@@ -58,6 +58,10 @@ class AuthMethods {
     return user;
   }
 
+
+
+  
+
   Future<bool> authenticateUser(FirebaseUser user) async {
     QuerySnapshot result = await firestore
         .collection(USERS_COLLECTION)
