@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:infv1/constants/strings.dart';
-import 'package:infv1/enum/user_state.dart';
-import 'package:infv1/models/user.dart';
-import 'package:infv1/utils/utilities.dart';
+import 'package:fv/constants/strings.dart';
+import 'package:fv/enum/user_state.dart';
+import 'package:fv/models/user.dart';
+import 'package:fv/utils/utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthMethods {

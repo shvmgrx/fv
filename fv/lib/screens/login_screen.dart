@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
-import 'package:infv1/onboarding/text_styles.dart';
-import 'package:infv1/resources/firebase_repository.dart';
-import 'package:infv1/utils/universal_variables.dart';
-import 'package:infv1/ui_elements/loader.dart';
-import 'package:infv1/ui_elements/delayed_animation.dart';
+import 'package:fv/onboarding/text_styles.dart';
+import 'package:fv/resources/firebase_repository.dart';
+import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/ui_elements/loader.dart';
+import 'package:fv/ui_elements/delayed_animation.dart';
 import 'home_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 

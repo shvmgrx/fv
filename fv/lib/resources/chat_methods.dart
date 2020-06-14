@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:infv1/constants/strings.dart';
-import 'package:infv1/models/contact.dart';
-import 'package:infv1/models/message.dart';
-import 'package:infv1/models/user.dart';
+import 'package:fv/constants/strings.dart';
+import 'package:fv/models/contact.dart';
+import 'package:fv/models/message.dart';
+import 'package:fv/models/user.dart';
 
 
 class ChatMethods {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infv1/widgets/nmBox.dart';
+import 'package:fv/widgets/nmBox.dart';
 
 class NMButton extends StatelessWidget {
   final bool down;

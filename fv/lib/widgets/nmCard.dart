@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infv1/widgets/nmBox.dart';
+import 'package:fv/widgets/nmBox.dart';
 
 
 class NMCard extends StatelessWidget {

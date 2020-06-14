@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:infv1/models/message.dart';
+import 'package:fv/models/message.dart';
 
 
 class LastMessageContainer extends StatelessWidget {

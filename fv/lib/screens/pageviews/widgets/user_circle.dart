@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:infv1/provider/user_provider.dart';
-import 'package:infv1/utils/universal_variables.dart';
-import 'package:infv1/utils/utilities.dart';
+import 'package:fv/provider/user_provider.dart';
+import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/utils/utilities.dart';
 import 'package:provider/provider.dart';
 
 class UserCircle extends StatelessWidget {

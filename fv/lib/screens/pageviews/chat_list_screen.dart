@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:infv1/constants/strings.dart';
-import 'package:infv1/models/contact.dart';
-import 'package:infv1/provider/user_provider.dart';
-import 'package:infv1/resources/chat_methods.dart';
-import 'package:infv1/screens/callscreens/pickup/pickup_layout.dart';
-import 'package:infv1/screens/pageviews/widgets/contact_view.dart';
-import 'package:infv1/screens/pageviews/widgets/new_chat_button.dart';
-import 'package:infv1/screens/pageviews/widgets/quiet_box.dart';
-import 'package:infv1/screens/pageviews/widgets/user_circle.dart';
-import 'package:infv1/utils/universal_variables.dart';
-import 'package:infv1/widgets/cust_app_bar.dart';
+import 'package:fv/constants/strings.dart';
+import 'package:fv/models/contact.dart';
+import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/chat_methods.dart';
+import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
+import 'package:fv/screens/pageviews/widgets/contact_view.dart';
+import 'package:fv/screens/pageviews/widgets/new_chat_button.dart';
+import 'package:fv/screens/pageviews/widgets/quiet_box.dart';
+import 'package:fv/screens/pageviews/widgets/user_circle.dart';
+import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/widgets/cust_app_bar.dart';
 import 'package:provider/provider.dart';
 
 

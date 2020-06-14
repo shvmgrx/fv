@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-import 'package:infv1/utils/universal_variables.dart';
+import 'package:fv/utils/universal_variables.dart';
 
 class TextStyles {
   TextStyles._();

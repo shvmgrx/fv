@@ -2,20 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:infv1/provider/image_upload_provider.dart';
-import 'package:infv1/provider/user_provider.dart';
-import 'package:infv1/resources/firebase_repository.dart';
-import 'package:infv1/screens/editProfile.dart';
+import 'package:fv/provider/image_upload_provider.dart';
+import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/firebase_repository.dart';
+import 'package:fv/screens/editProfile.dart';
 
-import 'package:infv1/screens/home_screen.dart';
-import 'package:infv1/screens/landing_screen.dart';
+import 'package:fv/screens/home_screen.dart';
+import 'package:fv/screens/landing_screen.dart';
 
-import 'package:infv1/screens/list_influencer.dart';
-import 'package:infv1/screens/pageviews/chat_list_screen.dart';
-import 'package:infv1/screens/profile_screen.dart';
-import 'package:infv1/screens/search_screen.dart';
-import 'package:infv1/screens/settingsScreen.dart';
-import 'package:infv1/utils/universal_variables.dart';
+import 'package:fv/screens/list_influencer.dart';
+import 'package:fv/screens/pageviews/chat_list_screen.dart';
+import 'package:fv/screens/profile_screen.dart';
+import 'package:fv/screens/search_screen.dart';
+import 'package:fv/screens/settingsScreen.dart';
+import 'package:fv/utils/universal_variables.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {

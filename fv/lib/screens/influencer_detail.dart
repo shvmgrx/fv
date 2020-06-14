@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infv1/models/user.dart';
-import 'package:infv1/onboarding/strings.dart';
-import 'package:infv1/onboarding/text_styles.dart';
-import 'package:infv1/screens/chatscreens/chat_screen.dart';
-import 'package:infv1/utils/universal_variables.dart';
-import 'package:infv1/widgets/nmBox.dart';
-import 'package:infv1/widgets/priceCard.dart';
+import 'package:fv/models/user.dart';
+import 'package:fv/onboarding/strings.dart';
+import 'package:fv/onboarding/text_styles.dart';
+import 'package:fv/screens/chatscreens/chat_screen.dart';
+import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/widgets/nmBox.dart';
+import 'package:fv/widgets/priceCard.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'package:infv1/models/influencer.dart';
+import 'package:fv/models/influencer.dart';
 
 class InfluencerDetails extends StatefulWidget {
   final User selectedInfluencer;

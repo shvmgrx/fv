@@ -1,4 +1,4 @@
-import 'package:infv1/models/user.dart';
+import 'package:fv/models/user.dart';
 
 class Influencer {
   String influencerName;

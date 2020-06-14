@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:infv1/constants/strings.dart';
-import 'package:infv1/models/call.dart';
+import 'package:fv/constants/strings.dart';
+import 'package:fv/models/call.dart';
 
 class CallMethods {
   final CollectionReference callCollection =

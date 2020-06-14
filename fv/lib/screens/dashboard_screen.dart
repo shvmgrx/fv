@@ -1,6 +1,6 @@
-import 'package:infv1/onboarding/custom_app_bar.dart';
-import 'package:infv1/onboarding/strings.dart';
-import 'package:infv1/onboarding/text_styles.dart';
+import 'package:fv/onboarding/custom_app_bar.dart';
+import 'package:fv/onboarding/strings.dart';
+import 'package:fv/onboarding/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {

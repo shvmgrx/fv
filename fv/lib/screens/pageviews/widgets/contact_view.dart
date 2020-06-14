@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:infv1/models/contact.dart';
-import 'package:infv1/models/user.dart';
-import 'package:infv1/provider/user_provider.dart';
-import 'package:infv1/resources/auth_methods.dart';
-import 'package:infv1/resources/chat_methods.dart';
-import 'package:infv1/screens/chatscreens/chat_screen.dart';
-import 'package:infv1/screens/chatscreens/widgets/cached_image.dart';
-import 'package:infv1/screens/pageviews/widgets/last_message_container.dart';
-import 'package:infv1/screens/pageviews/widgets/online_dot_indicator.dart';
-import 'package:infv1/utils/universal_variables.dart';
-import 'package:infv1/widgets/custom_tile.dart';
+import 'package:fv/models/contact.dart';
+import 'package:fv/models/user.dart';
+import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/auth_methods.dart';
+import 'package:fv/resources/chat_methods.dart';
+import 'package:fv/screens/chatscreens/chat_screen.dart';
+import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
+import 'package:fv/screens/pageviews/widgets/last_message_container.dart';
+import 'package:fv/screens/pageviews/widgets/online_dot_indicator.dart';
+import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/widgets/custom_tile.dart';
 import 'package:provider/provider.dart';
 
 class ContactView extends StatelessWidget {

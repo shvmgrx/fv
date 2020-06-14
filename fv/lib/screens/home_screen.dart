@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:infv1/enum/user_state.dart';
-import 'package:infv1/provider/user_provider.dart';
-import 'package:infv1/resources/auth_methods.dart';
-import 'package:infv1/screens/callscreens/pickup/pickup_layout.dart';
-import 'package:infv1/screens/list_influencer.dart';
-import 'package:infv1/screens/pageviews/chat_list_screen.dart';
-import 'package:infv1/screens/profile_screen.dart';
-import 'package:infv1/utils/universal_variables.dart';
+import 'package:fv/enum/user_state.dart';
+import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/auth_methods.dart';
+import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
+import 'package:fv/screens/list_influencer.dart';
+import 'package:fv/screens/pageviews/chat_list_screen.dart';
+import 'package:fv/screens/profile_screen.dart';
+import 'package:fv/utils/universal_variables.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:infv1/widgets/bottom_bar.dart';
-import 'package:infv1/widgets/nmBox.dart';
-import 'package:infv1/widgets/nmButton.dart';
+import 'package:fv/widgets/bottom_bar.dart';
+import 'package:fv/widgets/nmBox.dart';
+import 'package:fv/widgets/nmButton.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

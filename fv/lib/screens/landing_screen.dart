@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:infv1/onboarding/custom_app_bar.dart';
+import 'package:fv/onboarding/custom_app_bar.dart';
 //import 'package:animal_planet/screens/choose_plan_screen.dart';
-import 'package:infv1/onboarding/strings.dart';
-import 'package:infv1/onboarding/text_styles.dart';
+import 'package:fv/onboarding/strings.dart';
+import 'package:fv/onboarding/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:infv1/screens/dashboard_screen.dart';
-import 'package:infv1/screens/login_screen.dart';
-import 'package:infv1/utils/universal_variables.dart';
+import 'package:fv/screens/dashboard_screen.dart';
+import 'package:fv/screens/login_screen.dart';
+import 'package:fv/utils/universal_variables.dart';
 import 'package:video_player/video_player.dart';
 
 class LandingScreen extends StatefulWidget {

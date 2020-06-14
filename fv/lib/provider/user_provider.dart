@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:infv1/models/user.dart';
-import 'package:infv1/resources/firebase_repository.dart';
+import 'package:fv/models/user.dart';
+import 'package:fv/resources/firebase_repository.dart';
 
 
 class UserProvider with ChangeNotifier {

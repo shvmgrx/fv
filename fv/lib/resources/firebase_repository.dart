@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:infv1/models/message.dart';
-import 'package:infv1/models/user.dart';
-import 'package:infv1/provider/image_upload_provider.dart';
-import 'package:infv1/resources/firebase_methods.dart';
+import 'package:fv/models/message.dart';
+import 'package:fv/models/user.dart';
+import 'package:fv/provider/image_upload_provider.dart';
+import 'package:fv/resources/firebase_methods.dart';
 import 'package:meta/meta.dart';
 
 class FirebaseRepository {

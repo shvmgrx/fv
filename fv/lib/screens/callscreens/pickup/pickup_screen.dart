@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:infv1/models/call.dart';
-import 'package:infv1/resources/call_methods.dart';
-import 'package:infv1/screens/callscreens/call_screen.dart';
-import 'package:infv1/screens/chatscreens/widgets/cached_image.dart';
-import 'package:infv1/utils/permissions.dart';
+import 'package:fv/models/call.dart';
+import 'package:fv/resources/call_methods.dart';
+import 'package:fv/screens/callscreens/call_screen.dart';
+import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
+import 'package:fv/utils/permissions.dart';
 
 class PickupScreen extends StatelessWidget {
   final Call call;

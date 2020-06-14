@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:infv1/constants/strings.dart';
-import 'package:infv1/models/message.dart';
-import 'package:infv1/models/user.dart';
-import 'package:infv1/provider/image_upload_provider.dart';
-import 'package:infv1/utils/utilities.dart';
+import 'package:fv/constants/strings.dart';
+import 'package:fv/models/message.dart';
+import 'package:fv/models/user.dart';
+import 'package:fv/provider/image_upload_provider.dart';
+import 'package:fv/utils/utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseMethods {
