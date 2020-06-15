@@ -21,6 +21,7 @@ class User {
   int infReceived;
   bool isInfluencer;
   String hashtags;
+  Map timeSlots;
 
 
 
@@ -46,7 +47,8 @@ class User {
     this.infSent,
     this.infReceived,
     this.isInfluencer,
-    this.hashtags
+    this.hashtags,
+    this.timeSlots
   });
 
   Map toMap(User user) {
@@ -73,6 +75,7 @@ class User {
     data["infReceived"] = user.infReceived;
     data["isInfluencer"] = user.isInfluencer;
     data["hashtags"] = user.hashtags;
+    data["timeSlots"] = user.timeSlots;
     
     return data;
   }
@@ -100,5 +103,6 @@ class User {
     this.infReceived = mapData['infReceived'];
     this.isInfluencer = mapData['isInfluencer'];
     this.hashtags = mapData['hashtags'];
+    this.timeSlots = mapData['timeSlots'];
   }
 }

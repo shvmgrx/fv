@@ -62,30 +62,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int loggedUserinfReceived;
   bool loggedUserisInfluencer;
   String loggedUserHashtags;
+  Map loggedUserTimeSlots;
+
+  Map tempTimeslots;
+
+  bool ts1Filled;
+  DateTime ts1;
+  bool ts2Filled;
+  int ts2;
+  bool ts3Filled;
+  bool ts4Filled;
+  bool ts5Filled;
 
   bool expertMode;
   bool textMode;
   bool videoMode;
   bool videoCallMode;
 
-
- 
-
   void pickProfilePhoto({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
-  
+
     _repository.getCurrentUser().then((user) {
-    
-        _repository.changeProfilePhoto(
-        image: selectedImage,
-        imageUploadProvider: _imageUploadProvider,
-        currentUser: user);
-    
+      _repository.changeProfilePhoto(
+          image: selectedImage,
+          imageUploadProvider: _imageUploadProvider,
+          currentUser: user);
     });
-
-
-  
-
   }
 
   void initState() {
@@ -114,14 +116,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           loggedUserinfReceived = loggedUser['infReceived'];
           loggedUserisInfluencer = loggedUser['isInfluencer'];
           loggedUserHashtags = loggedUser['hashtags'];
-          expertMode= loggedUser['isInfluencer'];
+          loggedUserTimeSlots = loggedUser['timeSlots'];
+          expertMode = loggedUser['isInfluencer'];
 
-          expertMode = expertMode==null?false:loggedUser['isInfluencer'];
+          expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
 
-          textMode= loggedUseranswerPrice1!=null;
-          videoMode= loggedUseranswerPrice2!=null;
-          videoCallMode= loggedUseranswerPrice3!=null;
-
+          textMode = loggedUseranswerPrice1 != null;
+          videoMode = loggedUseranswerPrice2 != null;
+          videoCallMode = loggedUseranswerPrice3 != null;
         });
       });
     });
@@ -145,6 +147,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _repository.getCurrentUser().then((FirebaseUser user) {
       loggedUserDisplayName = user.displayName;
       loggedUserProfilePic = user.photoUrl;
+    });
+  }
+
+  updateTimeFunction(TimeOfDay ts, int tsNum) {
+    setState(() {
+      loggedUserTimeSlots = {tsNum: ts};
     });
   }
 
@@ -182,8 +190,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
-                            style: TextStyles.appNameLogoStyle,
-                            textAlign: TextAlign.center),
+                      style: TextStyles.appNameLogoStyle,
+                      textAlign: TextAlign.center),
                   // GradientText("FAVEEZ",
                   //     gradient: LinearGradient(colors: [
                   //       UniversalVariables.gold1,
@@ -209,7 +217,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       _formKey.currentState.save();
 
                       _repository.getCurrentUser().then((FirebaseUser user) {
-                      
                         _repository.updateProfiletoDb(
                           user,
                           loggedUserDisplayName,
@@ -252,7 +259,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: <Widget>[
                     // Container(
                     //   //add image here
-                     
+
                     //     child: Container(
                     //       width: 160.0,
                     //       height: 160.0,
@@ -261,16 +268,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     //         image: DecorationImage(
                     //           fit: BoxFit.cover,
                     //           image: NetworkImage(loggedUserProfilePic != null
-                    //               ? loggedUserProfilePic 
+                    //               ? loggedUserProfilePic
                     //               : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
                     //         ),
                     //       ),
                     //     ),
-                      
+
                     // ),
                     // Container(
                     //   child: OutlineButton(
-                        
+
                     //     onPressed: () => {
                     //       //buttonDisabled
                     //       //pickProfilePhoto(source: ImageSource.gallery),
@@ -286,7 +293,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Container(
                         child: Column(
                           children: <Widget>[
-                             Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Expanded(
@@ -296,24 +303,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       textAlign: TextAlign.left),
                                 ),
                                 Expanded(
-                                  flex: 1,
-                                  child: CupertinoSwitch(value: expertMode, 
-                                  activeColor: UniversalVariables.gold2,
-                                  onChanged: (value) {
-                                      setState(() {
-                                        expertMode = value;
-                                        loggedUserisInfluencer=value;
-                                      });
-                                    },
-                                  
-                                  )
-                                )
+                                    flex: 1,
+                                    child: CupertinoSwitch(
+                                      value: expertMode,
+                                      activeColor: UniversalVariables.gold2,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          expertMode = value;
+                                          loggedUserisInfluencer = value;
+                                        });
+                                      },
+                                    ))
                               ],
                             ),
                             Visibility(
-                                 visible: expertMode,
-                                                          child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              visible: expertMode,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   Expanded(
                                     flex: 3,
@@ -322,26 +329,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         textAlign: TextAlign.left),
                                   ),
                                   Expanded(
-                                    flex: 1,
-                                    child: CupertinoSwitch(
-                                      
-                                    value: textMode, 
-                                    activeColor: UniversalVariables.gold2,
-                                    onChanged: (value) {
-                                        setState(() {
-                                          textMode = value;
-                                        });
-                                      },
-                                    
-                                    )
-                                  )
+                                      flex: 1,
+                                      child: CupertinoSwitch(
+                                        value: textMode,
+                                        activeColor: UniversalVariables.gold2,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            textMode = value;
+                                          });
+                                        },
+                                      ))
                                 ],
                               ),
                             ),
                             Visibility(
-                                 visible: expertMode,
-                                                          child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              visible: expertMode,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   Expanded(
                                     flex: 3,
@@ -350,24 +355,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         textAlign: TextAlign.left),
                                   ),
                                   Expanded(
-                                    flex: 1,
-                                    child: CupertinoSwitch(value: videoMode, 
-                                    activeColor: UniversalVariables.gold2,
-                                    onChanged: (value) {
-                                        setState(() {
-                                          videoMode = value;
-                                        });
-                                      },
-                                    
-                                    )
-                                  )
+                                      flex: 1,
+                                      child: CupertinoSwitch(
+                                        value: videoMode,
+                                        activeColor: UniversalVariables.gold2,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            videoMode = value;
+                                          });
+                                        },
+                                      ))
                                 ],
                               ),
                             ),
                             Visibility(
-                                 visible: expertMode,
-                                                          child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              visible: expertMode,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   Expanded(
                                     flex: 3,
@@ -376,17 +381,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         textAlign: TextAlign.left),
                                   ),
                                   Expanded(
-                                    flex: 1,
-                                    child: CupertinoSwitch(value: videoCallMode, 
-                                    activeColor: UniversalVariables.gold2,
-                                    onChanged: (value) {
-                                        setState(() {
-                                          videoCallMode = value;
-                                        });
-                                      },
-                                    
-                                    )
-                                  )
+                                      flex: 1,
+                                      child: CupertinoSwitch(
+                                        value: videoCallMode,
+                                        activeColor: UniversalVariables.gold2,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            videoCallMode = value;
+                                          });
+                                        },
+                                      ))
                                 ],
                               ),
                             ),
@@ -504,33 +508,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             //   ],
                             // ),
                             Visibility(
-                                 visible: expertMode,
-                                                          child: Row(
+                              visible: expertMode,
+                              child: Row(
                                 children: <Widget>[
                                   Expanded(
-                                    flex: 3,
+                                    flex: 5,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text("Text Reply Price",
                                             style: TextStyles.editHeadingName,
                                             textAlign: TextAlign.left),
-                                            SizedBox(height:5),
+                                        SizedBox(height: 5),
                                         // Text("\$${loggedUseranswerPrice1*0.65} (post-charges)",
                                         //     style: TextStyles.postCommissionsPrice,
                                         //     textAlign: TextAlign.left),
-                                          
-
                                       ],
                                     ),
                                   ),
                                   Expanded(
                                     flex: 3,
                                     child: TextField(
-                                      enabled:textMode&&expertMode,
+                                        enabled: textMode && expertMode,
                                         cursorColor: UniversalVariables.gold2,
                                         decoration: InputDecoration(
-                                          icon: Icon(Icons.attach_money, size:20),
+                                          icon: Icon(Icons.attach_money,
+                                              size: 20),
                                           contentPadding:
                                               EdgeInsets.only(bottom: 5),
                                           hintText: '$loggedUseranswerPrice1',
@@ -542,7 +546,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           WhitelistingTextInputFormatter
                                               .digitsOnly
                                         ],
-                                        maxLength: 6,
+                                        // maxLength: 6,
                                         onChanged: (input) => {
                                               loggedUseranswerPrice1 =
                                                   num.tryParse(input)
@@ -552,18 +556,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             Visibility(
-                                 visible: expertMode,
-                                                          child: Row(
+                              visible: expertMode,
+                              child: Row(
                                 children: <Widget>[
                                   Expanded(
-                                    flex: 3,
+                                    flex: 5,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text("Video Reply Price",
                                             style: TextStyles.editHeadingName,
                                             textAlign: TextAlign.left),
-                                             SizedBox(height:5),
+                                        SizedBox(height: 5),
                                         // Text("\$${loggedUseranswerPrice2*0.65} (post-charges)",
                                         //     style: TextStyles.postCommissionsPrice,
                                         //     textAlign: TextAlign.left),
@@ -574,10 +579,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     child: Expanded(
                                       flex: 3,
                                       child: TextField(
-                                        enabled:videoMode&&expertMode,
+                                          enabled: videoMode && expertMode,
                                           cursorColor: UniversalVariables.gold2,
                                           decoration: InputDecoration(
-                                            icon: Icon(Icons.attach_money, size:20),
+                                            icon: Icon(Icons.attach_money,
+                                                size: 20),
                                             contentPadding:
                                                 EdgeInsets.only(bottom: 5),
                                             hintText: '$loggedUseranswerPrice2',
@@ -589,7 +595,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          maxLength: 6,
+                                          // maxLength: 6,
                                           onChanged: (input) => {
                                                 loggedUseranswerPrice2 =
                                                     num.tryParse(input)
@@ -600,18 +606,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             Visibility(
-                                 visible: expertMode,
-                                                          child: Row(
+                              visible: expertMode,
+                              child: Row(
                                 children: <Widget>[
                                   Expanded(
-                                    flex: 3,
+                                    flex: 5,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text("Video Call Price:",
+                                        Text("Video Call Price (10 mins)",
                                             style: TextStyles.editHeadingName,
                                             textAlign: TextAlign.left),
-                                             SizedBox(height:5),
+                                        SizedBox(height: 5),
                                         // Text("\$${loggedUseranswerPrice2*0.65} (post-charges)",
                                         //     style: TextStyles.postCommissionsPrice,
                                         //     textAlign: TextAlign.left),
@@ -622,10 +629,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     child: Expanded(
                                       flex: 3,
                                       child: TextField(
-                                        enabled:videoCallMode&&expertMode,
+                                          enabled: videoCallMode && expertMode,
                                           cursorColor: UniversalVariables.gold2,
                                           decoration: InputDecoration(
-                                            icon: Icon(Icons.attach_money, size:20),
+                                            icon: Icon(Icons.attach_money,
+                                                size: 20),
                                             contentPadding:
                                                 EdgeInsets.only(bottom: 5),
                                             hintText: '$loggedUseranswerPrice3',
@@ -637,7 +645,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          maxLength: 6,
+                                          //maxLength: 6,
                                           onChanged: (input) => {
                                                 loggedUseranswerPrice3 =
                                                     num.tryParse(input)
@@ -647,43 +655,117 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ],
                               ),
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            //   children: <Widget>[
-                            //     Expanded(
-                            //       flex: 3,
-                            //       child: Text("Hashtags:",
-                            //           style: TextStyles.editHeadingName,
-                            //           textAlign: TextAlign.left),
-                            //     ),
-                            //     Expanded(
-                            //       flex: 5,
-                            //       child: TextField(
-                            //         cursorColor: UniversalVariables.gold2,
-                            //         decoration: InputDecoration(
-                            //           contentPadding:
-                            //               EdgeInsets.only(bottom: 10),
-                            //           hintText: loggedUserHashtags,
-                            //           hintStyle: TextStyles.hintTextStyle,
-                            //         ),
-                            //         maxLength: 120,
-                            //         style: TextStyles.whileEditing,
-                            //         // validator: (String value) {
-                            //         //   if (value.isEmpty) {
-                            //         //     return 'Enter bio';
-                            //         //   }
-
-                            //         //   return null;
-                            //         // },
-                            //         onChanged: (String value) {
-                            //           setState(() {
-                            //             loggedUserHashtags = value;
-                            //           });
-                            //         },
-                            //       ),
-                            //     )
-                            //   ],
-                            // ),
+                            Divider(
+                              height: 40,
+                            ),
+                            Visibility(
+                              visible: expertMode && videoCallMode,
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("Videocall Timeslots",
+                                          style: TextStyles.editHeadingName,
+                                          textAlign: TextAlign.left),
+                                      SizedBox(height: 5),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Visibility(
+                                      visible: expertMode && videoCallMode,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 1,
+                                            child: Icon(
+                                                CupertinoIcons.add_circled,
+                                                size: 20.0,
+                                                color:
+                                                    UniversalVariables.grey1),
+                                          ),
+                                          Expanded(
+                                            flex: 5,
+                                            child: Container(
+                                              height: 50,
+                                              width: screenWidth / 2,
+                                              child: CupertinoTheme(
+                                                data: CupertinoThemeData(
+                                                  textTheme: CupertinoTextThemeData(
+                                                      dateTimePickerTextStyle:TextStyles.timeTextStyle,
+                                                    //  pickerTextStyle: TextStyles.appNameLogoStyle
+                                                      
+                                                      ),
+                                                ),
+                                                child: CupertinoDatePicker(
+                                                  backgroundColor:
+                                                      UniversalVariables
+                                                          .transparent,
+                                                  mode: CupertinoDatePickerMode
+                                                      .dateAndTime,
+                                                  initialDateTime:
+                                                      DateTime.now(),
+                                                  onDateTimeChanged:
+                                                      (DateTime newTimeslot) {
+                                                    setState(() {
+                                                      ts1Filled = true;
+                                                      ts1 = newTimeslot;
+                                                    });
+                                                  },
+                                                  use24hFormat: true,
+                                                  minuteInterval: 1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Expanded(
+                                            flex: 2,
+                                            child: Container(
+                                              height: 50,
+                                              width: screenWidth / 2,
+                                              child: CupertinoTheme(
+                                                data: CupertinoThemeData(
+                                                  textTheme: CupertinoTextThemeData(
+                                                      pickerTextStyle:TextStyles.timeTextStyle,
+                                                    //  pickerTextStyle: TextStyles.appNameLogoStyle
+                                                      
+                                                      ),
+                                                ),
+                                                child:  CupertinoPicker(
+                                                          backgroundColor:UniversalVariables.transparent,
+                                                          onSelectedItemChanged: (value) {
+                                                            setState(() {
+                                                              ts2 = value;
+                                                            });
+                                                          },
+                                                          itemExtent: 32.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('25 mins'),
+                                                            Text('45 mins'),
+                                                          ],
+                                                        ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            //flex: 1,
+                                            child: Icon(
+                                                CupertinoIcons.check_mark_circled,
+                                                size: 20.0,
+                                                color:UniversalVariables.grey1),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),

@@ -109,6 +109,19 @@ class TextStyles {
     // ],
   );
 
+    static final TextStyle timeTextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w200,
+  color: UniversalVariables.grey1,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
 
       static final TextStyle chatProfileName = TextStyle(
     fontSize: 25,
@@ -197,7 +210,7 @@ class TextStyles {
     // ],
   );
 
-        static final TextStyle usernameStyle = TextStyle(
+  static final TextStyle usernameStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
     color: UniversalVariables.grey2,
