@@ -60,71 +60,29 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
                             style: TextStyles.theNameStyle,
                           ),
                     SizedBox(height: 7.0),
-                    // Row(
-                    //   children: <Widget>[
-                    //     Text(
-                    //       widget.selectedInfluencer.username,
-                    //       style: TextStyles.usernameStyle,
-                    //     ),
-                    //     Icon(
-                    //       Icons.verified_user,
-                    //       color: UniversalVariables.gold2,
-                    //       size: 20,
-                    //     ),
-                    //   ],
-                    // ),
-                    // Text('Santa Monica, CA',
-                    // style: GoogleFonts.sourceSansPro(
-                    //   fontSize: 15.0,
-                    //   fontWeight: FontWeight.w400,
-                    //   color: Color(0xFF5E5B54)
-                    // )
-                    // ),
-                    SizedBox(height: 7.0),
-                    Row(
-                      children: <Widget>[
-                        // SmoothStarRating(
-                        //   allowHalfRating: false,
-                        //   starCount: 5,
-                        //   rating: 4.0,
-                        //   size: 15.0,
-                        //   color: Color(0xFFF36F32),
-                        //   borderColor: Color(0xFFF36F32),
-                        //   spacing:0.0
-                        // ),
-                        SizedBox(width: 3.0),
-                        // Text('4.7',
-                        //   style: GoogleFonts.sourceSansPro(
-                        //           fontSize: 14.0,
-                        //           fontWeight: FontWeight.w400,
-                        //           color: Color(0xFFD57843)
-                        //         )
-                        // ),
-                        // SizedBox(width: 3.0),
-                        // Text('(200 Reviews)',
-                        //   style: GoogleFonts.sourceSansPro(
-                        //           fontSize: 14.0,
-                        //           fontWeight: FontWeight.w400,
-                        //           color: Color(0xFFC2C0B6)
-                        //         )
-                        // )
-                      ],
-                    ),
-                    SizedBox(height: 1.0),
+
+                    // SizedBox(height: 7.0),
+
+                    // SizedBox(height: 1.0),
                     widget.selectedInfluencer.bio != null
                         ? Container(
-                          width: 180,
-                          child: Text(widget.selectedInfluencer.bio,
+                            width: 180,
+                            child: Text(widget.selectedInfluencer.bio,
+                                style: GoogleFonts.sourceSansPro(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: UniversalVariables.grey2)),
+                          )
+                        : Container(
+                            width: 175,
+                            child: Text(
+                              "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
                               style: GoogleFonts.sourceSansPro(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF201F1C))),
-                        )
-                        : Text("Faveez user bio",
-                            style: GoogleFonts.sourceSansPro(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF201F1C))),
+                                  color: UniversalVariables.grey2),
+                            ),
+                          ),
 
                     SizedBox(height: 15.0),
                     // Text('Read More',
@@ -134,8 +92,249 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
                     //     color: Color(0xFFF36F32)
                     //   )
                     // ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 5.0),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                    receiver: widget.selectedInfluencer,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 80.0,
+                              width: screenWidth / 4,
+                              decoration: BoxDecoration(
 
+                                  //gradient: UniversalVariables.fabGradient,
+
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                  //color: UniversalVariables.white2
+                                  color: mC,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mCD,
+                                      offset: Offset(-10, 10),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      color: mCL,
+                                      offset: Offset(0, -10),
+                                      blurRadius: 10,
+                                    ),
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text("Text Reply",
+                                            style: TextStyles.priceType,
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: widget.selectedInfluencer
+                                                  .answerPrice1 !=
+                                              null
+                                          ? Text(
+                                              "\$ ${widget.selectedInfluencer.answerPrice1}",
+                                              style: TextStyles.priceNumber,
+                                              textAlign: TextAlign.center)
+                                          : Text("Not Set",
+                                              style:
+                                                  TextStyles.notSetPriceNumber,
+                                              textAlign: TextAlign.center),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                    receiver: widget.selectedInfluencer,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 80.0,
+                              width: screenWidth / 4,
+                              decoration: BoxDecoration(
+
+                                  //gradient: UniversalVariables.fabGradient,
+
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                  //color: UniversalVariables.white2
+                                  color: mC,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mCD,
+                                      offset: Offset(-10, 10),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      color: mCL,
+                                      offset: Offset(0, -10),
+                                      blurRadius: 10,
+                                    ),
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text("Video Reply",
+                                            style: TextStyles.priceType,
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: widget.selectedInfluencer
+                                                  .answerPrice1 !=
+                                              null
+                                          ? Text(
+                                              "\$ ${widget.selectedInfluencer.answerPrice2}",
+                                              style: TextStyles.priceNumber,
+                                              textAlign: TextAlign.center)
+                                          : Text("Not Set",
+                                              style:
+                                                  TextStyles.notSetPriceNumber,
+                                              textAlign: TextAlign.center),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                    receiver: widget.selectedInfluencer,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 80.0,
+                              width: screenWidth / 4,
+                              decoration: BoxDecoration(
+
+                                  //gradient: UniversalVariables.fabGradient,
+
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                  //color: UniversalVariables.white2
+                                  color: mC,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mCD,
+                                      offset: Offset(-10, 10),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      color: mCL,
+                                      offset: Offset(0, -10),
+                                      blurRadius: 10,
+                                    ),
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text("Videocall",
+                                            style: TextStyles.priceType,
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: widget.selectedInfluencer
+                                                  .answerPrice1 !=
+                                              null
+                                          ? Text(
+                                              "\$ ${widget.selectedInfluencer.answerPrice3}",
+                                              style: TextStyles.priceNumber,
+                                              textAlign: TextAlign.center)
+                                          : Text("Not Set",
+                                              style:
+                                                  TextStyles.notSetPriceNumber,
+                                              textAlign: TextAlign.center),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                     // Container(
                     //   width: 325,
                     //   child: Row(
@@ -349,207 +548,207 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
             ),
           ),
 
-          Positioned(
-            top: screenHeight - screenHeight / 3.5,
-            left: 10,
-            right: 10,
-            child: Center(
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                            height: 110.0,
-                            width: 126.0,
-                            color: UniversalVariables.transparent),
-                        Positioned(
-                            left: 1.0,
-                            top: 1.0,
-                            child: Column(
-                              children: <Widget>[
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatScreen(
-                                          receiver: widget.selectedInfluencer,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    height: 78.0,
-                                    width: 115.0,
-                                    decoration: BoxDecoration(
+          // Positioned(
+          //   top: screenHeight - screenHeight / 3.5,
+          //   left: 10,
+          //   right: 10,
+          //   child: Center(
+          //     child: Row(
+          //       children: <Widget>[
+          //         Padding(
+          //           padding: EdgeInsets.all(20.0),
+          //           child: Stack(
+          //             children: <Widget>[
+          //               Container(
+          //                   height: 110.0,
+          //                   width: 126.0,
+          //                   color: UniversalVariables.transparent),
+          //               Positioned(
+          //                   left: 1.0,
+          //                   top: 1.0,
+          //                   child: Column(
+          //                     children: <Widget>[
+          //                       GestureDetector(
+          //                         onTap: () {
+          //                           Navigator.push(
+          //                             context,
+          //                             MaterialPageRoute(
+          //                               builder: (context) => ChatScreen(
+          //                                 receiver: widget.selectedInfluencer,
+          //                               ),
+          //                             ),
+          //                           );
+          //                         },
+          //                         child: Container(
+          //                           height: 78.0,
+          //                           width: 115.0,
+          //                           decoration: BoxDecoration(
 
-                                        //gradient: UniversalVariables.fabGradient,
+          //                               //gradient: UniversalVariables.fabGradient,
 
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                        ),
-                                        //color: UniversalVariables.white2
-                                        color: mC,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: mCD,
-                                            offset: Offset(-10, 10),
-                                            blurRadius: 10,
-                                          ),
-                                          BoxShadow(
-                                            color: mCL,
-                                            offset: Offset(0, -10),
-                                            blurRadius: 10,
-                                          ),
-                                        ]),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: widget.selectedInfluencer
-                                                    .answerPrice1 !=
-                                                null
-                                            ? Text(
-                                                "\$ ${widget.selectedInfluencer.answerPrice1}",
-                                                style: TextStyles.priceNumber,
-                                                textAlign: TextAlign.center)
-                                            : Text("Not Set",
-                                                style: TextStyles
-                                                    .notSetPriceNumber,
-                                                textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 27.0,
-                                  width: 115.0,
-                                  decoration: BoxDecoration(
-                                      //gradient: UniversalVariables.fabGradient,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                      color: UniversalVariables.white2),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 2.0),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text("Text Reply",
-                                          style: TextStyles.priceType,
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                            height: 110.0,
-                            width: 132.0,
-                            color: UniversalVariables.transparent),
-                        Positioned(
-                            right: 1,
-                            top: 1.0,
-                            child: Column(
-                              children: <Widget>[
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatScreen(
-                                          receiver: widget.selectedInfluencer,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    height: 78.0,
-                                    width: 120.0,
-                                    decoration: BoxDecoration(
+          //                               borderRadius: BorderRadius.only(
+          //                                 topLeft: Radius.circular(10.0),
+          //                                 topRight: Radius.circular(10.0),
+          //                               ),
+          //                               //color: UniversalVariables.white2
+          //                               color: mC,
+          //                               boxShadow: [
+          //                                 BoxShadow(
+          //                                   color: mCD,
+          //                                   offset: Offset(-10, 10),
+          //                                   blurRadius: 10,
+          //                                 ),
+          //                                 BoxShadow(
+          //                                   color: mCL,
+          //                                   offset: Offset(0, -10),
+          //                                   blurRadius: 10,
+          //                                 ),
+          //                               ]),
+          //                           child: Padding(
+          //                             padding: const EdgeInsets.symmetric(
+          //                                 vertical: 2.0),
+          //                             child: Align(
+          //                               alignment: Alignment.center,
+          //                               child: widget.selectedInfluencer
+          //                                           .answerPrice1 !=
+          //                                       null
+          //                                   ? Text(
+          //                                       "\$ ${widget.selectedInfluencer.answerPrice1}",
+          //                                       style: TextStyles.priceNumber,
+          //                                       textAlign: TextAlign.center)
+          //                                   : Text("Not Set",
+          //                                       style: TextStyles
+          //                                           .notSetPriceNumber,
+          //                                       textAlign: TextAlign.center),
+          //                             ),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       Container(
+          //                         height: 27.0,
+          //                         width: 115.0,
+          //                         decoration: BoxDecoration(
+          //                             //gradient: UniversalVariables.fabGradient,
+          //                             borderRadius: BorderRadius.only(
+          //                               bottomLeft: Radius.circular(10.0),
+          //                               bottomRight: Radius.circular(10.0),
+          //                             ),
+          //                             color: UniversalVariables.white2),
+          //                         child: Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               vertical: 2.0),
+          //                           child: Align(
+          //                             alignment: Alignment.center,
+          //                             child: Text("Text Reply",
+          //                                 style: TextStyles.priceType,
+          //                                 textAlign: TextAlign.center),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ],
+          //                   ))
+          //             ],
+          //           ),
+          //         ),
+          //         Padding(
+          //           padding: EdgeInsets.all(20.0),
+          //           child: Stack(
+          //             children: <Widget>[
+          //               Container(
+          //                   height: 110.0,
+          //                   width: 132.0,
+          //                   color: UniversalVariables.transparent),
+          //               Positioned(
+          //                   right: 1,
+          //                   top: 1.0,
+          //                   child: Column(
+          //                     children: <Widget>[
+          //                       GestureDetector(
+          //                         onTap: () {
+          //                           Navigator.push(
+          //                             context,
+          //                             MaterialPageRoute(
+          //                               builder: (context) => ChatScreen(
+          //                                 receiver: widget.selectedInfluencer,
+          //                               ),
+          //                             ),
+          //                           );
+          //                         },
+          //                         child: Container(
+          //                           height: 78.0,
+          //                           width: 120.0,
+          //                           decoration: BoxDecoration(
 
-                                        //gradient: UniversalVariables.fabGradient,
+          //                               //gradient: UniversalVariables.fabGradient,
 
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                        ),
-                                        //color: UniversalVariables.white2
-                                        color: mC,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: mCD,
-                                            offset: Offset(-10, 10),
-                                            blurRadius: 10,
-                                          ),
-                                          BoxShadow(
-                                            color: mCL,
-                                            offset: Offset(0, -10),
-                                            blurRadius: 10,
-                                          ),
-                                        ]),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: widget.selectedInfluencer
-                                                    .answerPrice2 !=
-                                                null
-                                            ? Text(
-                                                "\$ ${widget.selectedInfluencer.answerPrice2}",
-                                                style: TextStyles.priceNumber,
-                                                textAlign: TextAlign.center)
-                                            : Text("Not Set",
-                                                style: TextStyles
-                                                    .notSetPriceNumber,
-                                                textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 27.0,
-                                  width: 120.0,
-                                  decoration: BoxDecoration(
-                                      //gradient: UniversalVariables.fabGradient,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                      color: UniversalVariables.white2),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 2.0),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text("Video Reply",
-                                          style: TextStyles.priceType,
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
+          //                               borderRadius: BorderRadius.only(
+          //                                 topLeft: Radius.circular(10.0),
+          //                                 topRight: Radius.circular(10.0),
+          //                               ),
+          //                               //color: UniversalVariables.white2
+          //                               color: mC,
+          //                               boxShadow: [
+          //                                 BoxShadow(
+          //                                   color: mCD,
+          //                                   offset: Offset(-10, 10),
+          //                                   blurRadius: 10,
+          //                                 ),
+          //                                 BoxShadow(
+          //                                   color: mCL,
+          //                                   offset: Offset(0, -10),
+          //                                   blurRadius: 10,
+          //                                 ),
+          //                               ]),
+          //                           child: Padding(
+          //                             padding: const EdgeInsets.symmetric(
+          //                                 vertical: 2.0),
+          //                             child: Align(
+          //                               alignment: Alignment.center,
+          //                               child: widget.selectedInfluencer
+          //                                           .answerPrice2 !=
+          //                                       null
+          //                                   ? Text(
+          //                                       "\$ ${widget.selectedInfluencer.answerPrice2}",
+          //                                       style: TextStyles.priceNumber,
+          //                                       textAlign: TextAlign.center)
+          //                                   : Text("Not Set",
+          //                                       style: TextStyles
+          //                                           .notSetPriceNumber,
+          //                                       textAlign: TextAlign.center),
+          //                             ),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       Container(
+          //                         height: 27.0,
+          //                         width: 120.0,
+          //                         decoration: BoxDecoration(
+          //                             //gradient: UniversalVariables.fabGradient,
+          //                             borderRadius: BorderRadius.only(
+          //                               bottomLeft: Radius.circular(10.0),
+          //                               bottomRight: Radius.circular(10.0),
+          //                             ),
+          //                             color: UniversalVariables.white2),
+          //                         child: Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               vertical: 2.0),
+          //                           child: Align(
+          //                             alignment: Alignment.center,
+          //                             child: Text("Video Reply",
+          //                                 style: TextStyles.priceType,
+          //                                 textAlign: TextAlign.center),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ],
+          //                   ))
+          //             ],
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
       // floatingActionButton: Visibility(
@@ -578,16 +777,15 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                       icon: GestureDetector(
-                        onTap: () {
-                            Navigator.pushNamed(
-                                context, "/home_screen");
+                          onTap: () {
+                            Navigator.pushNamed(context, "/home_screen");
                           },
-                          child: Icon(Icons.home, color: UniversalVariables.grey2))),
+                          child: Icon(Icons.home,
+                              color: UniversalVariables.grey2))),
                   BottomNavigationBarItem(
                       icon: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, "/profile_screen");
+                            Navigator.pushNamed(context, "/profile_screen");
                           },
                           child: Icon(Icons.person_outline,
                               color: UniversalVariables.grey1))),

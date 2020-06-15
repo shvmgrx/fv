@@ -349,6 +349,7 @@ class _EditProfileState extends State<EditProfile> {
                                 Expanded(
                                   flex: 5,
                                   child: TextField(
+                                    keyboardType: TextInputType.multiline,
                                     cursorColor: UniversalVariables.gold2,
                                     decoration: InputDecoration(
                                       contentPadding:
@@ -362,7 +363,6 @@ class _EditProfileState extends State<EditProfile> {
                                     //   if (value.isEmpty) {
                                     //     return 'Enter bio';
                                     //   }
-
                                     //   return null;
                                     // },
                                     onChanged: (String value) {

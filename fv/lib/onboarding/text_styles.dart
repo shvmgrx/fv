@@ -147,7 +147,7 @@ class TextStyles {
     // ],
   );
       static final TextStyle priceNumber = TextStyle(
-    fontSize: 35,
+    fontSize: 25,
     fontWeight: FontWeight.w800,
     color: UniversalVariables.grey2,
     fontFamily: 'Adam',
@@ -184,6 +184,19 @@ class TextStyles {
     // ],
   );
 
+         static final TextStyle bioStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w200,
+    color: UniversalVariables.grey2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
         static final TextStyle usernameStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
@@ -210,11 +223,11 @@ class TextStyles {
     ],
   );
         static final TextStyle priceType = TextStyle(
-    fontSize: 17,
-    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    fontWeight: FontWeight.w900,
     
-    color: UniversalVariables.greyColor,
-    fontFamily: 'kiona',
+    color: UniversalVariables.grey1,
+    fontFamily: 'Raleway',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,

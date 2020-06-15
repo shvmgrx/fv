@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/screens/settingsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:fv/models/user.dart';
@@ -414,171 +415,403 @@ class _ProfileScreenState extends State<ProfileScreen> {
             top: screenHeight - screenHeight / 4,
             left: 10,
             right: 10,
-            child: Center(
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                            height: 110.0,
-                            width: 120.0,
-                            color: UniversalVariables.transparent),
-                        Positioned(
-                            left: 1.0,
-                            top: 1.0,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 55.0,
-                                  width: 115.0,
-                                  decoration: BoxDecoration(
+            child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                             Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingsScreen(),
+                    ),
+                  );
+                            },
+                            child: Container(
+                              height: 80.0,
+                              width: screenWidth / 4,
+                              decoration: BoxDecoration(
 
-                                      //gradient: UniversalVariables.fabGradient,
+                                  //gradient: UniversalVariables.fabGradient,
 
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                  //color: UniversalVariables.white2
+                                  color: mC,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mCD,
+                                      offset: Offset(-10, 10),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      color: mCL,
+                                      offset: Offset(0, -10),
+                                      blurRadius: 10,
+                                    ),
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text("Text Reply",
+                                            style: TextStyles.priceType,
+                                            textAlign: TextAlign.center),
                                       ),
-                                      //color: UniversalVariables.white2
-                                      color: mC,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: mCD,
-                                          offset: Offset(10, 10),
-                                          blurRadius: 10,
-                                        ),
-                                        BoxShadow(
-                                          color: mCL,
-                                          offset: Offset(-10, -10),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Padding(
+                                    ),
+                                  ),
+                                  Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 2.0),
                                     child: Align(
                                       alignment: Alignment.center,
-                                      child: loggedInanswerPrice1 != null
-                                          ? Text("\$ $loggedInanswerPrice1",
+                                      child: loggedInanswerPrice1 !=
+                                              null
+                                          ? Text(
+                                              "\$ ${loggedInanswerPrice1}",
                                               style: TextStyles.priceNumber,
                                               textAlign: TextAlign.center)
-                                          : Text("\$0",
-                                              style: TextStyles.priceNumber,
+                                          : Text("Not Set",
+                                              style:
+                                                  TextStyles.notSetPriceNumber,
                                               textAlign: TextAlign.center),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 27.0,
-                                  width: 115.0,
-                                  decoration: BoxDecoration(
-                                      //gradient: UniversalVariables.fabGradient,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                      color: UniversalVariables.white2),
-                                  child: Padding(
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingsScreen(),
+                    ),
+                  );
+                            },
+                            child: Container(
+                              height: 80.0,
+                              width: screenWidth / 4,
+                              decoration: BoxDecoration(
+
+                                  //gradient: UniversalVariables.fabGradient,
+
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                  //color: UniversalVariables.white2
+                                  color: mC,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mCD,
+                                      offset: Offset(-10, 10),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      color: mCL,
+                                      offset: Offset(0, -10),
+                                      blurRadius: 10,
+                                    ),
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 2.0),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text("Text Reply",
-                                          style: TextStyles.priceType,
-                                          textAlign: TextAlign.center),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text("Video Reply",
+                                            style: TextStyles.priceType,
+                                            textAlign: TextAlign.center),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                            height: 110.0,
-                            width: 125.0,
-                            color: UniversalVariables.transparent),
-                        Positioned(
-                            left: 1.0,
-                            top: 1.0,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 55.0,
-                                  width: 120.0,
-                                  decoration: BoxDecoration(
-
-                                      //gradient: UniversalVariables.fabGradient,
-
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                      ),
-                                      //color: UniversalVariables.white2
-                                      color: mC,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: mCD,
-                                          offset: Offset(10, 10),
-                                          blurRadius: 10,
-                                        ),
-                                        BoxShadow(
-                                          color: mCL,
-                                          offset: Offset(-10, -10),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Padding(
+                                  Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 2.0),
                                     child: Align(
                                       alignment: Alignment.center,
-                                      child: loggedInanswerPrice2 != null
-                                          ? Text("\$ $loggedInanswerPrice2",
+                                      child: loggedInanswerPrice2 !=
+                                              null
+                                          ? Text(
+                                              "\$ ${loggedInanswerPrice2}",
                                               style: TextStyles.priceNumber,
                                               textAlign: TextAlign.center)
-                                          : Text("\$0",
-                                              style: TextStyles.priceNumber,
+                                          : Text("Not Set",
+                                              style:
+                                                  TextStyles.notSetPriceNumber,
                                               textAlign: TextAlign.center),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 27.0,
-                                  width: 120.0,
-                                  decoration: BoxDecoration(
-                                      //gradient: UniversalVariables.fabGradient,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingsScreen(),
+                    ),
+                  );
+                            },
+                            child: Container(
+                              height: 80.0,
+                              width: screenWidth / 4,
+                              decoration: BoxDecoration(
+
+                                  //gradient: UniversalVariables.fabGradient,
+
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                  //color: UniversalVariables.white2
+                                  color: mC,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mCD,
+                                      offset: Offset(-10, 10),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      color: mCL,
+                                      offset: Offset(0, -10),
+                                      blurRadius: 10,
+                                    ),
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text("Videocall",
+                                            style: TextStyles.priceType,
+                                            textAlign: TextAlign.center),
                                       ),
-                                      color: UniversalVariables.white2),
-                                  child: Padding(
+                                    ),
+                                  ),
+                                  Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 2.0),
                                     child: Align(
                                       alignment: Alignment.center,
-                                      child: Text("Video Reply",
-                                          style: TextStyles.priceType,
-                                          textAlign: TextAlign.center),
+                                      child: loggedInanswerPrice3 !=
+                                              null
+                                          ? Text(
+                                              "\$ ${loggedInanswerPrice3}",
+                                              style: TextStyles.priceNumber,
+                                              textAlign: TextAlign.center)
+                                          : Text("Not Set",
+                                              style:
+                                                  TextStyles.notSetPriceNumber,
+                                              textAlign: TextAlign.center),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+          //     child: Row(
+          //       children: <Widget>[
+          //         Padding(
+          //           padding: EdgeInsets.all(20.0),
+          //           child: Stack(
+          //             children: <Widget>[
+          //               Container(
+          //                   height: 110.0,
+          //                   width: 120.0,
+          //                   color: UniversalVariables.transparent),
+          //               Positioned(
+          //                   left: 1.0,
+          //                   top: 1.0,
+          //                   child: Column(
+          //                     children: <Widget>[
+          //                       Container(
+          //                         height: 55.0,
+          //                         width: 115.0,
+          //                         decoration: BoxDecoration(
+
+          //                             //gradient: UniversalVariables.fabGradient,
+
+          //                             borderRadius: BorderRadius.only(
+          //                               topLeft: Radius.circular(10.0),
+          //                               topRight: Radius.circular(10.0),
+          //                             ),
+          //                             //color: UniversalVariables.white2
+          //                             color: mC,
+          //                             boxShadow: [
+          //                               BoxShadow(
+          //                                 color: mCD,
+          //                                 offset: Offset(10, 10),
+          //                                 blurRadius: 10,
+          //                               ),
+          //                               BoxShadow(
+          //                                 color: mCL,
+          //                                 offset: Offset(-10, -10),
+          //                                 blurRadius: 10,
+          //                               ),
+          //                             ]),
+          //                         child: Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               vertical: 2.0),
+          //                           child: Align(
+          //                             alignment: Alignment.center,
+          //                             child: loggedInanswerPrice1 != null
+          //                                 ? Text("\$ $loggedInanswerPrice1",
+          //                                     style: TextStyles.priceNumber,
+          //                                     textAlign: TextAlign.center)
+          //                                 : Text("\$0",
+          //                                     style: TextStyles.priceNumber,
+          //                                     textAlign: TextAlign.center),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       Container(
+          //                         height: 27.0,
+          //                         width: 115.0,
+          //                         decoration: BoxDecoration(
+          //                             //gradient: UniversalVariables.fabGradient,
+          //                             borderRadius: BorderRadius.only(
+          //                               bottomLeft: Radius.circular(10.0),
+          //                               bottomRight: Radius.circular(10.0),
+          //                             ),
+          //                             color: UniversalVariables.white2),
+          //                         child: Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               vertical: 2.0),
+          //                           child: Align(
+          //                             alignment: Alignment.center,
+          //                             child: Text("Text Reply",
+          //                                 style: TextStyles.priceType,
+          //                                 textAlign: TextAlign.center),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ],
+          //                   ))
+          //             ],
+          //           ),
+          //         ),
+          //         Padding(
+          //           padding: EdgeInsets.all(20.0),
+          //           child: Stack(
+          //             children: <Widget>[
+          //               Container(
+          //                   height: 110.0,
+          //                   width: 125.0,
+          //                   color: UniversalVariables.transparent),
+          //               Positioned(
+          //                   left: 1.0,
+          //                   top: 1.0,
+          //                   child: Column(
+          //                     children: <Widget>[
+          //                       Container(
+          //                         height: 55.0,
+          //                         width: 120.0,
+          //                         decoration: BoxDecoration(
+
+          //                             //gradient: UniversalVariables.fabGradient,
+
+          //                             borderRadius: BorderRadius.only(
+          //                               topLeft: Radius.circular(10.0),
+          //                               topRight: Radius.circular(10.0),
+          //                             ),
+          //                             //color: UniversalVariables.white2
+          //                             color: mC,
+          //                             boxShadow: [
+          //                               BoxShadow(
+          //                                 color: mCD,
+          //                                 offset: Offset(10, 10),
+          //                                 blurRadius: 10,
+          //                               ),
+          //                               BoxShadow(
+          //                                 color: mCL,
+          //                                 offset: Offset(-10, -10),
+          //                                 blurRadius: 10,
+          //                               ),
+          //                             ]),
+          //                         child: Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               vertical: 2.0),
+          //                           child: Align(
+          //                             alignment: Alignment.center,
+          //                             child: loggedInanswerPrice2 != null
+          //                                 ? Text("\$ $loggedInanswerPrice2",
+          //                                     style: TextStyles.priceNumber,
+          //                                     textAlign: TextAlign.center)
+          //                                 : Text("\$0",
+          //                                     style: TextStyles.priceNumber,
+          //                                     textAlign: TextAlign.center),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       Container(
+          //                         height: 27.0,
+          //                         width: 120.0,
+          //                         decoration: BoxDecoration(
+          //                             //gradient: UniversalVariables.fabGradient,
+          //                             borderRadius: BorderRadius.only(
+          //                               bottomLeft: Radius.circular(10.0),
+          //                               bottomRight: Radius.circular(10.0),
+          //                             ),
+          //                             color: UniversalVariables.white2),
+          //                         child: Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               vertical: 2.0),
+          //                           child: Align(
+          //                             alignment: Alignment.center,
+          //                             child: Text("Video Reply",
+          //                                 style: TextStyles.priceType,
+          //                                 textAlign: TextAlign.center),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ],
+          //                   ))
+          //             ],
+          //           ),
+          //         ),
+          //       ],
+          //     ),
             ),
-          )
+          
         ],
       ),
       // floatingActionButton: Visibility(

@@ -116,6 +116,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           loggedUserHashtags = loggedUser['hashtags'];
           expertMode= loggedUser['isInfluencer'];
 
+          expertMode = expertMode==null?false:loggedUser['isInfluencer'];
+
           textMode= loggedUseranswerPrice1!=null;
           videoMode= loggedUseranswerPrice2!=null;
           videoCallMode= loggedUseranswerPrice3!=null;
@@ -540,7 +542,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           WhitelistingTextInputFormatter
                                               .digitsOnly
                                         ],
-                                        maxLength: 9,
+                                        maxLength: 6,
                                         onChanged: (input) => {
                                               loggedUseranswerPrice1 =
                                                   num.tryParse(input)
@@ -587,7 +589,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          maxLength: 9,
+                                          maxLength: 6,
                                           onChanged: (input) => {
                                                 loggedUseranswerPrice2 =
                                                     num.tryParse(input)
@@ -635,7 +637,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          maxLength: 9,
+                                          maxLength: 6,
                                           onChanged: (input) => {
                                                 loggedUseranswerPrice3 =
                                                     num.tryParse(input)
