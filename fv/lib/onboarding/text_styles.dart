@@ -111,8 +111,8 @@ class TextStyles {
 
     static final TextStyle timeTextStyle = TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w200,
-  color: UniversalVariables.grey1,
+    fontWeight: FontWeight.w300,
+  color: UniversalVariables.grey2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(

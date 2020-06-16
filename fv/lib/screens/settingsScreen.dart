@@ -68,11 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool ts1Filled;
   DateTime ts1;
-  bool ts2Filled;
-  int ts2;
-  bool ts3Filled;
-  bool ts4Filled;
-  bool ts5Filled;
+
 
   bool expertMode;
   bool textMode;
@@ -694,11 +690,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               width: screenWidth / 2,
                                               child: CupertinoTheme(
                                                 data: CupertinoThemeData(
-                                                  textTheme: CupertinoTextThemeData(
-                                                      dateTimePickerTextStyle:TextStyles.timeTextStyle,
+                                                  textTheme:
+                                                      CupertinoTextThemeData(
+                                                    dateTimePickerTextStyle:
+                                                        TextStyles
+                                                            .timeTextStyle,
                                                     //  pickerTextStyle: TextStyles.appNameLogoStyle
-                                                      
-                                                      ),
+                                                  ),
                                                 ),
                                                 child: CupertinoDatePicker(
                                                   backgroundColor:
@@ -729,35 +727,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               width: screenWidth / 2,
                                               child: CupertinoTheme(
                                                 data: CupertinoThemeData(
-                                                  textTheme: CupertinoTextThemeData(
-                                                      pickerTextStyle:TextStyles.timeTextStyle,
+                                                  textTheme:
+                                                      CupertinoTextThemeData(
+                                                    pickerTextStyle: TextStyles
+                                                        .timeTextStyle,
                                                     //  pickerTextStyle: TextStyles.appNameLogoStyle
-                                                      
-                                                      ),
+                                                  ),
                                                 ),
-                                                child:  CupertinoPicker(
-                                                          backgroundColor:UniversalVariables.transparent,
-                                                          onSelectedItemChanged: (value) {
-                                                            setState(() {
-                                                              ts2 = value;
-                                                            });
-                                                          },
-                                                          itemExtent: 32.0,
-                                                          children: const [
-                                                            Text('10 mins'),
-                                                            Text('25 mins'),
-                                                            Text('45 mins'),
-                                                          ],
-                                                        ),
+                                                child: CupertinoPicker(
+                                                  backgroundColor:UniversalVariables.transparent,
+                                                  onSelectedItemChanged:
+                                                      (value) {
+                                                    setState(() {
+                                                       print("value");
+                                                    print(value);
+                                                    });
+                                                  },
+                                                  itemExtent: 30.0,
+                                               
+                                                  children: const [
+                                                    Text('10 mins'),
+                                                    Text('25 mins'),
+                                                    Text('45 mins'),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
                                           Expanded(
                                             //flex: 1,
                                             child: Icon(
-                                                CupertinoIcons.check_mark_circled,
+                                                CupertinoIcons
+                                                    .check_mark_circled,
                                                 size: 20.0,
-                                                color:UniversalVariables.grey1),
+                                                color:
+                                                    UniversalVariables.grey1),
                                           ),
                                         ],
                                       ),
