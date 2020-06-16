@@ -69,30 +69,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool showts1 = true;
   bool ts1Set = false;
   DateTime ts1;
+  int ts1Duration;
 
   bool showts2 = false;
   bool ts2Set = false;
   DateTime ts2;
+  int ts2Duration;
 
   bool showts3 = false;
   bool ts3Set = false;
   DateTime ts3;
+  int ts3Duration;
 
   bool showts4 = false;
   bool ts4Set = false;
   DateTime ts4;
+  int ts4Duration;
 
   bool showts5 = false;
   bool ts5Set = false;
   DateTime ts5;
+  int ts5Duration;
 
   bool showts6 = false;
   bool ts6Set = false;
   DateTime ts6;
+  int ts6Duration;
 
   bool showts7 = false;
   bool ts7Set = false;
   DateTime ts7;
+  int ts7Duration;
 
   bool showts8 = false;
   bool ts8Set = false;
@@ -515,6 +522,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       SizedBox(height: 5),
                                     ],
                                   ),
+                                  //TS1
                                   Padding(
                                     padding: const EdgeInsets.only(top: 25.0),
                                     child: Visibility(
@@ -591,8 +599,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       onSelectedItemChanged:
                                                           (value) {
                                                         setState(() {
-                                                          print("value");
-                                                          print(value);
+                                                          ts1Duration = value;
                                                         });
                                                       },
                                                       itemExtent: 30.0,
@@ -616,6 +623,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   setState(() {
                                                     ts1Set = !ts1Set;
                                                     showts2 = true;
+                                                    if(ts1Set){
+                                                      tempTimeslots = {
+                                                            ts1: ts1,
+                                                            ts1Duration:ts1Duration
+                                                          };
+                                                    }
+                                                    
                                                   });
                                                 },
                                                 child: ts1Set
@@ -640,6 +654,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
+                                  //TS2
                                   Visibility(
                                     visible: showts2,
                                     child: Padding(
@@ -682,7 +697,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             (DateTime
                                                                 newTimeslot) {
                                                           setState(() {
-                                                            ts1 = newTimeslot;
+                                                            ts2 = newTimeslot;
                                                           });
                                                         },
                                                         use24hFormat: true,
@@ -719,8 +734,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            print("value");
-                                                            print(value);
+                                                            ts2Duration=value;
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -744,6 +758,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts2Set = !ts2Set;
                                                       showts3 = true;
+
+                                                      if(ts2Set){
+                                                      tempTimeslots.addAll({
+                                                            
+                                                            ts2: ts2,
+                                                            ts2Duration:ts2Duration
+                                                          });
+                                                    }
+                                                    print(tempTimeslots);
                                                     });
                                                   },
                                                   child: ts2Set
@@ -769,6 +792,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
+                                  //TS3
                                   Visibility(
                                     visible: showts3,
                                     child: Padding(
@@ -872,7 +896,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   onTap: () {
                                                     setState(() {
                                                       ts3Set = !ts3Set;
-                                                      showts4= true;
+                                                      showts4 = true;
                                                     });
                                                   },
                                                   child: ts3Set
@@ -1130,7 +1154,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   onTap: () {
                                                     setState(() {
                                                       ts5Set = !ts5Set;
-                                                      showts6= true;
+                                                      showts6 = true;
                                                     });
                                                   },
                                                   child: ts5Set
@@ -1154,7 +1178,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ],
                                         ),
                                       ),
-
                                     ),
                                   ),
                                   Visibility(
@@ -1260,7 +1283,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   onTap: () {
                                                     setState(() {
                                                       ts6Set = !ts6Set;
-                                                      showts7= true;
+                                                      showts7 = true;
                                                     });
                                                   },
                                                   child: ts6Set
@@ -1289,7 +1312,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Visibility(
                                     visible: showts7,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(top: 25.0,bottom:20),
+                                      padding: const EdgeInsets.only(
+                                          top: 25.0, bottom: 20),
                                       child: Visibility(
                                         visible: expertMode && videoCallMode,
                                         child: Row(
@@ -1389,7 +1413,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   onTap: () {
                                                     setState(() {
                                                       ts7Set = !ts7Set;
-                                                      showts8= true;
+                                                      showts8 = true;
                                                     });
                                                   },
                                                   child: ts7Set
@@ -1417,17 +1441,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   Visibility(
                                     visible: showts8,
-                                      child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Text("Get premium to set more timeslots",
-                                            style: TextStyles.getPremiumTimeslots,
+                                        Text(
+                                            "Get premium to set more timeslots",
+                                            style:
+                                                TextStyles.getPremiumTimeslots,
                                             textAlign: TextAlign.left),
                                         SizedBox(height: 5),
                                       ],
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
