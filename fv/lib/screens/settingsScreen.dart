@@ -561,6 +561,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   child: AbsorbPointer(
                                                     absorbing: ts1Set,
                                                     child: CupertinoDatePicker(
+                                                      
+                                                      minimumDate: DateTime.now(),
+                                                     
                                                       backgroundColor:
                                                           UniversalVariables
                                                               .transparent,
@@ -695,6 +698,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts2Set,
                                                       child:
                                                           CupertinoDatePicker(
+                                                             minimumDate: DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -835,6 +839,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts3Set,
                                                       child:
                                                           CupertinoDatePicker(
+                                                             minimumDate: DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -978,6 +983,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts4Set,
                                                       child:
                                                           CupertinoDatePicker(
+                                                             minimumDate: DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1124,6 +1130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts5Set,
                                                       child:
                                                           CupertinoDatePicker(
+                                                             minimumDate: DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1272,6 +1279,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts6Set,
                                                       child:
                                                           CupertinoDatePicker(
+                                                             minimumDate: DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1426,6 +1434,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts7Set,
                                                       child:
                                                           CupertinoDatePicker(
+                                                             minimumDate: DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
