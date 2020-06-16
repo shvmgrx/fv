@@ -206,11 +206,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text("FAVEEZ",
-                      style: TextStyles.appNameLogoStyle,
-                      textAlign: TextAlign.center),
+                GestureDetector(
+                  onDoubleTap: () {
+                    print(tempTimeslots);
+                  },
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text("FAVEEZ",
+                        style: TextStyles.appNameLogoStyle,
+                        textAlign: TextAlign.center),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.topRight,
@@ -281,7 +286,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Expanded(
                                     flex: 1,
                                     child: CupertinoSwitch(
-                                      value: expertMode,
+                                      value: expertMode == null
+                                          ? false
+                                          : expertMode,
                                       activeColor: UniversalVariables.gold2,
                                       onChanged: (value) {
                                         setState(() {
@@ -307,7 +314,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Expanded(
                                       flex: 1,
                                       child: CupertinoSwitch(
-                                        value: textMode,
+                                        value:
+                                            textMode == null ? false : textMode,
                                         activeColor: UniversalVariables.gold2,
                                         onChanged: (value) {
                                           setState(() {
@@ -333,7 +341,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Expanded(
                                       flex: 1,
                                       child: CupertinoSwitch(
-                                        value: videoMode,
+                                        value: videoMode == null
+                                            ? false
+                                            : videoMode,
                                         activeColor: UniversalVariables.gold2,
                                         onChanged: (value) {
                                           setState(() {
@@ -506,6 +516,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ],
                               ),
                             ),
+                            
                             Divider(
                               height: 40,
                             ),
@@ -623,13 +634,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   setState(() {
                                                     ts1Set = !ts1Set;
                                                     showts2 = true;
-                                                    if(ts1Set){
+                                               //     if (ts1Set) {
                                                       tempTimeslots = {
-                                                            ts1: ts1,
-                                                            ts1Duration:ts1Duration
-                                                          };
-                                                    }
-                                                    
+                                                        ts1: ts1,
+                                                        ts1Duration: ts1Duration
+                                                      };
+                                                 //   }
                                                   });
                                                 },
                                                 child: ts1Set
@@ -734,7 +744,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            ts2Duration=value;
+                                                            print(value);
+                                                            ts2Duration = value;
+                                                            print(ts2Duration);
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -759,14 +771,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       ts2Set = !ts2Set;
                                                       showts3 = true;
 
-                                                      if(ts2Set){
-                                                      tempTimeslots.addAll({
-                                                            
-                                                            ts2: ts2,
-                                                            ts2Duration:ts2Duration
-                                                          });
-                                                    }
-                                                    print(tempTimeslots);
+                                                    //  if (ts2Set) {
+                                                        tempTimeslots = {
+                                                          ts1: ts1,
+                                                          ts1Duration:ts1Duration,
+                                                          ts2: ts2,
+                                                          ts2Duration:ts2Duration
+                                                        };
+                                                   //   }
                                                     });
                                                   },
                                                   child: ts2Set
@@ -835,7 +847,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             (DateTime
                                                                 newTimeslot) {
                                                           setState(() {
-                                                            ts1 = newTimeslot;
+                                                            ts3 = newTimeslot;
                                                           });
                                                         },
                                                         use24hFormat: true,
@@ -872,8 +884,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            print("value");
-                                                            print(value);
+                                                            ts3Duration = value;
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -897,6 +908,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts3Set = !ts3Set;
                                                       showts4 = true;
+
+                                                     // if (ts3Set) {
+                                                        tempTimeslots = {
+                                                          ts1: ts1,
+                                                          ts1Duration:
+                                                              ts1Duration,
+                                                          ts2: ts2,
+                                                          ts2Duration:
+                                                              ts2Duration,
+                                                          ts3: ts3,
+                                                          ts3Duration:
+                                                              ts3Duration
+                                                        };
+                                                  //    }
                                                     });
                                                   },
                                                   child: ts3Set
@@ -922,6 +947,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
+                                  //TS4
                                   Visibility(
                                     visible: showts4,
                                     child: Padding(
@@ -964,7 +990,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             (DateTime
                                                                 newTimeslot) {
                                                           setState(() {
-                                                            ts1 = newTimeslot;
+                                                            ts4 = newTimeslot;
                                                           });
                                                         },
                                                         use24hFormat: true,
@@ -1001,8 +1027,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            print("value");
-                                                            print(value);
+                                                            ts4Duration = value;
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -1026,6 +1051,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts4Set = !ts4Set;
                                                       showts5 = true;
+
+                                                 //     if (ts4Set) {
+                                                        tempTimeslots = {
+                                                          ts1: ts1,
+                                                          ts1Duration:
+                                                              ts1Duration,
+                                                          ts2: ts2,
+                                                          ts2Duration:
+                                                              ts2Duration,
+                                                          ts3: ts3,
+                                                          ts3Duration:
+                                                              ts3Duration,
+                                                          ts4: ts4,
+                                                          ts4Duration:
+                                                              ts4Duration
+                                                        };
+                                                    //  }
                                                     });
                                                   },
                                                   child: ts4Set
@@ -1051,6 +1093,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
+                                  //TS5
                                   Visibility(
                                     visible: showts5,
                                     child: Padding(
@@ -1093,7 +1136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             (DateTime
                                                                 newTimeslot) {
                                                           setState(() {
-                                                            ts1 = newTimeslot;
+                                                            ts5 = newTimeslot;
                                                           });
                                                         },
                                                         use24hFormat: true,
@@ -1130,8 +1173,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            print("value");
-                                                            print(value);
+                                                            ts5Duration = value;
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -1155,6 +1197,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts5Set = !ts5Set;
                                                       showts6 = true;
+                                                    //  if (ts5Set) {
+                                                        tempTimeslots = {
+                                                          ts1: ts1,
+                                                          ts1Duration:
+                                                              ts1Duration,
+                                                          ts2: ts2,
+                                                          ts2Duration:
+                                                              ts2Duration,
+                                                          ts3: ts3,
+                                                          ts3Duration:
+                                                              ts3Duration,
+                                                          ts4: ts4,
+                                                          ts4Duration:
+                                                              ts4Duration,
+                                                          ts5: ts5,
+                                                          ts5Duration:
+                                                              ts5Duration
+                                                        };
+                                                   //   }
                                                     });
                                                   },
                                                   child: ts5Set
@@ -1180,6 +1241,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
+                                  //TS6
                                   Visibility(
                                     visible: showts6,
                                     child: Padding(
@@ -1222,7 +1284,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             (DateTime
                                                                 newTimeslot) {
                                                           setState(() {
-                                                            ts1 = newTimeslot;
+                                                            ts6 = newTimeslot;
                                                           });
                                                         },
                                                         use24hFormat: true,
@@ -1259,8 +1321,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            print("value");
-                                                            print(value);
+                                                            ts6Duration = value;
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -1284,6 +1345,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts6Set = !ts6Set;
                                                       showts7 = true;
+
+                                                     // if (ts6Set) {
+                                                        
+                                                        tempTimeslots = {
+                                                          ts1: ts1,
+                                                          ts1Duration:
+                                                              ts1Duration,
+                                                          ts2: ts2,
+                                                          ts2Duration:
+                                                              ts2Duration,
+                                                          ts3: ts3,
+                                                          ts3Duration:
+                                                              ts3Duration,
+                                                          ts4: ts4,
+                                                          ts4Duration:
+                                                              ts4Duration,
+                                                          ts5: ts5,
+                                                          ts5Duration:
+                                                              ts5Duration,
+                                                              ts6: ts6,
+                                                          ts6Duration:
+                                                              ts6Duration
+                                                        };
+                                                     // }
                                                     });
                                                   },
                                                   child: ts6Set
@@ -1309,6 +1394,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
+                                  //TS7
                                   Visibility(
                                     visible: showts7,
                                     child: Padding(
@@ -1352,7 +1438,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             (DateTime
                                                                 newTimeslot) {
                                                           setState(() {
-                                                            ts1 = newTimeslot;
+                                                            ts7 = newTimeslot;
                                                           });
                                                         },
                                                         use24hFormat: true,
@@ -1389,8 +1475,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         onSelectedItemChanged:
                                                             (value) {
                                                           setState(() {
-                                                            print("value");
-                                                            print(value);
+                                                            ts7Duration = value;
                                                           });
                                                         },
                                                         itemExtent: 30.0,
@@ -1414,6 +1499,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts7Set = !ts7Set;
                                                       showts8 = true;
+                                                   //   if (ts7Set) {
+                                                      
+
+                                                        tempTimeslots = {
+                                                          ts1: ts1,
+                                                          ts1Duration:
+                                                              ts1Duration,
+                                                          ts2: ts2,
+                                                          ts2Duration:
+                                                              ts2Duration,
+                                                          ts3: ts3,
+                                                          ts3Duration:
+                                                              ts3Duration,
+                                                          ts4: ts4,
+                                                          ts4Duration:
+                                                              ts4Duration,
+                                                          ts5: ts5,
+                                                          ts5Duration:
+                                                              ts5Duration,
+                                                              ts6: ts6,
+                                                          ts6Duration:
+                                                              ts6Duration,
+                                                              ts7: ts7,
+                                                          ts7Duration:
+                                                              ts7Duration
+                                                        };
+                                                   //   }
+                                                 
                                                     });
                                                   },
                                                   child: ts7Set
