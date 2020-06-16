@@ -70,6 +70,19 @@ class TextStyles {
     ],
   );
 
+    static final TextStyle getPremiumTimeslots = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
     static final TextStyle postCommissionsPrice = TextStyle(
     fontSize: 8,
     fontWeight: FontWeight.w600,
