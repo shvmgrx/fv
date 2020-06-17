@@ -122,6 +122,20 @@ class TextStyles {
     // ],
   );
 
+    static final TextStyle moneyStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: UniversalVariables.standardWhite,
+      ),
+    ],
+  );
+
+
     static final TextStyle timeTextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w300,

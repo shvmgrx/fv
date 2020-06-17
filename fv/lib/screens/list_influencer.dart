@@ -52,6 +52,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
   bool category2Pressed = false;
   bool category3Pressed = false;
   bool category4Pressed = false;
+  bool loggedUserisInfCert =false;
   int loggedUseranswerPrice3;
   String pageCategory;
   var loggedUserData;
@@ -65,6 +66,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           loggedInname = loggedUser['name'];
 
           loggedInprofilePhoto = loggedUser['profilePhoto'];
+          loggedUserisInfCert = loggedUser['isInfCert'];
         });
       });
     });
@@ -318,16 +320,40 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                       style: TextStyles.appNameLogoStyle,
                       textAlign: TextAlign.center),
                 ),
+
                 Align(
                   alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.message,
-                      color: UniversalVariables.grey2,
+                  child: Row(
+                    children: <Widget>[
+                      Visibility(
+                        visible: loggedUserisInfCert==null? false: loggedUserisInfCert,
+                    child: Row(
+                      children: <Widget>[
+                       
+                        // IconButton(
+                        // icon: Icon(
+                        //     Icons.attach_money,
+                        //     color: UniversalVariables.gold2,
+                        // ),
+                        // onPressed: () {
+                        //     Navigator.pushNamed(context, "/messages_screen");
+                        // },
+                  // ),
+                   Text("\$ 48",style: TextStyles.moneyStyle,),
+
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/messages_screen");
-                    },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.message,
+                          color: UniversalVariables.grey2,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/messages_screen");
+                        },
+                      ),
+                    ],
                   ),
                 )
               ],
