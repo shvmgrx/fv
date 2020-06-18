@@ -55,6 +55,8 @@ class UniversalVariables {
   static final Color gold3 = Color(0xffa48c64);
   static final Color gold4 = Color(0xffc1b59c);
 
+  static final Color moneyColor = Color(0xff4ad862);
+
   static final Color violet1 = Color(0xff230e36);
   static final Color violet2 = Color(0xff4c4a5b);
   static final Color violet3 = Color(0xff060509);

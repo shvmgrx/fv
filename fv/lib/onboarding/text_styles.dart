@@ -125,7 +125,7 @@ class TextStyles {
     static final TextStyle moneyStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
-  color: UniversalVariables.gold2,
+  color: UniversalVariables.moneyColor,
     fontFamily: 'Poppins',
     shadows: <Shadow>[
       Shadow(

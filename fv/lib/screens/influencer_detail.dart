@@ -20,9 +20,37 @@ class InfluencerDetails extends StatefulWidget {
   _InfluencerDetailsState createState() => _InfluencerDetailsState();
 }
 
-class _InfluencerDetailsState extends State<InfluencerDetails> {
+class _InfluencerDetailsState extends State<InfluencerDetails>
+    with SingleTickerProviderStateMixin {
+
+      AnimationController controller;
+      Animation animation;
+  @override
+  void initState() {
+    super.initState();
+
+    controller =AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+    
+
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  void pullUp(){
+    controller.forward();
+  }
+
+    void pullDown(){
+    controller.reverse();
+  }
+
+  
   @override
   Widget build(BuildContext context) {
+    bool showAppBar = true;
+
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -41,10 +69,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
             ),
           ),
           Positioned(
-            top: screenHeight - (screenHeight / 2.5) - 25,
+            top: screenHeight - (screenHeight / 2.5) - controller.value*100,
             child: Container(
               padding: EdgeInsets.only(left: 20.0),
-              height: screenHeight / 3 + 25.0,
+              height: screenHeight,
               width: screenWidth,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,16 +101,19 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
                                     fontWeight: FontWeight.w400,
                                     color: UniversalVariables.grey2)),
                           )
-                        : Container(
-                            width: 175,
-                            child: Text(
-                              "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: UniversalVariables.grey2),
+                        : GestureDetector(
+                          onTap:pullDown,
+                                                  child: Container(
+                              width: 175,
+                              child: Text(
+                                "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
+                                style: GoogleFonts.sourceSansPro(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: UniversalVariables.grey2),
+                              ),
                             ),
-                          ),
+                        ),
 
                     SizedBox(height: 15.0),
                     // Text('Read More',
@@ -506,44 +537,50 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
           Positioned(
             top: screenHeight - screenHeight / 2.5 - 65.0,
             right: 35.0,
-            child: Hero(
-              tag: widget.selectedInfluencer.profilePhoto,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 110.0,
-                    width: 110.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            widget.selectedInfluencer.profilePhoto),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        widget.selectedInfluencer.username != null
-                            ? Text(
-                                widget.selectedInfluencer.username,
-                                style: TextStyles.usernameStyle,
-                              )
-                            : Text(
-                                "faveezUsername",
-                                style: TextStyles.usernameStyle,
-                              ),
-                        Icon(
-                          Icons.verified_user,
-                          color: UniversalVariables.gold2,
-                          size: 20,
+            child: GestureDetector(
+              onVerticalDragUpdate: (dragUpdateDetails) {
+        pullUp();
+      },
+              onTap: pullUp,
+                child: Hero(
+                tag: widget.selectedInfluencer.profilePhoto,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 110.0,
+                      width: 110.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              widget.selectedInfluencer.profilePhoto),
+                          fit: BoxFit.cover,
                         ),
-                      ],
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                     ),
-                  )
-                ],
+                    SizedBox(height: 5),
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          widget.selectedInfluencer.username != null
+                              ? Text(
+                                  widget.selectedInfluencer.username,
+                                  style: TextStyles.usernameStyle,
+                                )
+                              : Text(
+                                  "faveezUsername",
+                                  style: TextStyles.usernameStyle,
+                                ),
+                          Icon(
+                            Icons.verified_user,
+                            color: UniversalVariables.gold2,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -751,16 +788,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
           // )
         ],
       ),
-      // floatingActionButton: Visibility(
-      //   child: FloatingActionButton(
-      //     onPressed: () {
-      //       Navigator.pushNamed(context, "/search_screen");
-      //     },
-      //     backgroundColor: UniversalVariables.standardWhite,
-      //     child: Icon(Icons.search, size: 45, color: UniversalVariables.grey2),
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Visibility(
+        visible: showAppBar,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/search_screen");
+          },
+          backgroundColor: UniversalVariables.standardWhite,
+          child: Icon(Icons.search, size: 45, color: UniversalVariables.grey2),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Visibility(
         child: BottomAppBar(
           shape: CircularNotchedRectangle(),
@@ -785,9 +823,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails> {
                   BottomNavigationBarItem(
                       icon: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, "/profile_screen");
+                            //  Navigator.pushNamed(context, "/profile_screen");
                           },
-                          child: Icon(Icons.person_outline,
+                          child: Icon(Icons.person,
                               color: UniversalVariables.grey1))),
                 ],
                 //onTap: navigationTapped,

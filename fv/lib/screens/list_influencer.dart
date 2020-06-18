@@ -255,6 +255,19 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
               Divider(),
               ListTile(
                   title: new Text(
+                    "Feedback",
+                    style: TextStyle(
+                        color: category4Pressed ? fCDD : fCLL,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
+                  ),
+                  trailing: new Icon(Icons.feedback),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    //  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
+                  }),
+              ListTile(
+                  title: new Text(
                     "Terms of Service",
                     style: TextStyle(
                         color: category4Pressed ? fCDD : fCLL,
