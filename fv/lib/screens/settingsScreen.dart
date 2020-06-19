@@ -410,7 +410,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           hintText: '$loggedUseranswerPrice1',
                                           hintStyle: TextStyles.hintTextStyle,
                                         ),
-                                        keyboardType: TextInputType.number,
+                                      //  keyboardType: TextInputType.number,
                                         style: TextStyles.whileEditing,
                                         inputFormatters: <TextInputFormatter>[
                                           WhitelistingTextInputFormatter
@@ -455,7 +455,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             hintText: '$loggedUseranswerPrice2',
                                             hintStyle: TextStyles.hintTextStyle,
                                           ),
-                                          keyboardType: TextInputType.number,
+                                        //  keyboardType: TextInputType.number,
                                           style: TextStyles.whileEditing,
                                           inputFormatters: <TextInputFormatter>[
                                             WhitelistingTextInputFormatter
@@ -501,7 +501,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             hintText: '$loggedUseranswerPrice3',
                                             hintStyle: TextStyles.hintTextStyle,
                                           ),
-                                          keyboardType: TextInputType.number,
+                                         
+                                          keyboardAppearance: Brightness.light,
+                                       //   keyboardType: TextInputType.number,
                                           style: TextStyles.whileEditing,
                                           inputFormatters: <TextInputFormatter>[
                                             WhitelistingTextInputFormatter
@@ -514,6 +516,64 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   )
                                 ],
+                              ),
+                            ),
+                            Visibility(
+                              visible: expertMode && videoCallMode && loggedUseranswerPrice3!=null ,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top:8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 5,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text("Video Call Price (25 mins)",
+                                              style: TextStyles.editHeadingName,
+                                              textAlign: TextAlign.left),
+                                          SizedBox(height: 5),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Expanded(
+                                        flex: 3,
+                                        child: Text("${(loggedUseranswerPrice3*1.333).ceil()}",style:TextStyles.hintTextStyle,),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: expertMode && videoCallMode && loggedUseranswerPrice3!=null ,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top:8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 5,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text("Video Call Price (45 mins)",
+                                              style: TextStyles.editHeadingName,
+                                              textAlign: TextAlign.left),
+                                          SizedBox(height: 5),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Expanded(
+                                        flex: 3,
+                                        child: Text("${(loggedUseranswerPrice3*2.667).ceil()}",style:TextStyles.hintTextStyle,),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             

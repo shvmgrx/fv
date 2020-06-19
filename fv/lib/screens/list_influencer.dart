@@ -547,12 +547,12 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
             //  ),
 
             Container(
-              //margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(left: 5),
               height: MediaQuery.of(context).size.height - 200.0,
               child: GridView.count(
                 crossAxisCount: 3,
-                crossAxisSpacing: 2,
-                mainAxisSpacing: 3,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 2,
                 childAspectRatio: 0.65,
                 primary: false,
                 children: <Widget>[

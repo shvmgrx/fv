@@ -97,16 +97,16 @@ class TextStyles {
   );
 
     static final TextStyle whileEditing = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color: UniversalVariables.gold2,
-    //fontFamily: 'kiona',
-    shadows: <Shadow>[
-      Shadow(
-        blurRadius: 2.0,
-        color: Colors.white30,
-      ),
-    ],
+    fontSize: 18,
+    fontWeight: FontWeight.w300,
+  color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
   );
 
   static final TextStyle hintTextStyle = TextStyle(
