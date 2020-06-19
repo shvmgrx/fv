@@ -149,6 +149,19 @@ class TextStyles {
     // ],
   );
 
+    static final TextStyle timeTextDetailStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w200,
+  color: UniversalVariables.grey1,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
 
       static final TextStyle chatProfileName = TextStyle(
     fontSize: 25,
@@ -163,9 +176,10 @@ class TextStyles {
     ],
   );
   static final TextStyle mainScreenProfileName = TextStyle(
-    fontSize: 14,
-    //fontWeight: FontWeight.w400,
-    color: UniversalVariables.grey2,
+    fontSize: 16,
+   // letterSpacing: 1.5,
+    fontWeight: FontWeight.w600,
+    color: UniversalVariables.grey1,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -237,17 +251,43 @@ class TextStyles {
     // ],
   );
 
-  static final TextStyle usernameStyle = TextStyle(
+          static final TextStyle timeSlotDetails = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.blackColor,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
+  static final TextStyle usernameStyleEnd = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
-    color: UniversalVariables.grey2,
-    fontFamily: 'Ubuntu',
-    shadows: <Shadow>[
-      Shadow(
-        blurRadius: 2.0,
-        color: UniversalVariables.gold2,
-      ),
-    ],
+    color: UniversalVariables.gold2,
+   // fontFamily: 'Ubuntu',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
+    static final TextStyle usernameStyleBegin = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.blackColor,
+    //fontFamily: 'Ubuntu',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
   );
 
         static final TextStyle timeStampStyle = TextStyle(

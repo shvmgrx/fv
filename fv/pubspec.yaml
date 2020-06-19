@@ -48,6 +48,7 @@ dependencies:
   firebase_messaging: ^6.0.16
   apple_sign_in: ^0.1.0
   flutter_time_picker_spinner: ^1.0.6+1
+  
 
 dev_dependencies:
   flutter_test:

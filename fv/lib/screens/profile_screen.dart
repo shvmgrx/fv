@@ -397,7 +397,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         loggedInusername != null
                             ? loggedInusername
                             : "Add username",
-                        style: TextStyles.usernameStyle,
+                        style: TextStyles.usernameStyleEnd,
                       ),
                       Icon(
                         Icons.verified_user,
