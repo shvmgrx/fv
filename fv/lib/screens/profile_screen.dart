@@ -30,7 +30,8 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin{
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final influencers = allInfluencers;
 
@@ -91,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       });
     });
 
-        controller =
+    controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
@@ -103,11 +104,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     controller.addListener(() {
       setState(() {});
     });
-    
+
     super.initState();
   }
-  
-    @override
+
+  @override
   void dispose() {
     // TODO: implement dispose
     controller.dispose();
@@ -143,7 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         ),
         child: Stack(
           children: <Widget>[
-            
             Container(
                 height: screenHeight,
                 width: screenWidth,
@@ -162,63 +162,70 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 ),
               ),
             ),
-        Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsScreen(),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsScreen(),
+                      ),
                     ),
-                  ),
-                },
-                child: Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: UniversalVariables.white2),
-                  child: Center(
-                    child: Icon(CupertinoIcons.settings,
-                        size: 30.0, color: UniversalVariables.grey1),
+                  },
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UniversalVariables.white2),
+                    child: Center(
+                      child: Icon(CupertinoIcons.settings,
+                          size: 30.0, color: UniversalVariables.grey1),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.only(left: 45.0, top: 30.0, right: 15.0),
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProfile(),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.only(left: 45.0, top: 30.0, right: 15.0),
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfile(),
+                      ),
                     ),
-                  ),
-                },
-                child: Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: UniversalVariables.white2),
-                  child: Center(
-                    child: Icon(CupertinoIcons.pen,
-                        size: 20.0, color: UniversalVariables.grey1),
+                  },
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UniversalVariables.white2),
+                    child: Center(
+                      child: Icon(CupertinoIcons.pen,
+                          size: 20.0, color: UniversalVariables.grey1),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
             Positioned(
-             
-             top: loggedInisInfluencer? 
-             screenHeight - (screenHeight / 2.5) - (controller.value * 100)-55
-             :screenHeight - (screenHeight / 2) - (controller.value * 100)+120,
+              top: loggedInisInfluencer
+                  ? screenHeight -
+                      (screenHeight / 2.5) -
+                      (controller.value * 100) -
+                      55
+                  : screenHeight -
+                      (screenHeight / 2) -
+                      (controller.value * 100) +
+                      120,
               child: Container(
                 padding: EdgeInsets.only(left: 20.0),
                 height: screenHeight,
@@ -241,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       // SizedBox(height: 7.0),
 
                       // SizedBox(height: 1.0),
-                     loggedInbio != null
+                      loggedInbio != null
                           ? Container(
                               width: 180,
                               child: Text(loggedInbio,
@@ -277,16 +284,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsScreen(),
-                    ),
-                  );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SettingsScreen(),
+                                  ),
+                                );
                               },
                               child: Visibility(
-                                visible:loggedInisInfluencer,
-                                                              child: Container(
+                                visible: loggedInisInfluencer,
+                                child: Container(
                                   height: 80.0,
                                   width: screenWidth / 4,
                                   decoration: BoxDecoration(
@@ -336,8 +343,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                                             vertical: 2.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: loggedInanswerPrice1 !=
-                                                  null
+                                          child: loggedInanswerPrice1 != null
                                               ? Text(
                                                   "\$ ${loggedInanswerPrice1}",
                                                   style: TextStyles.priceNumber,
@@ -355,16 +361,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             ),
                             GestureDetector(
                               onTap: () {
-                                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsScreen(),
-                    ),
-                  );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SettingsScreen(),
+                                  ),
+                                );
                               },
                               child: Visibility(
-                                visible:loggedInisInfluencer,
-                                                              child: Container(
+                                visible: loggedInisInfluencer,
+                                child: Container(
                                   height: 80.0,
                                   width: screenWidth / 4,
                                   decoration: BoxDecoration(
@@ -414,8 +420,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                                             vertical: 2.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: loggedInanswerPrice2 !=
-                                                  null
+                                          child: loggedInanswerPrice2 != null
                                               ? Text(
                                                   "\$ ${loggedInanswerPrice2}",
                                                   style: TextStyles.priceNumber,
@@ -434,15 +439,15 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsScreen(),
-                    ),
-                  );
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SettingsScreen(),
+                                  ),
+                                );
                               },
                               child: Visibility(
-                                visible:loggedInisInfluencer,
-                                                              child: Container(
+                                visible: loggedInisInfluencer,
+                                child: Container(
                                   height: 80.0,
                                   width: screenWidth / 4,
                                   decoration: BoxDecoration(
@@ -492,8 +497,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                                             vertical: 2.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: loggedInanswerPrice3 !=
-                                                  null
+                                          child: loggedInanswerPrice3 != null
                                               ? Text(
                                                   "\$ ${loggedInanswerPrice3}",
                                                   style: TextStyles.priceNumber,
@@ -510,6 +514,41 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      SizedBox(height: 35),
+                      Center(
+                        child: loggedInisInfCert? 
+                        
+                        Container(
+                          child: OutlineButton(
+                            onPressed: (){
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => SettingsScreen(),
+                              //     ),
+                              //   );
+                            },
+                            focusColor: UniversalVariables.standardWhite,
+                           // borderSide: BorderSide.solid,
+                            child: Text("YOU ARE VERIFIED", style:TextStyles.verifiedStyle),
+                          ),
+                        ):
+                        Container(
+                          child: OutlineButton(
+                            onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SettingsScreen(),
+                                  ),
+                                );
+                            },
+                            focusColor: UniversalVariables.standardWhite,
+                           // borderSide: BorderSide.solid,
+                            child: Text("GET VERIFIED", style:TextStyles.verifiedStyle),
+                          ),
                         ),
                       ),
                       // Padding(
@@ -1075,10 +1114,17 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             //   )
             // ),
             Positioned(
-              top: loggedInisInfluencer? 
-              screenHeight -screenHeight / 2.5 -65.0 -(controller.value * 100)-20
-              :screenHeight -screenHeight / 2.5 -65.0 -(controller.value * 100)+60
-              ,
+              top: loggedInisInfluencer
+                  ? screenHeight -
+                      screenHeight / 2.5 -
+                      65.0 -
+                      (controller.value * 100) -
+                      20
+                  : screenHeight -
+                      screenHeight / 2.5 -
+                      65.0 -
+                      (controller.value * 100) +
+                      60,
               right: 35.0,
               child: Hero(
                 tag: loggedInprofilePhoto,
@@ -1089,8 +1135,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       width: 110.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                              loggedInprofilePhoto),
+                          image: NetworkImage(loggedInprofilePhoto),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(15.0),
@@ -1327,48 +1372,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, "/search_screen");
-      //   },
-      //   backgroundColor: UniversalVariables.standardWhite,
-      //   child: Icon(Icons.search, size: 45, color: UniversalVariables.grey2),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: BottomAppBar(
-      //     shape: CircularNotchedRectangle(),
-      //     color: UniversalVariables.standardWhite,
-      //     elevation: 9.0,
-      //     clipBehavior: Clip.antiAlias,
-      //     notchMargin: 6.0,
-      //     child: Container(
-      //       height: 60,
-      //       child: Ink(
-      // decoration: BoxDecoration(),
-      // child: CupertinoTabBar(
-      //   backgroundColor: Colors.transparent,
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //         icon: GestureDetector(
-      //             onTap: () {
-      //               Navigator.pushNamed(context, "/home_screen");
-      //             },
-      //             child: Icon(Icons.home,
-      //                 color: UniversalVariables.grey2))),
-      //     BottomNavigationBarItem(
-      //         icon: GestureDetector(
-      //             onTap: () {
-      //               //  Navigator.pushNamed(context, "/profile_screen");
-      //             },
-      //             child: Icon(Icons.person,
-      //                 color: UniversalVariables.grey1))),
-      //   ],
-      //   //onTap: navigationTapped,
-      //   //currentIndex: _page,
-      // ),
-      //       ),
-      //     ),
-      //   ),
+     
     );
   }
   // @override
@@ -1607,32 +1611,32 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   //             ),
   //           ),
   //         ),
-          // Align(
-          //   alignment: Alignment.topRight,
-          //   child: Padding(
-          //     padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 15.0),
-          //     child: GestureDetector(
-          //       onTap: () => {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(
-          //             builder: (context) => EditProfile(),
-          //           ),
-          //         ),
-          //       },
-          //       child: Container(
-          //         height: 40.0,
-          //         width: 40.0,
-          //         decoration: BoxDecoration(
-          //             shape: BoxShape.circle, color: UniversalVariables.white2),
-          //         child: Center(
-          //           child: Icon(Icons.edit,
-          //               size: 20.0, color: UniversalVariables.grey1),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+  // Align(
+  //   alignment: Alignment.topRight,
+  //   child: Padding(
+  //     padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 15.0),
+  //     child: GestureDetector(
+  //       onTap: () => {
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) => EditProfile(),
+  //           ),
+  //         ),
+  //       },
+  //       child: Container(
+  //         height: 40.0,
+  //         width: 40.0,
+  //         decoration: BoxDecoration(
+  //             shape: BoxShape.circle, color: UniversalVariables.white2),
+  //         child: Center(
+  //           child: Icon(Icons.edit,
+  //               size: 20.0, color: UniversalVariables.grey1),
+  //         ),
+  //       ),
+  //     ),
+  //   ),
+  // ),
   //         // Positioned(
   //         //   top: (screenHeight - screenHeight / 3) / 2,
   //         //   left: (screenWidth /2) - 75.0,
@@ -2094,7 +2098,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   //         //       ],
   //         //     ),
   //           ),
-          
+
   //       ],
   //     ),
   //     // floatingActionButton: Visibility(

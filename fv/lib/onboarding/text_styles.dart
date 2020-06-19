@@ -238,6 +238,19 @@ class TextStyles {
     // ],
   );
 
+          static final TextStyle verifiedStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
          static final TextStyle bioStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w200,
