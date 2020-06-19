@@ -12,6 +12,7 @@ import 'package:fv/widgets/priceCard.dart';
 
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:fv/models/influencer.dart';
+import 'package:swipedetector/swipedetector.dart';
 
 class InfluencerDetails extends StatefulWidget {
   final User selectedInfluencer;
@@ -32,8 +33,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     super.initState();
 
     controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
-    animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
     anim = TextStyleTween(
             begin: TextStyles.usernameStyleBegin,
@@ -67,25 +68,36 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: GestureDetector(
-        //   onVerticalDragStart: (dragUpdateDetails) {
-        //   pullUp();
-        // },
-        // onPanDown: (dragUpdateDetails) {
-        //   pullDown();
-        // },
+      body: SwipeDetector(
+        onSwipeUp: () {
+          pullUp();
+        },
+        onSwipeDown: () {
+          pullDown();
+        },
+        swipeConfiguration: SwipeConfiguration(
+          verticalSwipeMinVelocity: 20.0,
+          verticalSwipeMinDisplacement: 20.0,
+          verticalSwipeMaxWidthThreshold: 120.0,
+        ),
         child: Stack(
           children: <Widget>[
             Container(
                 height: screenHeight,
                 width: screenWidth,
                 color: Colors.transparent),
-            Container(
-              height: screenHeight - screenHeight / 3,
-              width: screenWidth,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/surfing.jpg'), fit: BoxFit.cover),
+            GestureDetector(
+              onTap: () {
+                pullDown();
+              },
+              child: Container(
+                height: screenHeight - screenHeight / 3,
+                width: screenWidth,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/surfing.jpg'),
+                      fit: BoxFit.cover),
+                ),
               ),
             ),
             Positioned(
@@ -121,22 +133,14 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       fontWeight: FontWeight.w400,
                                       color: UniversalVariables.grey2)),
                             )
-                          : GestureDetector(
-                              onTap: () {
-                                pullDown();
-                              },
-                              onVerticalDragDown: (dragUpdateDetails) {
-                                pullDown();
-                              },
-                              child: Container(
-                                width: 175,
-                                child: Text(
-                                  "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
-                                  style: GoogleFonts.sourceSansPro(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: UniversalVariables.grey2),
-                                ),
+                          : Container(
+                              width: 175,
+                              child: Text(
+                                "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
+                                style: GoogleFonts.sourceSansPro(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: UniversalVariables.grey2),
                               ),
                             ),
 
@@ -148,7 +152,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                       //     color: Color(0xFFF36F32)
                       //   )
                       // ),
-                      SizedBox(height: 5.0),
+                      SizedBox(height: 25.0),
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -312,14 +316,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      receiver: widget.selectedInfluencer,
-                                    ),
-                                  ),
-                                );
+                                pullUp();
                               },
                               child: Container(
                                 height: 80.0,
@@ -394,7 +391,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Container(
-                            height: 200,
+                            height: 250,
                             width: screenWidth * 0.9,
                             color: UniversalVariables.transparent,
                             child: SingleChildScrollView(
@@ -403,166 +400,24 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                            color: UniversalVariables.standardWhite,
-                                            // borderRadius: BorderRadius.only(
-                                            //   topLeft: Radius.circular(10),
-                                            //   topRight: Radius.circular(10),
-                                            //   bottomLeft: Radius.circular(10),
-                                            //   bottomRight: Radius.circular(10),
-                                            // ),
-                                          ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                       mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text("July 23, 16:00",
-                                              style: TextStyles.timeTextDetailStyle),
-                                          Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.gold2,
-                                              // borderRadius: BorderRadius.only(
-                                              //   topLeft: Radius.circular(10),
-                                              //   topRight: Radius.circular(10),
-                                              //   bottomLeft: Radius.circular(10),
-                                              //   bottomRight: Radius.circular(10),
-                                              // ),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables.standardWhite, 
-                                                  ),
-                                                  Text("BOOK",
-                                              style: TextStyles.timeSlotDetails),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      color: UniversalVariables.standardWhite,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(100),
+                                        topRight: Radius.circular(100),
+                                        //   bottomLeft: Radius.circular(10),
+                                        //   bottomRight: Radius.circular(10),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                            color: UniversalVariables.standardWhite,
-                                            // borderRadius: BorderRadius.only(
-                                            //   topLeft: Radius.circular(10),
-                                            //   topRight: Radius.circular(10),
-                                            //   bottomLeft: Radius.circular(10),
-                                            //   bottomRight: Radius.circular(10),
-                                            // ),
-                                          ),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.only(top: 18.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                       mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
                                           Text("July 23, 16:00",
-                                              style: TextStyles.timeTextDetailStyle),
-                                          Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.gold2,
-                                              // borderRadius: BorderRadius.only(
-                                              //   topLeft: Radius.circular(10),
-                                              //   topRight: Radius.circular(10),
-                                              //   bottomLeft: Radius.circular(10),
-                                              //   bottomRight: Radius.circular(10),
-                                              // ),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables.standardWhite, 
-                                                  ),
-                                                  Text("BOOK",
-                                              style: TextStyles.timeSlotDetails),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                            color: UniversalVariables.standardWhite,
-                                            // borderRadius: BorderRadius.only(
-                                            //   topLeft: Radius.circular(10),
-                                            //   topRight: Radius.circular(10),
-                                            //   bottomLeft: Radius.circular(10),
-                                            //   bottomRight: Radius.circular(10),
-                                            // ),
-                                          ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                       mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text("July 23, 16:00",
-                                              style: TextStyles.timeTextDetailStyle),
-                                          Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.gold2,
-                                              // borderRadius: BorderRadius.only(
-                                              //   topLeft: Radius.circular(10),
-                                              //   topRight: Radius.circular(10),
-                                              //   bottomLeft: Radius.circular(10),
-                                              //   bottomRight: Radius.circular(10),
-                                              // ),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables.standardWhite, 
-                                                  ),
-                                                  Text("BOOK",
-                                              style: TextStyles.timeSlotDetails),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                            color: UniversalVariables.standardWhite,
-                                            // borderRadius: BorderRadius.only(
-                                            //   topLeft: Radius.circular(10),
-                                            //   topRight: Radius.circular(10),
-                                            //   bottomLeft: Radius.circular(10),
-                                            //   bottomRight: Radius.circular(10),
-                                            // ),
-                                          ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                       mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text("July 23, 16:00",
-                                              style: TextStyles.timeTextDetailStyle),
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
                                           Container(
                                             // color:Colors.orange,
                                             width: 75,
@@ -572,19 +427,23 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                 topLeft: Radius.circular(10),
                                                 topRight: Radius.circular(10),
                                                 bottomLeft: Radius.circular(10),
-                                                bottomRight: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
                                                   Icon(
                                                     Icons.shopping_cart,
-                                                    color: UniversalVariables.standardWhite, 
+                                                    color: UniversalVariables
+                                                        .standardWhite,
                                                   ),
                                                   Text("BOOK",
-                                              style: TextStyles.timeSlotDetails),
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
                                                 ],
                                               ),
                                             ),
@@ -595,22 +454,24 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
-                                            color: UniversalVariables.standardWhite,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10),
-                                            ),
-                                          ),
+                                      color: UniversalVariables.standardWhite,
+                                      // borderRadius: BorderRadius.only(
+                                      //   topLeft: Radius.circular(10),
+                                      //   topRight: Radius.circular(10),
+                                      //   bottomLeft: Radius.circular(10),
+                                      //   bottomRight: Radius.circular(10),
+                                      // ),
+                                    ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                       mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
                                           Text("July 23, 16:00",
-                                              style: TextStyles.timeTextDetailStyle),
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
                                           Container(
                                             // color:Colors.orange,
                                             width: 75,
@@ -620,19 +481,23 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                 topLeft: Radius.circular(10),
                                                 topRight: Radius.circular(10),
                                                 bottomLeft: Radius.circular(10),
-                                                bottomRight: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
                                                   Icon(
                                                     Icons.shopping_cart,
-                                                    color: UniversalVariables.standardWhite, 
+                                                    color: UniversalVariables
+                                                        .standardWhite,
                                                   ),
                                                   Text("BOOK",
-                                              style: TextStyles.timeSlotDetails),
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
                                                 ],
                                               ),
                                             ),
@@ -641,8 +506,277 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       ),
                                     ),
                                   ),
-                                  
-                                
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: UniversalVariables.standardWhite,
+                                      // borderRadius: BorderRadius.only(
+                                      //   topLeft: Radius.circular(10),
+                                      //   topRight: Radius.circular(10),
+                                      //   bottomLeft: Radius.circular(10),
+                                      //   bottomRight: Radius.circular(10),
+                                      // ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text("July 23, 16:00",
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
+                                          Container(
+                                            // color:Colors.orange,
+                                            width: 75,
+                                            decoration: BoxDecoration(
+                                              color: UniversalVariables.gold2,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.shopping_cart,
+                                                    color: UniversalVariables
+                                                        .standardWhite,
+                                                  ),
+                                                  Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: UniversalVariables.standardWhite,
+                                      // borderRadius: BorderRadius.only(
+                                      //   topLeft: Radius.circular(10),
+                                      //   topRight: Radius.circular(10),
+                                      //   bottomLeft: Radius.circular(10),
+                                      //   bottomRight: Radius.circular(10),
+                                      // ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text("July 23, 16:00",
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
+                                          Container(
+                                            // color:Colors.orange,
+                                            width: 75,
+                                            decoration: BoxDecoration(
+                                              color: UniversalVariables.gold2,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.shopping_cart,
+                                                    color: UniversalVariables
+                                                        .standardWhite,
+                                                  ),
+                                                  Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: UniversalVariables.standardWhite,
+                                      // borderRadius: BorderRadius.only(
+                                      //   topLeft: Radius.circular(10),
+                                      //   topRight: Radius.circular(10),
+                                      //   bottomLeft: Radius.circular(10),
+                                      //   bottomRight: Radius.circular(10),
+                                      // ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text("July 23, 16:00",
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
+                                          Container(
+                                            // color:Colors.orange,
+                                            width: 75,
+                                            decoration: BoxDecoration(
+                                              color: UniversalVariables.gold2,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.shopping_cart,
+                                                    color: UniversalVariables
+                                                        .standardWhite,
+                                                  ),
+                                                  Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: UniversalVariables.standardWhite,
+                                      // borderRadius: BorderRadius.only(
+                                      //   topLeft: Radius.circular(10),
+                                      //   topRight: Radius.circular(10),
+                                      //   bottomLeft: Radius.circular(10),
+                                      //   bottomRight: Radius.circular(10),
+                                      // ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text("July 23, 16:00",
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
+                                          Container(
+                                            // color:Colors.orange,
+                                            width: 75,
+                                            decoration: BoxDecoration(
+                                              color: UniversalVariables.gold2,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.shopping_cart,
+                                                    color: UniversalVariables
+                                                        .standardWhite,
+                                                  ),
+                                                  Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: UniversalVariables.standardWhite,
+                                      borderRadius: BorderRadius.only(
+                                        //  topLeft: Radius.circular(10),
+                                        //  topRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(50),
+                                        bottomRight: Radius.circular(50),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 80.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text("July 23, 16:00",
+                                              style: TextStyles
+                                                  .timeTextDetailStyle),
+                                          Container(
+                                            // color:Colors.orange,
+                                            width: 75,
+                                            decoration: BoxDecoration(
+                                              color: UniversalVariables.gold2,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.shopping_cart,
+                                                    color: UniversalVariables
+                                                        .standardWhite,
+                                                  ),
+                                                  Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             )),
@@ -840,30 +974,25 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                       ),
                     ),
                     SizedBox(height: 5),
-                    GestureDetector(
-                      onTap: () {
-                        pullUp();
-                      },
-                      child: Container(
-                        child: Row(
-                          children: <Widget>[
-                            widget.selectedInfluencer.username != null
-                                ? Text(
-                                    widget.selectedInfluencer.username,
-                                    // style: TextStyles.usernameStyle,
-                                    style: anim.value,
-                                  )
-                                : Text(
-                                    "faveezUsername",
-                                    style: TextStyles.usernameStyleEnd,
-                                  ),
-                            Icon(
-                              Icons.verified_user,
-                              color: UniversalVariables.gold2,
-                              size: 20,
-                            ),
-                          ],
-                        ),
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          widget.selectedInfluencer.username != null
+                              ? Text(
+                                  widget.selectedInfluencer.username,
+                                  // style: TextStyles.usernameStyle,
+                                  style: anim.value,
+                                )
+                              : Text(
+                                  "faveezUsername",
+                                  style: TextStyles.usernameStyleEnd,
+                                ),
+                          Icon(
+                            Icons.verified_user,
+                            color: UniversalVariables.gold2,
+                            size: 20,
+                          ),
+                        ],
                       ),
                     )
                   ],
