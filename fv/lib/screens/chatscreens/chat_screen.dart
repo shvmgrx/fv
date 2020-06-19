@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/constants/strings.dart';
@@ -277,13 +278,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Content and tools",
-                            style: TextStyle(
-                                color: UniversalVariables.grey2,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          // child: Text(
+                          //   "Content and tools",
+                          //   style: TextStyle(
+                          //       color: UniversalVariables.grey2,
+                          //       fontSize: 20,
+                          //       fontWeight: FontWeight.bold),
+                          // ),
                         ),
                       ),
                     ],
@@ -293,21 +294,29 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: ListView(
                     children: <Widget>[
                       ModalTile(
+                        title: "Take photo",
+                        subtitle: "Click and send a picture",
+                        icon: CupertinoIcons.photo_camera,
+                        onTap: () => pickImage(source: ImageSource.camera),
+                      ),
+                      ModalTile(
                         title: "Photo",
-                        subtitle: "Share Photo (Under construction)",
-                        icon: Icons.image,
-                        // onTap: () => pickImage(source: ImageSource.gallery),
+                        subtitle: "Share Photo from gallery",
+                        icon: IconData(0xf2e4,
+                            fontFamily: CupertinoIcons.iconFont,
+                            fontPackage: CupertinoIcons.iconFontPackage),
+                        onTap: () => pickImage(source: ImageSource.gallery),
                       ),
                       ModalTile(
                         title: "Video",
                         subtitle: "Share Video (Under construction)",
-                        icon: Icons.videocam,
+                        icon: CupertinoIcons.video_camera,
                         // onTap: () => pickVideos(),
                       ),
-                      ModalTile(
-                          title: "Schedule Call",
-                          subtitle: "Videocall (Under construction)",
-                          icon: Icons.schedule),
+                      // ModalTile(
+                      //     title: "Schedule Call",
+                      //     subtitle: "Videocall (Under construction)",
+                      //     icon: CupertinoIcons.video_camera.),
                     ],
                   ),
                 ),
@@ -337,7 +346,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(bottom:25,left:10,right:10),
       child: Row(
         children: <Widget>[
           Container(
@@ -395,18 +404,18 @@ class _ChatScreenState extends State<ChatScreen> {
           //         padding: EdgeInsets.symmetric(horizontal: 10),
           //         child: Icon(Icons.record_voice_over),
           //       ),
-          isWriting
-              ? Container()
-              : Container(
-                  margin: EdgeInsets.only(left: 5, right: 5),
-                  child: GestureDetector(
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: UniversalVariables.grey2,
-                    ),
-                    onTap: () => pickImage(source: ImageSource.camera),
-                  ),
-                ),
+          // isWriting
+          //     ? Container()
+          //     : Container(
+          //         margin: EdgeInsets.only(left: 5, right: 5),
+          //         child: GestureDetector(
+          //           child: Icon(
+          //             Icons.camera_alt,
+          //             color: UniversalVariables.grey2,
+          //           ),
+          //           onTap: () => pickImage(source: ImageSource.camera),
+          //         ),
+          //       ),
           isWriting
               ? GestureDetector(
                   child: Container(
