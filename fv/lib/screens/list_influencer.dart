@@ -364,6 +364,8 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                           Icons.message,
                           color: UniversalVariables.grey2,
                         ),
+
+                        
                         onPressed: () {
                           Navigator.pushNamed(context, "/messages_screen");
                         },
