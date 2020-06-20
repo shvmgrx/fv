@@ -125,14 +125,15 @@ class TextStyles {
     static final TextStyle moneyStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
-  color: UniversalVariables.moneyColor,
+  color: UniversalVariables.moneyColor1,
+
     fontFamily: 'Poppins',
-    shadows: <Shadow>[
-      Shadow(
-        blurRadius: 2.0,
-        color: UniversalVariables.standardWhite,
-      ),
-    ],
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.standardWhite,
+    //   ),
+    // ],
   );
 
 

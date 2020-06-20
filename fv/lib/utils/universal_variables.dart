@@ -33,7 +33,7 @@ class UniversalVariables {
   static final Color grey1 = Color(0xff343942);
   static final Color grey2 = Color(0xff878E9A);
   static final Color grey3 = Color(0xff575C66);
-  static final Color transparent =  Colors.transparent;
+  static final Color transparent = Colors.transparent;
 
   static final Gradient fabGradient = LinearGradient(
       colors: [gradientColorStart, gradientColorEnd],
@@ -41,12 +41,12 @@ class UniversalVariables {
       end: Alignment.bottomRight);
 
   static final Gradient goldGradient = LinearGradient(
-      colors: [gold1, gold2, gold3,gold4],
+      colors: [gold1, gold2, gold3, gold4],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter);
 
   static final Gradient whiteGradient = LinearGradient(
-      colors: [gold1,white1, gold2],
+      colors: [gold1, white1, gold2],
       begin: Alignment.bottomCenter,
       end: Alignment.topCenter);
 
@@ -55,7 +55,7 @@ class UniversalVariables {
   static final Color gold3 = Color(0xffa48c64);
   static final Color gold4 = Color(0xffc1b59c);
 
-  static final Color moneyColor = Color(0xff4ad862);
+  static final Color moneyColor1 = Color(0xff23b35f);
 
   static final Color violet1 = Color(0xff230e36);
   static final Color violet2 = Color(0xff4c4a5b);
@@ -63,6 +63,4 @@ class UniversalVariables {
   static final Color violet4 = Color(0xff230e36);
 
   static final goldColors = [gold1, gold2, gold3, gold4];
-
-
 }
