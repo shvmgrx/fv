@@ -1,11 +1,15 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/resources/auth_methods.dart';
+import 'package:fv/utils/appleSignInAvailable.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/ui_elements/loader.dart';
 import 'package:fv/ui_elements/delayed_animation.dart';
+import 'package:provider/provider.dart';
 import 'home_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
@@ -38,11 +42,26 @@ class LoginScreenState extends State<LoginScreen>
 
   bool isLoginPressed = false;
 
+  Future<void> _signInWithApple(BuildContext context) async {
+  try {
+    final authService = Provider.of<AuthMethods>(context, listen: false);
+    final user = await authService.signInWithApple(
+        scopes: [Scope.email, Scope.fullName]);
+    print('uid: ${user.uid}');
+  } catch (e) {
+    // TODO: Show alert here
+    print(e);
+  }
+}
+
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+   // final height = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    final color = Colors.white;
+   // final color = Colors.white;
+
+     final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -142,7 +161,7 @@ class LoginScreenState extends State<LoginScreen>
                   DelayedAnimation(
                     child: Stack(children: [
                       Center(
-                        child: animatedButtonUI(screenWidth),
+                        child: animatedGoogleSignIn(screenWidth),
                       ),
                       isLoginPressed
                           ? Center(
@@ -156,6 +175,23 @@ class LoginScreenState extends State<LoginScreen>
                     ]),
                     delay: delayedAmount + 3000,
                   ),
+                 appleSignInAvailable.isAvailable? DelayedAnimation(
+                    child: Stack(children: [
+                      Center(
+                        child: animatedAppleSignIn(screenWidth),
+                      ),
+                      isLoginPressed
+                          ? Center(
+                              child: Column(
+                              children: <Widget>[
+                                SizedBox(height: 80),
+                                ColorLoader5(),
+                              ],
+                            ))
+                          : Container(),
+                    ]),
+                    delay: delayedAmount + 3400,
+                  ):Container(),
                   SizedBox(
                     height: 25.0,
                   ),
@@ -190,7 +226,7 @@ class LoginScreenState extends State<LoginScreen>
     );
   }
 
-  Widget animatedButtonUI(screenwidth) => Container(
+  Widget animatedGoogleSignIn(screenwidth) => Container(
         height: 60,
         width: screenwidth*0.7,
         decoration: BoxDecoration(
@@ -210,6 +246,24 @@ class LoginScreenState extends State<LoginScreen>
               ),
             ),
           ),
+        ),
+      );
+
+        Widget animatedAppleSignIn(screenwidth) => Container(
+        height: 60,
+        width: screenwidth*0.7,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          color: UniversalVariables.gold2.withOpacity(0.7),
+        ),
+        child: Center(
+          child: AppleSignInButton(
+                style: ButtonStyle.black, // style as needed
+                type: ButtonType.signIn, // style as needed
+                onPressed: () {
+                  _signInWithApple(context);
+                },
+              ),
         ),
       );
 

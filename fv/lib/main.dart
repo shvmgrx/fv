@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/auth_methods.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/screens/editProfile.dart';
 
@@ -15,13 +16,18 @@ import 'package:fv/screens/pageviews/chat_list_screen.dart';
 import 'package:fv/screens/profile_screen.dart';
 import 'package:fv/screens/search_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
+import 'package:fv/utils/appleSignInAvailable.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   SystemChrome.setEnabledSystemUIOverlays([]);
-
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final appleSignInAvailable = await AppleSignInAvailable.check();
+    runApp(Provider<AppleSignInAvailable>.value(
+    value: appleSignInAvailable,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -39,6 +45,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AuthMethods()),
+        
+        
       ],
       child: MaterialApp(
         title: "Faveez",
