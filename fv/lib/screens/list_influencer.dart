@@ -352,7 +352,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         //     Navigator.pushNamed(context, "/messages_screen");
                         // },
                   // ),
-                   Text("\$ 48",style: TextStyles.moneyStyle,),
+                   Text("\$ 599",style: TextStyles.moneyStyle,),
 
                       ],
                     ),
