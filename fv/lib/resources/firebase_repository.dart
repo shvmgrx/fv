@@ -13,6 +13,8 @@ class FirebaseRepository {
 
   Future<FirebaseUser> signIn() => _firebaseMethods.signIn();
 
+  Future<FirebaseUser> fbSignIn() => _firebaseMethods.fbSignIn();
+
   Future<User> getUserDetails() => _firebaseMethods.getUserDetails();
 
   Future<bool> authenticateUser(FirebaseUser user) =>
@@ -20,6 +22,9 @@ class FirebaseRepository {
 
   Future<void> addDataToDb(FirebaseUser user) =>
       _firebaseMethods.addDataToDb(user);
+
+   Future<void> addFBDataToDb(FirebaseUser user) =>
+      _firebaseMethods.addFBDataToDb(user);
 
   Future<void> fetchLoggedUser(FirebaseUser user) =>
       _firebaseMethods.fetchLoggedUser(user);

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/message.dart';
@@ -9,11 +10,14 @@ import 'package:fv/models/user.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/utils/utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final Firestore firestore = Firestore.instance;
+
+  FacebookLogin fbLogin = FacebookLogin();
 
   static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
@@ -69,7 +73,34 @@ class FirebaseMethods {
     return user;
   }
 
-  
+  Future<FirebaseUser> fbSignIn() async {
+    //final result = await facebookLogin.logIn(['email']);
+
+    var result = await fbLogin.logIn(['email', 'public_profile']);
+
+    final token = result.accessToken.token;
+    final graphResponse = await http.get(
+        'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,profile_pic&access_token=${token}');
+
+    // if (result.status == FacebookLoginStatus.loggedIn) {
+    //   final credential = FacebookAuthProvider.getCredential(accessToken: token);
+    //   AuthResult result = await _auth.signInWithCredential(credential);
+    //   FirebaseUser user = result.user;
+    //   return user;
+    // }
+
+    if (result.status == FacebookLoginStatus.loggedIn) {
+      FacebookAccessToken myToken = result.accessToken;
+      AuthCredential credential =
+          FacebookAuthProvider.getCredential(accessToken: myToken.token);
+
+      AuthResult finalResult =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      FirebaseUser user = finalResult.user;
+    } else {
+      return null;
+    }
+  }
 
   Future<bool> authenticateUser(FirebaseUser user) async {
     QuerySnapshot result = await firestore
@@ -96,6 +127,22 @@ class FirebaseMethods {
   }
 
   Future<void> addDataToDb(FirebaseUser currentUser) async {
+    String username = Utils.getUsername(currentUser.displayName);
+
+    user = User(
+        uid: currentUser.uid,
+        email: currentUser.email,
+        name: currentUser.displayName,
+        profilePhoto: currentUser.photoUrl,
+        username: username);
+
+    firestore
+        .collection(USERS_COLLECTION)
+        .document(currentUser.uid)
+        .setData(user.toMap(user));
+  }
+
+  Future<void> addFBDataToDb(FirebaseUser currentUser) async {
     String username = Utils.getUsername(currentUser.displayName);
 
     user = User(
@@ -138,10 +185,10 @@ class FirebaseMethods {
     user = User(
       uid: currentUser.uid,
       name: name,
-      email:email,
+      email: email,
       username: username,
-      status:status,
-      state:state,
+      status: status,
+      state: state,
       profilePhoto: profilePhoto,
       answerPrice1: answerPrice1,
       answerPrice2: answerPrice2,
@@ -165,8 +212,6 @@ class FirebaseMethods {
         .document(currentUser.uid)
         .updateData(user.toMap(user));
   }
-
-
 
   //void setImageMsg(String url, String receiverId, String senderId) async {
   void setProfilePhoto(String url, FirebaseUser currentUser) async {

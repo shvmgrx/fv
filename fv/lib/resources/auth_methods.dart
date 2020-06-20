@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +10,16 @@ import 'package:fv/enum/user_state.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/utils/utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
-class AuthMethods with ChangeNotifier{
+class AuthMethods with ChangeNotifier {
   static final Firestore _firestore = Firestore.instance;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final Firestore firestore = Firestore.instance;
+
+  FacebookLogin facebookLogin = FacebookLogin();
 
   static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
@@ -56,15 +59,29 @@ class AuthMethods with ChangeNotifier{
         accessToken: _signInAuthentication.accessToken,
         idToken: _signInAuthentication.idToken);
 
-  AuthResult result = await _auth.signInWithCredential(credential);
+    AuthResult result = await _auth.signInWithCredential(credential);
     FirebaseUser user = result.user;
     return user;
   }
 
+  // Future<FirebaseUser> signInWithFB() async {
+  //   final result = await facebookLogin.logIn(['email']);
+  //   final token = result.accessToken.token;
+  //   final graphResponse = await http.get(
+  //       'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name&access_token=${token}');
+  //   print(graphResponse.body);
+  //   if (result.status == FacebookLoginStatus.loggedIn) {
+  //     final credential = FacebookAuthProvider.getCredential(accessToken: token);
+  //     AuthResult result = await _auth.signInWithCredential(credential);
+  //     FirebaseUser user = result.user;
+  //     return user;
+  //   }
+  // }
 
- Future<FirebaseUser> signInWithApple({List<Scope> scopes = const []}) async {
+  Future<FirebaseUser> signInWithApple({List<Scope> scopes = const []}) async {
     // 1. perform the sign-in request
-    final result = await AppleSignIn.performRequests([AppleIdRequest(requestedScopes: scopes)]);
+    final result = await AppleSignIn.performRequests(
+        [AppleIdRequest(requestedScopes: scopes)]);
     // 2. check the result
     switch (result.status) {
       case AuthorizationStatus.authorized:
@@ -72,7 +89,8 @@ class AuthMethods with ChangeNotifier{
         final oAuthProvider = OAuthProvider(providerId: 'apple.com');
         final credential = oAuthProvider.getCredential(
           idToken: String.fromCharCodes(appleIdCredential.identityToken),
-          accessToken:String.fromCharCodes(appleIdCredential.authorizationCode),
+          accessToken:
+              String.fromCharCodes(appleIdCredential.authorizationCode),
         );
         final authResult = await _auth.signInWithCredential(credential);
         final firebaseUser = authResult.user;
@@ -98,9 +116,6 @@ class AuthMethods with ChangeNotifier{
     }
     return null;
   }
-
-
-  
 
   Future<bool> authenticateUser(FirebaseUser user) async {
     QuerySnapshot result = await firestore
@@ -143,7 +158,7 @@ class AuthMethods with ChangeNotifier{
     return userList;
   }
 
-Future<bool> signOut() async {
+  Future<bool> signOut() async {
     try {
       await _googleSignIn.signOut();
       await _auth.signOut();

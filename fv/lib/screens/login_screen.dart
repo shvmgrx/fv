@@ -42,6 +42,7 @@ class LoginScreenState extends State<LoginScreen>
 
   bool isGoogleLoginPressed = false;
   bool isAppleLoginPressed = false;
+  bool isFBLoginPressed = false;
 
   Future<void> _signInWithApple(BuildContext context) async {
 
@@ -72,24 +73,6 @@ class LoginScreenState extends State<LoginScreen>
 
     final appleSignInAvailable =
         Provider.of<AppleSignInAvailable>(context, listen: false);
-
-    // Future<void> _signInWithApple(BuildContext context) async {
-
-    //   try {
-    //     final authService = Provider.of<AuthMethods>(context, listen: false);
-    //     final user = await authService.signInWithApple(scopes: [Scope.email, Scope.fullName]);
-
-    // if (user != null) {
-    //   authenticateAppleUser(user);
-    // } else {
-    //   print("There was an error");
-    // }
-    // print('uid: ${user.uid}');
-    //   } catch (e) {
-    //     // TODO: Show alert here
-    //     print(e);
-    //   }
-    // }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -168,7 +151,7 @@ class LoginScreenState extends State<LoginScreen>
                           fontSize: 20.0,
                           color: UniversalVariables.grey2),
                     ),
-                    delay: delayedAmount + 2000,
+                    delay: delayedAmount + 1500,
                   ),
                   DelayedAnimation(
                     child: Text(
@@ -179,7 +162,7 @@ class LoginScreenState extends State<LoginScreen>
                           fontSize: 20.0,
                           color: UniversalVariables.grey2),
                     ),
-                    delay: delayedAmount + 2500,
+                    delay: delayedAmount + 1700,
                   ),
                   SizedBox(
                     height: 170.0,
@@ -199,7 +182,25 @@ class LoginScreenState extends State<LoginScreen>
                             ))
                           : Container(),
                     ]),
-                    delay: delayedAmount + 3000,
+                    delay: delayedAmount + 2000,
+                  ),
+                  SizedBox(height:10),
+                  DelayedAnimation(
+                    child: Stack(children: [
+                      Center(
+                        child: animatedFBSignIn(screenWidth),
+                      ),
+                      isFBLoginPressed
+                          ? Center(
+                              child: Column(
+                              children: <Widget>[
+                                SizedBox(height: 80),
+                                ColorLoader5(),
+                              ],
+                            ))
+                          : Container(),
+                    ]),
+                    delay: delayedAmount + 2100,
                   ),
                   appleSignInAvailable.isAvailable
                       ? DelayedAnimation(
@@ -217,7 +218,7 @@ class LoginScreenState extends State<LoginScreen>
                                   ))
                                 : Container(),
                           ]),
-                          delay: delayedAmount + 3400,
+                          delay: delayedAmount + 2200,
                         )
                       : Container(),
                   SizedBox(
@@ -267,6 +268,29 @@ class LoginScreenState extends State<LoginScreen>
         ),
       );
 
+        Widget animatedFBSignIn(screenwidth) => Container(
+        height: 60,
+        width: screenwidth * 0.7,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          color: UniversalVariables.gold2.withOpacity(0.7),
+        ),
+        child: Center(
+          child: FlatButton(
+            onPressed: () => performFBLogin(),
+            child: Text(
+              'Facebook Sign In',
+              style: TextStyle(
+                fontFamily: 'Kiona',
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      );
+
   Widget animatedAppleSignIn(screenwidth) => Container(
       height: 60,
       width: screenwidth * 0.7,
@@ -280,18 +304,6 @@ class LoginScreenState extends State<LoginScreen>
         onPressed: () => _signInWithApple(context),
       )
 
-      // FlatButton(
-      //   onPressed: () => _signInWithApple(context),
-      //   child: Text(
-      //     'Apple Sign In',
-      //     style: TextStyle(
-      //       fontFamily: 'Kiona',
-      //       fontSize: 20.0,
-      //       fontWeight: FontWeight.bold,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      // ),
       );
 
   void performGoogleLogin() {
@@ -309,15 +321,21 @@ class LoginScreenState extends State<LoginScreen>
     });
   }
 
-  // void performAppleLogin() {
 
-  //   setState(() {
-  //     isAppleLoginPressed = true;
-  //   });
+  void performFBLogin() {
+    setState(() {
+      isFBLoginPressed = true;
+    });
 
-  //   _signInWithApple(context);
-
-  // }
+    _repository.fbSignIn().then((FirebaseUser user) {
+      print("something");
+      if (user != null) {
+        authenticateFBUser(user);
+      } else {
+        print("There was an error");
+      }
+    });
+  }
 
   void authenticateGoogleUser(FirebaseUser user) {
     _repository.authenticateUser(user).then((isNewUser) {
@@ -344,6 +362,28 @@ class LoginScreenState extends State<LoginScreen>
     _repository.authenticateUser(user).then((isNewUser) {
       setState(() {
         isAppleLoginPressed = false;
+      });
+      if (isNewUser) {
+        _repository.addDataToDb(user).then((value) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return HomeScreen();
+          }));
+        });
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      }
+    });
+  }
+
+
+    void authenticateFBUser(FirebaseUser user) {
+    _repository.authenticateUser(user).then((isNewUser) {
+      setState(() {
+        isFBLoginPressed = false;
       });
       if (isNewUser) {
         _repository.addDataToDb(user).then((value) {
