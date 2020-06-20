@@ -436,11 +436,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                  
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -490,11 +486,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                  
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -544,11 +536,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                 
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -598,11 +586,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                  
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -652,11 +636,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -706,11 +686,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                 
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -761,11 +737,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   const EdgeInsets.all(5.0),
                                               child: Row(
                                                 children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
+                                                 
                                                   Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
@@ -957,46 +929,43 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                   (controller.value * 100) -
                   50,
               right: 35.0,
-              child: Hero(
-                tag: widget.selectedInfluencer.profilePhoto,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: 110.0,
-                      width: 110.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              widget.selectedInfluencer.profilePhoto),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(15.0),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 110.0,
+                    width: 110.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            widget.selectedInfluencer.profilePhoto),
+                        fit: BoxFit.cover,
                       ),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    SizedBox(height: 5),
-                    Container(
-                      child: Row(
-                        children: <Widget>[
-                          widget.selectedInfluencer.username != null
-                              ? Text(
-                                  widget.selectedInfluencer.username,
-                                  // style: TextStyles.usernameStyle,
-                                  style: anim.value,
-                                )
-                              : Text(
-                                  "faveezUsername",
-                                  style: TextStyles.usernameStyleEnd,
-                                ),
-                          Icon(
-                            Icons.verified_user,
-                            color: UniversalVariables.gold2,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        widget.selectedInfluencer.username != null
+                            ? Text(
+                                widget.selectedInfluencer.username,
+                                // style: TextStyles.usernameStyle,
+                                style: anim.value,
+                              )
+                            : Text(
+                                "faveezUsername",
+                                style: TextStyles.usernameStyleEnd,
+                              ),
+                        Icon(
+                          Icons.verified_user,
+                          color: UniversalVariables.gold2,
+                          size: 20,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
 
