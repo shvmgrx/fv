@@ -64,8 +64,7 @@ class AuthMethods with ChangeNotifier{
 
  Future<FirebaseUser> signInWithApple({List<Scope> scopes = const []}) async {
     // 1. perform the sign-in request
-    final result = await AppleSignIn.performRequests(
-        [AppleIdRequest(requestedScopes: scopes)]);
+    final result = await AppleSignIn.performRequests([AppleIdRequest(requestedScopes: scopes)]);
     // 2. check the result
     switch (result.status) {
       case AuthorizationStatus.authorized:
@@ -73,8 +72,7 @@ class AuthMethods with ChangeNotifier{
         final oAuthProvider = OAuthProvider(providerId: 'apple.com');
         final credential = oAuthProvider.getCredential(
           idToken: String.fromCharCodes(appleIdCredential.identityToken),
-          accessToken:
-              String.fromCharCodes(appleIdCredential.authorizationCode),
+          accessToken:String.fromCharCodes(appleIdCredential.authorizationCode),
         );
         final authResult = await _auth.signInWithCredential(credential);
         final firebaseUser = authResult.user;

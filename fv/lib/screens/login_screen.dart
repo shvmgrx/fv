@@ -40,32 +40,59 @@ class LoginScreenState extends State<LoginScreen>
 
   FirebaseRepository _repository = FirebaseRepository();
 
-  bool isLoginPressed = false;
+  bool isGoogleLoginPressed = false;
+  bool isAppleLoginPressed = false;
 
   Future<void> _signInWithApple(BuildContext context) async {
-  try {
-    final authService = Provider.of<AuthMethods>(context, listen: false);
-    final user = await authService.signInWithApple(
-        scopes: [Scope.email, Scope.fullName]);
-    print('uid: ${user.uid}');
-  } catch (e) {
-    // TODO: Show alert here
-    print(e);
+
+        setState(() {
+      isAppleLoginPressed = true;
+    });
+    try {
+      final authService = Provider.of<AuthMethods>(context, listen: false);
+      final user = await authService
+          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
+      if (user != null) {
+        authenticateAppleUser(user);
+      } else {
+        print("There was an error");
+      }
+      print('uid: ${user.uid}');
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
-   // final height = MediaQuery.of(context).size.height;
+    // final height = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-   // final color = Colors.white;
+    // final color = Colors.white;
 
-     final appleSignInAvailable =
+    final appleSignInAvailable =
         Provider.of<AppleSignInAvailable>(context, listen: false);
+
+    // Future<void> _signInWithApple(BuildContext context) async {
+
+    //   try {
+    //     final authService = Provider.of<AuthMethods>(context, listen: false);
+    //     final user = await authService.signInWithApple(scopes: [Scope.email, Scope.fullName]);
+
+    // if (user != null) {
+    //   authenticateAppleUser(user);
+    // } else {
+    //   print("There was an error");
+    // }
+    // print('uid: ${user.uid}');
+    //   } catch (e) {
+    //     // TODO: Show alert here
+    //     print(e);
+    //   }
+    // }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      
       home: Scaffold(
         backgroundColor: UniversalVariables.backgroundGrey,
         body: Stack(
@@ -125,7 +152,6 @@ class LoginScreenState extends State<LoginScreen>
                         // textAlign: TextAlign.center),
 
                         Text("FAVEEZ",
-                          
                             style: TextStyles.appNameLogoStyle,
                             textAlign: TextAlign.center),
                     delay: delayedAmount + 1000,
@@ -163,7 +189,7 @@ class LoginScreenState extends State<LoginScreen>
                       Center(
                         child: animatedGoogleSignIn(screenWidth),
                       ),
-                      isLoginPressed
+                      isGoogleLoginPressed
                           ? Center(
                               child: Column(
                               children: <Widget>[
@@ -175,23 +201,25 @@ class LoginScreenState extends State<LoginScreen>
                     ]),
                     delay: delayedAmount + 3000,
                   ),
-                 appleSignInAvailable.isAvailable? DelayedAnimation(
-                    child: Stack(children: [
-                      Center(
-                        child: animatedAppleSignIn(screenWidth),
-                      ),
-                      isLoginPressed
-                          ? Center(
-                              child: Column(
-                              children: <Widget>[
-                                SizedBox(height: 80),
-                                ColorLoader5(),
-                              ],
-                            ))
-                          : Container(),
-                    ]),
-                    delay: delayedAmount + 3400,
-                  ):Container(),
+                  appleSignInAvailable.isAvailable
+                      ? DelayedAnimation(
+                          child: Stack(children: [
+                            Center(
+                              child: animatedAppleSignIn(screenWidth),
+                            ),
+                            isAppleLoginPressed
+                                ? Center(
+                                    child: Column(
+                                    children: <Widget>[
+                                      SizedBox(height: 80),
+                                      ColorLoader5(),
+                                    ],
+                                  ))
+                                : Container(),
+                          ]),
+                          delay: delayedAmount + 3400,
+                        )
+                      : Container(),
                   SizedBox(
                     height: 25.0,
                   ),
@@ -202,40 +230,30 @@ class LoginScreenState extends State<LoginScreen>
         ),
       ),
     );
-
-    // return Scaffold(
-    //   backgroundColor: UniversalVariables.blackColor,
-    //   body: Stack(children: [
-    //     Center(
-    //       child: loginButton(),
-    //     ),
-    //     isLoginPressed ? Center(child: ColorLoader5()) : Container(),
-    //   ]),
-    // );
   }
 
-  Widget loginButton() {
-    return FlatButton(
-      padding: EdgeInsets.all(35),
-      child: Text(
-        "LOGIN NOW",
-        style: TextStyle(
-            fontSize: 35, fontWeight: FontWeight.w900, letterSpacing: 1.2),
-      ),
-      onPressed: () => performLogin(),
-    );
-  }
+  // Widget loginButton() {
+  //   return FlatButton(
+  //     padding: EdgeInsets.all(35),
+  //     child: Text(
+  //       "LOGIN NOW",
+  //       style: TextStyle(
+  //           fontSize: 35, fontWeight: FontWeight.w900, letterSpacing: 1.2),
+  //     ),
+  //     onPressed: () => performLogin(),
+  //   );
+  // }
 
   Widget animatedGoogleSignIn(screenwidth) => Container(
         height: 60,
-        width: screenwidth*0.7,
+        width: screenwidth * 0.7,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100.0),
           color: UniversalVariables.gold2.withOpacity(0.7),
         ),
         child: Center(
           child: FlatButton(
-            onPressed: () => performLogin(),
+            onPressed: () => performGoogleLogin(),
             child: Text(
               'Google Sign In',
               style: TextStyle(
@@ -249,43 +267,83 @@ class LoginScreenState extends State<LoginScreen>
         ),
       );
 
-        Widget animatedAppleSignIn(screenwidth) => Container(
-        height: 60,
-        width: screenwidth*0.7,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: UniversalVariables.gold2.withOpacity(0.7),
-        ),
-        child: Center(
-          child: AppleSignInButton(
-                style: ButtonStyle.black, // style as needed
-                type: ButtonType.signIn, // style as needed
-                onPressed: () {
-                  _signInWithApple(context);
-                },
-              ),
-        ),
+  Widget animatedAppleSignIn(screenwidth) => Container(
+      height: 60,
+      width: screenwidth * 0.7,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100.0),
+        color: UniversalVariables.blackColor.withOpacity(0.7),
+      ),
+      child: AppleSignInButton(
+        style: ButtonStyle.black,
+        type: ButtonType.signIn,
+        onPressed: () => _signInWithApple(context),
+      )
+
+      // FlatButton(
+      //   onPressed: () => _signInWithApple(context),
+      //   child: Text(
+      //     'Apple Sign In',
+      //     style: TextStyle(
+      //       fontFamily: 'Kiona',
+      //       fontSize: 20.0,
+      //       fontWeight: FontWeight.bold,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      // ),
       );
 
-  void performLogin() {
+  void performGoogleLogin() {
     setState(() {
-      isLoginPressed = true;
+      isGoogleLoginPressed = true;
     });
 
     _repository.signIn().then((FirebaseUser user) {
       print("something");
       if (user != null) {
-        authenticateUser(user);
+        authenticateGoogleUser(user);
       } else {
         print("There was an error");
       }
     });
   }
 
-  void authenticateUser(FirebaseUser user) {
+  // void performAppleLogin() {
+
+  //   setState(() {
+  //     isAppleLoginPressed = true;
+  //   });
+
+  //   _signInWithApple(context);
+
+  // }
+
+  void authenticateGoogleUser(FirebaseUser user) {
     _repository.authenticateUser(user).then((isNewUser) {
       setState(() {
-        isLoginPressed = false;
+        isGoogleLoginPressed = false;
+      });
+      if (isNewUser) {
+        _repository.addDataToDb(user).then((value) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return HomeScreen();
+          }));
+        });
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      }
+    });
+  }
+
+  void authenticateAppleUser(FirebaseUser user) {
+    _repository.authenticateUser(user).then((isNewUser) {
+      setState(() {
+        isAppleLoginPressed = false;
       });
       if (isNewUser) {
         _repository.addDataToDb(user).then((value) {
