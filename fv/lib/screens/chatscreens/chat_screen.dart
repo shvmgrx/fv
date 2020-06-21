@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -455,7 +455,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () => sendMessage(),
+                  onTap: () => showAboutDialog(context: context)
+               // sendMessage(),
                 )
               : Container()
         ],
@@ -532,6 +533,36 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
+void showAlertDialog(BuildContext context) {
+
+  showDialog(
+    context: context,
+    child:  CupertinoAlertDialog(
+      title: Text("Log out?"),
+      content: Text( "Are you sure you want to log out?"),
+      actions: <Widget>[
+        CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: Text("Cancel")
+        ),
+        CupertinoDialogAction(
+          textStyle: TextStyle(color: Colors.red),
+            isDefaultAction: true,
+            onPressed: () async {
+              Navigator.pop(context);
+            
+           
+              
+            },
+            child: Text("Log out")
+        ),
+      ],
+    ));
+}
+
 class ModalTile extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -587,4 +618,8 @@ class ModalTile extends StatelessWidget {
       ),
     );
   }
+
+  
 }
+
+

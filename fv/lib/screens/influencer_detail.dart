@@ -32,8 +32,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   void initState() {
     super.initState();
 
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    controller =AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
     anim = TextStyleTween(
@@ -95,7 +94,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                 width: screenWidth,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/surfing.jpg'),
+                      image: NetworkImage('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rd.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2016%2F03%2F03-nighttime-habits-great-skin-products.jpg&f=1&nofb=1'),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -469,7 +468,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Text("July 23, 16:00",
+                                          Text("July 23, 18:00",
                                               style: TextStyles
                                                   .timeTextDetailStyle),
                                           Container(
