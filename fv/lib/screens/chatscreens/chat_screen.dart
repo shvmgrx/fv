@@ -73,6 +73,8 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
@@ -345,8 +347,33 @@ class _ChatScreenState extends State<ChatScreen> {
       _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
+      void showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        child: CupertinoAlertDialog(
+          title: Text("Log out?"),
+          content: Text("Are you sure you want to log out?"),
+          actions: <Widget>[
+            CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancel")),
+            CupertinoDialogAction(
+                textStyle: TextStyle(color: Colors.green),
+                isDefaultAction: true,
+                onPressed: () async {
+                  sendMessage();
+                  Navigator.pop(context);
+                },
+                child: Text("Send")),
+          ],
+        ),);
+  }
+
     return Container(
-      padding: EdgeInsets.only(bottom:25,left:10,right:10),
+      padding: EdgeInsets.only(bottom: 25, left: 10, right: 10),
       child: Row(
         children: <Widget>[
           Container(
@@ -455,8 +482,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () => showAboutDialog(context: context)
-               // sendMessage(),
+                  onTap: () => showAlertDialog(context),
+                  // sendMessage(),
                 )
               : Container()
         ],
@@ -533,36 +560,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-void showAlertDialog(BuildContext context) {
-
-  showDialog(
-    context: context,
-    child:  CupertinoAlertDialog(
-      title: Text("Log out?"),
-      content: Text( "Are you sure you want to log out?"),
-      actions: <Widget>[
-        CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: (){
-              Navigator.pop(context);
-            },
-            child: Text("Cancel")
-        ),
-        CupertinoDialogAction(
-          textStyle: TextStyle(color: Colors.red),
-            isDefaultAction: true,
-            onPressed: () async {
-              Navigator.pop(context);
-            
-           
-              
-            },
-            child: Text("Log out")
-        ),
-      ],
-    ));
-}
-
 class ModalTile extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -618,8 +615,4 @@ class ModalTile extends StatelessWidget {
       ),
     );
   }
-
-  
 }
-
-
