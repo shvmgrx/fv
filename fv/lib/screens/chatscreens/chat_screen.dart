@@ -349,92 +349,8 @@ class _ChatScreenState extends State<ChatScreen> {
       _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
-    void showAlertDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        child: CupertinoAlertDialog(
-          // title: Text("Log out?"),
-          content: Container(
-              child: Column(
-            children: <Widget>[
-              Text("Choose reply type", style: TextStyles.paymentTypeStyle),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                  
-
-                  Container(
-                    height: 42,
-                    margin: EdgeInsets.only(left: 3),
-                    decoration: replyTypeBox,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        //SizedBox(width: 10),
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child: Text(
-                              "\$ ${widget.receiver.answerPrice1}",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300,
-                                color: UniversalVariables.grey1,
-                                fontFamily: 'Poppins',
-                              ),
-                            )),
-
-                            Container(
-                              height:42,
-                            decoration: replyTypeBox2,
-                            padding: EdgeInsets.only(left: 5,top:5,bottom:5,right:5),
-                            child: Center(
-                              child: Text(
-                                "TEXT REPLY",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                  color: UniversalVariables.blackColor,
-                                  fontFamily: 'LeagueSpartan',
-                                ),
-                              ),
-                            )),
-       
-                      
-                       
-                      ],
-                    ),
-                  ),
-
-                  ],
-                ),
-              ),
-            ],
-          )),
-          actions: <Widget>[
-            CupertinoDialogAction(
-                textStyle: TextStyle(color: Colors.red),
-                isDefaultAction: true,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel")),
-            CupertinoDialogAction(
-                textStyle: TextStyle(color: Colors.green),
-                isDefaultAction: false,
-                onPressed: () async {
-                  sendMessage();
-                  Navigator.pop(context);
-                },
-                child: Text("Send")),
-          ],
-        ),
-      );
-    }
-
     return Container(
-      padding: EdgeInsets.only(bottom: 25, left: 10, right: 10),
+      padding: EdgeInsets.only(bottom:25,left:10,right:10),
       child: Row(
         children: <Widget>[
           Container(
@@ -543,8 +459,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () => showAlertDialog(context),
-                  // sendMessage(),
+                  onTap: () => showAboutDialog(context: context)
+               // sendMessage(),
                 )
               : Container()
         ],
@@ -621,6 +537,36 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
+void showAlertDialog(BuildContext context) {
+
+  showDialog(
+    context: context,
+    child:  CupertinoAlertDialog(
+      title: Text("Log out?"),
+      content: Text( "Are you sure you want to log out?"),
+      actions: <Widget>[
+        CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: Text("Cancel")
+        ),
+        CupertinoDialogAction(
+          textStyle: TextStyle(color: Colors.red),
+            isDefaultAction: true,
+            onPressed: () async {
+              Navigator.pop(context);
+            
+           
+              
+            },
+            child: Text("Log out")
+        ),
+      ],
+    ));
+}
+
 class ModalTile extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -676,4 +622,8 @@ class ModalTile extends StatelessWidget {
       ),
     );
   }
+
+  
 }
+
+
