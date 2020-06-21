@@ -53,6 +53,32 @@ BoxDecoration priceSendBox = BoxDecoration(
   ]
 );
 
+BoxDecoration replyTypeBox = BoxDecoration(
+  borderRadius: BorderRadius.only(topRight:Radius.circular(15),bottomRight:Radius.circular(15)),
+  color: UniversalVariables.standardWhite,
+  // boxShadow: [
+  //   BoxShadow(
+  //     color: mCD,
+  //     offset: Offset(10, 10),
+  //     blurRadius: 10,
+  //   ),
+  //   BoxShadow(
+  //     color: mCL,
+  //     offset: Offset(-10, -10),
+  //     blurRadius: 10,
+  //   ),
+  // ]
+);
+
+BoxDecoration replyTypeBox2 = BoxDecoration(
+  borderRadius: BorderRadius.only(topRight:Radius.circular(15),bottomRight:Radius.circular(15)),
+  color: UniversalVariables.gold2,
+
+);
+
+
+
+
 
 BoxDecoration buttonPressed = BoxDecoration(
 

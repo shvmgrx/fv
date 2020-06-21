@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/widgets/nmButton.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/enum/view_state.dart';
@@ -52,6 +53,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   ImageUploadProvider _imageUploadProvider;
 
+  bool textReplyChosen = false;
+  bool videoReplyChosen = false;
+
   //For video
   // String _platformVersion = 'Unknown';
   // List<dynamic> _mediaPaths;
@@ -72,8 +76,6 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -347,14 +349,72 @@ class _ChatScreenState extends State<ChatScreen> {
       _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
-      void showAlertDialog(BuildContext context) {
-    showDialog(
+    void showAlertDialog(BuildContext context) {
+      showDialog(
         context: context,
         child: CupertinoAlertDialog(
-          title: Text("Log out?"),
-          content: Text("Are you sure you want to log out?"),
+          // title: Text("Log out?"),
+          content: Container(
+              child: Column(
+            children: <Widget>[
+              Text("Choose reply type", style: TextStyles.paymentTypeStyle),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                  
+
+                  Container(
+                    height: 42,
+                    margin: EdgeInsets.only(left: 3),
+                    decoration: replyTypeBox,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        //SizedBox(width: 10),
+                        Container(
+                            margin: EdgeInsets.all(5),
+                            child: Text(
+                              "\$ ${widget.receiver.answerPrice1}",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300,
+                                color: UniversalVariables.grey1,
+                                fontFamily: 'Poppins',
+                              ),
+                            )),
+
+                            Container(
+                              height:42,
+                            decoration: replyTypeBox2,
+                            padding: EdgeInsets.only(left: 5,top:5,bottom:5,right:5),
+                            child: Center(
+                              child: Text(
+                                "TEXT REPLY",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                  color: UniversalVariables.blackColor,
+                                  fontFamily: 'LeagueSpartan',
+                                ),
+                              ),
+                            )),
+       
+                      
+                       
+                      ],
+                    ),
+                  ),
+
+                  ],
+                ),
+              ),
+            ],
+          )),
           actions: <Widget>[
             CupertinoDialogAction(
+                textStyle: TextStyle(color: Colors.red),
                 isDefaultAction: true,
                 onPressed: () {
                   Navigator.pop(context);
@@ -362,15 +422,16 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Text("Cancel")),
             CupertinoDialogAction(
                 textStyle: TextStyle(color: Colors.green),
-                isDefaultAction: true,
+                isDefaultAction: false,
                 onPressed: () async {
                   sendMessage();
                   Navigator.pop(context);
                 },
                 child: Text("Send")),
           ],
-        ),);
-  }
+        ),
+      );
+    }
 
     return Container(
       padding: EdgeInsets.only(bottom: 25, left: 10, right: 10),

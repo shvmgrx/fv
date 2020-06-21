@@ -122,6 +122,19 @@ class TextStyles {
     // ],
   );
 
+    static final TextStyle paymentTypeStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w300,
+  color: UniversalVariables.blackColor,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
     static final TextStyle moneyStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
@@ -238,6 +251,8 @@ class TextStyles {
     //   ),
     // ],
   );
+
+
 
           static final TextStyle verifiedStyle = TextStyle(
     fontSize: 20,
