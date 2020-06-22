@@ -1026,8 +1026,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                       borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10.0),
                                       topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
+                                      bottomLeft: Radius.circular(0),
+                                      bottomRight: Radius.circular(10.0),
                                     ),),
                                
                                 child: Padding(
@@ -1059,8 +1059,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                       borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10.0),
                                       topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(0),
                                     ),),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
