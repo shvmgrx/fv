@@ -653,6 +653,8 @@ import 'package:provider/provider.dart';
 import 'package:date_time_format/date_time_format.dart';
 // import 'package:flutter/services.dart';
 // import 'package:media_picker/media_picker.dart';
+import 'package:square_in_app_payments/models.dart';
+import 'package:square_in_app_payments/in_app_payments.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -708,8 +710,60 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       valueSelected = value;
     });
-  
+
     print('Value = $value');
+  }
+
+  _payment() async {
+    await InAppPayments.setSquareApplicationId('sandbox-sq0idb-nq5gHwIK8_3pmaQK1URhqQ');
+    await InAppPayments.startCardEntryFlow(
+        onCardNonceRequestSuccess: _onCardEntryCardNonceRequestSuccess,
+        onCardEntryCancel: _onCancelCardEntryFlow);
+  }
+
+  // Future<void> _onStartCardEntryFlow() async {
+  //   await InAppPayments.startCardEntryFlow(
+  //       onCardNonceRequestSuccess: _onCardEntryCardNonceRequestSuccess,
+  //       onCardEntryCancel: _onCancelCardEntryFlow);
+  // }
+
+  /**
+  * Callback when card entry is cancelled and UI is closed
+  */
+  void _onCancelCardEntryFlow() {
+    // Handle the cancel callback
+  }
+
+  /**
+  * Callback when successfully get the card nonce details for processig
+  * card entry is still open and waiting for processing card nonce details
+  */
+  void _onCardEntryCardNonceRequestSuccess(CardDetails result) async {
+    try {
+
+      print("card sucs");
+      // take payment with the card nonce details
+      // you can take a charge
+      // await chargeCard(result);
+      
+      //PaymentsRepository.actuallyMakeTheCharge(result.nonce);
+
+      // payment finished successfully
+      // you must call this method to close card entry
+      InAppPayments.completeCardEntry(
+          onCardEntryComplete: _onCardEntryComplete);
+    } on Exception catch (ex) {
+      // payment failed to complete due to error
+      // notify card entry to show processing error
+      InAppPayments.showCardNonceProcessingError("Error processing payment");
+    }
+  }
+
+  /**
+  * Callback when the card entry is closed after call 'completeCardEntry'
+  */
+  void _onCardEntryComplete() {
+    // Update UI to notify user that the payment flow is finished successfully
   }
 
   @override
@@ -986,7 +1040,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     void showAlertDialog(BuildContext context) {
       showDialog(
-        barrierDismissible: false,
+          barrierDismissible: false,
           context: context,
           child: AlertDialog(
             elevation: 2,
@@ -1010,129 +1064,131 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: Text("Choose reply type",
                               style: TextStyles.paymentTypeStyle),
                         ),
-                            Padding(
-                      padding: const EdgeInsets.only(top:20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Column(
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              Container(
-
-                                decoration: BoxDecoration(
-
-                                    //gradient: UniversalVariables.fabGradient,
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      //gradient: UniversalVariables.fabGradient,
                                       color: UniversalVariables.gold2,
                                       borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(0),
-                                      bottomRight: Radius.circular(10.0),
-                                    ),),
-                               
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'TEXT REPLY',
-                                    style: TextStyle(fontSize: 16.0,color:UniversalVariables.standardWhite),
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                        bottomLeft: Radius.circular(0),
+                                        bottomRight: Radius.circular(10.0),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'TEXT REPLY',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: UniversalVariables
+                                                .standardWhite),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Radio(
+                                      activeColor: UniversalVariables.gold2,
+                                      value: 1,
+                                      groupValue: valueSelected,
+                                      onChanged: (int value) {
+                                        onRadioChanged(value);
+                                        showAlertDialog(context);
+                                      })
+                                ],
                               ),
-                              Radio(
-                                activeColor: UniversalVariables.gold2,
-                                  value: 1,
-                                  groupValue: valueSelected,
-                                  onChanged: (int value) {
-                                   
-                                    onRadioChanged(value);
-                                     showAlertDialog(context);
-                                  })
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-
-                                    //gradient: UniversalVariables.fabGradient,
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      //gradient: UniversalVariables.fabGradient,
                                       color: UniversalVariables.gold2,
                                       borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(10.0),
-                                      bottomRight: Radius.circular(0),
-                                    ),),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'VIDEO REPLY',
-                                   style: TextStyle(fontSize: 16.0,color:UniversalVariables.standardWhite),
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                        bottomLeft: Radius.circular(10.0),
+                                        bottomRight: Radius.circular(0),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'VIDEO REPLY',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: UniversalVariables
+                                                .standardWhite),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Radio(
+                                      activeColor: UniversalVariables.gold2,
+                                      value: 2,
+                                      groupValue: valueSelected,
+                                      onChanged: (int value) {
+                                        onRadioChanged(value);
+                                        showAlertDialog(context);
+                                      })
+                                ],
                               ),
-                              Radio(
-                                 activeColor: UniversalVariables.gold2,
-                                  value: 2,
-                                  groupValue: valueSelected,
-                                  onChanged: (int value) {
-                                    onRadioChanged(value);
-                                     showAlertDialog(context);
-                                  })
                             ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
                       ],
                     ),
-                           Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.0),
-                child: GestureDetector(
-                  onTap: () => {
-                   Navigator.pop(context),
-                   Navigator.pop(context),
-                  
-                  },
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UniversalVariables.white2),
-                    child: Center(
-                      child: Icon(Icons.close,
-                          size: 20.0, color: UniversalVariables.offline),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 15.0),
+                        child: GestureDetector(
+                          onTap: () => {
+                            Navigator.pop(context),
+                            Navigator.pop(context),
+                          },
+                          child: Container(
+                            height: 40.0,
+                            width: 40.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: UniversalVariables.white2),
+                            child: Center(
+                              child: Icon(Icons.close,
+                                  size: 20.0,
+                                  color: UniversalVariables.offline),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
-              Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: GestureDetector(
-                  onTap: () => {
-                   Navigator.pop(context),
-                   Navigator.pop(context),
-                  
-                  },
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UniversalVariables.white2),
-                    child: Center(
-                      child: Icon(Icons.done,
-                          size: 20.0, color: UniversalVariables.online),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 15.0),
+                        child: GestureDetector(
+                          onTap: () => {
+                            Navigator.pop(context),
+                            Navigator.pop(context),
+                          },
+                          child: Container(
+                            height: 40.0,
+                            width: 40.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: UniversalVariables.white2),
+                            child: Center(
+                              child: Icon(Icons.done,
+                                  size: 20.0, color: UniversalVariables.online),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
 
                     // Padding(
                     //   padding: const EdgeInsets.all(15.0),
@@ -1140,23 +1196,23 @@ class _ChatScreenState extends State<ChatScreen> {
                     //     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     //     mainAxisSize: MainAxisSize.max,
                     //     children: <Widget>[
-                          // OutlineButton(
-                          //   onPressed: () {
-                          //     Navigator.pop(context);
+                    // OutlineButton(
+                    //   onPressed: () {
+                    //     Navigator.pop(context);
 
-                          //     setState(() {
-                          //       textReplyChosen = true;
-                          //       videoReplyChosen = false;
-                          //     });
-                          //   },
-                          //   focusColor: UniversalVariables.gold2,
-                          //   borderSide: BorderSide.solid,
-                          //   child: Text(
-                          //       "\$ ${widget.receiver.answerPrice1} TEXT REPLY",
-                          //       style: textReplyChosen
-                          //           ? TextStyles.replyTypeStyle
-                          //           : TextStyles.replyTypeSelectedStyle),
-                          // ),
+                    //     setState(() {
+                    //       textReplyChosen = true;
+                    //       videoReplyChosen = false;
+                    //     });
+                    //   },
+                    //   focusColor: UniversalVariables.gold2,
+                    //   borderSide: BorderSide.solid,
+                    //   child: Text(
+                    //       "\$ ${widget.receiver.answerPrice1} TEXT REPLY",
+                    //       style: textReplyChosen
+                    //           ? TextStyles.replyTypeStyle
+                    //           : TextStyles.replyTypeSelectedStyle),
+                    // ),
                     //       Spacer(),
                     //       OutlineButton(
                     //         color: videoReplyChosen
@@ -1518,7 +1574,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () => showAlertDialog(context),
+                  onTap: () => _payment(),
+                  // showAlertDialog(context),
                   // sendMessage(),
                 )
               : Container()
