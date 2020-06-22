@@ -109,7 +109,6 @@ class ChatListContainer extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var docList = snapshot.data.documents;
-
               if (docList.isEmpty) {
                 return QuietBox();
               }
@@ -124,7 +123,7 @@ class ChatListContainer extends StatelessWidget {
               );
             }
 
-            return Center(child: CircularProgressIndicator());
+            // return Center(child: CircularProgressIndicator());
           }),
     );
   }

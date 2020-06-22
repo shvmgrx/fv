@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fv/models/contact.dart';
 import 'package:fv/models/user.dart';
+import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/auth_methods.dart';
 import 'package:fv/resources/chat_methods.dart';
@@ -31,7 +32,7 @@ class ContactView extends StatelessWidget {
           );
         }
         return Center(
-          child: CircularProgressIndicator(),
+         // child: CircularProgressIndicator(),
         );
       },
     );
@@ -61,8 +62,7 @@ class ViewLayout extends StatelessWidget {
           )),
       title: Text(
         (contact != null ? contact.name : null) != null ? contact.name : "..",
-        style:
-            TextStyle(color: UniversalVariables.grey2, fontFamily: "Arial", fontSize: 19),
+        style: TextStyles.chatListProfileName,
       ),
       subtitle: LastMessageContainer(
         stream: _chatMethods.fetchLastMessageBetween(

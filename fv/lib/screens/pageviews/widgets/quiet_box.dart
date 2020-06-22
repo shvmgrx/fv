@@ -10,7 +10,7 @@ class QuietBox extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25),
         child: Container(
-          color: UniversalVariables.separatorColor,
+          color: UniversalVariables.white1,
           padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -26,7 +26,7 @@ class QuietBox extends StatelessWidget {
               ),
               SizedBox(height: 25),
               Text(
-                "Search for your favurite people and start videocalling or chatting with them",
+                "Search for your favorite people and start videocalling or chatting with them.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   letterSpacing: 1.2,

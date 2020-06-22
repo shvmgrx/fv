@@ -511,14 +511,18 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: GestureDetector(
                           onTap: () => {
                             Navigator.pop(context),
-                            if (valueSelected == 1)
-                              {
-                                stripePayment(widget.receiver.answerPrice1),
-                              }
-                            else if (valueSelected == 2)
-                              {
-                                stripePayment(widget.receiver.answerPrice2),
-                              }
+                            // if (valueSelected == 1)
+                            //   {
+                            //     stripePayment(widget.receiver.answerPrice1),
+                            //   }
+                            // else if (valueSelected == 2)
+                            //   {
+                            //     stripePayment(widget.receiver.answerPrice2),
+                            //   }
+
+                            sendMessage()
+
+
                           },
                           //Navigator.pop(context),
 

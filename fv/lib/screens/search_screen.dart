@@ -113,26 +113,23 @@ class _SearchScreenState extends State<SearchScreen> {
       final List<User> suggestionHashList = (query.isEmpty)
           ? []
           : userAllList.where((User user) {
-              String _getHashtags = user.hashtags.toLowerCase();
-              print(_getHashtags);
+              String _getHashtags = user.hashtags==null? "none" : user.hashtags.toLowerCase();
               String _filteredHashtags = _getHashtags.replaceAll("#", "");
-              print(_filteredHashtags);
               String _filteredQuery = query.replaceAll("#", "");
               _filteredQuery = _filteredQuery.toLowerCase();
-
               bool matchesHashtags = _filteredHashtags.contains(_filteredQuery);
               return (matchesHashtags);
             }).toList();
- print(suggestionHashList.length);
+
 
 
 
     final List<User> suggestionList = (query.isEmpty)
         ? []
         : userAllList.where((User user) {
-            String _getUsername = user.username.toLowerCase();
+            String _getUsername = user.username==null? "none" : user.username.toLowerCase();          
             String _query = query.toLowerCase();
-            String _getName = user.name.toLowerCase();
+            String _getName = user.name==null? "none" : user.name.toLowerCase();           
             bool matchesUsername = _getUsername.contains(_query);
             bool matchesName = _getName.contains(_query);
             return (matchesUsername || matchesName);

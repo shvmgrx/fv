@@ -202,6 +202,19 @@ class TextStyles {
       ),
     ],
   );
+
+        static final TextStyle chatListProfileName = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: UniversalVariables.blackColor,
+   // fontFamily: 'Ubuntu',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
   static final TextStyle mainScreenProfileName = TextStyle(
     fontSize: 16,
    // letterSpacing: 1.5,
