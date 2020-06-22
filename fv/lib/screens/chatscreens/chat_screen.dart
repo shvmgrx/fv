@@ -624,6 +624,7 @@
 // }
 
 import 'dart:io';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/cupertino.dart';
@@ -653,8 +654,9 @@ import 'package:provider/provider.dart';
 import 'package:date_time_format/date_time_format.dart';
 // import 'package:flutter/services.dart';
 // import 'package:media_picker/media_picker.dart';
-import 'package:square_in_app_payments/models.dart';
-import 'package:square_in_app_payments/in_app_payments.dart';
+
+import 'package:stripe_payment/stripe_payment.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -714,51 +716,27 @@ class _ChatScreenState extends State<ChatScreen> {
     print('Value = $value');
   }
 
-  _payment() async {
-    await InAppPayments.setSquareApplicationId('sandbox-sq0idb-nq5gHwIK8_3pmaQK1URhqQ');
-    await InAppPayments.startCardEntryFlow(
-        onCardNonceRequestSuccess: _onCardEntryCardNonceRequestSuccess,
-        onCardEntryCancel: _onCancelCardEntryFlow);
+    void stripePayment() {
+    StripePayment.setOptions(StripeOptions(
+        publishableKey: "pk_live_FheU3MdCQh1zmfTBPEXZQNRP004f2b4pbj"));
+
+    final HttpsCallable INTENT = CloudFunctions.instance
+        .getHttpsCallable(functionName: 'createPaymentIntent');
+
+        StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
+        .then((paymentMethod) {
+          double amount=1*100.0; // multipliying with 100 to change $ to cents
+      INTENT.call(<String, dynamic>{'amount': amount,'currency':'usd'}).then((response) {
+        confirmDialog(response.data["client_secret"],paymentMethod); //function for confirmation for payment
+      });
+    });
+
+
   }
 
-  // Future<void> _onStartCardEntryFlow() async {
-  //   await InAppPayments.startCardEntryFlow(
-  //       onCardNonceRequestSuccess: _onCardEntryCardNonceRequestSuccess,
-  //       onCardEntryCancel: _onCancelCardEntryFlow);
-  // }
+  
 
-
-  void _onCancelCardEntryFlow() {
-    // Handle the cancel callback
-  }
-
-
-
-  void _onCardEntryCardNonceRequestSuccess(CardDetails result) async {
-    try {
-
-      print("card sucs");
-      // take payment with the card nonce details
-      // you can take a charge
-      // await chargeCard(result);
-      
-      //PaymentsRepository.actuallyMakeTheCharge(result.nonce);
-
-      // payment finished successfully
-      // you must call this method to close card entry
-      InAppPayments.completeCardEntry(
-          onCardEntryComplete: _onCardEntryComplete);
-    } on Exception catch (ex) {
-      // payment failed to complete due to error
-      // notify card entry to show processing error
-      InAppPayments.showCardNonceProcessingError(ex.toString());
-    }
-  }
-
-
-  void _onCardEntryComplete() {
-    // Update UI to notify user that the payment flow is finished successfully
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -786,6 +764,9 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+
+
+  
 
   Widget messageList() {
     return StreamBuilder(
@@ -1141,10 +1122,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 15.0),
                         child: GestureDetector(
-                          onTap: () => 
-                            Navigator.pop(context),
-                        //    Navigator.pop(context),
-                        
+                          onTap: () => Navigator.pop(context),
+                          //    Navigator.pop(context),
+
                           child: Container(
                             height: 40.0,
                             width: 40.0,
@@ -1165,10 +1145,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(right: 15.0),
                         child: GestureDetector(
-                          onTap: () => 
-                            Navigator.pop(context),
-                            //Navigator.pop(context),
-                          
+                          onTap: () => Navigator.pop(context),
+                          //Navigator.pop(context),
+
                           child: Container(
                             height: 40.0,
                             width: 40.0,
@@ -1568,8 +1547,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () => _payment(),
-                  // showAlertDialog(context),
+                  onTap: () => stripePayment(),
+                 // showAlertDialog(context),
                   // sendMessage(),
                 )
               : Container()
@@ -1577,6 +1556,60 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+
+  confirmDialog(String clientSecret,PaymentMethod paymentMethod) {
+    var confirm = AlertDialog(
+      title: Text("Confirm Payement"),
+      content: Container( 
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              "Make Payment",
+             // style: TextStyle(fontSize: 25),
+            ),
+            Text("Charge amount:\$100")
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        new RaisedButton(
+          child: new Text('CANCEL'),
+          onPressed: () {
+            Navigator.of(context).pop();
+             final snackBar = SnackBar(content: Text('Payment Cancelled'),);
+             Scaffold.of(context).showSnackBar(snackBar);
+          },
+        ),
+        new RaisedButton(
+          child: new Text('Confirm'),
+          onPressed: () {
+            Navigator.of(context).pop();
+            confirmPayment(clientSecret, paymentMethod); // function to confirm Payment
+          },
+        ),
+      ],
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return confirm;
+        });
+  }
+
+  confirmPayment(String sec, PaymentMethod paymentMethod) {
+    StripePayment.confirmPaymentIntent(
+      PaymentIntent(clientSecret: sec, paymentMethodId: paymentMethod.id),
+    ).then((val) {
+     // addPaymentDetailsToFirestore(); //Function to add Payment details to firestore
+      final snackBar = SnackBar(content: Text('Payment Successfull'),);
+      Scaffold.of(context).showSnackBar(snackBar);
+    });
+  }
+
+
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
