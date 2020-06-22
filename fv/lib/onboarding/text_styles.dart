@@ -135,6 +135,19 @@ class TextStyles {
     // ],
   );
 
+      static final TextStyle paymentModalStyle = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w400,
+  color: UniversalVariables.blackColor,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
     static final TextStyle moneyStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
@@ -258,6 +271,32 @@ class TextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
+            static final TextStyle replyTypeStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w900,
+    color: UniversalVariables.blackColor,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
+             static final TextStyle replyTypeSelectedStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: UniversalVariables.white1,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(

@@ -54,7 +54,7 @@ BoxDecoration priceSendBox = BoxDecoration(
 );
 
 BoxDecoration replyTypeBox = BoxDecoration(
-  borderRadius: BorderRadius.only(topRight:Radius.circular(15),bottomRight:Radius.circular(15)),
+  borderRadius: BorderRadius.only(topLeft:Radius.circular(15),bottomLeft:Radius.circular(15),topRight:Radius.circular(15),bottomRight:Radius.circular(15)),
   color: UniversalVariables.standardWhite,
   // boxShadow: [
   //   BoxShadow(
