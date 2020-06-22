@@ -626,9 +626,9 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fv/widgets/nmButton.dart';
+// import 'package:fv/widgets/nmButton.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/enum/view_state.dart';
@@ -640,7 +640,7 @@ import 'package:fv/resources/chat_methods.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
-import 'package:fv/ui_elements/loader.dart';
+// import 'package:fv/ui_elements/loader.dart';
 import 'package:fv/utils/call_utilities.dart';
 import 'package:fv/utils/permissions.dart';
 import 'package:fv/utils/universal_variables.dart';
@@ -727,17 +727,13 @@ class _ChatScreenState extends State<ChatScreen> {
   //       onCardEntryCancel: _onCancelCardEntryFlow);
   // }
 
-  /**
-  * Callback when card entry is cancelled and UI is closed
-  */
+
   void _onCancelCardEntryFlow() {
     // Handle the cancel callback
   }
 
-  /**
-  * Callback when successfully get the card nonce details for processig
-  * card entry is still open and waiting for processing card nonce details
-  */
+
+
   void _onCardEntryCardNonceRequestSuccess(CardDetails result) async {
     try {
 
@@ -755,13 +751,11 @@ class _ChatScreenState extends State<ChatScreen> {
     } on Exception catch (ex) {
       // payment failed to complete due to error
       // notify card entry to show processing error
-      InAppPayments.showCardNonceProcessingError("Error processing payment");
+      InAppPayments.showCardNonceProcessingError(ex.toString());
     }
   }
 
-  /**
-  * Callback when the card entry is closed after call 'completeCardEntry'
-  */
+
   void _onCardEntryComplete() {
     // Update UI to notify user that the payment flow is finished successfully
   }
@@ -1147,10 +1141,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 15.0),
                         child: GestureDetector(
-                          onTap: () => {
+                          onTap: () => 
                             Navigator.pop(context),
-                            Navigator.pop(context),
-                          },
+                        //    Navigator.pop(context),
+                        
                           child: Container(
                             height: 40.0,
                             width: 40.0,
@@ -1171,10 +1165,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(right: 15.0),
                         child: GestureDetector(
-                          onTap: () => {
+                          onTap: () => 
                             Navigator.pop(context),
-                            Navigator.pop(context),
-                          },
+                            //Navigator.pop(context),
+                          
                           child: Container(
                             height: 40.0,
                             width: 40.0,
@@ -1667,8 +1661,8 @@ class ModalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    // var screenHeight = MediaQuery.of(context).size.height;
+    // var screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: CustomTile(

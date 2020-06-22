@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:image/image.dart' as Im;
+//import 'package:image/image.dart' as Im;
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/enum/user_state.dart';
 import 'package:meta/meta.dart';
-import 'package:path_provider/path_provider.dart';
+//import 'package:path_provider/path_provider.dart';
 
 class Utils {
   static String getUsername(String name) {

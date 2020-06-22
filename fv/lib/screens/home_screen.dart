@@ -5,13 +5,13 @@ import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/auth_methods.dart';
 import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:fv/screens/list_influencer.dart';
-import 'package:fv/screens/pageviews/chat_list_screen.dart';
+// import 'package:fv/screens/pageviews/chat_list_screen.dart';
 import 'package:fv/screens/profile_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fv/widgets/bottom_bar.dart';
-import 'package:fv/widgets/nmBox.dart';
-import 'package:fv/widgets/nmButton.dart';
+// import 'package:fv/widgets/bottom_bar.dart';
+// import 'package:fv/widgets/nmBox.dart';
+// import 'package:fv/widgets/nmButton.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
 
   @override
   Widget build(BuildContext context) {
-    double _labelFontSize = 10;
+   // double _labelFontSize = 10;
 
     return PickupLayout(
           scaffold: Scaffold(

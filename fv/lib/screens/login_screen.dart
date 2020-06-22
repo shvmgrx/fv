@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/resources/auth_methods.dart';
 import 'package:fv/utils/appleSignInAvailable.dart';
-import 'package:gradient_text/gradient_text.dart';
+// import 'package:gradient_text/gradient_text.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/utils/universal_variables.dart';
@@ -11,7 +11,7 @@ import 'package:fv/ui_elements/loader.dart';
 import 'package:fv/ui_elements/delayed_animation.dart';
 import 'package:provider/provider.dart';
 import 'home_screen.dart';
-import 'package:avatar_glow/avatar_glow.dart';
+// import 'package:avatar_glow/avatar_glow.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,11 +21,11 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   final int delayedAmount = 500;
-  AnimationController _controller;
+  AnimationController controller;
 
   @override
   void initState() {
-    _controller = AnimationController(
+    controller = AnimationController(
       vsync: this,
       duration: Duration(
         milliseconds: 200,

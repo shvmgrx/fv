@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/resources/firebase_repository.dart';
-import 'package:fv/screens/chatscreens/chat_screen.dart';
 import 'package:fv/screens/influencer_detail.dart';
-//import 'package:fv/screens/influencer_detail.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/custom_tile.dart';
 

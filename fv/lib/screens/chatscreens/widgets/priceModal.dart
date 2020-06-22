@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fv/provider/user_provider.dart';
-import 'package:fv/resources/auth_methods.dart';
-import 'package:provider/provider.dart';
+// import 'package:fv/provider/user_provider.dart';
+// import 'package:fv/resources/auth_methods.dart';
+// import 'package:provider/provider.dart';
 
 class PriceModal extends StatelessWidget {
 

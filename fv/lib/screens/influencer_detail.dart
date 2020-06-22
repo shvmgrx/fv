@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fv/widgets/nmButton.dart';
+// import 'package:fv/widgets/nmButton.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fv/models/user.dart';
-import 'package:fv/onboarding/strings.dart';
+// import 'package:fv/onboarding/strings.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/screens/chatscreens/chat_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/nmBox.dart';
-import 'package:fv/widgets/priceCard.dart';
+// import 'package:fv/widgets/priceCard.dart';
 
-import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'package:fv/models/influencer.dart';
+// import 'package:smooth_star_rating/smooth_star_rating.dart';
+// import 'package:fv/models/influencer.dart';
 import 'package:swipedetector/swipedetector.dart';
 
 class InfluencerDetails extends StatefulWidget {
@@ -62,7 +62,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
   @override
   Widget build(BuildContext context) {
-    bool showAppBar = true;
+    //bool showAppBar = true;
 
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -895,9 +895,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0),
                 child: GestureDetector(
-                  onTap: () => {
+                  onTap: () => 
                     Navigator.pop(context),
-                  },
+                  
                   child: Container(
                     height: 40.0,
                     width: 40.0,

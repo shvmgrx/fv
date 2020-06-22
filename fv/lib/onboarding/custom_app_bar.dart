@@ -1,5 +1,4 @@
-import 'package:fv/onboarding/strings.dart';
-import 'package:fv/onboarding/text_styles.dart';
+
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {

@@ -505,7 +505,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.10"
+    version: "1.6.11"
   path_provider_linux:
     dependency: transitive
     description:
@@ -609,13 +609,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  smooth_star_rating:
-    dependency: "direct main"
-    description:
-      name: smooth_star_rating
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4+2"
   source_gen:
     dependency: transitive
     description:

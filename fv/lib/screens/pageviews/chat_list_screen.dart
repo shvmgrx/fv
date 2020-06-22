@@ -6,7 +6,7 @@ import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/chat_methods.dart';
 import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:fv/screens/pageviews/widgets/contact_view.dart';
-import 'package:fv/screens/pageviews/widgets/new_chat_button.dart';
+// import 'package:fv/screens/pageviews/widgets/new_chat_button.dart';
 import 'package:fv/screens/pageviews/widgets/quiet_box.dart';
 import 'package:fv/screens/pageviews/widgets/user_circle.dart';
 import 'package:fv/utils/universal_variables.dart';
@@ -29,12 +29,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
     
   }
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorContactKey =
-      new GlobalKey<RefreshIndicatorState>();
+ // final GlobalKey<RefreshIndicatorState> _refreshIndicatorContactKey =
+    //  new GlobalKey<RefreshIndicatorState>();
 
     static final Firestore _firestore = Firestore.instance;
     static final CollectionReference _userCollection =
-      _firestore.collection(USERS_COLLECTION);
+_firestore.collection(USERS_COLLECTION);
 
    
       //  Future<Null> refreshContacts() {

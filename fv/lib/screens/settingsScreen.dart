@@ -1,27 +1,27 @@
-import 'dart:io';
-import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
-import 'package:avatar_glow/avatar_glow.dart';
+// import 'dart:io';
+// import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
+// import 'package:avatar_glow/avatar_glow.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:gradient_text/gradient_text.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:gradient_text/gradient_text.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:fv/models/user.dart';
-import 'package:fv/onboarding/strings.dart';
+// import 'package:fv/onboarding/strings.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/screens/home_screen.dart';
-import 'package:fv/screens/influencer_detail.dart';
+// import 'package:fv/screens/influencer_detail.dart';
 import 'package:fv/models/influencer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fv/screens/pageviews/chat_list_screen.dart';
+// import 'package:fv/screens/pageviews/chat_list_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
-import 'package:fv/utils/utilities.dart';
-import 'package:fv/widgets/goldMask.dart';
-import 'package:fv/widgets/nmBox.dart';
-import 'package:fv/widgets/nmButton.dart';
-import 'package:fv/widgets/nmCard.dart';
-import 'package:fv/widgets/slideRoute.dart';
+// import 'package:fv/utils/utilities.dart';
+// import 'package:fv/widgets/goldMask.dart';
+// import 'package:fv/widgets/nmBox.dart';
+// import 'package:fv/widgets/nmButton.dart';
+// import 'package:fv/widgets/nmCard.dart';
+// import 'package:fv/widgets/slideRoute.dart';
 import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:provider/provider.dart';
@@ -178,7 +178,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
-    var screenHeight = MediaQuery.of(context).size.height;
+   // var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
@@ -416,10 +416,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           WhitelistingTextInputFormatter
                                               .digitsOnly
                                         ],
-                                        onChanged: (input) => {
+                                        onChanged: (input) => 
                                               loggedUseranswerPrice1 =
                                                   num.tryParse(input)
-                                            }),
+                                            ),
                                   )
                                 ],
                               ),
@@ -461,10 +461,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          onChanged: (input) => {
+                                          onChanged: (input) => 
                                                 loggedUseranswerPrice2 =
                                                     num.tryParse(input)
-                                              }),
+                                              ),
                                     ),
                                   )
                                 ],
@@ -509,10 +509,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          onChanged: (input) => {
+                                          onChanged: (input) => 
                                                 loggedUseranswerPrice3 =
                                                     num.tryParse(input)
-                                              }),
+                                              ),
                                     ),
                                   )
                                 ],

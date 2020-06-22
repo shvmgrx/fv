@@ -1,28 +1,28 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/screens/settingsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gradient_text/gradient_text.dart';
-import 'package:fv/models/user.dart';
-import 'package:fv/onboarding/strings.dart';
+// import 'package:gradient_text/gradient_text.dart';
+// import 'package:fv/models/user.dart';
+// import 'package:fv/onboarding/strings.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/screens/editProfile.dart';
-import 'package:fv/screens/home_screen.dart';
-import 'package:fv/screens/influencer_detail.dart';
+// import 'package:fv/screens/home_screen.dart';
+// import 'package:fv/screens/influencer_detail.dart';
 import 'package:fv/models/influencer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fv/screens/landing_screen.dart';
-import 'package:fv/screens/list_influencer.dart';
-import 'package:fv/screens/pageviews/chat_list_screen.dart';
+// import 'package:fv/screens/landing_screen.dart';
+// import 'package:fv/screens/list_influencer.dart';
+// import 'package:fv/screens/pageviews/chat_list_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
-import 'package:fv/widgets/goldMask.dart';
+// import 'package:fv/widgets/goldMask.dart';
 import 'package:fv/widgets/nmBox.dart';
-import 'package:fv/widgets/nmButton.dart';
-import 'package:fv/widgets/nmCard.dart';
-import 'package:fv/widgets/slideRoute.dart';
-import 'package:flutter/services.dart';
+// import 'package:fv/widgets/nmButton.dart';
+// import 'package:fv/widgets/nmCard.dart';
+// import 'package:fv/widgets/slideRoute.dart';
+// import 'package:flutter/services.dart';
 import 'package:swipedetector/swipedetector.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool showAppBar = true;
+    //bool showAppBar = true;
 
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -167,14 +167,14 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
                 child: GestureDetector(
-                  onTap: () => {
+                  onTap: () => 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => SettingsScreen(),
                       ),
                     ),
-                  },
+               
                   child: Container(
                     height: 40.0,
                     width: 40.0,
@@ -194,14 +194,14 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 45.0, top: 30.0, right: 15.0),
                 child: GestureDetector(
-                  onTap: () => {
+                  onTap: () => 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditProfile(),
                       ),
                     ),
-                  },
+                  
                   child: Container(
                     height: 40.0,
                     width: 40.0,
@@ -345,7 +345,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           alignment: Alignment.center,
                                           child: loggedInanswerPrice1 != null
                                               ? Text(
-                                                  "\$ ${loggedInanswerPrice1}",
+                                                  "\$ $loggedInanswerPrice1",
                                                   style: TextStyles.priceNumber,
                                                   textAlign: TextAlign.center)
                                               : Text("Not Set",
@@ -422,7 +422,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           alignment: Alignment.center,
                                           child: loggedInanswerPrice2 != null
                                               ? Text(
-                                                  "\$ ${loggedInanswerPrice2}",
+                                                  "\$ $loggedInanswerPrice2",
                                                   style: TextStyles.priceNumber,
                                                   textAlign: TextAlign.center)
                                               : Text("Not Set",
@@ -499,7 +499,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           alignment: Alignment.center,
                                           child: loggedInanswerPrice3 != null
                                               ? Text(
-                                                  "\$ ${loggedInanswerPrice3}",
+                                                  "\$ $loggedInanswerPrice3",
                                                   style: TextStyles.priceNumber,
                                                   textAlign: TextAlign.center)
                                               : Text("Not Set",
@@ -1059,9 +1059,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0),
                 child: GestureDetector(
-                  onTap: () => {
-                    Navigator.pop(context),
-                  },
+                  onTap: () =>  Navigator.pop(context),
                   child: Container(
                     height: 40.0,
                     width: 40.0,

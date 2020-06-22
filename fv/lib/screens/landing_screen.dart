@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:fv/onboarding/custom_app_bar.dart';
+// import 'package:fv/onboarding/custom_app_bar.dart';
 //import 'package:animal_planet/screens/choose_plan_screen.dart';
-import 'package:fv/onboarding/strings.dart';
+// import 'package:fv/onboarding/strings.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:fv/screens/dashboard_screen.dart';
+// import 'package:fv/screens/dashboard_screen.dart';
 import 'package:fv/screens/login_screen.dart';
-import 'package:fv/utils/universal_variables.dart';
+// import 'package:fv/utils/universal_variables.dart';
 //import 'package:video_player/video_player.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -59,8 +59,8 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenwidth = MediaQuery.of(context).size.width;
+    // final screenHeight = MediaQuery.of(context).size.height;
+    // final screenwidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(

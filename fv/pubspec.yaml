@@ -32,9 +32,8 @@ dependencies:
   after_layout: ^1.0.7+2
   google_fonts: ^1.0.0
   more: ^2.2.0
-  smooth_star_rating: 1.0.4+2
   image_picker: ^0.6.5+2
-  path_provider: ^1.6.7
+  path_provider: ^1.6.11
   firebase_storage: ^3.1.5
   provider: ^4.0.5
   cached_network_image: ^2.1.0+1
