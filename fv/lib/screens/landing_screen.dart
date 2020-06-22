@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fv/screens/dashboard_screen.dart';
 import 'package:fv/screens/login_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
-import 'package:video_player/video_player.dart';
+//import 'package:video_player/video_player.dart';
 
 class LandingScreen extends StatefulWidget {
   @override
