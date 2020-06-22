@@ -681,6 +681,8 @@ class _ChatScreenState extends State<ChatScreen> {
   bool textReplyChosen = false;
   bool videoReplyChosen = false;
 
+  int valueSelected = 0;
+
   //For video
   // String _platformVersion = 'Unknown';
   // List<dynamic> _mediaPaths;
@@ -700,6 +702,14 @@ class _ChatScreenState extends State<ChatScreen> {
         );
       });
     });
+  }
+
+  void onRadioChanged(int value) {
+    setState(() {
+      valueSelected = value;
+    });
+  
+    print('Value = $value');
   }
 
   @override
@@ -976,6 +986,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     void showAlertDialog(BuildContext context) {
       showDialog(
+        barrierDismissible: false,
           context: context,
           child: AlertDialog(
             elevation: 2,
@@ -991,54 +1002,161 @@ class _ChatScreenState extends State<ChatScreen> {
             content: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 400,
-                child: Column(
+                child: Stack(
                   children: <Widget>[
-                    Text("Choose reply type",
-                        style: TextStyles.paymentTypeStyle),
-                      new Text(
-                          'TEXT REPLY',
-                          style: new TextStyle(fontSize: 16.0),
+                    Column(
+                      children: <Widget>[
+                        Center(
+                          child: Text("Choose reply type",
+                              style: TextStyles.paymentTypeStyle),
                         ),
-                      new Radio(
-                          value: 0,
-                          groupValue: textReplyChosen,
-                          onChanged: null,
-                        ),
-                        new Text(
-                         'VIDEO REPLY',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                        new Radio(
-                          value: 1,
-                          groupValue: videoReplyChosen,
-                          onChanged: null,
-                        ),
-                      
-                    
-                    
+                            Padding(
+                      padding: const EdgeInsets.only(top:20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Container(
+
+                                decoration: BoxDecoration(
+
+                                    //gradient: UniversalVariables.fabGradient,
+                                      color: UniversalVariables.gold2,
+                                      borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0),
+                                      bottomLeft: Radius.circular(5.0),
+                                      bottomRight: Radius.circular(5.0),
+                                    ),),
+                               
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'TEXT REPLY',
+                                    style: TextStyle(fontSize: 16.0,color:UniversalVariables.standardWhite),
+                                  ),
+                                ),
+                              ),
+                              Radio(
+                                activeColor: UniversalVariables.gold2,
+                                  value: 1,
+                                  groupValue: valueSelected,
+                                  onChanged: (int value) {
+                                   
+                                    onRadioChanged(value);
+                                     showAlertDialog(context);
+                                  })
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+
+                                    //gradient: UniversalVariables.fabGradient,
+                                      color: UniversalVariables.gold2,
+                                      borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0),
+                                      bottomLeft: Radius.circular(5.0),
+                                      bottomRight: Radius.circular(5.0),
+                                    ),),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'VIDEO REPLY',
+                                   style: TextStyle(fontSize: 16.0,color:UniversalVariables.standardWhite),
+                                  ),
+                                ),
+                              ),
+                              Radio(
+                                 activeColor: UniversalVariables.gold2,
+                                  value: 2,
+                                  groupValue: valueSelected,
+                                  onChanged: (int value) {
+                                    onRadioChanged(value);
+                                     showAlertDialog(context);
+                                  })
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                      ],
+                    ),
+                           Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0),
+                child: GestureDetector(
+                  onTap: () => {
+                   Navigator.pop(context),
+                   Navigator.pop(context),
+                  
+                  },
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UniversalVariables.white2),
+                    child: Center(
+                      child: Icon(Icons.close,
+                          size: 20.0, color: UniversalVariables.offline),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+              Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 15.0),
+                child: GestureDetector(
+                  onTap: () => {
+                   Navigator.pop(context),
+                   Navigator.pop(context),
+                  
+                  },
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UniversalVariables.white2),
+                    child: Center(
+                      child: Icon(Icons.done,
+                          size: 20.0, color: UniversalVariables.online),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
                     // Padding(
                     //   padding: const EdgeInsets.all(15.0),
                     //   child: Row(
                     //     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     //     mainAxisSize: MainAxisSize.max,
                     //     children: <Widget>[
-                    //       OutlineButton(
-                    //         onPressed: () {
-                    //           //Navigator.pop(context);
+                          // OutlineButton(
+                          //   onPressed: () {
+                          //     Navigator.pop(context);
 
-                    //           setState(() {
-                    //             textReplyChosen = true;
-                    //             videoReplyChosen = false;
-                    //           });
-                    //         },
-                    //         focusColor: UniversalVariables.gold2,
-                    //         // borderSide: BorderSide.solid,
-                    //         child: Text(
-                    //             "\$ ${widget.receiver.answerPrice1} TEXT REPLY",
-                    //             style: textReplyChosen
-                    //                 ? TextStyles.replyTypeStyle
-                    //                 : TextStyles.replyTypeSelectedStyle),
-                    //       ),
+                          //     setState(() {
+                          //       textReplyChosen = true;
+                          //       videoReplyChosen = false;
+                          //     });
+                          //   },
+                          //   focusColor: UniversalVariables.gold2,
+                          //   borderSide: BorderSide.solid,
+                          //   child: Text(
+                          //       "\$ ${widget.receiver.answerPrice1} TEXT REPLY",
+                          //       style: textReplyChosen
+                          //           ? TextStyles.replyTypeStyle
+                          //           : TextStyles.replyTypeSelectedStyle),
+                          // ),
                     //       Spacer(),
                     //       OutlineButton(
                     //         color: videoReplyChosen
