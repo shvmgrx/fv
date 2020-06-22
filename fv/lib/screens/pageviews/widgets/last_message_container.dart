@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/models/message.dart';
+import 'package:fv/utils/universal_variables.dart';
 
 
 class LastMessageContainer extends StatelessWidget {
@@ -20,6 +21,7 @@ class LastMessageContainer extends StatelessWidget {
 
           if (docList.isNotEmpty) {
             Message message = Message.fromMap(docList.last.data);
+
             return SizedBox(
               width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
@@ -27,7 +29,8 @@ class LastMessageContainer extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: UniversalVariables.blackColor,
+                  fontWeight: FontWeight.w400,
                   fontSize: 14,
                 ),
               ),
