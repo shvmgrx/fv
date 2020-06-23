@@ -46,6 +46,7 @@ class FirebaseRepository {
     int infReceived,
     bool isInfluencer,
     String hashtags,
+    Map timeSlots
   ) =>
       _firebaseMethods.updateProfiletoDb(
           user,
@@ -69,7 +70,8 @@ class FirebaseRepository {
           infSent,
           infReceived,
           isInfluencer,
-          hashtags);
+          hashtags,
+          timeSlots);
 
   Future<void> signOut() => _firebaseMethods.signOut();
 

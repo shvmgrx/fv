@@ -1,6 +1,7 @@
 // import 'dart:io';
 // import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
 // import 'package:avatar_glow/avatar_glow.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -64,10 +65,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String loggedUserHashtags;
 
   Map loggedUserTimeSlots;
-  Map tempTimeslots;
 
-  var ttSlots = new List()..length=7;
-  var ttDurations = new List()..length=7;
+
+  static List ttSlots = new List()..length=7;
+   static List ttDurations = new List()..length=7;
+
+
+
+  Map<String, List> tempTimeslots = {
+   "timeSlots": ttSlots,
+   "timeslotDurations": ttDurations
+  };
+
+
+
+
 
   bool showts1 = true;
   bool ts1Set = false;
@@ -189,11 +201,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-  updateTimeFunction(TimeOfDay ts, int tsNum) {
-    setState(() {
-      loggedUserTimeSlots = {tsNum: ts};
-    });
-  }
+  // updateTimeFunction(TimeOfDay ts, int tsNum) {
+  //   setState(() {
+  //     loggedUserTimeSlots = {tsNum: ts};
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -228,8 +240,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print("ttSlots: $ttSlots");
-                    print("ttDurations: $ttDurations");
+                    print(tempTimeslots);
                   },
                   child: Align(
                     alignment: Alignment.center,
@@ -250,6 +261,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return;
                       }
 
+                      setState(() {
+                        loggedUserTimeSlots=tempTimeslots;
+                      });
+
+                      print(loggedUserTimeSlots);
+ 
                       _formKey.currentState.save();
 
                       _repository.getCurrentUser().then((FirebaseUser user) {
@@ -276,6 +293,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           loggedUserinfReceived,
                           loggedUserisInfluencer,
                           loggedUserHashtags,
+                          loggedUserTimeSlots
                         );
                       });
 

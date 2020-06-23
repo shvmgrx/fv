@@ -134,6 +134,7 @@ class FirebaseMethods {
     int infReceived,
     bool isInfluencer,
     String hashtags,
+    Map timeSlots
   ) async {
     user = User(
       uid: currentUser.uid,
@@ -158,6 +159,7 @@ class FirebaseMethods {
       infReceived: infReceived,
       isInfluencer: isInfluencer,
       hashtags: hashtags,
+      timeSlots:timeSlots
     );
 
     firestore

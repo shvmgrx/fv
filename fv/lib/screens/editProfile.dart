@@ -62,6 +62,7 @@ class _EditProfileState extends State<EditProfile> {
   int loggedUserinfReceived;
   bool loggedUserisInfluencer;
   String loggedUserHashtags;
+  Map loggedUserTimeSlots;
 
   void pickProfilePhoto({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
@@ -210,6 +211,8 @@ class _EditProfileState extends State<EditProfile> {
                           loggedUserinfReceived,
                           loggedUserisInfluencer,
                           loggedUserHashtags,
+                          loggedUserTimeSlots
+
                         );
                       });
 
