@@ -68,42 +68,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool showts1 = true;
   bool ts1Set = false;
+  int ts1Changed = 0;
+  bool ts1ErrorFlag = false;
   DateTime ts1;
   int ts1Duration;
 
   bool showts2 = false;
   bool ts2Set = false;
+  int ts2Changed = 0;
+  bool ts2ErrorFlag = false;
   DateTime ts2;
   int ts2Duration;
 
   bool showts3 = false;
   bool ts3Set = false;
+  int ts3Changed = 0;
+  bool ts3ErrorFlag = false;
   DateTime ts3;
   int ts3Duration;
 
   bool showts4 = false;
   bool ts4Set = false;
+  int ts4Changed = 0;
+  bool ts4ErrorFlag = false;
   DateTime ts4;
   int ts4Duration;
 
   bool showts5 = false;
   bool ts5Set = false;
+  int ts5Changed = 0;
+  bool ts5ErrorFlag = false;
   DateTime ts5;
   int ts5Duration;
 
   bool showts6 = false;
   bool ts6Set = false;
+  int ts6Changed = 0;
+  bool ts6ErrorFlag = false;
   DateTime ts6;
   int ts6Duration;
 
   bool showts7 = false;
   bool ts7Set = false;
+  int ts7Changed = 0;
+  bool ts7ErrorFlag = false;
   DateTime ts7;
   int ts7Duration;
 
+
   bool showts8 = false;
   bool ts8Set = false;
+  int ts8Changed = 0;
+  bool ts8ErrorFlag = false;
   DateTime ts8;
+  int ts8Duration;
 
   bool expertMode;
   bool textMode;
@@ -178,7 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
-   // var screenHeight = MediaQuery.of(context).size.height;
+    // var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
@@ -207,7 +225,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onDoubleTap: () {
+                  onTap: () {
                     print(tempTimeslots);
                   },
                   child: Align(
@@ -284,19 +302,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       textAlign: TextAlign.left),
                                 ),
                                 Expanded(
-                                    flex: 1,
-                                    child: CupertinoSwitch(
-                                      value: expertMode == null
-                                          ? false
-                                          : expertMode,
-                                      activeColor: UniversalVariables.gold2,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          expertMode = value;
-                                          loggedUserisInfluencer = value;
-                                        });
-                                      },
-                                    ))
+                                  flex: 1,
+                                  child: CupertinoSwitch(
+                                    value:
+                                        expertMode == null ? false : expertMode,
+                                    activeColor: UniversalVariables.gold2,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        expertMode = value;
+                                        loggedUserisInfluencer = value;
+                                      });
+                                    },
+                                  ),
+                                )
                               ],
                             ),
                             Visibility(
@@ -410,16 +428,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           hintText: '$loggedUseranswerPrice1',
                                           hintStyle: TextStyles.hintTextStyle,
                                         ),
-                                      //  keyboardType: TextInputType.number,
+                                        //  keyboardType: TextInputType.number,
                                         style: TextStyles.whileEditing,
                                         inputFormatters: <TextInputFormatter>[
                                           WhitelistingTextInputFormatter
                                               .digitsOnly
                                         ],
-                                        onChanged: (input) => 
-                                              loggedUseranswerPrice1 =
-                                                  num.tryParse(input)
-                                            ),
+                                        onChanged: (input) =>
+                                            loggedUseranswerPrice1 =
+                                                num.tryParse(input)),
                                   )
                                 ],
                               ),
@@ -455,23 +472,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             hintText: '$loggedUseranswerPrice2',
                                             hintStyle: TextStyles.hintTextStyle,
                                           ),
-                                        //  keyboardType: TextInputType.number,
+                                          //  keyboardType: TextInputType.number,
                                           style: TextStyles.whileEditing,
                                           inputFormatters: <TextInputFormatter>[
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          onChanged: (input) => 
-                                                loggedUseranswerPrice2 =
-                                                    num.tryParse(input)
-                                              ),
+                                          onChanged: (input) =>
+                                              loggedUseranswerPrice2 =
+                                                  num.tryParse(input)),
                                     ),
                                   )
                                 ],
                               ),
                             ),
                             Visibility(
-                              visible: expertMode,
+                              visible: expertMode && videoCallMode,
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
@@ -501,27 +517,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             hintText: '$loggedUseranswerPrice3',
                                             hintStyle: TextStyles.hintTextStyle,
                                           ),
-                                         
                                           keyboardAppearance: Brightness.light,
-                                       //   keyboardType: TextInputType.number,
+                                          //   keyboardType: TextInputType.number,
                                           style: TextStyles.whileEditing,
                                           inputFormatters: <TextInputFormatter>[
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          onChanged: (input) => 
-                                                loggedUseranswerPrice3 =
-                                                    num.tryParse(input)
-                                              ),
+                                          onChanged: (input) =>
+                                              loggedUseranswerPrice3 =
+                                                  num.tryParse(input)),
                                     ),
                                   )
                                 ],
                               ),
                             ),
                             Visibility(
-                              visible: expertMode && videoCallMode && loggedUseranswerPrice3!=null ,
+                              visible: expertMode &&
+                                  videoCallMode &&
+                                  loggedUseranswerPrice3 != null,
                               child: Padding(
-                                padding: const EdgeInsets.only(top:8.0),
+                                padding: const EdgeInsets.only(top: 8.0),
                                 child: Row(
                                   children: <Widget>[
                                     Expanded(
@@ -540,7 +556,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     Container(
                                       child: Expanded(
                                         flex: 3,
-                                        child: Text("${(loggedUseranswerPrice3*1.333).ceil()}",style:TextStyles.hintTextStyle,),
+                                        child: loggedUseranswerPrice3 == null
+                                            ? Text(
+                                                "Set videocall price",
+                                                style: TextStyles.hintTextStyle,
+                                              )
+                                            : Text(
+                                                "${(loggedUseranswerPrice3 * 1.333).ceil()}",
+                                                style: TextStyles.hintTextStyle,
+                                              ),
                                       ),
                                     )
                                   ],
@@ -548,9 +572,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             Visibility(
-                              visible: expertMode && videoCallMode && loggedUseranswerPrice3!=null ,
+                              visible: expertMode &&
+                                  videoCallMode &&
+                                  loggedUseranswerPrice3 != null,
                               child: Padding(
-                                padding: const EdgeInsets.only(top:8.0),
+                                padding: const EdgeInsets.only(top: 8.0),
                                 child: Row(
                                   children: <Widget>[
                                     Expanded(
@@ -569,14 +595,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     Container(
                                       child: Expanded(
                                         flex: 3,
-                                        child: Text("${(loggedUseranswerPrice3*2.667).ceil()}",style:TextStyles.hintTextStyle,),
+                                        child: loggedUseranswerPrice3 == null
+                                            ? Text(
+                                                "Set videocall price",
+                                                style: TextStyles.hintTextStyle,
+                                              )
+                                            : Text(
+                                                "${(loggedUseranswerPrice3 * 2.667).ceil()}",
+                                                style: TextStyles.hintTextStyle,
+                                              ),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                             ),
-                            
                             Divider(
                               height: 40,
                             ),
@@ -598,131 +631,151 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     padding: const EdgeInsets.only(top: 25.0),
                                     child: Visibility(
                                       visible: expertMode && videoCallMode,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                      child: Column(
                                         children: <Widget>[
-                                          Expanded(
-                                            flex: 5,
-                                            child: Visibility(
-                                              //visible: show1,
-                                              child: Container(
-                                                height: 50,
-                                                width: screenWidth / 2,
-                                                child: CupertinoTheme(
-                                                  data: CupertinoThemeData(
-                                                    textTheme:
-                                                        CupertinoTextThemeData(
-                                                      dateTimePickerTextStyle:
-                                                          TextStyles
-                                                              .timeTextStyle,
-                                                    ),
-                                                  ),
-                                                  child: AbsorbPointer(
-                                                    absorbing: ts1Set,
-                                                    child: CupertinoDatePicker(
-                                                      
-                                                      minimumDate: DateTime.now(),
-                                                     
-                                                      backgroundColor:
-                                                          UniversalVariables
-                                                              .transparent,
-                                                      mode:
-                                                          CupertinoDatePickerMode
-                                                              .dateAndTime,
-                                                      initialDateTime:
-                                                          DateTime.now(),
-                                                      onDateTimeChanged:
-                                                          (DateTime
-                                                              newTimeslot) {
-                                                        setState(() {
-                                                          ts1 = newTimeslot;
-                                                        });
-                                                      },
-                                                      use24hFormat: true,
-                                                      minuteInterval: 1,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Visibility(
-                                              //visible: show1,
-                                              child: Container(
-                                                height: 50,
-                                                width: screenWidth / 2,
-                                                child: CupertinoTheme(
-                                                  data: CupertinoThemeData(
-                                                    textTheme:
-                                                        CupertinoTextThemeData(
-                                                      pickerTextStyle:
-                                                          TextStyles
-                                                              .timeTextStyle,
-                                                    ),
-                                                  ),
-                                                  child: AbsorbPointer(
-                                                    absorbing: ts1Set,
-                                                    child: CupertinoPicker(
-                                                      backgroundColor:
-                                                          UniversalVariables
-                                                              .transparent,
-                                                      onSelectedItemChanged:
-                                                          (value) {
-                                                        setState(() {
-                                                          ts1Duration = value;
-                                                        });
-                                                      },
-                                                      itemExtent: 30.0,
-                                                      children: const [
-                                                        Text('10 mins'),
-                                                        Text('25 mins'),
-                                                        Text('45 mins'),
-                                                      ],
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              Expanded(
+                                                flex: 5,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          dateTimePickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts1Set,
+                                                        child:
+                                                            CupertinoDatePicker(
+                                                          minimumDate:
+                                                              DateTime.now(),
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          mode:
+                                                              CupertinoDatePickerMode
+                                                                  .dateAndTime,
+                                                          initialDateTime:
+                                                              DateTime.now(),
+                                                          onDateTimeChanged:
+                                                              (DateTime
+                                                                  newTimeslot) {
+                                                            setState(() {
+                                                              ts1Changed++;
+                                                              ts1 = newTimeslot;
+                                                            });
+                                                          },
+                                                          use24hFormat: true,
+                                                          minuteInterval: 1,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Visibility(
-                                              //visible: show1,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    ts1Set = !ts1Set;
-                                                    showts2 = true;
-                                               //     if (ts1Set) {
-                                                      tempTimeslots = {
-                                                        ts1: ts1,
-                                                        ts1Duration: ts1Duration
-                                                      };
-                                                 //   }
-                                                  });
-                                                },
-                                                child: ts1Set
-                                                    ? Icon(
-                                                        CupertinoIcons
-                                                            .check_mark_circled_solid,
-                                                        size: 20.0,
-                                                        color:
-                                                            UniversalVariables
-                                                                .gold2)
-                                                    : Icon(
-                                                        CupertinoIcons
-                                                            .check_mark_circled,
-                                                        size: 20.0,
-                                                        color:
-                                                            UniversalVariables
-                                                                .grey1),
+                                              Spacer(),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts1Set,
+                                                        child: CupertinoPicker(
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          onSelectedItemChanged:
+                                                              (value) {
+                                                            setState(() {
+                                                              ts1Duration =
+                                                                  value;
+                                                              ts1Changed++;
+                                                            });
+                                                          },
+                                                          itemExtent: 30.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('25 mins'),
+                                                            Text('45 mins'),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        ts1Set = !ts1Set;
+
+                                                        if (ts1Set &&
+                                                            ts1Changed > 2) {
+                                                          showts2 = true;
+                                                          tempTimeslots = {
+                                                            ts1: ts1,
+                                                            ts1Duration:
+                                                                ts1Duration
+                                                          };
+                                                          ts1ErrorFlag=false;
+                                                        } else {
+                                                          setState(() {
+                                                            ts1ErrorFlag = true;
+                                                          });
+                                                        }
+                                                      });
+                                                    },
+                                                    child: ts1Set
+                                                        ? Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled_solid,
+                                                            size: 20.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .gold2)
+                                                        : Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled,
+                                                            size: 20.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .grey1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                          Visibility(
+                                            visible: ts1ErrorFlag,
+                                              child: Center(
+                                                  child: Text(
+                                                      "SET CORRECT DURATION AND TIMESLOT")))
                                         ],
                                       ),
                                     ),
@@ -758,7 +811,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts2Set,
                                                       child:
                                                           CupertinoDatePicker(
-                                                             minimumDate: DateTime.now(),
+                                                        minimumDate:
+                                                            DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -835,14 +889,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       ts2Set = !ts2Set;
                                                       showts3 = true;
 
-                                                    //  if (ts2Set) {
-                                                        tempTimeslots = {
-                                                          ts1: ts1,
-                                                          ts1Duration:ts1Duration,
-                                                          ts2: ts2,
-                                                          ts2Duration:ts2Duration
-                                                        };
-                                                   //   }
+                                                      //  if (ts2Set) {
+                                                      tempTimeslots = {
+                                                        ts1: ts1,
+                                                        ts1Duration:
+                                                            ts1Duration,
+                                                        ts2: ts2,
+                                                        ts2Duration: ts2Duration
+                                                      };
+                                                      //   }
                                                     });
                                                   },
                                                   child: ts2Set
@@ -899,7 +954,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts3Set,
                                                       child:
                                                           CupertinoDatePicker(
-                                                             minimumDate: DateTime.now(),
+                                                        minimumDate:
+                                                            DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -974,19 +1030,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       ts3Set = !ts3Set;
                                                       showts4 = true;
 
-                                                     // if (ts3Set) {
-                                                        tempTimeslots = {
-                                                          ts1: ts1,
-                                                          ts1Duration:
-                                                              ts1Duration,
-                                                          ts2: ts2,
-                                                          ts2Duration:
-                                                              ts2Duration,
-                                                          ts3: ts3,
-                                                          ts3Duration:
-                                                              ts3Duration
-                                                        };
-                                                  //    }
+                                                      // if (ts3Set) {
+                                                      tempTimeslots = {
+                                                        ts1: ts1,
+                                                        ts1Duration:
+                                                            ts1Duration,
+                                                        ts2: ts2,
+                                                        ts2Duration:
+                                                            ts2Duration,
+                                                        ts3: ts3,
+                                                        ts3Duration: ts3Duration
+                                                      };
+                                                      //    }
                                                     });
                                                   },
                                                   child: ts3Set
@@ -1043,7 +1098,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts4Set,
                                                       child:
                                                           CupertinoDatePicker(
-                                                             minimumDate: DateTime.now(),
+                                                        minimumDate:
+                                                            DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1118,22 +1174,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       ts4Set = !ts4Set;
                                                       showts5 = true;
 
-                                                 //     if (ts4Set) {
-                                                        tempTimeslots = {
-                                                          ts1: ts1,
-                                                          ts1Duration:
-                                                              ts1Duration,
-                                                          ts2: ts2,
-                                                          ts2Duration:
-                                                              ts2Duration,
-                                                          ts3: ts3,
-                                                          ts3Duration:
-                                                              ts3Duration,
-                                                          ts4: ts4,
-                                                          ts4Duration:
-                                                              ts4Duration
-                                                        };
-                                                    //  }
+                                                      //     if (ts4Set) {
+                                                      tempTimeslots = {
+                                                        ts1: ts1,
+                                                        ts1Duration:
+                                                            ts1Duration,
+                                                        ts2: ts2,
+                                                        ts2Duration:
+                                                            ts2Duration,
+                                                        ts3: ts3,
+                                                        ts3Duration:
+                                                            ts3Duration,
+                                                        ts4: ts4,
+                                                        ts4Duration: ts4Duration
+                                                      };
+                                                      //  }
                                                     });
                                                   },
                                                   child: ts4Set
@@ -1190,7 +1245,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts5Set,
                                                       child:
                                                           CupertinoDatePicker(
-                                                             minimumDate: DateTime.now(),
+                                                        minimumDate:
+                                                            DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1264,25 +1320,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts5Set = !ts5Set;
                                                       showts6 = true;
-                                                    //  if (ts5Set) {
-                                                        tempTimeslots = {
-                                                          ts1: ts1,
-                                                          ts1Duration:
-                                                              ts1Duration,
-                                                          ts2: ts2,
-                                                          ts2Duration:
-                                                              ts2Duration,
-                                                          ts3: ts3,
-                                                          ts3Duration:
-                                                              ts3Duration,
-                                                          ts4: ts4,
-                                                          ts4Duration:
-                                                              ts4Duration,
-                                                          ts5: ts5,
-                                                          ts5Duration:
-                                                              ts5Duration
-                                                        };
-                                                   //   }
+                                                      //  if (ts5Set) {
+                                                      tempTimeslots = {
+                                                        ts1: ts1,
+                                                        ts1Duration:
+                                                            ts1Duration,
+                                                        ts2: ts2,
+                                                        ts2Duration:
+                                                            ts2Duration,
+                                                        ts3: ts3,
+                                                        ts3Duration:
+                                                            ts3Duration,
+                                                        ts4: ts4,
+                                                        ts4Duration:
+                                                            ts4Duration,
+                                                        ts5: ts5,
+                                                        ts5Duration: ts5Duration
+                                                      };
+                                                      //   }
                                                     });
                                                   },
                                                   child: ts5Set
@@ -1339,7 +1394,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts6Set,
                                                       child:
                                                           CupertinoDatePicker(
-                                                             minimumDate: DateTime.now(),
+                                                        minimumDate:
+                                                            DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1414,29 +1470,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       ts6Set = !ts6Set;
                                                       showts7 = true;
 
-                                                     // if (ts6Set) {
-                                                        
-                                                        tempTimeslots = {
-                                                          ts1: ts1,
-                                                          ts1Duration:
-                                                              ts1Duration,
-                                                          ts2: ts2,
-                                                          ts2Duration:
-                                                              ts2Duration,
-                                                          ts3: ts3,
-                                                          ts3Duration:
-                                                              ts3Duration,
-                                                          ts4: ts4,
-                                                          ts4Duration:
-                                                              ts4Duration,
-                                                          ts5: ts5,
-                                                          ts5Duration:
-                                                              ts5Duration,
-                                                              ts6: ts6,
-                                                          ts6Duration:
-                                                              ts6Duration
-                                                        };
-                                                     // }
+                                                      // if (ts6Set) {
+
+                                                      tempTimeslots = {
+                                                        ts1: ts1,
+                                                        ts1Duration:
+                                                            ts1Duration,
+                                                        ts2: ts2,
+                                                        ts2Duration:
+                                                            ts2Duration,
+                                                        ts3: ts3,
+                                                        ts3Duration:
+                                                            ts3Duration,
+                                                        ts4: ts4,
+                                                        ts4Duration:
+                                                            ts4Duration,
+                                                        ts5: ts5,
+                                                        ts5Duration:
+                                                            ts5Duration,
+                                                        ts6: ts6,
+                                                        ts6Duration: ts6Duration
+                                                      };
+                                                      // }
                                                     });
                                                   },
                                                   child: ts6Set
@@ -1494,7 +1549,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       absorbing: ts7Set,
                                                       child:
                                                           CupertinoDatePicker(
-                                                             minimumDate: DateTime.now(),
+                                                        minimumDate:
+                                                            DateTime.now(),
                                                         backgroundColor:
                                                             UniversalVariables
                                                                 .transparent,
@@ -1568,34 +1624,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     setState(() {
                                                       ts7Set = !ts7Set;
                                                       showts8 = true;
-                                                   //   if (ts7Set) {
-                                                      
+                                                      //   if (ts7Set) {
 
-                                                        tempTimeslots = {
-                                                          ts1: ts1,
-                                                          ts1Duration:
-                                                              ts1Duration,
-                                                          ts2: ts2,
-                                                          ts2Duration:
-                                                              ts2Duration,
-                                                          ts3: ts3,
-                                                          ts3Duration:
-                                                              ts3Duration,
-                                                          ts4: ts4,
-                                                          ts4Duration:
-                                                              ts4Duration,
-                                                          ts5: ts5,
-                                                          ts5Duration:
-                                                              ts5Duration,
-                                                              ts6: ts6,
-                                                          ts6Duration:
-                                                              ts6Duration,
-                                                              ts7: ts7,
-                                                          ts7Duration:
-                                                              ts7Duration
-                                                        };
-                                                   //   }
-                                                 
+                                                      tempTimeslots = {
+                                                        ts1: ts1,
+                                                        ts1Duration:
+                                                            ts1Duration,
+                                                        ts2: ts2,
+                                                        ts2Duration:
+                                                            ts2Duration,
+                                                        ts3: ts3,
+                                                        ts3Duration:
+                                                            ts3Duration,
+                                                        ts4: ts4,
+                                                        ts4Duration:
+                                                            ts4Duration,
+                                                        ts5: ts5,
+                                                        ts5Duration:
+                                                            ts5Duration,
+                                                        ts6: ts6,
+                                                        ts6Duration:
+                                                            ts6Duration,
+                                                        ts7: ts7,
+                                                        ts7Duration: ts7Duration
+                                                      };
+                                                      //   }
                                                     });
                                                   },
                                                   child: ts7Set

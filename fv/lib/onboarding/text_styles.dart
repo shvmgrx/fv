@@ -98,7 +98,7 @@ class TextStyles {
 
     static final TextStyle whileEditing = TextStyle(
     fontSize: 18,
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w600,
   color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
