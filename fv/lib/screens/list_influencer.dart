@@ -174,20 +174,34 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           color: UniversalVariables.backgroundGrey,
           child: new ListView(
             children: <Widget>[
-              Container(
-                height: screenHeight / 3,
-                width: screenWidth,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
+              // Container(
+              //   height: 150,
+              //   width: 150,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     image: DecorationImage(
+              //       image: NetworkImage(loggedInprofilePhoto != null
+              //           ? loggedInprofilePhoto
+              //           : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
+              //       fit: BoxFit.fitHeight,
+              //     ),
+              //   ),
+              // ),
+           Container(
+          margin: EdgeInsets.only(left:70,right: 70,top:20),
+          width: 90,
+          height: 150,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+           image: DecorationImage(
                     image: NetworkImage(loggedInprofilePhoto != null
                         ? loggedInprofilePhoto
                         : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
-                ),
-              ),
+          ),),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18.0),
+                padding: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Align(
                   alignment: Alignment.center,
                   child: loggedInname != null
@@ -253,6 +267,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                 ),
               ),
               Divider(),
+              SizedBox(height:20),
               ListTile(
                   title: new Text(
                     "Feedback",
