@@ -332,6 +332,19 @@ class TextStyles {
     // ],
   );
 
+           static final TextStyle errorStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.offline,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
           static final TextStyle timeSlotDetails = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,

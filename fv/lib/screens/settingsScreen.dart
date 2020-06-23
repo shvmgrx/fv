@@ -115,7 +115,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts7;
   int ts7Duration;
 
-
   bool showts8 = false;
   bool ts8Set = false;
   int ts8Changed = 0;
@@ -654,7 +653,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ),
                                                       ),
                                                       child: AbsorbPointer(
-                                                        absorbing: ts1Set,
+                                                        absorbing: ts1Set &&
+                                                            !ts1ErrorFlag,
                                                         child:
                                                             CupertinoDatePicker(
                                                           minimumDate:
@@ -701,7 +701,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ),
                                                       ),
                                                       child: AbsorbPointer(
-                                                        absorbing: ts1Set,
+                                                        absorbing: ts1Set &&
+                                                            !ts1ErrorFlag,
                                                         child: CupertinoPicker(
                                                           backgroundColor:
                                                               UniversalVariables
@@ -743,26 +744,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             ts1Duration:
                                                                 ts1Duration
                                                           };
-                                                          ts1ErrorFlag=false;
+                                                          ts1ErrorFlag = false;
                                                         } else {
-                                                          setState(() {
-                                                            ts1ErrorFlag = true;
-                                                          });
+                                                          ts1ErrorFlag = true;
                                                         }
                                                       });
                                                     },
-                                                    child: ts1Set
+                                                    child: ts1Set &&
+                                                            !ts1ErrorFlag
                                                         ? Icon(
                                                             CupertinoIcons
                                                                 .check_mark_circled_solid,
-                                                            size: 20.0,
+                                                            size: 30.0,
                                                             color:
                                                                 UniversalVariables
                                                                     .gold2)
                                                         : Icon(
                                                             CupertinoIcons
                                                                 .check_mark_circled,
-                                                            size: 20.0,
+                                                            size: 30.0,
                                                             color:
                                                                 UniversalVariables
                                                                     .grey1),
@@ -773,9 +773,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                           Visibility(
                                             visible: ts1ErrorFlag,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 13.0),
                                               child: Center(
-                                                  child: Text(
-                                                      "SET CORRECT DURATION AND TIMESLOT")))
+                                                child: Text(
+                                                    "SET CORRECT DURATION AND TIMESLOT",
+                                                    style:
+                                                        TextStyles.errorStyle),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -787,134 +795,165 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
                                         visible: expertMode && videoCallMode,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                        child: Column(
                                           children: <Widget>[
-                                            Expanded(
-                                              flex: 5,
-                                              child: Visibility(
-                                                //visible: show1,
-                                                child: Container(
-                                                  height: 50,
-                                                  width: screenWidth / 2,
-                                                  child: CupertinoTheme(
-                                                    data: CupertinoThemeData(
-                                                      textTheme:
-                                                          CupertinoTextThemeData(
-                                                        dateTimePickerTextStyle:
-                                                            TextStyles
-                                                                .timeTextStyle,
-                                                      ),
-                                                    ),
-                                                    child: AbsorbPointer(
-                                                      absorbing: ts2Set,
-                                                      child:
-                                                          CupertinoDatePicker(
-                                                        minimumDate:
-                                                            DateTime.now(),
-                                                        backgroundColor:
-                                                            UniversalVariables
-                                                                .transparent,
-                                                        mode:
-                                                            CupertinoDatePickerMode
-                                                                .dateAndTime,
-                                                        initialDateTime:
-                                                            DateTime.now(),
-                                                        onDateTimeChanged:
-                                                            (DateTime
-                                                                newTimeslot) {
-                                                          setState(() {
-                                                            ts2 = newTimeslot;
-                                                          });
-                                                        },
-                                                        use24hFormat: true,
-                                                        minuteInterval: 1,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            Expanded(
-                                              flex: 2,
-                                              child: Visibility(
-                                                //visible: show1,
-                                                child: Container(
-                                                  height: 50,
-                                                  width: screenWidth / 2,
-                                                  child: CupertinoTheme(
-                                                    data: CupertinoThemeData(
-                                                      textTheme:
-                                                          CupertinoTextThemeData(
-                                                        pickerTextStyle:
-                                                            TextStyles
-                                                                .timeTextStyle,
-                                                      ),
-                                                    ),
-                                                    child: AbsorbPointer(
-                                                      absorbing: ts2Set,
-                                                      child: CupertinoPicker(
-                                                        backgroundColor:
-                                                            UniversalVariables
-                                                                .transparent,
-                                                        onSelectedItemChanged:
-                                                            (value) {
-                                                          setState(() {
-                                                            print(value);
-                                                            ts2Duration = value;
-                                                            print(ts2Duration);
-                                                          });
-                                                        },
-                                                        itemExtent: 30.0,
-                                                        children: const [
-                                                          Text('10 mins'),
-                                                          Text('25 mins'),
-                                                          Text('45 mins'),
-                                                        ],
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: <Widget>[
+                                                Expanded(
+                                                  flex: 5,
+                                                  child: Visibility(
+                                                    //visible: show1,
+                                                    child: Container(
+                                                      height: 50,
+                                                      width: screenWidth / 2,
+                                                      child: CupertinoTheme(
+                                                        data:
+                                                            CupertinoThemeData(
+                                                          textTheme:
+                                                              CupertinoTextThemeData(
+                                                            dateTimePickerTextStyle:
+                                                                TextStyles
+                                                                    .timeTextStyle,
+                                                          ),
+                                                        ),
+                                                        child: AbsorbPointer(
+                                                          absorbing: ts2Set &&
+                                                              !ts2ErrorFlag,
+                                                          child:
+                                                              CupertinoDatePicker(
+                                                            minimumDate:
+                                                                DateTime.now(),
+                                                            backgroundColor:
+                                                                UniversalVariables
+                                                                    .transparent,
+                                                            mode:
+                                                                CupertinoDatePickerMode
+                                                                    .dateAndTime,
+                                                            initialDateTime:
+                                                                DateTime.now(),
+                                                            onDateTimeChanged:
+                                                                (DateTime
+                                                                    newTimeslot) {
+                                                              setState(() {
+                                                                ts2Changed++;
+                                                                ts2 =
+                                                                    newTimeslot;
+                                                              });
+                                                            },
+                                                            use24hFormat: true,
+                                                            minuteInterval: 1,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Visibility(
-                                                //visible: show1,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      ts2Set = !ts2Set;
-                                                      showts3 = true;
+                                                Spacer(),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Visibility(
+                                                    //visible: show1,
+                                                    child: Container(
+                                                      height: 50,
+                                                      width: screenWidth / 2,
+                                                      child: CupertinoTheme(
+                                                        data:
+                                                            CupertinoThemeData(
+                                                          textTheme:
+                                                              CupertinoTextThemeData(
+                                                            pickerTextStyle:
+                                                                TextStyles
+                                                                    .timeTextStyle,
+                                                          ),
+                                                        ),
+                                                        child: AbsorbPointer(
+                                                          absorbing: ts2Set &&
+                                                              !ts2ErrorFlag,
+                                                          child:
+                                                              CupertinoPicker(
+                                                            backgroundColor:
+                                                                UniversalVariables
+                                                                    .transparent,
+                                                            onSelectedItemChanged:
+                                                                (value) {
+                                                              setState(() {
+                                                                ts2Duration =
+                                                                    value;
+                                                                ts2Changed++;
+                                                              });
+                                                            },
+                                                            itemExtent: 30.0,
+                                                            children: const [
+                                                              Text('10 mins'),
+                                                              Text('25 mins'),
+                                                              Text('45 mins'),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Visibility(
+                                                    //visible: show1,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          ts2Set = !ts2Set;
 
-                                                      //  if (ts2Set) {
-                                                      tempTimeslots = {
-                                                        ts1: ts1,
-                                                        ts1Duration:
-                                                            ts1Duration,
-                                                        ts2: ts2,
-                                                        ts2Duration: ts2Duration
-                                                      };
-                                                      //   }
-                                                    });
-                                                  },
-                                                  child: ts2Set
-                                                      ? Icon(
-                                                          CupertinoIcons
-                                                              .check_mark_circled_solid,
-                                                          size: 20.0,
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2)
-                                                      : Icon(
-                                                          CupertinoIcons
-                                                              .check_mark_circled,
-                                                          size: 20.0,
-                                                          color:
-                                                              UniversalVariables
-                                                                  .grey1),
+                                                          if (ts2Set &&
+                                                              ts2Changed > 2) {
+                                                            showts3 = true;
+                                                            tempTimeslots = {
+                                                              ts1: ts1,
+                                                              ts1Duration:
+                                                                  ts1Duration,
+                                                              ts2: ts2,
+                                                              ts2Duration:
+                                                                  ts2Duration
+                                                            };
+                                                            ts2ErrorFlag =
+                                                                false;
+                                                          } else {
+                                                            ts2ErrorFlag = true;
+                                                          }
+                                                        });
+                                                      },
+                                                      child: ts2Set &&
+                                                              !ts2ErrorFlag
+                                                          ? Icon(
+                                                              CupertinoIcons
+                                                                  .check_mark_circled_solid,
+                                                              size: 30.0,
+                                                              color:
+                                                                  UniversalVariables
+                                                                      .gold2)
+                                                          : Icon(
+                                                              CupertinoIcons
+                                                                  .check_mark_circled,
+                                                              size: 30.0,
+                                                              color:
+                                                                  UniversalVariables
+                                                                      .grey1),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: ts2ErrorFlag,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 13.0),
+                                                child: Center(
+                                                  child: Text(
+                                                      "SET CORRECT DURATION AND TIMESLOT",
+                                                      style: TextStyles
+                                                          .errorStyle),
                                                 ),
                                               ),
                                             ),
