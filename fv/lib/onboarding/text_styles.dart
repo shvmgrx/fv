@@ -153,7 +153,7 @@ class TextStyles {
     fontWeight: FontWeight.w600,
   color: UniversalVariables.moneyColor1,
 
-    fontFamily: 'Poppins',
+   // fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -398,10 +398,10 @@ class TextStyles {
   );
         static final TextStyle priceType = TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w500,
     
     color: UniversalVariables.grey1,
-    fontFamily: 'Raleway',
+    //fontFamily: 'Raleway',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,

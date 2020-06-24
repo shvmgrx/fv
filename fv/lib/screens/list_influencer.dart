@@ -367,7 +367,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         //     Navigator.pushNamed(context, "/messages_screen");
                         // },
                   // ),
-                   Text("\$ 6,399",
+                   Text("\$ 243",
                    
                    style: TextStyles.moneyStyle,),
 
@@ -388,180 +388,188 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                 )
               ],
             ),
-            Container(
-              //margin: EdgeInsets.only(bottom:45),
-              padding: EdgeInsets.only(bottom: 5),
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  category1Pressed = !category1Pressed;
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 7),
-                                decoration: category1Pressed
-                                    ? buttonPressed
-                                    : buttonNotPressed,
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "ALL",
-                                        style: TextStyle(
-                                            color:
-                                                category1Pressed ? fCDD : fCLL,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'PoppinsEL',
-                                            fontSize: 14),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  category2Pressed = !category2Pressed;
-                                  if (category2Pressed == true) {
-                                    category1Pressed = false;
-                                    category3Pressed = false;
-                                    category4Pressed = false;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 7),
-                                decoration: category2Pressed
-                                    ? buttonPressed
-                                    : buttonNotPressed,
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "TRENDING",
-                                        style: TextStyle(
-                                            color:
-                                                category2Pressed ? fCDD : fCLL,
-                                            fontFamily: 'PoppinsEL',
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  category3Pressed = !category3Pressed;
-                                  if (category3Pressed == true) {
-                                    category1Pressed = false;
-                                    category2Pressed = false;
-                                    category4Pressed = false;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 7),
-                                decoration: category3Pressed
-                                    ? buttonPressed
-                                    : buttonNotPressed,
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "NEW",
-                                        style: TextStyle(
-                                            color:
-                                                category3Pressed ? fCDD : fCLL,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'PoppinsEL',
-                                            fontSize: 14),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  category4Pressed = !category4Pressed;
-                                  if (category4Pressed == true) {
-                                    category1Pressed = false;
-                                    category2Pressed = false;
-                                    category3Pressed = false;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 7),
-                                decoration: category4Pressed
-                                    ? buttonPressed
-                                    : buttonNotPressed,
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "MOST ACTIVE",
-                                        style: TextStyle(
-                                            color:
-                                                category4Pressed ? fCDD : fCLL,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'PoppinsEL',
-                                            fontSize: 14),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ])),
-              ),
-            ),
-             Row(
-               children: <Widget>[
-                 DummyUser(),
-                 DummyUser2(),
-                 DummyUser3(),
-               ],
-             ),
-              Row(
-               children: <Widget>[
-                 DummyUser4(),
-                 DummyUser5(),
-                 DummyUser6(),
-               ],
-             ),
+            // Container(
+            //   //margin: EdgeInsets.only(bottom:45),
+            //   padding: EdgeInsets.only(bottom: 5),
+            //   child: Padding(
+            //     padding: EdgeInsets.all(15),
+            //     child: SingleChildScrollView(
+            //         scrollDirection: Axis.horizontal,
+            //         child: Row(
+            //             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //             children: <Widget>[
+            //               Padding(
+            //                 padding: const EdgeInsets.symmetric(horizontal: 5),
+            //                 child: GestureDetector(
+            //                   onTap: () {
+            //                     setState(() {
+            //                       category1Pressed = !category1Pressed;
+            //                     });
+            //                   },
+            //                   child: Container(
+            //                     padding: EdgeInsets.symmetric(
+            //                         horizontal: 15, vertical: 7),
+            //                     decoration: category1Pressed
+            //                         ? buttonPressed
+            //                         : buttonNotPressed,
+            //                     child: Row(
+            //                       children: <Widget>[
+            //                         Align(
+            //                           alignment: Alignment.center,
+            //                           child: Text(
+            //                             "ALL",
+            //                             style: TextStyle(
+            //                                 color:
+            //                                     category1Pressed ? fCDD : fCLL,
+            //                                 fontWeight: FontWeight.w600,
+            //                                 fontFamily: 'PoppinsEL',
+            //                                 fontSize: 14),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //               Padding(
+            //                 padding: const EdgeInsets.symmetric(horizontal: 5),
+            //                 child: GestureDetector(
+            //                   onTap: () {
+            //                     setState(() {
+            //                       category2Pressed = !category2Pressed;
+            //                       if (category2Pressed == true) {
+            //                         category1Pressed = false;
+            //                         category3Pressed = false;
+            //                         category4Pressed = false;
+            //                       }
+            //                     });
+            //                   },
+            //                   child: Container(
+            //                     padding: EdgeInsets.symmetric(
+            //                         horizontal: 15, vertical: 7),
+            //                     decoration: category2Pressed
+            //                         ? buttonPressed
+            //                         : buttonNotPressed,
+            //                     child: Row(
+            //                       children: <Widget>[
+            //                         Align(
+            //                           alignment: Alignment.center,
+            //                           child: Text(
+            //                             "TRENDING",
+            //                             style: TextStyle(
+            //                                 color:
+            //                                     category2Pressed ? fCDD : fCLL,
+            //                                 fontFamily: 'PoppinsEL',
+            //                                 fontWeight: FontWeight.w600,
+            //                                 fontSize: 14),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //               Padding(
+            //                 padding: const EdgeInsets.symmetric(horizontal: 5),
+            //                 child: GestureDetector(
+            //                   onTap: () {
+            //                     setState(() {
+            //                       category3Pressed = !category3Pressed;
+            //                       if (category3Pressed == true) {
+            //                         category1Pressed = false;
+            //                         category2Pressed = false;
+            //                         category4Pressed = false;
+            //                       }
+            //                     });
+            //                   },
+            //                   child: Container(
+            //                     padding: EdgeInsets.symmetric(
+            //                         horizontal: 15, vertical: 7),
+            //                     decoration: category3Pressed
+            //                         ? buttonPressed
+            //                         : buttonNotPressed,
+            //                     child: Row(
+            //                       children: <Widget>[
+            //                         Align(
+            //                           alignment: Alignment.center,
+            //                           child: Text(
+            //                             "NEW",
+            //                             style: TextStyle(
+            //                                 color:
+            //                                     category3Pressed ? fCDD : fCLL,
+            //                                 fontWeight: FontWeight.w600,
+            //                                 fontFamily: 'PoppinsEL',
+            //                                 fontSize: 14),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //               Padding(
+            //                 padding: const EdgeInsets.symmetric(horizontal: 5),
+            //                 child: GestureDetector(
+            //                   onTap: () {
+            //                     setState(() {
+            //                       category4Pressed = !category4Pressed;
+            //                       if (category4Pressed == true) {
+            //                         category1Pressed = false;
+            //                         category2Pressed = false;
+            //                         category3Pressed = false;
+            //                       }
+            //                     });
+            //                   },
+            //                   child: Container(
+            //                     padding: EdgeInsets.symmetric(
+            //                         horizontal: 15, vertical: 7),
+            //                     decoration: category4Pressed
+            //                         ? buttonPressed
+            //                         : buttonNotPressed,
+            //                     child: Row(
+            //                       children: <Widget>[
+            //                         Align(
+            //                           alignment: Alignment.center,
+            //                           child: Text(
+            //                             "MOST ACTIVE",
+            //                             style: TextStyle(
+            //                                 color:
+            //                                     category4Pressed ? fCDD : fCLL,
+            //                                 fontWeight: FontWeight.w600,
+            //                                 fontFamily: 'PoppinsEL',
+            //                                 fontSize: 14),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ])),
+            //   ),
+            // ),
+            //  Row(
+            //    children: <Widget>[
+            //      DummyUser(),
+            //      DummyUser2(),
+            //      DummyUser3(),
+            //    ],
+            //  ),
+            //   Row(
+            //    children: <Widget>[
+            //      DummyUser4(),
+            //      DummyUser5(),
+            //      DummyUser6(),
+            //    ],
+            //  ),
+            //   Row(
+            //    children: <Widget>[
+            //      DummyUser7(),
+            //      DummyUser8(),
+            //      DummyUser9(),
+            //    ],
+            //  ),
+             
 
             Container(
               margin: EdgeInsets.only(left: 5),
@@ -719,7 +727,7 @@ class DummyUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(3.0),
+        padding: EdgeInsets.only(top:20.0,left:3,right:3,bottom:3),
         child: Stack(
           children: <Widget>[
             Container(
@@ -796,7 +804,7 @@ class DummyUser2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(3.0),
+        padding: EdgeInsets.only(top:20.0,left:3,right:3,bottom:3),
         child: Stack(
           children: <Widget>[
             Container(
@@ -872,7 +880,7 @@ class DummyUser3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(3.0),
+        padding: EdgeInsets.only(top:20.0,left:3,right:3,bottom:3),
         child: Stack(
           children: <Widget>[
             Container(
@@ -1165,3 +1173,232 @@ class DummyUser6 extends StatelessWidget {
     );
   }
 }
+
+class DummyUser7 extends StatelessWidget {
+  const DummyUser7({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(3.0),
+        child: Stack(
+          children: <Widget>[
+            Container(
+                 height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
+                color: UniversalVariables.transparent),
+            Positioned(
+                left: 1.0,
+                top: 1.0,
+                child: Opacity(
+                  opacity: 1,
+                  child: Container(
+                      height: 150.0,
+                      width: 109.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://images.pexels.com/photos/247322/pexels-photo-247322.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                              fit: BoxFit.cover))),
+                )),
+            Positioned(
+                left: 1.0,
+                top: 126.0,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 45.0,
+                      width: 110.0,
+                      decoration: BoxDecoration(
+                          //gradient: UniversalVariables.fabGradient,
+
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25.0),
+                            bottomRight: Radius.circular(25.0),
+                          ),
+                          color: UniversalVariables.white2),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Lara Dufour",
+                              // gradient: LinearGradient(colors: [
+                              //   UniversalVariables.grey1,
+                              //   UniversalVariables.white1,
+                              //   UniversalVariables.grey3,
+                              // ]
+                              // ),
+
+                              style: TextStyles.mainScreenProfileName,
+                              textAlign: TextAlign.center),
+                        ),
+                      ),
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DummyUser8 extends StatelessWidget {
+  const DummyUser8({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(3.0),
+        child: Stack(
+          children: <Widget>[
+            Container(
+                 height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
+                color: UniversalVariables.transparent),
+            Positioned(
+                left: 1.0,
+                top: 1.0,
+                child: Opacity(
+                  opacity: 1,
+                  child: Container(
+                      height: 150.0,
+                      width: 109.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                              fit: BoxFit.cover))),
+                )),
+            Positioned(
+                left: 1.0,
+                top: 126.0,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 45.0,
+                      width: 110.0,
+                      decoration: BoxDecoration(
+                          //gradient: UniversalVariables.fabGradient,
+
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25.0),
+                            bottomRight: Radius.circular(25.0),
+                          ),
+                          color: UniversalVariables.white2),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Dominik Roy",
+                              // gradient: LinearGradient(colors: [
+                              //   UniversalVariables.grey1,
+                              //   UniversalVariables.white1,
+                              //   UniversalVariables.grey3,
+                              // ]
+                              // ),
+
+                              style: TextStyles.mainScreenProfileName,
+                              textAlign: TextAlign.center),
+                        ),
+                      ),
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DummyUser9 extends StatelessWidget {
+  const DummyUser9({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(3.0),
+        child: Stack(
+          children: <Widget>[
+            Container(
+                 height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
+                color: UniversalVariables.transparent),
+            Positioned(
+                left: 1.0,
+                top: 1.0,
+                child: Opacity(
+                  opacity: 1,
+                  child: Container(
+                      height: 150.0,
+                      width: 109.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                              fit: BoxFit.cover))),
+                )),
+            Positioned(
+                left: 1.0,
+                top: 126.0,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 45.0,
+                      width: 110.0,
+                      decoration: BoxDecoration(
+                          //gradient: UniversalVariables.fabGradient,
+
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25.0),
+                            bottomRight: Radius.circular(25.0),
+                          ),
+                          color: UniversalVariables.white2),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Julie Corina",
+                              // gradient: LinearGradient(colors: [
+                              //   UniversalVariables.grey1,
+                              //   UniversalVariables.white1,
+                              //   UniversalVariables.grey3,
+                              // ]
+                              // ),
+
+                              style: TextStyles.mainScreenProfileName,
+                              textAlign: TextAlign.center),
+                        ),
+                      ),
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+}
+

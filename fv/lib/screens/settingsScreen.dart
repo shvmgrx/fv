@@ -73,8 +73,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
 
   Map<String, List> tempTimeslots = {
-   "timeSlots": ttSlots,
-   "timeslotDurations": ttDurations
+   "ttSlots": ttSlots,
+   "ttDurations": ttDurations
   };
 
 

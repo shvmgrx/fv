@@ -9,11 +9,11 @@ import 'package:fv/models/user.dart';
 class ChatMethods {
   static final Firestore _firestore = Firestore.instance;
 
-  final CollectionReference _messageCollection =
-      _firestore.collection(MESSAGES_COLLECTION);
+  final CollectionReference _messageCollection =_firestore.collection(MESSAGES_COLLECTION);
 
-  final CollectionReference _userCollection =
-      _firestore.collection(USERS_COLLECTION);
+  final CollectionReference _userCollection =_firestore.collection(USERS_COLLECTION);
+
+   final CollectionReference _timeSlotCollection =_firestore.collection(TIMESLOT_COLLECTION);
 
   Future<void> addMessageToDb(
       Message message, User sender, User receiver) async {
