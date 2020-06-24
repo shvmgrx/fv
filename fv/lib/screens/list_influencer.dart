@@ -367,7 +367,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         //     Navigator.pushNamed(context, "/messages_screen");
                         // },
                   // ),
-                   Text("\$ 5399",
+                   Text("\$ 6,399",
                    
                    style: TextStyles.moneyStyle,),
 
@@ -548,20 +548,20 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         ])),
               ),
             ),
-            //  Row(
-            //    children: <Widget>[
-            //      DummyUser(),
-            //      DummyUser2(),
-            //      DummyUser3(),
-            //    ],
-            //  ),
-            //   Row(
-            //    children: <Widget>[
-            //      DummyUser4(),
-            //      DummyUser5(),
-            //      DummyUser6(),
-            //    ],
-            //  ),
+             Row(
+               children: <Widget>[
+                 DummyUser(),
+                 DummyUser2(),
+                 DummyUser3(),
+               ],
+             ),
+              Row(
+               children: <Widget>[
+                 DummyUser4(),
+                 DummyUser5(),
+                 DummyUser6(),
+               ],
+             ),
 
             Container(
               margin: EdgeInsets.only(left: 5),
@@ -628,7 +628,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           children: <Widget>[
             Container(
                 height: 170.0,
-                width: 125.0,
+                width: MediaQuery.of(context).size.width/3,
                 color: UniversalVariables.transparent),
             // Positioned(
             //     left: 15.0,
@@ -724,7 +724,8 @@ class DummyUser extends StatelessWidget {
           children: <Widget>[
             Container(
                 height: 170.0,
-                width: 113.0,
+                width: MediaQuery.of(context).size.width/3.2,
+                
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -741,7 +742,7 @@ class DummyUser extends StatelessWidget {
                           ),
                           image: DecorationImage(
                               image: NetworkImage(
-                                  "https://biographymask.com/wp-content/uploads/2020/02/Shelby-Church-youtube-star.jpg"),
+                                  "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
                               fit: BoxFit.cover))),
                 )),
             Positioned(
@@ -764,7 +765,7 @@ class DummyUser extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 2.0),
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Shelby Church",
+                          child: Text("Era Church",
                               // gradient: LinearGradient(colors: [
                               //   UniversalVariables.grey1,
                               //   UniversalVariables.white1,
@@ -799,8 +800,8 @@ class DummyUser2 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                height: 170.0,
-                width: 113.0,
+                 height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -817,8 +818,8 @@ class DummyUser2 extends StatelessWidget {
                           ),
                           image: DecorationImage(
                               image: NetworkImage(
-                                  "https://i.ytimg.com/vi/cwinvctTkWQ/maxresdefault.jpg"),
-                              fit: BoxFit.cover))),
+                                  "https://images.pexels.com/photos/4580470/pexels-photo-4580470.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                              fit: BoxFit.fitWidth))),
                 )),
             Positioned(
                 left: 1.0,
@@ -840,7 +841,7 @@ class DummyUser2 extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 2.0),
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Matt D'Avella",
+                          child: Text("Matt Gilfoyle",
                               // gradient: LinearGradient(colors: [
                               //   UniversalVariables.grey1,
                               //   UniversalVariables.white1,
@@ -875,8 +876,8 @@ class DummyUser3 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                height: 170.0,
-                width: 113.0,
+                 height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -893,7 +894,7 @@ class DummyUser3 extends StatelessWidget {
                           ),
                           image: DecorationImage(
                               image: NetworkImage(
-                                  "https://s.yimg.com/ny/api/res/1.2/1uCtL50Ws9QDqu7uEuKwhg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTc5OQ--/https://s.yimg.com/uu/api/res/1.2/rZTLuTx8Z6Fv0.fajeKUgA--~B/aD03OTk7dz02NDA7c209MTthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/hearst_womens_health_52/6e4ccac8be71a1b60ef9d5e7d30b5aa6"),
+                                  "https://images.pexels.com/photos/3768918/pexels-photo-3768918.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
                               fit: BoxFit.cover))),
                 )),
             Positioned(
@@ -916,7 +917,7 @@ class DummyUser3 extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 2.0),
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Christine Quinn",
+                          child: Text("Joyce Quinn",
                               // gradient: LinearGradient(colors: [
                               //   UniversalVariables.grey1,
                               //   UniversalVariables.white1,
@@ -951,8 +952,8 @@ class DummyUser4 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                height: 170.0,
-                width: 113.0,
+                  height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1027,8 +1028,8 @@ class DummyUser5 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                height: 170.0,
-                width: 113.0,
+                  height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1068,7 +1069,7 @@ class DummyUser5 extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 2.0),
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Iris Schonefeld",
+                          child: Text("Iris Jones",
                               // gradient: LinearGradient(colors: [
                               //   UniversalVariables.grey1,
                               //   UniversalVariables.white1,
@@ -1102,8 +1103,8 @@ class DummyUser6 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                height: 170.0,
-                width: 113.0,
+                 height: 170.0,
+                width: MediaQuery.of(context).size.width/3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
