@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/contact.dart';
 import 'package:fv/models/message.dart';
+import 'package:fv/models/order.dart';
 import 'package:fv/models/user.dart';
-
 
 class ChatMethods {
   static final Firestore _firestore = Firestore.instance;
 
   final CollectionReference _messageCollection =_firestore.collection(MESSAGES_COLLECTION);
 
-  final CollectionReference _userCollection =_firestore.collection(USERS_COLLECTION);
+  final CollectionReference _userCollection = _firestore.collection(USERS_COLLECTION);
 
-   final CollectionReference _timeSlotCollection =_firestore.collection(TIMESLOT_COLLECTION);
+  final CollectionReference _timeSlotCollection =_firestore.collection(TIMESLOT_COLLECTION);
 
   Future<void> addMessageToDb(
       Message message, User sender, User receiver) async {
@@ -31,6 +31,25 @@ class ChatMethods {
         .collection(message.senderId)
         .add(map);
   }
+
+  //   Future<void> addTimeslotOrderToDb(
+  //     Order order, User buyer, User seller) async {
+  //   var map = order.toMap();
+
+  //   await _timeSlotCollection
+  //       .document(order.uid)
+  //       .collection(order.receiverId)
+  //       .add(map);
+
+  //   addToContacts(senderId: message.senderId, receiverId: message.receiverId);
+
+  //   return await _timeSlotCollection
+  //       .document(message.receiverId)
+  //       .collection(message.senderId)
+  //       .add(map);
+  // }
+
+  
 
   DocumentReference getContactsDocument({String of, String forContact}) =>
       _userCollection

@@ -2,48 +2,52 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Order  {
   String uid;
-  Timestamp addedOn;
+
   bool isBought;
   String buyerId;
+  String sellerId;
   Timestamp boughtOn;
-  DateTime ts;
-  int duration;
+  DateTime slotTime;
+  int slotDuration;
   int price;
 
   Order({
     this.uid,
-    this.addedOn,
+
     this.isBought,
     this.buyerId,
+    this.sellerId,
     this.boughtOn,
-    this.ts,
-    this.duration,
+    this.slotTime,
+    this.slotDuration,
     this.price
 
   });
 
-  Map toMap(Order order) {
+  Map toMap() {
+    
     var data = Map<String, dynamic>();
-    data['seller_id'] = order.uid;
-    data['added_on'] = order.addedOn;
-    data['is_bought'] = order.isBought;
-    data['buyer_id'] = order.buyerId;
-    data['bought_on'] = order.boughtOn;
-    data['ts'] = order.ts;
-    data['duration'] = order.duration;
-    data['price'] = order.price;
+    data['seller_id'] = this.uid;
+
+    data['is_bought'] = this.isBought;
+    data['buyer_id'] = this.buyerId;
+    data['seller_id'] = this.sellerId;
+    data['bought_on'] = this.boughtOn;
+    data['slot_time'] = this.slotTime;
+    data['slot_duration'] = this.slotDuration;
+    data['price'] = this.price;
     return data;
   }
 
   Order.fromMap(Map<String, dynamic> mapData) {
     this.uid = mapData['seller_id'];
-    this.addedOn = mapData["added_on"];
+
     this.isBought = mapData["is_bought"];
     this.buyerId = mapData['buyer_id'];
+    this.sellerId = mapData['seller_id'];
     this.boughtOn = mapData["bought_on"];
-    this.ts = mapData["ts"];
-    this.duration = mapData["duration"];
+    this.slotTime = mapData["slot_time"];
+    this.slotDuration = mapData["slot_duration"];
     this.price = mapData["price"];
-
   }
 }

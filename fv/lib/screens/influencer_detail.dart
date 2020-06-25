@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/models/order.dart';
+import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/order_methods.dart';
 // import 'package:fv/widgets/nmButton.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fv/models/user.dart';
@@ -8,7 +12,9 @@ import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/screens/chatscreens/chat_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/nmBox.dart';
+import 'package:provider/provider.dart';
 // import 'package:fv/widgets/priceCard.dart';
+import 'dart:math';
 
 // import 'package:smooth_star_rating/smooth_star_rating.dart';
 // import 'package:fv/models/influencer.dart';
@@ -28,11 +34,15 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   AnimationController controller;
   Animation animation;
   Animation anim;
+
+  final OrderMethods _orderMethods = OrderMethods();
+
   @override
   void initState() {
     super.initState();
 
-    controller =AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
     anim = TextStyleTween(
@@ -62,6 +72,65 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
+    sendOrder(int sTime, int sDuration) {
+      int orderPrice;
+
+      int _generatePrice() {
+        int basePrice = widget.selectedInfluencer.answerPrice3;
+
+        switch (widget.selectedInfluencer.timeSlots[sDuration]) {
+          case 1:
+            {
+              setState(() {
+                orderPrice = basePrice * 1.333.ceil();
+              });
+            }
+            break;
+
+          case 2:
+            {
+              setState(() {
+                orderPrice = basePrice * 2.667.ceil();
+              });
+            }
+            break;
+
+          default:
+            {
+              setState(() {
+                orderPrice = basePrice;
+              });
+            }
+            break;
+        }
+        return orderPrice;
+      }
+
+      String _randomString() {
+        var rand = new Random();
+        var codeUnits = new List.generate(9, (index) {
+          return rand.nextInt(33) + 89;
+        });
+
+        return new String.fromCharCodes(codeUnits);
+      }
+
+      Order _order = Order(
+          uid: _randomString(),
+          isBought: true,
+          buyerId: userProvider.getUser.uid,
+          sellerId: widget.selectedInfluencer.uid,
+          boughtOn: Timestamp.now(),
+          slotTime: widget.selectedInfluencer.timeSlots[sTime],
+          slotDuration: widget.selectedInfluencer.timeSlots[sDuration],
+          price: _generatePrice());
+
+
+      _orderMethods.addMessageToDb(_message, sender, widget.receiver);
+    }
+
     //bool showAppBar = true;
 
     var screenHeight = MediaQuery.of(context).size.height;
@@ -94,7 +163,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                 width: screenWidth,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rd.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2016%2F03%2F03-nighttime-habits-great-skin-products.jpg&f=1&nofb=1'),
+                      image: NetworkImage(
+                          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rd.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2016%2F03%2F03-nighttime-habits-great-skin-products.jpg&f=1&nofb=1'),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -895,9 +965,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0),
                 child: GestureDetector(
-                  onTap: () => 
-                    Navigator.pop(context),
-                  
+                  onTap: () => Navigator.pop(context),
                   child: Container(
                     height: 40.0,
                     width: 40.0,
