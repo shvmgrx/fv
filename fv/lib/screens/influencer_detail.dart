@@ -15,6 +15,7 @@ import 'package:fv/widgets/nmBox.dart';
 import 'package:provider/provider.dart';
 // import 'package:fv/widgets/priceCard.dart';
 import 'dart:math';
+import 'package:intl/intl.dart';
 
 // import 'package:smooth_star_rating/smooth_star_rating.dart';
 // import 'package:fv/models/influencer.dart';
@@ -39,37 +40,37 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
   bool showts1 = false;
   bool ts1Bought = false;
-  DateTime ts1;
+  String ts1;
   int ts1Duration;
 
   bool showts2 = false;
   bool ts2Bought = false;
-  DateTime ts2;
+  String ts2;
   int ts2Duration;
 
   bool showts3 = false;
   bool ts3Bought = false;
-  DateTime ts3;
+  String ts3;
   int ts3Duration;
 
   bool showts4 = false;
   bool ts4Bought = false;
-  DateTime ts4;
+  String ts4;
   int ts4Duration;
 
   bool showts5 = false;
   bool ts5Bought = false;
-  DateTime ts5;
+  String ts5;
   int ts5Duration;
 
   bool showts6 = false;
   bool ts6Bought = false;
-  DateTime ts6;
+  String ts6;
   int ts6Duration;
 
   bool showts7 = false;
   bool ts7Bought = false;
-  DateTime ts7;
+  String ts7;
   int ts7Duration;
 
   @override
@@ -88,31 +89,40 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     controller.addListener(() {
       setState(() {});
     });
-    getOrders();
+
+   
   }
 
-   getOrders() {
-
-      setState(() {
-        ts1Duration=widget.selectedInfluencer.timeSlots['ttDurations'][0];
-        ts2Duration=widget.selectedInfluencer.timeSlots['ttDurations'][1];
-        ts3Duration=widget.selectedInfluencer.timeSlots['ttDurations'][2];
-        ts4Duration=widget.selectedInfluencer.timeSlots['ttDurations'][3];
-        ts5Duration=widget.selectedInfluencer.timeSlots['ttDurations'][4];
-        ts6Duration=widget.selectedInfluencer.timeSlots['ttDurations'][5];
-        ts7Duration=widget.selectedInfluencer.timeSlots['ttDurations'][6];
-
-        ts1=widget.selectedInfluencer.timeSlots['ttSlots'][0];
-        ts2=widget.selectedInfluencer.timeSlots['ttSlots'][1];
-        ts3=widget.selectedInfluencer.timeSlots['ttSlots'][2];
-        ts4=widget.selectedInfluencer.timeSlots['ttSlots'][3];
-        ts5=widget.selectedInfluencer.timeSlots['ttSlots'][4];
-        ts6=widget.selectedInfluencer.timeSlots['ttSlots'][5];
-        ts7=widget.selectedInfluencer.timeSlots['ttSlots'][6];
-
-      });
-
+    String dateMaker(Timestamp theSetDate) {
+   
+      var temp= (theSetDate==null)? Timestamp.now() : theSetDate.toDate();
+      var formatter = new DateFormat('MMMM d, HH:mm');
+      String convertedDate = formatter.format(temp);
+      return convertedDate;
     }
+
+    int durationMaker(int durationType) {
+
+      int mins;
+
+      switch (durationType) {
+        case 0:
+          mins= 10;
+          break;
+        case 1:
+          mins= 25;
+          break;
+        case 2:
+          mins= 45;
+          break;
+        default:
+          mins= 5;
+      }
+      
+      return mins;
+    }
+
+
 
   @override
   void dispose() {
@@ -132,6 +142,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
+
+    
+      setState(() {
+        ts1 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][0]);
+        // ts2 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][1]);
+        // ts3 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][2]);
+        // ts4 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][3]);
+        // ts5 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][4]);
+        // ts6 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][5]);
+        // ts7 = dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][6]);
+
+        ts1Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][0]);
+        ts2Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][1]);
+        ts3Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][2]);
+        ts4Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][3]);
+        ts5Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][4]);
+        ts6Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][5]);
+        ts7Duration = durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][6]);
+
+      });
+    
 
     sendOrder(int sTime, int sDuration) {
       int orderPrice;
@@ -189,8 +220,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       _orderMethods.addOrderToDb(_order);
     }
 
-   
 
+  
     //bool showAppBar = true;
 
     var screenHeight = MediaQuery.of(context).size.height;
@@ -549,12 +580,20 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Text("$ts1 - 35 mins",
+                                          Text(
+                                              "$ts1  $ts1Duration mins",
                                               style: TextStyles
                                                   .timeTextDetailStyle),
                                           GestureDetector(
                                             onTap: () {
-                                              print(widget.selectedInfluencer.timeSlots['ttDurations'][0]);
+                                              var e = widget.selectedInfluencer
+                                                  .timeSlots['ttSlots'][0]
+                                                  .toDate();
+                                              var formatter =
+                                                  new DateFormat('MMMM d, H:m');
+                                              String formatted =
+                                                  formatter.format(e);
+                                              print(ts1Duration);
                                             },
                                             child: Container(
                                               // color:Colors.orange,

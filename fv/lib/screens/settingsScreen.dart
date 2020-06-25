@@ -79,8 +79,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
 
 
-
-
   bool showts1 = true;
   bool ts1Set = false;
   int ts1Changed = 0;
