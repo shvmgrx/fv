@@ -348,7 +348,7 @@ class TextStyles {
           static final TextStyle timeSlotDetails = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
-    color: UniversalVariables.blackColor,
+    color: UniversalVariables.standardWhite,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(

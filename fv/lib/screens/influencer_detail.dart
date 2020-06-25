@@ -37,6 +37,41 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
   final OrderMethods _orderMethods = OrderMethods();
 
+  bool showts1 = false;
+  bool ts1Bought = false;
+  DateTime ts1;
+  int ts1Duration;
+
+  bool showts2 = false;
+  bool ts2Bought = false;
+  DateTime ts2;
+  int ts2Duration;
+
+  bool showts3 = false;
+  bool ts3Bought = false;
+  DateTime ts3;
+  int ts3Duration;
+
+  bool showts4 = false;
+  bool ts4Bought = false;
+  DateTime ts4;
+  int ts4Duration;
+
+  bool showts5 = false;
+  bool ts5Bought = false;
+  DateTime ts5;
+  int ts5Duration;
+
+  bool showts6 = false;
+  bool ts6Bought = false;
+  DateTime ts6;
+  int ts6Duration;
+
+  bool showts7 = false;
+  bool ts7Bought = false;
+  DateTime ts7;
+  int ts7Duration;
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +88,31 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     controller.addListener(() {
       setState(() {});
     });
+    getOrders();
   }
+
+   getOrders() {
+
+      setState(() {
+        ts1Duration=widget.selectedInfluencer.timeSlots['ttDurations'][0];
+        ts2Duration=widget.selectedInfluencer.timeSlots['ttDurations'][1];
+        ts3Duration=widget.selectedInfluencer.timeSlots['ttDurations'][2];
+        ts4Duration=widget.selectedInfluencer.timeSlots['ttDurations'][3];
+        ts5Duration=widget.selectedInfluencer.timeSlots['ttDurations'][4];
+        ts6Duration=widget.selectedInfluencer.timeSlots['ttDurations'][5];
+        ts7Duration=widget.selectedInfluencer.timeSlots['ttDurations'][6];
+
+        ts1=widget.selectedInfluencer.timeSlots['ttSlots'][0];
+        ts2=widget.selectedInfluencer.timeSlots['ttSlots'][1];
+        ts3=widget.selectedInfluencer.timeSlots['ttSlots'][2];
+        ts4=widget.selectedInfluencer.timeSlots['ttSlots'][3];
+        ts5=widget.selectedInfluencer.timeSlots['ttSlots'][4];
+        ts6=widget.selectedInfluencer.timeSlots['ttSlots'][5];
+        ts7=widget.selectedInfluencer.timeSlots['ttSlots'][6];
+
+      });
+
+    }
 
   @override
   void dispose() {
@@ -127,15 +186,16 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           slotDuration: widget.selectedInfluencer.timeSlots[sDuration],
           price: _generatePrice());
 
-
       _orderMethods.addOrderToDb(_order);
     }
+
+   
 
     //bool showAppBar = true;
 
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold( 
+    return Scaffold(
       body: SwipeDetector(
         onSwipeUp: () {
           pullUp();
@@ -467,6 +527,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                               scrollDirection: Axis.vertical,
                               child: Column(
                                 children: <Widget>[
+                                  //TS1
                                   Container(
                                     decoration: BoxDecoration(
                                       color: UniversalVariables.standardWhite,
@@ -478,42 +539,45 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       ),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(top: 18.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 18.0,
+                                          left: 8,
+                                          right: 8,
+                                          bottom: 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Text("July 23, 16:00",
+                                          Text("$ts1 - 35 mins",
                                               style: TextStyles
                                                   .timeTextDetailStyle),
-                                          Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.gold2,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
+                                          GestureDetector(
+                                            onTap: () {
+                                              print(widget.selectedInfluencer.timeSlots['ttDurations'][0]);
+                                            },
+                                            child: Container(
+                                              // color:Colors.orange,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.gold2,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
                                               ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  // Icon(
-                                                  //   Icons.shopping_cart,
-                                                  //   color: UniversalVariables
-                                                  //       .standardWhite,
-                                                  // ),
-                                                  Text("BOOK",
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Center(
+                                                  child: Text("BOOK",
                                                       style: TextStyles
                                                           .timeSlotDetails),
-                                                ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -557,17 +621,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
-                                                  Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ],
+                                              child: Center(
+                                                child: Text("BOOK",
+                                                    style: TextStyles
+                                                        .timeSlotDetails),
                                               ),
                                             ),
                                           ),
@@ -611,17 +668,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
-                                                  Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ],
+                                              child: Center(
+                                                child: Text("BOOK",
+                                                    style: TextStyles
+                                                        .timeSlotDetails),
                                               ),
                                             ),
                                           ),
@@ -665,17 +715,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
-                                                  Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ],
+                                              child: Center(
+                                                child: Text("BOOK",
+                                                    style: TextStyles
+                                                        .timeSlotDetails),
                                               ),
                                             ),
                                           ),
@@ -719,17 +762,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
-                                                  Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ],
+                                              child: Center(
+                                                child: Text("BOOK",
+                                                    style: TextStyles
+                                                        .timeSlotDetails),
                                               ),
                                             ),
                                           ),
@@ -773,17 +809,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
-                                                  Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ],
+                                              child: Center(
+                                                child: Text("BOOK",
+                                                    style: TextStyles
+                                                        .timeSlotDetails),
                                               ),
                                             ),
                                           ),
@@ -796,14 +825,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       color: UniversalVariables.standardWhite,
                                       borderRadius: BorderRadius.only(
                                         //  topLeft: Radius.circular(10),
-                                        //  topRight: Radius.circular(10),
+                                        //   topRight: Radius.circular(10),
                                         bottomLeft: Radius.circular(50),
                                         bottomRight: Radius.circular(50),
                                       ),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 80.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0,
+                                          left: 8,
+                                          right: 8,
+                                          bottom: 80),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -828,17 +860,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.shopping_cart,
-                                                    color: UniversalVariables
-                                                        .standardWhite,
-                                                  ),
-                                                  Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ],
+                                              child: Center(
+                                                child: Text("BOOK",
+                                                    style: TextStyles
+                                                        .timeSlotDetails),
                                               ),
                                             ),
                                           ),
