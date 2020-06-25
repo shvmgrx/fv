@@ -1,7 +1,7 @@
   
 const String MESSAGES_COLLECTION = "messages";
 const String USERS_COLLECTION = "users";
-const String TIMESLOT_COLLECTION = "tSlots";
+const String ORDER_COLLECTION = "orders";
 const String CALL_COLLECTION = "call";
 const String CONTACTS_COLLECTION = "contacts";
 

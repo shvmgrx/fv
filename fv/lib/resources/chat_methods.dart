@@ -13,8 +13,6 @@ class ChatMethods {
 
   final CollectionReference _userCollection = _firestore.collection(USERS_COLLECTION);
 
-  final CollectionReference _timeSlotCollection =_firestore.collection(TIMESLOT_COLLECTION);
-
   Future<void> addMessageToDb(
       Message message, User sender, User receiver) async {
     var map = message.toMap();
@@ -31,25 +29,6 @@ class ChatMethods {
         .collection(message.senderId)
         .add(map);
   }
-
-  //   Future<void> addTimeslotOrderToDb(
-  //     Order order, User buyer, User seller) async {
-  //   var map = order.toMap();
-
-  //   await _timeSlotCollection
-  //       .document(order.uid)
-  //       .collection(order.receiverId)
-  //       .add(map);
-
-  //   addToContacts(senderId: message.senderId, receiverId: message.receiverId);
-
-  //   return await _timeSlotCollection
-  //       .document(message.receiverId)
-  //       .collection(message.senderId)
-  //       .add(map);
-  // }
-
-  
 
   DocumentReference getContactsDocument({String of, String forContact}) =>
       _userCollection

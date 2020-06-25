@@ -128,14 +128,14 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           price: _generatePrice());
 
 
-      _orderMethods.addMessageToDb(_message, sender, widget.receiver);
+      _orderMethods.addOrderToDb(_order);
     }
 
     //bool showAppBar = true;
 
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return Scaffold( 
       body: SwipeDetector(
         onSwipeUp: () {
           pullUp();
