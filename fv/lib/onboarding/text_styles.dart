@@ -180,7 +180,7 @@ class TextStyles {
     fontSize: 15,
     fontWeight: FontWeight.w400,
   color: UniversalVariables.blackColor,
-    fontFamily: 'Poppins',
+   // fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
