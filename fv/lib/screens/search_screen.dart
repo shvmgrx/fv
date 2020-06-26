@@ -167,13 +167,13 @@ class _SearchScreenState extends State<SearchScreen> {
           title: Text(
             searchedUser.username,
             style: TextStyle(
-              color: UniversalVariables.standardViolet,
+              color: UniversalVariables.blackColor,
               fontWeight: FontWeight.bold,
             ),
           ),
           subtitle: Text(
             searchedUser.name,
-            style: TextStyle(color: UniversalVariables.standardPink),
+            style: TextStyle(color: UniversalVariables.gold2),
           ),
         );
       }),
