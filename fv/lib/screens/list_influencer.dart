@@ -52,7 +52,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
   bool category2Pressed = false;
   bool category3Pressed = false;
   bool category4Pressed = false;
-  bool loggedUserisInfCert =false;
+  bool loggedUserisInfCert = false;
   int loggedUseranswerPrice3;
   String pageCategory;
   var loggedUserData;
@@ -187,19 +187,30 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
               //     ),
               //   ),
               // ),
-           Container(
-          margin: EdgeInsets.only(left:70,right: 70,top:20),
-          width: 90,
-          height: 150,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-           image: DecorationImage(
-                    image: NetworkImage(loggedInprofilePhoto != null
-                        ? loggedInprofilePhoto
-                        : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
-                    fit: BoxFit.fill,
-                  ),
-          ),),
+              //    Container(
+              //  // margin: EdgeInsets.only(left:70,right: 70,top:20),
+              //  // width: 350,
+              //   height: 200,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //    image: DecorationImage(
+              //             image: NetworkImage(loggedInprofilePhoto != null
+              //                 ? loggedInprofilePhoto
+              //                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
+              //             fit: BoxFit.fitWidth,
+              //           ),
+              //   ),
+              //   ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal:40.0),
+                child: CircleAvatar(
+                    backgroundColor: UniversalVariables.senderColor,
+                    radius: 100,
+                    backgroundImage: NetworkImage(loggedInprofilePhoto != null
+                               ? loggedInprofilePhoto
+                              : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Align(
@@ -267,7 +278,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                 ),
               ),
               Divider(),
-              SizedBox(height:20),
+              SizedBox(height: 20),
               ListTile(
                   title: new Text(
                     "Feedback",
@@ -348,31 +359,31 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                       style: TextStyles.appNameLogoStyle,
                       textAlign: TextAlign.center),
                 ),
-
                 Align(
                   alignment: Alignment.topRight,
                   child: Row(
                     children: <Widget>[
                       Visibility(
-                        visible: loggedUserisInfCert==null? false: loggedUserisInfCert,
-                    child: Row(
-                      children: <Widget>[
-                       
-                        // IconButton(
-                        // icon: Icon(
-                        //     Icons.attach_money,
-                        //     color: UniversalVariables.gold2,
-                        // ),
-                        // onPressed: () {
-                        //     Navigator.pushNamed(context, "/messages_screen");
-                        // },
-                  // ),
-                   Text("\$ 243",
-                   
-                   style: TextStyles.moneyStyle,),
-
-                      ],
-                    ),
+                        visible: loggedUserisInfCert == null
+                            ? false
+                            : loggedUserisInfCert,
+                        child: Row(
+                          children: <Widget>[
+                            // IconButton(
+                            // icon: Icon(
+                            //     Icons.attach_money,
+                            //     color: UniversalVariables.gold2,
+                            // ),
+                            // onPressed: () {
+                            //     Navigator.pushNamed(context, "/messages_screen");
+                            // },
+                            // ),
+                            Text(
+                              "\$ 243",
+                              style: TextStyles.moneyStyle,
+                            ),
+                          ],
+                        ),
                       ),
                       IconButton(
                         icon: Icon(
@@ -569,7 +580,6 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
             //      DummyUser9(),
             //    ],
             //  ),
-             
 
             Container(
               margin: EdgeInsets.only(left: 5),
@@ -636,7 +646,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           children: <Widget>[
             Container(
                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3,
+                width: MediaQuery.of(context).size.width / 3,
                 color: UniversalVariables.transparent),
             // Positioned(
             //     left: 15.0,
@@ -727,13 +737,12 @@ class DummyUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(top:20.0,left:3,right:3,bottom:3),
+        padding: EdgeInsets.only(top: 20.0, left: 3, right: 3, bottom: 3),
         child: Stack(
           children: <Widget>[
             Container(
                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
-                
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -804,12 +813,12 @@ class DummyUser2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(top:20.0,left:3,right:3,bottom:3),
+        padding: EdgeInsets.only(top: 20.0, left: 3, right: 3, bottom: 3),
         child: Stack(
           children: <Widget>[
             Container(
-                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -880,12 +889,12 @@ class DummyUser3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(top:20.0,left:3,right:3,bottom:3),
+        padding: EdgeInsets.only(top: 20.0, left: 3, right: 3, bottom: 3),
         child: Stack(
           children: <Widget>[
             Container(
-                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -960,8 +969,8 @@ class DummyUser4 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                  height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1036,8 +1045,8 @@ class DummyUser5 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                  height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1111,8 +1120,8 @@ class DummyUser6 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1187,8 +1196,8 @@ class DummyUser7 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1263,8 +1272,8 @@ class DummyUser8 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1339,8 +1348,8 @@ class DummyUser9 extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                 height: 170.0,
-                width: MediaQuery.of(context).size.width/3.2,
+                height: 170.0,
+                width: MediaQuery.of(context).size.width / 3.2,
                 color: UniversalVariables.transparent),
             Positioned(
                 left: 1.0,
@@ -1401,4 +1410,3 @@ class DummyUser9 extends StatelessWidget {
     );
   }
 }
-
