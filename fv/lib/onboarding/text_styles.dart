@@ -178,8 +178,21 @@ class TextStyles {
 
     static final TextStyle timeTextDetailStyle = TextStyle(
     fontSize: 15,
-    fontWeight: FontWeight.w500,
-  color: UniversalVariables.grey1,
+    fontWeight: FontWeight.w400,
+  color: UniversalVariables.blackColor,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
+      static final TextStyle timeDurationDetailStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
