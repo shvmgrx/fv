@@ -174,7 +174,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       int _generatePrice() {
         int basePrice = widget.selectedInfluencer.answerPrice3;
 
-        switch (widget.selectedInfluencer.timeSlots[sDuration]) {
+        switch (widget.selectedInfluencer.timeSlots['ttDurations'][sDuration]) {
           case 1:
             {
               setState(() {
@@ -211,14 +211,15 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         return new String.fromCharCodes(codeUnits);
       }
 
+
       Order _order = Order(
           uid: _randomString(),
           isBought: true,
           buyerId: userProvider.getUser.uid,
           sellerId: widget.selectedInfluencer.uid,
           boughtOn: Timestamp.now(),
-          slotTime: widget.selectedInfluencer.timeSlots[sTime],
-          slotDuration: widget.selectedInfluencer.timeSlots[sDuration],
+          slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
+          slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration],
           price: _generatePrice());
 
       _orderMethods.addOrderToDb(_order);
@@ -601,27 +602,32 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
                                         Padding(
                                          padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft:
-                                                    Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
+                                          child: InkWell(
+                                          onTap: () =>{
+                                            sendOrder(0, 0),
+                                          },
+                                                child: Container(
+                                              // color:Colors.orange,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.separatorColor,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
                                               ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Center(
+                                                  child: Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -666,26 +672,31 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                         ),
                                         Padding(
                                             padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
+                                          child: InkWell(
+                                            onTap: () =>{
+                                            sendOrder(1, 1),
+                                          },
+                                                                                      child: Container(
+                                              // color:Colors.orange,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.separatorColor,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
                                               ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Center(
+                                                  child: Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -730,26 +741,31 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
+                                          child: InkWell(
+                                            onTap: () =>{
+                                            sendOrder(2, 2),
+                                          },
+                                                                                      child: Container(
+                                              // color:Colors.orange,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.separatorColor,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
                                               ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Center(
+                                                  child: Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -794,26 +810,31 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                         ),
                                         Padding(
                                            padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
+                                          child: InkWell(
+                                            onTap: () =>{
+                                            sendOrder(3, 3),
+                                          },
+                                                                                      child: Container(
+                                              // color:Colors.orange,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.separatorColor,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
                                               ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Center(
+                                                  child: Text("BOOK",
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
                                               ),
                                             ),
                                           ),

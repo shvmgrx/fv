@@ -7,7 +7,7 @@ class Order  {
   String buyerId;
   String sellerId;
   Timestamp boughtOn;
-  DateTime slotTime;
+  Timestamp slotTime;
   int slotDuration;
   int price;
 
