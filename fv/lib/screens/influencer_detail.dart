@@ -216,6 +216,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           uid: _randomString(),
           isBought: true,
           buyerId: userProvider.getUser.uid,
+          buyerName: userProvider.getUser.name,
+          buyerPhoto: userProvider.getUser.profilePhoto,
           sellerId: widget.selectedInfluencer.uid,
           boughtOn: Timestamp.now(),
           slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],

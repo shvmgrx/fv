@@ -255,7 +255,7 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                     getUserDetails(buyerOrder.buyerId);
                     // print(currentBuyer.name);
 
-                      return Text("${buyerOrder.buyerId} : ");
+                      return Text("${buyerOrder.buyerId} : ${buyerOrder.buyerName}  ");
 
     //                   return CustomTile(
     //   mini: false,

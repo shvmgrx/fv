@@ -5,6 +5,8 @@ class Order  {
 
   bool isBought;
   String buyerId;
+  String buyerName;
+  String buyerPhoto;
   String sellerId;
   Timestamp boughtOn;
   Timestamp slotTime;
@@ -13,9 +15,10 @@ class Order  {
 
   Order({
     this.uid,
-
     this.isBought,
     this.buyerId,
+    this.buyerName,
+    this.buyerPhoto,
     this.sellerId,
     this.boughtOn,
     this.slotTime,
@@ -31,6 +34,8 @@ class Order  {
 
     data['is_bought'] = this.isBought;
     data['buyer_id'] = this.buyerId;
+    data['buyer_name'] = this.buyerName;
+    data['buyer_photo'] = this.buyerPhoto;
     data['seller_id'] = this.sellerId;
     data['bought_on'] = this.boughtOn;
     data['slot_time'] = this.slotTime;
@@ -44,6 +49,8 @@ class Order  {
 
     this.isBought = mapData["is_bought"];
     this.buyerId = mapData['buyer_id'];
+    this.buyerName = mapData['buyer_name'];
+    this.buyerPhoto = mapData['buyer_photo'];
     this.sellerId = mapData['seller_id'];
     this.boughtOn = mapData["bought_on"];
     this.slotTime = mapData["slot_time"];
