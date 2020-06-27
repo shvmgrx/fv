@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/contact.dart';
+import 'package:fv/models/order.dart';
 import 'package:fv/models/user.dart';
+import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/chat_methods.dart';
 import 'package:fv/resources/firebase_repository.dart';
@@ -16,6 +18,7 @@ import 'package:fv/screens/pageviews/widgets/quiet_box.dart';
 import 'package:fv/screens/pageviews/widgets/user_circle.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/cust_app_bar.dart';
+import 'package:fv/widgets/custom_tile.dart';
 import 'package:provider/provider.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -27,15 +30,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
   bool chatPressed = true;
   bool videoChatPressed = false;
 
-   
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
-
   }
   // final GlobalKey<RefreshIndicatorState> _refreshIndicatorContactKey =
   //  new GlobalKey<RefreshIndicatorState>();
@@ -184,66 +182,93 @@ class VideoChatListContainer extends StatefulWidget {
 
 class _VideoChatListContainerState extends State<VideoChatListContainer> {
   final OrderMethods _orderMethods = OrderMethods();
-    FirebaseRepository _repository = FirebaseRepository();
+  FirebaseRepository _repository = FirebaseRepository();
 
-List<User> buyerList;
+  List<Order> ordersList;
 
-@override
+  Future<QuerySnapshot> Qs;
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _repository.getCurrentUser().then((FirebaseUser user) {
-        _orderMethods.fetchForSellers(user).then((List<User> list) {
-        setState(() {
-          buyerList = list;
-        });
-      });
-     });
+    // _repository.getCurrentUser().then((FirebaseUser user) {
+    //     _orderMethods.fetchForSellers(user).then((List<Order> list) {
+    //     setState(() {
+    //       ordersList = list;
+    //     });
+    //   });
+    //  });
   }
+
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
     return Container(
-      child: Center(
-        child: GestureDetector(
-          onTap: () => {
-          print(buyerList.length)
-          },
-          child: Text("videocalls"),
-        ),
-      ),
+      child: StreamBuilder<QuerySnapshot>(
+              stream: _orderMethods.fetchSellerOrders(
+                userId: userProvider.getUser.uid,
+              ),
+              builder: (context, snapshot) {
 
-      // child: StreamBuilder<QuerySnapshot>(
+                if (snapshot.hasData) {
+                  var docList = snapshot.data.documents;
 
-      //     stream: _orderMethods.fetchSellerOrders(
-      //       userId: userProvider.getUser.uid,
-      //     ),
-      //     builder: (context, snapshot) {
+                  if (docList.isEmpty) {
+                    return QuietBox();
+                  }
 
-      //       print(_orderMethods.fetchSellerOrders(
-      //       userId: userProvider.getUser.uid,
-      //     ));
+                  // for (var i = 0; i < docList.length; i++) {
+                  //   print(docList[i].data['buyer_id']);
+                  // }
 
-      //       if (snapshot.hasData) {
-      //         var docList = snapshot.data.documents;
-      //         print(docList);
-      //         if (docList.isEmpty) {
-      //           return QuietBox();
-      //         }
+                  return ListView.builder(
+                    padding: EdgeInsets.all(10),
+                    itemCount: docList.length,
+                    itemBuilder: (context, index) {
+                      Order buyerOrder = Order.fromMap(docList[index].data);
 
-      //         // return ListView.builder(
-      //         //   padding: EdgeInsets.all(10),
-      //         //   itemCount: docList.length,
-      //         //   itemBuilder: (context, index) {
-      //         //     Contact contact = Contact.fromMap(docList[index].data);
+                      return Text(buyerOrder.buyerId);
 
-      //         //     return ContactView(contact);
-      //         //   },
-      //         // );
-      //       }
-
-      //     }),
+    //                   return CustomTile(
+    //   mini: false,
+    //   onTap: () => {},
+     
+    //   title: Text(
+    //     (buyerOrder != null ? buyerOrder.buyerId : null) != null ? buyerOrder.slotDuration : "..",
+    //     style: TextStyles.chatListProfileName,
+    //   ),
+    //   // subtitle: LastMessageContainer(
+    //   //   stream: _chatMethods.fetchLastMessageBetween(
+    //   //     senderId: userProvider.getUser.uid,
+    //   //     receiverId: contact.uid,
+    //   //   ),
+    //   // ),
+    //   // leading: Container(
+    //   //   constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
+    //   //   child: Stack(
+    //   //     children: <Widget>[
+    //   //       CachedImage(
+    //   //         contact.profilePhoto,
+    //   //         radius: 80,
+    //   //         isRound: true,
+    //   //       ),
+    //   //       OnlineDotIndicator(
+    //   //         uid: contact.uid,
+    //   //       ),
+    //   //     ],
+    //   //   ),
+    //   // ),
+    // );
+                    },
+                  );
+                }
+              }),
     );
   }
+
+
+  
 }
+

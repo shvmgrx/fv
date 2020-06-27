@@ -603,9 +603,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                   //     }),
                   if (category1Pressed)
                     if (featuredList != null)
-                      ...featuredList.map((e) {
-                        return buildInfluencerGrid(e);
-                      }).toList(),
+                      ...featuredList.map((e) {return buildInfluencerGrid(e);}).toList(),
 
                   if (category2Pressed)
                     if (trendingList != null)

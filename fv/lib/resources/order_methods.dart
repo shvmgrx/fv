@@ -33,11 +33,18 @@ class OrderMethods {
     _firestore.collection(BUYER_ORDER_COLLECTION).document(order.uid).setData(map);
   }
 
-  Stream<QuerySnapshot> fetchSellerOrders({String userId}) => _sellerOrderCollection
-      .document(userId)
-      .collection(SELLER_ORDER_COLLECTION)
+  Stream<QuerySnapshot> fetchSellerOrders({String userId}) => _orderCollection
+    //  .document(userId)
+    //  .collection(ORDER_COLLECTION)
+      .where("seller_id", isEqualTo: userId)
       .snapshots();
 
+
+  // Future<Order> fetchFutureOrders({String userId}) => _orderCollection
+  //   //  .document(userId)
+  //   //  .collection(ORDER_COLLECTION)
+  //     .where("seller_id", isEqualTo: userId)
+  //     .snapshots();
 
  Future<QuerySnapshot> fetchSell() async {
         QuerySnapshot result = await firestore
@@ -45,21 +52,92 @@ class OrderMethods {
         //.where(EMAIL_FIELD, isEqualTo: user.email)
         .getDocuments();
 }
+//old working function
+  // Future<List<User>> fetchForSellers(user) async {
+  //   List<User> buyerList = List<User>();
 
-  Future<List<User>> fetchForSellers(user) async {
-    List<User> buyerList = List<User>();
+  //   QuerySnapshot querySnapshot = await firestore
+  //       .collection(ORDER_COLLECTION)
+  //       .where("seller_id", isEqualTo: user.uid)
+  //       .getDocuments();
+
+  //       print("object");
+  //       print(querySnapshot.documents.length);
+
+  //   for (var i = 0; i < querySnapshot.documents.length; i++) {
+   
+  //       buyerList.add(User.fromMap(querySnapshot.documents[i].data));
+  
+  //   }
+  //   return buyerList;
+  // }
+
+
+//works and send logged user orders as list
+  //   Future<List<Order>> fetchForSellers(user) async {
+  //   List<Order> loggedUserOrdersList = List<Order>();
+
+  //   QuerySnapshot querySnapshot = await firestore
+  //       .collection(ORDER_COLLECTION)
+  //       .where("seller_id", isEqualTo: user.uid)
+  //       .getDocuments();
+
+  //       print("object");
+  //       print(querySnapshot.documents.length);
+
+  //   for (var i = 0; i < querySnapshot.documents.length; i++) {
+   
+  //       loggedUserOrdersList.add(Order.fromMap(querySnapshot.documents[i].data));
+  
+  //   }
+  //   return loggedUserOrdersList;
+  // }
+
+      Future<List<Order>> ff2(user) async {
+    List<Order> loggedUserOrdersList = List<Order>();
 
     QuerySnapshot querySnapshot = await firestore
         .collection(ORDER_COLLECTION)
         .where("seller_id", isEqualTo: user.uid)
         .getDocuments();
 
+        print("object");
+        print(querySnapshot.documents.length);
+
     for (var i = 0; i < querySnapshot.documents.length; i++) {
    
-        buyerList.add(User.fromMap(querySnapshot.documents[i].data));
+        loggedUserOrdersList.add(Order.fromMap(querySnapshot.documents[i].data));
   
     }
-    return buyerList;
+    return loggedUserOrdersList;
+  }
+
+
+
+
+
+     Future<QuerySnapshot> fetchForSellers(user) async {
+    List<Order> loggedUserOrdersList = List<Order>();
+
+      // Stream<QuerySnapshot> fetchContacts({String userId}) => _userCollection
+      // .document(userId)
+      // .collection(CONTACTS_COLLECTION)
+      // .snapshots();
+
+    QuerySnapshot querySnapshot = await firestore
+        .collection(ORDER_COLLECTION)
+        .where("seller_id", isEqualTo: user.uid)
+        .getDocuments();
+
+        print("object");
+        print(querySnapshot.documents.length);
+
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+   
+        loggedUserOrdersList.add(Order.fromMap(querySnapshot.documents[i].data));
+  
+    }
+    return querySnapshot;
   }
 
 }
