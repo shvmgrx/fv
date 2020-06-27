@@ -183,6 +183,12 @@ class VideoChatListContainer extends StatefulWidget {
 class _VideoChatListContainerState extends State<VideoChatListContainer> {
   final OrderMethods _orderMethods = OrderMethods();
   FirebaseRepository _repository = FirebaseRepository();
+  static final Firestore _firestore = Firestore.instance;
+
+  User currentBuyer;
+
+    static final CollectionReference _userCollection =
+      _firestore.collection(USERS_COLLECTION);
 
   List<Order> ordersList;
 
@@ -201,9 +207,26 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
     //  });
   }
 
+
+
+  
+
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
+
+     Future<void> getUserDetails(String buyerId) async {
+   
+
+    DocumentSnapshot documentSnapshot =
+        await _userCollection.document(buyerId).get();
+
+        setState(() {
+          currentBuyer=User.fromMap(documentSnapshot.data);
+        });
+
+  
+  }
 
     return Container(
       child: StreamBuilder<QuerySnapshot>(
@@ -229,7 +252,10 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                     itemBuilder: (context, index) {
                       Order buyerOrder = Order.fromMap(docList[index].data);
 
-                      return Text(buyerOrder.buyerId);
+                    getUserDetails(buyerOrder.buyerId);
+                    // print(currentBuyer.name);
+
+                      return Text("${buyerOrder.buyerId} : ");
 
     //                   return CustomTile(
     //   mini: false,

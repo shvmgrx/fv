@@ -14,11 +14,12 @@ class FirebaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final Firestore firestore = Firestore.instance;
+  static final Firestore _firestore = Firestore.instance;
 
   static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
 
-  static final Firestore _firestore = Firestore.instance;
+  
 
   final CollectionReference _messageCollection =
       _firestore.collection(MESSAGES_COLLECTION);
