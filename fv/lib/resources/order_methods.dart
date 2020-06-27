@@ -37,6 +37,7 @@ class OrderMethods {
     //  .document(userId)
     //  .collection(ORDER_COLLECTION)
       .where("seller_id", isEqualTo: userId)
+      .orderBy('slot_time', descending: false)
       .snapshots();
 
 

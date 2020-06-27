@@ -12,7 +12,9 @@ import 'package:fv/resources/chat_methods.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/resources/order_methods.dart';
 import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
+import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
 import 'package:fv/screens/pageviews/widgets/contact_view.dart';
+import 'package:fv/screens/pageviews/widgets/online_dot_indicator.dart';
 // import 'package:fv/screens/pageviews/widgets/new_chat_button.dart';
 import 'package:fv/screens/pageviews/widgets/quiet_box.dart';
 import 'package:fv/screens/pageviews/widgets/user_circle.dart';
@@ -247,6 +249,7 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                   // }
 
                   return ListView.builder(
+                   // reverse: true,
                     padding: EdgeInsets.all(10),
                     itemCount: docList.length,
                     itemBuilder: (context, index) {
@@ -255,38 +258,42 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                     getUserDetails(buyerOrder.buyerId);
                     // print(currentBuyer.name);
 
-                      return Text("${buyerOrder.buyerId} : ${buyerOrder.buyerName}  ");
+                      // return Text("${buyerOrder.buyerId} : ${buyerOrder.buyerName}  ");
 
-    //                   return CustomTile(
-    //   mini: false,
-    //   onTap: () => {},
+                      return CustomTile(
+      mini: false,
+      onTap: () => {},
      
-    //   title: Text(
-    //     (buyerOrder != null ? buyerOrder.buyerId : null) != null ? buyerOrder.slotDuration : "..",
-    //     style: TextStyles.chatListProfileName,
-    //   ),
-    //   // subtitle: LastMessageContainer(
-    //   //   stream: _chatMethods.fetchLastMessageBetween(
-    //   //     senderId: userProvider.getUser.uid,
-    //   //     receiverId: contact.uid,
-    //   //   ),
-    //   // ),
-    //   // leading: Container(
-    //   //   constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
-    //   //   child: Stack(
-    //   //     children: <Widget>[
-    //   //       CachedImage(
-    //   //         contact.profilePhoto,
-    //   //         radius: 80,
-    //   //         isRound: true,
-    //   //       ),
-    //   //       OnlineDotIndicator(
-    //   //         uid: contact.uid,
-    //   //       ),
-    //   //     ],
-    //   //   ),
-    //   // ),
-    // );
+      title: Text(
+       buyerOrder.buyerName,
+       // style: TextStyles.chatListProfileName,
+      ),
+      subtitle: Text(
+       "${buyerOrder.slotTime.toDate()}",
+       // style: TextStyles.chatListProfileName,
+      ),
+      // LastMessageContainer(
+      //   stream: _chatMethods.fetchLastMessageBetween(
+      //     senderId: userProvider.getUser.uid,
+      //     receiverId: contact.uid,
+      //   ),
+      // ),
+      leading: Container(
+        constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
+        child: Stack(
+          children: <Widget>[
+            CachedImage(
+              buyerOrder.buyerPhoto,
+              radius: 80,
+              isRound: true,
+            ),
+            OnlineDotIndicator(
+              uid: buyerOrder.uid,
+            ),
+          ],
+        ),
+      ),
+    );
                     },
                   );
                 }
