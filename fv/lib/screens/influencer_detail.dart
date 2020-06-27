@@ -222,7 +222,29 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration],
           price: _generatePrice());
 
+      // Order _sellerOrder = Order(
+      //     uid: widget.selectedInfluencer.uid,
+      //     isBought: true,
+      //     buyerId: userProvider.getUser.uid,
+      //     sellerId: widget.selectedInfluencer.uid,
+      //     boughtOn: Timestamp.now(),
+      //     slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
+      //     slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration],
+      //     price: _generatePrice());
+
+      // Order _buyerOrder = Order(
+      //     uid: userProvider.getUser.uid,
+      //     isBought: true,
+      //     buyerId: userProvider.getUser.uid,
+      //     sellerId: widget.selectedInfluencer.uid,
+      //     boughtOn: Timestamp.now(),
+      //     slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
+      //     slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration],
+      //     price: _generatePrice());
+
       _orderMethods.addOrderToDb(_order);
+      // _orderMethods.addOrderToSellerDb(_sellerOrder);
+      // _orderMethods.addOrderToBuyerDb(_buyerOrder);
     }
 
     //bool showAppBar = true;

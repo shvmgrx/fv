@@ -68,15 +68,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
 
   static List ttSlots = new List()..length=7;
-   static List ttDurations = new List()..length=7;
-
+  static List ttDurations = new List()..length=7;
 
 
   Map<String, List> tempTimeslots = {
    "ttSlots": ttSlots,
-   "ttDurations": ttDurations
+   "ttDurations": ttDurations,
   };
-
 
 
   bool showts1 = true;
@@ -85,6 +83,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts1ErrorFlag = false;
   DateTime ts1;
   int ts1Duration;
+  bool isTs1bought= false;
+
 
   bool showts2 = false;
   bool ts2Set = false;
@@ -92,6 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts2ErrorFlag = false;
   DateTime ts2;
   int ts2Duration;
+  bool isTs2bought= false;
 
   bool showts3 = false;
   bool ts3Set = false;
@@ -99,6 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts3ErrorFlag = false;
   DateTime ts3;
   int ts3Duration;
+  bool isTs3bought= false;
 
   bool showts4 = false;
   bool ts4Set = false;
@@ -106,6 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts4ErrorFlag = false;
   DateTime ts4;
   int ts4Duration;
+  bool isTs4bought= false;
 
   bool showts5 = false;
   bool ts5Set = false;
@@ -113,6 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts5ErrorFlag = false;
   DateTime ts5;
   int ts5Duration;
+  bool isTs5bought= false;
 
   bool showts6 = false;
   bool ts6Set = false;
@@ -120,6 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts6ErrorFlag = false;
   DateTime ts6;
   int ts6Duration;
+  bool isTs6bought= false;
 
   bool showts7 = false;
   bool ts7Set = false;
@@ -127,6 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts7ErrorFlag = false;
   DateTime ts7;
   int ts7Duration;
+  bool isTs7bought= false;
 
   bool showts8 = false;
   bool ts8Set = false;
@@ -134,6 +140,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts8ErrorFlag = false;
   DateTime ts8;
   int ts8Duration;
+  bool isTs8bought= false;
 
   bool expertMode;
   bool textMode;

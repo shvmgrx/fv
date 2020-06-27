@@ -46,15 +46,15 @@ class TextStyles {
 
     static final TextStyle profileName = TextStyle(
     fontSize: 25,
-    fontWeight: FontWeight.w900,
+   // fontWeight: FontWeight.w900,
     //color: Color(0xffd07155),
-    fontFamily: 'kiona',
-    shadows: <Shadow>[
-      Shadow(
-        blurRadius: 2.0,
-        color: Colors.white30,
-      ),
-    ],
+//fontFamily: 'kiona',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
   );
 
   static final TextStyle editHeadingName = TextStyle(
@@ -193,7 +193,7 @@ class TextStyles {
     fontSize: 15,
     fontWeight: FontWeight.w600,
   color: UniversalVariables.gold2,
-    fontFamily: 'Poppins',
+   // fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,

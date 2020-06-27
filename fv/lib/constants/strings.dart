@@ -2,6 +2,11 @@
 const String MESSAGES_COLLECTION = "messages";
 const String USERS_COLLECTION = "users";
 const String ORDER_COLLECTION = "orders";
+
+const String SELLER_ORDER_COLLECTION = "sellerOrders";
+
+const String BUYER_ORDER_COLLECTION = "buyerOrders";
+
 const String CALL_COLLECTION = "call";
 const String CONTACTS_COLLECTION = "contacts";
 
