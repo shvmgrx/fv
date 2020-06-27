@@ -3,7 +3,7 @@ import 'package:fv/screens/search_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
 
 
-class QuietBox extends StatelessWidget {
+class VideoQuietBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -17,7 +17,7 @@ class QuietBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "This is where all the chats are listed",
+                "This is where all the videochats are listed",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -37,7 +37,7 @@ class QuietBox extends StatelessWidget {
               SizedBox(height: 25),
               FlatButton(
                 color: UniversalVariables.lightBlueColor,
-                child: Text("START SEARCHING"),
+                child: Text("START BROWSING"),
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -244,10 +244,6 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                     return QuietBox();
                   }
 
-                  // for (var i = 0; i < docList.length; i++) {
-                  //   print(docList[i].data['buyer_id']);
-                  // }
-
                   return ListView.builder(
                    // reverse: true,
                     padding: EdgeInsets.all(10),
