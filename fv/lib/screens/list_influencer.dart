@@ -2293,7 +2293,4 @@ enforceability of the other regulations of this annex shall not be affected.
  
 (4) This annex is subject to the laws of the Federal Republic of Germany.
 
-​
-​
-
 """;
