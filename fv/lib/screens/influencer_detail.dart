@@ -145,27 +145,26 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
     setState(() {
-      ts1 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][0]);
-      ts2 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][1]);
-      ts3 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][2]);
-      ts4 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][3]);
-      ts5 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][4]);
-      ts6 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][5]);
-      ts7 = widget.selectedInfluencer.timeSlots['ttSlots']== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][6]);
 
-      ts1Duration =durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][0]);
-      ts2Duration =
-          durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][1]);
-      ts3Duration =
-          durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][2]);
-      ts4Duration =
-          durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][3]);
-      ts5Duration =
-          durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][4]);
-      ts6Duration =
-          durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][5]);
-      ts7Duration =
-          durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][6]);
+      print("object");
+      print(widget.selectedInfluencer.timeSlots);
+       print("eobject");
+      
+      ts1 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][0]);
+      ts2 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][1]);
+      ts3 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][2]);
+      ts4 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][3]);
+      ts5 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][4]);
+      ts6 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][5]);
+      ts7 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][6]);
+
+      ts1Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][0]);
+      ts2Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][1]);
+      ts3Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][2]);
+      ts4Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][3]);
+      ts5Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][4]);
+      ts6Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][5]);
+      ts7Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][6]);
     });
 
     sendOrder(int sTime, int sDuration) {
@@ -220,8 +219,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           buyerPhoto: userProvider.getUser.profilePhoto,
           sellerId: widget.selectedInfluencer.uid,
           boughtOn: Timestamp.now(),
-          slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
-          slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration],
+          slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime] != null? widget.selectedInfluencer.timeSlots['ttSlots'][sTime]:null,
+          slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration] !=null ? widget.selectedInfluencer.timeSlots['ttDurations'][sDuration]:null,
           price: _generatePrice());
 
       // Order _sellerOrder = Order(
@@ -243,8 +242,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       //     slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
       //     slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration],
       //     price: _generatePrice());
-
-      _orderMethods.addOrderToDb(_order);
+      if(widget.selectedInfluencer.timeSlots['ttSlots'][sTime] != null && widget.selectedInfluencer.timeSlots['ttDurations'][sDuration] !=null)
+      {
+        _orderMethods.addOrderToDb(_order);
+      }
       // _orderMethods.addOrderToSellerDb(_sellerOrder);
       // _orderMethods.addOrderToBuyerDb(_buyerOrder);
     }
