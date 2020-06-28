@@ -145,10 +145,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
     setState(() {
-
-      print("object");
-      print(widget.selectedInfluencer.timeSlots);
-       print("eobject");
       
       ts1 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][0]);
       ts2 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][1]);
