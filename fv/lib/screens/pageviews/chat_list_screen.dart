@@ -8,6 +8,7 @@ import 'package:fv/models/order.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/auth_methods.dart';
 import 'package:fv/resources/chat_methods.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/resources/order_methods.dart';
@@ -18,6 +19,8 @@ import 'package:fv/screens/pageviews/widgets/online_dot_indicator.dart';
 // import 'package:fv/screens/pageviews/widgets/new_chat_button.dart';
 import 'package:fv/screens/pageviews/widgets/quiet_box.dart';
 import 'package:fv/screens/pageviews/widgets/user_circle.dart';
+import 'package:fv/utils/call_utilities.dart';
+import 'package:fv/utils/permissions.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/cust_app_bar.dart';
 import 'package:fv/widgets/custom_tile.dart';
@@ -188,8 +191,10 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
   static final Firestore _firestore = Firestore.instance;
 
   User currentBuyer;
+  User callGetter;
 
-    static final CollectionReference _userCollection =
+
+  static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
 
   List<Order> ordersList;
@@ -208,96 +213,148 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
     //   });
     //  });
   }
-
-
-
-  
-
+ final AuthMethods _authMethods = AuthMethods();
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
-     Future<void> getUserDetails(String buyerId) async {
-   
 
-    DocumentSnapshot documentSnapshot =
-        await _userCollection.document(buyerId).get();
-
-        setState(() {
-          currentBuyer=User.fromMap(documentSnapshot.data);
-        });
-
-  
-  }
 
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-              stream: _orderMethods.fetchSellerOrders(
-                userId: userProvider.getUser.uid,
-              ),
-              builder: (context, snapshot) {
+          stream: _orderMethods.fetchSellerOrders(
+            userId: userProvider.getUser.uid,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var docList = snapshot.data.documents;
 
-                if (snapshot.hasData) {
-                  var docList = snapshot.data.documents;
+              if (docList.isEmpty) {
+                return QuietBox();
+              }
 
-                  if (docList.isEmpty) {
-                    return QuietBox();
-                  }
+                  Future<void> getUserDetails(String buyerId) async {
+      DocumentSnapshot documentSnapshot =
+          await _userCollection.document(buyerId).get();
 
-                  return ListView.builder(
-                   // reverse: true,
-                    padding: EdgeInsets.all(10),
-                    itemCount: docList.length,
-                    itemBuilder: (context, index) {
-                      Order buyerOrder = Order.fromMap(docList[index].data);
+      setState(() {
+        currentBuyer = User.fromMap(documentSnapshot.data);
+      });
+    }
 
-                    getUserDetails(buyerOrder.buyerId);
-                    // print(currentBuyer.name);
+              return ListView.builder(
+                // reverse: true,
+                padding: EdgeInsets.all(10),
+                itemCount: docList.length,
+                itemBuilder: (context, index) {
+                  Order buyerOrder = Order.fromMap(docList[index].data);
 
-                      // return Text("${buyerOrder.buyerId} : ${buyerOrder.buyerName}  ");
+                //  User theBuyer=currentBuyer;
 
-                      return CustomTile(
-      mini: false,
-      onTap: () => {},
-     
-      title: Text(
-       buyerOrder.buyerName,
-       // style: TextStyles.chatListProfileName,
-      ),
-      subtitle: Text(
-       "${buyerOrder.slotTime.toDate()}",
-       // style: TextStyles.chatListProfileName,
-      ),
-      // LastMessageContainer(
-      //   stream: _chatMethods.fetchLastMessageBetween(
-      //     senderId: userProvider.getUser.uid,
-      //     receiverId: contact.uid,
-      //   ),
-      // ),
-      leading: Container(
-        constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
-        child: Stack(
-          children: <Widget>[
-            CachedImage(
-              buyerOrder.buyerPhoto,
-              radius: 80,
-              isRound: true,
-            ),
-            OnlineDotIndicator(
-              uid: buyerOrder.uid,
-            ),
-          ],
-        ),
-      ),
-    );
-                    },
+                 
+
+                  getUserDetails(buyerOrder.buyerId);
+
+                  return CustomTile(
+                    mini: false,
+                    onTap: () => {},
+
+                    title: Text(
+                      buyerOrder.buyerName,
+                      // style: TextStyles.chatListProfileName,
+                    ),
+                    subtitle: Text(
+                      "${buyerOrder.slotTime.toDate()}",
+                      // style: TextStyles.chatListProfileName,
+                    ),
+                    // LastMessageContainer(
+                    //   stream: _chatMethods.fetchLastMessageBetween(
+                    //     senderId: userProvider.getUser.uid,
+                    //     receiverId: contact.uid,
+                    //   ),
+                    // ),
+                    leading: Container(
+                      constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
+                      child: Stack(
+                        children: <Widget>[
+                          CachedImage(
+                            buyerOrder.buyerPhoto,
+                            radius: 80,
+                            isRound: true,
+                          ),
+                          OnlineDotIndicator(
+                            uid: buyerOrder.uid,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    trailing: VideoCallUser(currentBuyer),
                   );
-                }
-              }),
+                },
+              );
+            }
+          }),
     );
+  }
+}
+
+
+class VideoCallUser extends StatefulWidget {
+
+  final User callReceiver;
+
+  VideoCallUser(this.callReceiver);
+
+  
+  @override
+  _VideoCallUserState createState() => _VideoCallUserState();
+}
+
+class _VideoCallUserState extends State<VideoCallUser> {
+
+ FirebaseRepository _repository = FirebaseRepository();
+  User sender;
+   String _currentUserId;
+
+
+
+    @override
+  void initState() {
+    super.initState();
+
+    _repository.getCurrentUser().then((user) {
+      _currentUserId = user.uid;
+
+      setState(() {
+        sender = User(
+          uid: user.uid,
+          name: user.displayName,
+          profilePhoto: user.photoUrl,
+        );
+      });
+    });
   }
 
 
-  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: IconButton(
+                color: UniversalVariables.grey2,
+                icon: Icon(
+                  Icons.video_call,
+                ),
+                onPressed: () async =>
+                    await Permissions.cameraAndMicrophonePermissionsGranted()
+                        ? CallUtils.dial(
+                            from: sender,
+                            to: widget.callReceiver,
+                            context: context,
+                          )
+                        : {},
+              ),
+      
+    );
+  }
 }
-
