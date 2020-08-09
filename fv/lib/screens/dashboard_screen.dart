@@ -195,7 +195,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 4,
+                              height: 3,
                             ),
                             Text(
                               Strings.lion,
