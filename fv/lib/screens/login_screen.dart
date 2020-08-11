@@ -275,7 +275,7 @@ class LoginScreenState extends State<LoginScreen>
         color: UniversalVariables.blackColor.withOpacity(0.7),
       ),
       child: AppleSignInButton(
-        style: ButtonStyle.black,
+      //  style: ButtonStyle.black,
         type: ButtonType.signIn,
         onPressed: () => _signInWithApple(context),
       )

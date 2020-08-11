@@ -233,16 +233,10 @@ PODS:
     - Firebase/Core
     - Firebase/Firestore (~> 6.0)
     - Flutter
-  - cloud_firestore_web (0.1.0):
-    - Flutter
   - cloud_functions (0.0.1):
     - Firebase/Core
     - Firebase/Functions (~> 6.0)
     - Flutter
-  - cloud_functions_web (1.0.0):
-    - Flutter
-  - Firebase/Analytics (6.27.0):
-    - Firebase/Core
   - Firebase/Auth (6.27.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.6.0)
@@ -267,12 +261,8 @@ PODS:
     - Firebase/Auth (~> 6.3)
     - Firebase/Core
     - Flutter
-  - firebase_auth_web (0.1.0):
-    - Flutter
   - firebase_core (0.0.1):
     - Firebase/Core
-    - Flutter
-  - firebase_core_web (0.1.0):
     - Flutter
   - firebase_messaging (0.0.1):
     - Firebase/Core
@@ -341,16 +331,12 @@ PODS:
     - FirebaseCore (~> 6.8)
     - GTMSessionFetcher/Core (~> 1.1)
   - Flutter (1.0.0)
-  - flutter_plugin_android_lifecycle (0.0.1):
-    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - google_sign_in (0.0.1):
     - Flutter
     - GoogleSignIn (~> 5.0)
-  - google_sign_in_web (0.8.1):
-    - Flutter
   - GoogleAppMeasurement (6.6.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -428,10 +414,6 @@ PODS:
   - nanopb/encode (1.30905.0)
   - path_provider (0.0.1):
     - Flutter
-  - path_provider_linux (0.0.1):
-    - Flutter
-  - path_provider_macos (0.0.1):
-    - Flutter
   - permission_handler (3.0.0):
     - Flutter
   - PromisesObjC (1.2.9)
@@ -448,25 +430,16 @@ DEPENDENCIES:
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - apple_sign_in (from `.symlinks/plugins/apple_sign_in/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
-  - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
-  - cloud_functions_web (from `.symlinks/plugins/cloud_functions_web/ios`)
-  - Firebase/Analytics
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
-  - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
-  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
-  - google_sign_in_web (from `.symlinks/plugins/google_sign_in_web/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - in_app_purchase (from `.symlinks/plugins/in_app_purchase/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
-  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - stripe_payment (from `.symlinks/plugins/stripe_payment/ios`)
@@ -511,42 +484,26 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/apple_sign_in/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
-  cloud_firestore_web:
-    :path: ".symlinks/plugins/cloud_firestore_web/ios"
   cloud_functions:
     :path: ".symlinks/plugins/cloud_functions/ios"
-  cloud_functions_web:
-    :path: ".symlinks/plugins/cloud_functions_web/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
-  firebase_auth_web:
-    :path: ".symlinks/plugins/firebase_auth_web/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
-  firebase_core_web:
-    :path: ".symlinks/plugins/firebase_core_web/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   firebase_storage:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
-  flutter_plugin_android_lifecycle:
-    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
-  google_sign_in_web:
-    :path: ".symlinks/plugins/google_sign_in_web/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   in_app_purchase:
     :path: ".symlinks/plugins/in_app_purchase/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  path_provider_linux:
-    :path: ".symlinks/plugins/path_provider_linux/ios"
-  path_provider_macos:
-    :path: ".symlinks/plugins/path_provider_macos/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
   sqflite:
@@ -562,14 +519,10 @@ SPEC CHECKSUMS:
   apple_sign_in: 7716c7ddfa195aeab7dec0dc374ef4ff45d1adb4
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: 4cc700e236ebfe2d5d980e49cb066d202cfee0e9
-  cloud_firestore_web: 9ec3dc7f5f98de5129339802d491c1204462bfec
   cloud_functions: 20ba5a917ef4e8f5e60648c7398c272b38a66051
-  cloud_functions_web: ec883775f4a3b3fad943918d2cdad4fbf51cdbf0
   Firebase: fc4cbf6f1592636431821ef9a3c557e4dfd9f268
   firebase_auth: af8784c4d8d87c36f730a305f97bfbcb24db024b
-  firebase_auth_web: 0955c07bcc06e84af76b9d4e32e6f31518f2d7de
   firebase_core: 335c02abd48672b7c83c683df833d0488a72e73e
-  firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   firebase_messaging: 21344b3b3a7d9d325d63a70e3750c0c798fe1e03
   firebase_storage: 22966fce4aa6e8848cbaa017df62107cee29f327
   FirebaseAnalytics: 0ea640473474f036cabbc2576e20c2d63671c92f
@@ -583,10 +536,8 @@ SPEC CHECKSUMS:
   FirebaseMessaging: ad9e1a80ea64905e01a0ce1b3eb76a2944544151
   FirebaseStorage: af7bdbd12177cf567df00904e3e3a93704f25b15
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
-  google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3
   GoogleAppMeasurement: 2fd5c5a56c069db635c8e7b92d4809a9591d0a69
   GoogleDataTransport: 9a8a16f79feffc7f42096743de2a7c4815e84020
   GoogleDataTransportCCTSupport: 489c1265d2c85b68187a83a911913d190012158d
@@ -601,8 +552,6 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
-  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   permission_handler: 047f11d44db785922214783da5f7a3cc8874c843
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
@@ -610,6 +559,6 @@ SPEC CHECKSUMS:
   Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
   stripe_payment: ad86f099179edb7b9fe12b9b62ac3746d5e56802
 
-PODFILE CHECKSUM: cf7347e9f82182c690792c85f55cb958ff66f4d4
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
 COCOAPODS: 1.9.3
