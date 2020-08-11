@@ -182,6 +182,8 @@ class FirebaseMethods {
         .updateData(user.toMap(user));
   }
 
+  
+
   Future<void> signOut() async {
     print("signed out start");
     await _googleSignIn.disconnect();

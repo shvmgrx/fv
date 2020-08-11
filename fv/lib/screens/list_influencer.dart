@@ -66,7 +66,9 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           loggedInname = loggedUser['name'];
 
           loggedInprofilePhoto = loggedUser['profilePhoto'];
+          //uncomment and remove temporary loggedUserisInfCert
           loggedUserisInfCert = loggedUser['isInfCert'];
+        // loggedUserisInfCert = false;
         });
       });
     });
@@ -273,6 +275,10 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         onTap: () {
                           setState(() {
                             paymentPressed = !paymentPressed;
+                            if (paymentPressed) {
+                            Navigator.pushNamed(
+                                context, "/register_choice_screen");
+                          }
                           });
                         },
                         child: NMButton(

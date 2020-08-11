@@ -18,11 +18,22 @@ class Utils {
     return firstNameInitial;
   }
 
-  static Future<File> pickImage({@required ImageSource source}) async {
-    File selectedImage = await ImagePicker.pickImage(source: source);
-    //return await compressImage(selectedImage);
-    return selectedImage;
+
+     static Future<File> pickImage({@required ImageSource source}) async {
+    //   print("1a");
+    File _image;
+    final iPicker = ImagePicker();
+ //    print("21a");
+
+ 
+    final pickedFile = await iPicker.getImage(source: ImageSource.gallery, maxWidth: 700.0, maxHeight: 700.0);
+    // print("31a");
+
+    _image = File(pickedFile.path);
+ //print("4a");
+    return _image;
   }
+
 
 
  static int stateToNum(UserState userState) {

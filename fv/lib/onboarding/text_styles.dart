@@ -70,6 +70,19 @@ class TextStyles {
     ],
   );
 
+    static final TextStyle registerChoice = TextStyle(
+    fontSize: 25,
+    fontWeight: FontWeight.w400,
+  color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
     static final TextStyle getPremiumTimeslots = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w600,

@@ -12,8 +12,10 @@ import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/landing_screen.dart';
 
 import 'package:fv/screens/list_influencer.dart';
+import 'package:fv/screens/onBoardUser.dart';
 import 'package:fv/screens/pageviews/chat_list_screen.dart';
 import 'package:fv/screens/profile_screen.dart';
+import 'package:fv/screens/registerChoice.dart';
 import 'package:fv/screens/search_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
 import 'package:fv/utils/appleSignInAvailable.dart';
@@ -62,6 +64,8 @@ class _MyAppState extends State<MyApp> {
           '/edit_profile_screen': (context) => EditProfile(),
           '/settings_screen': (context) => SettingsScreen(),
           '/home_screen': (context) => HomeScreen(),
+          '/register_choice_screen': (context) => RegisterChoice(),
+          '/onboard_user_screen': (context) => OnBoardUser(),
         },
         theme: ThemeData(
           primaryColor: UniversalVariables.gold2,

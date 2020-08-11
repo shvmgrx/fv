@@ -1,6 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:gradient_text/gradient_text.dart';
@@ -87,7 +88,9 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedIninfWorth = loggedUser['infWorth'];
           // loggedIninfSent = loggedUser['infSent'];
           loggedIninfReceived = loggedUser['infReceived'];
+          //uncomment this and remove temporary loggedInisInfluencer
           loggedInisInfluencer = loggedUser['isInfluencer'];
+         // loggedInisInfluencer = true;
         });
       });
     });
@@ -1059,7 +1062,14 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0),
                 child: GestureDetector(
-                  onTap: () =>  Navigator.pop(context),
+                  onTap: () =>  {
+                    Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                              (Route<dynamic> route) => false,
+                            )
+                  },
                   child: Container(
                     height: 40.0,
                     width: 40.0,
