@@ -4,7 +4,10 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/constants/conStrings.dart';
 import 'package:fv/enum/crop_state.dart';
+import 'package:fv/screens/onBoardExpert.dart';
+import 'package:fv/screens/registerChoice.dart';
 // import 'package:google_fonts/google_fonts.dart';
 // import 'package:gradient_text/gradient_text.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,12 +31,12 @@ import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:provider/provider.dart';
 
-class RegisterChoice extends StatefulWidget {
+class VerifyExpert extends StatefulWidget {
   @override
-  _RegisterChoiceState createState() => _RegisterChoiceState();
+  _VerifyExpertState createState() => _VerifyExpertState();
 }
 
-class _RegisterChoiceState extends State<RegisterChoice> {
+class _VerifyExpertState extends State<VerifyExpert> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
@@ -54,9 +57,28 @@ class _RegisterChoiceState extends State<RegisterChoice> {
           Expanded(
             flex:1,
                       child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-            
+           Padding(
+             padding: const EdgeInsets.only(left:8.0),
+             child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: UniversalVariables.grey2,
+                      ),
+                      onPressed: () {
+                      
+
+                        Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterChoice()),
+                                  (Route<dynamic> route) => false,
+                                );
+                      },
+                    ),
+           ),
+                  
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
@@ -64,6 +86,16 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                       textAlign: TextAlign.center),
                   
                 ),
+                IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: UniversalVariables.backgroundGrey,
+                    ),
+                    onPressed: () {
+                    
+
+                    },
+                  ),
 
                 //       Navigator.pushAndRemoveUntil(
                 //         context,
@@ -88,18 +120,17 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                  
                   children: <Widget>[
                   Container(
-                     color:UniversalVariables.white2,
+                       color:UniversalVariables.white2,
                     width:screenWidth*0.8,
                         child: OutlineButton(
                            padding: EdgeInsets.all(5),
-                           color:UniversalVariables.white2,
+                           color:UniversalVariables.receiverColor,
                           splashColor: UniversalVariables.gold4,
                           highlightColor: UniversalVariables.receiverColor,
                           highlightedBorderColor: UniversalVariables.gold2,
                           visualDensity: VisualDensity.adaptivePlatformDensity,
                           onPressed: () => {
-                       Navigator.pushNamed(
-                                context, "/onboard_user_screen")
+                      
                             
                           },
                           child: Text(
@@ -108,24 +139,23 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                           ),
                         ),
                       ),
-                       SizedBox(height: 25),
+                      SizedBox(height: 25),
                       Container(
-                        width:screenWidth*0.8,
-                         color:UniversalVariables.white2,
+                        width:screenWidth*0.3,
                         child: OutlineButton(
                          padding: EdgeInsets.all(5),
                           color:UniversalVariables.white2,
                           splashColor: UniversalVariables.gold4,
-                          highlightColor: UniversalVariables.receiverColor,
+                          highlightColor: UniversalVariables.white2,
                            highlightedBorderColor: UniversalVariables.gold2,
                           visualDensity: VisualDensity.adaptivePlatformDensity,
                           onPressed: () => {
                        
                              Navigator.pushNamed(
-                                context, "/verify_expert_screen")
+                                context, "/onboard_expert_screen")
                           },
                           child: Text(
-                            "REGISTER AS EXPERT",
+                            ConStrings.NEXT,
                             style: TextStyles.registerChoice,
                           ),
                         ),

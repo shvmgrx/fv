@@ -19,6 +19,7 @@ import 'package:fv/screens/profile_screen.dart';
 import 'package:fv/screens/registerChoice.dart';
 import 'package:fv/screens/search_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
+import 'package:fv/screens/verifyExpert.dart';
 import 'package:fv/utils/appleSignInAvailable.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:provider/provider.dart';
@@ -68,6 +69,8 @@ class _MyAppState extends State<MyApp> {
           '/register_choice_screen': (context) => RegisterChoice(),
           '/onboard_user_screen': (context) => OnBoardUser(),
           '/onboard_expert_screen': (context) => OnBoardExpert(),
+          '/verify_expert_screen': (context) => VerifyExpert(),
+      
         },
         theme: ThemeData(
           primaryColor: UniversalVariables.gold2,
