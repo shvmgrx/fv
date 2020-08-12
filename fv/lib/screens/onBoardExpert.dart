@@ -63,7 +63,7 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
   int loggedUserReviews;
   int loggedUserinfWorth;
   int loggedUserinfSent;
-  int loggedUserinfReceived;//used for currency
+  int loggedUserinfReceived; //used for currency
   bool loggedUserisInfluencer;
   String loggedUserHashtags;
   Map loggedUserTimeSlots;
@@ -134,39 +134,27 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
   }
 
   void initState() {
-    _repository.getCurrentUser().then((user) {
-      _repository.fetchLoggedUser(user).then((dynamic loggedUser) {
-        setState(() {
-          loggedUserDisplayName = loggedUser['name'];
-          loggedUserEmail = loggedUser['email'];
-          loggedUserUserName = loggedUser['username'];
-          loggedUserStatus = loggedUser['status'];
-          loggedUserState = loggedUser['state'];
-          loggedUserProfilePic = loggedUser['profilePhoto'];
-          //  loggedUseranswerPrice1 = loggedUser['answerPrice1'];
-          // loggedUseranswerPrice2 = loggedUser['answerPrice2'];
-          //   loggedUseranswerPrice3 = loggedUser['answerPrice3'];
-          loggedUseranswerDuration = loggedUser['answerDuration'];
-          loggedUserBio = loggedUser['bio'];
-          loggedUserisInfCert = loggedUser['isInfCert'];
-          loggedUsermaxQuestionCharcount = loggedUser['maxQuestionCharcount'];
-          loggedUserRating = loggedUser['rating'];
-          loggedUserCategory = loggedUser['category'];
-          loggedUserReviews = loggedUser['reviews'];
-          loggedUserinfWorth = loggedUser['infWorth'];
-          loggedUserinfSent = loggedUser['infSent'];
-         // loggedUserinfReceived = loggedUser['infReceived'];
-          loggedUserisInfluencer = loggedUser['isInfluencer'];
-          loggedUserHashtags = loggedUser['hashtags'];
-        });
-      });
-    });
+    loggedUserDisplayName = "";
+    loggedUserEmail = "";
+    loggedUserUserName = "";
+    // loggedUserStatus = loggedUser['status'];
+
+    loggedUserBio = "";
+    loggedUserisInfCert = true;
+
+    loggedUserCategory = "GENERAL";
+
+    loggedUserinfWorth = 0;
+
+  
+    loggedUserisInfluencer = true;
+    loggedUserHashtags = "";
 
     loggedUseranswerPrice1 = 1;
     loggedUseranswerPrice2 = 2;
     loggedUseranswerPrice3 = 5;
 
-    tempCurrency="\$ Dollar";
+    tempCurrency = "\$ Dollar";
     loggedUserinfReceived = 0;
 
     super.initState();
@@ -209,21 +197,18 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: UniversalVariables.grey2,
-                      ),
-                      onPressed: () {
-                      
-
-                        Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => VerifyExpert()),
-                                  (Route<dynamic> route) => false,
-                                );
-                      },
-                    ),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: UniversalVariables.grey2,
+                  ),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => VerifyExpert()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
@@ -240,16 +225,12 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                   //     textAlign: TextAlign.center),
                 ),
                 IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: UniversalVariables.backgroundGrey,
-                      ),
-                      onPressed: () {
-                      
-
-                       
-                      },
-                    ),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: UniversalVariables.backgroundGrey,
+                  ),
+                  onPressed: () {},
+                ),
                 // Align(
                 //   alignment: Alignment.topRight,
                 //   child: IconButton(
@@ -575,7 +556,7 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                             ],
                           ),
                           SizedBox(height: 15),
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Expanded(
@@ -598,22 +579,18 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                   // ),
                                   onChanged: (String newValue) {
                                     setState(() {
-                                      if(newValue=="€ Euro")
-                                      {
+                                      if (newValue == "€ Euro") {
                                         loggedUserinfReceived = 1;
-                                        tempCurrency=newValue;
-                                      }
-                                      else{
+                                        tempCurrency = newValue;
+                                      } else {
                                         loggedUserinfReceived = 0;
-                                         tempCurrency=newValue;
+                                        tempCurrency = newValue;
                                       }
-                                      
                                     });
                                   },
                                   items: <String>[
                                     '\$ Dollar',
                                     '€ Euro',
-                                    
                                   ].map<DropdownMenuItem<String>>(
                                       (String value) {
                                     return DropdownMenuItem<String>(
@@ -659,7 +636,9 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                       },
                                     ),
                                     Text(
-                                      loggedUserinfReceived>0?  "€ $loggedUseranswerPrice1": "\$ $loggedUseranswerPrice1",
+                                      loggedUserinfReceived > 0
+                                          ? "€ $loggedUseranswerPrice1"
+                                          : "\$ $loggedUseranswerPrice1",
                                       style: TextStyles.hintTextStyle,
                                     ),
                                     IconButton(
@@ -711,7 +690,9 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                       },
                                     ),
                                     Text(
-                                     loggedUserinfReceived>0?  "€ $loggedUseranswerPrice2": "\$ $loggedUseranswerPrice2",
+                                      loggedUserinfReceived > 0
+                                          ? "€ $loggedUseranswerPrice2"
+                                          : "\$ $loggedUseranswerPrice2",
                                       style: TextStyles.hintTextStyle,
                                     ),
                                     IconButton(
@@ -763,7 +744,9 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                       },
                                     ),
                                     Text(
-                                    loggedUserinfReceived>0?  "€ $loggedUseranswerPrice3": "\$ $loggedUseranswerPrice3",
+                                      loggedUserinfReceived > 0
+                                          ? "€ $loggedUseranswerPrice3"
+                                          : "\$ $loggedUseranswerPrice3",
                                       style: TextStyles.hintTextStyle,
                                     ),
                                     IconButton(
@@ -785,7 +768,6 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                               )
                             ],
                           ),
-                          
                         ],
                       ),
                     ),
@@ -800,7 +782,38 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                       print("bioFill: $bioFilled"),
                       print("userNameFilled: $userNameFilled"),
                       print("loggedUserCategory: $loggedUserCategory"),
-                      print("loggedUserinfReceived: $loggedUserinfReceived")
+                      print("loggedUserinfReceived: $loggedUserinfReceived"),
+                      _repository.getCurrentUser().then((FirebaseUser user) {
+                        _repository.updateProfiletoDb(
+                            user,
+                            loggedUserDisplayName,
+                            loggedUserEmail,
+                            loggedUserUserName,
+                            loggedUserStatus,
+                            loggedUserState,
+                            loggedUserProfilePic,
+                            loggedUseranswerPrice1,
+                            loggedUseranswerPrice2,
+                            loggedUseranswerPrice3,
+                            loggedUseranswerDuration,
+                            loggedUserBio,
+                            loggedUserisInfCert,
+                            loggedUsermaxQuestionCharcount,
+                            loggedUserRating,
+                            loggedUserCategory,
+                            loggedUserReviews,
+                            loggedUserinfWorth,
+                            loggedUserinfSent,
+                            loggedUserinfReceived,
+                            loggedUserisInfluencer,
+                            loggedUserHashtags,
+                            loggedUserTimeSlots);
+                      }),
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        (Route<dynamic> route) => false,
+                      )
                     },
                     child: Text(
                       ConStrings.NEXT,

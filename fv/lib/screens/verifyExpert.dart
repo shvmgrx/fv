@@ -256,7 +256,12 @@ _scaffoldKey.currentState.showSnackBar(snackBar);
                           onPressed: () => {
                       if (codeVerified) 
                       {
-                         Navigator.pushNamed(context, "/onboard_expert_screen")
+                         Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OnBoardExpert()),
+                                  (Route<dynamic> route) => false,
+                                )
                       },
                    
                       

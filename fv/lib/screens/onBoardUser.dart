@@ -131,32 +131,20 @@ class _OnBoardUserState extends State<OnBoardUser> {
   }
 
   void initState() {
-    _repository.getCurrentUser().then((user) {
-      _repository.fetchLoggedUser(user).then((dynamic loggedUser) {
-        setState(() {
-          loggedUserDisplayName = loggedUser['name'];
-          loggedUserEmail = loggedUser['email'];
-          loggedUserUserName = loggedUser['username'];
-          loggedUserStatus = loggedUser['status'];
-          loggedUserState = loggedUser['state'];
-          loggedUserProfilePic = loggedUser['profilePhoto'];
-          loggedUseranswerPrice1 = loggedUser['answerPrice1'];
-          loggedUseranswerPrice2 = loggedUser['answerPrice2'];
-          loggedUseranswerPrice3 = loggedUser['answerPrice3'];
-          loggedUseranswerDuration = loggedUser['answerDuration'];
-          loggedUserBio = loggedUser['bio'];
-          loggedUserisInfCert = loggedUser['isInfCert'];
-          loggedUsermaxQuestionCharcount = loggedUser['maxQuestionCharcount'];
-          loggedUserRating = loggedUser['rating'];
-          loggedUserCategory = loggedUser['category'];
-          loggedUserReviews = loggedUser['reviews'];
-          loggedUserinfWorth = loggedUser['infWorth'];
-          loggedUserinfSent = loggedUser['infSent'];
-          loggedUserinfReceived = loggedUser['infReceived'];
-          loggedUserisInfluencer = loggedUser['isInfluencer'];
-          loggedUserHashtags = loggedUser['hashtags'];
-        });
-      });
+    setState(() {
+      loggedUserDisplayName = "Fv User name";
+      loggedUserEmail = "";
+      loggedUserUserName = "fvUsername";
+      //loggedUserStatus = loggedUser['status'];
+      //   loggedUserState = loggedUser['state'];
+      loggedUserProfilePic = "";
+
+      loggedUserBio = "";
+      loggedUserisInfCert = false;
+
+      loggedUserinfWorth = 0;
+
+      loggedUserisInfluencer = false;
     });
 
     super.initState();
@@ -199,21 +187,18 @@ class _OnBoardUserState extends State<OnBoardUser> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: UniversalVariables.grey2,
-                      ),
-                      onPressed: () {
-                      
-
-                        Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RegisterChoice()),
-                                  (Route<dynamic> route) => false,
-                                );
-                      },
-                    ),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: UniversalVariables.grey2,
+                  ),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterChoice()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
@@ -230,16 +215,12 @@ class _OnBoardUserState extends State<OnBoardUser> {
                   //     textAlign: TextAlign.center),
                 ),
                 IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: UniversalVariables.backgroundGrey,
-                      ),
-                      onPressed: () {
-                      
-
-                      
-                      },
-                    ),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: UniversalVariables.backgroundGrey,
+                  ),
+                  onPressed: () {},
+                ),
                 // Align(
                 //   alignment: Alignment.topRight,
                 //   child: IconButton(
@@ -309,8 +290,10 @@ class _OnBoardUserState extends State<OnBoardUser> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "https://w0.pngwave.com/png/27/394/computer-icons-user-user-png-clip-art.png"),
+                          image: tempProfilePictureUrl != null
+                              ? NetworkImage(tempProfilePictureUrl)
+                              : NetworkImage(
+                                  "https://w0.pngwave.com/png/27/394/computer-icons-user-user-png-clip-art.png"),
                         ),
                       ),
                     ),
@@ -361,10 +344,12 @@ class _OnBoardUserState extends State<OnBoardUser> {
                                   onChanged: (String value) {
                                     setState(() {
                                       loggedUserDisplayName = value;
-                                      if (loggedUserDisplayName != null && loggedUserDisplayName !="") {
+                                      if (loggedUserDisplayName != null &&
+                                          loggedUserDisplayName != "") {
                                         nameFilled = true;
                                       }
-                                       if (loggedUserDisplayName == null || loggedUserDisplayName =="") {
+                                      if (loggedUserDisplayName == null ||
+                                          loggedUserDisplayName == "") {
                                         nameFilled = false;
                                       }
                                     });
@@ -406,10 +391,12 @@ class _OnBoardUserState extends State<OnBoardUser> {
                                     setState(() {
                                       loggedUserUserName = value;
                                       _autoValidate = true;
-                                      if (loggedUserUserName != null && loggedUserUserName !="") {
+                                      if (loggedUserUserName != null &&
+                                          loggedUserUserName != "") {
                                         userNameFilled = true;
                                       }
-                                       if (loggedUserUserName == null || loggedUserUserName =="") {
+                                      if (loggedUserUserName == null ||
+                                          loggedUserUserName == "") {
                                         userNameFilled = false;
                                       }
                                     });
@@ -431,7 +418,7 @@ class _OnBoardUserState extends State<OnBoardUser> {
                               Expanded(
                                 flex: 5,
                                 child: TextField(
-                                 // keyboardType: TextInputType.multiline,
+                                  // keyboardType: TextInputType.multiline,
                                   cursorColor: UniversalVariables.gold2,
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(bottom: 10),
@@ -449,10 +436,11 @@ class _OnBoardUserState extends State<OnBoardUser> {
                                   onChanged: (String value) {
                                     setState(() {
                                       loggedUserBio = value;
-                                      if (loggedUserBio != null && loggedUserBio !="") {
+                                      if (loggedUserBio != null &&
+                                          loggedUserBio != "") {
                                         bioFilled = true;
-                                      }
-                                      else if (loggedUserBio == null || loggedUserBio =="") {
+                                      } else if (loggedUserBio == null ||
+                                          loggedUserBio == "") {
                                         bioFilled = false;
                                       }
                                     });
@@ -467,13 +455,47 @@ class _OnBoardUserState extends State<OnBoardUser> {
                   ),
                   Container(height: screenHeight * 0.06),
                   CupertinoButton(
-                    color: (nameFilled && userNameFilled && bioFilled)? UniversalVariables.gold2: UniversalVariables.grey2,
+                    color: (nameFilled && userNameFilled && bioFilled)
+                        ? UniversalVariables.gold2
+                        : UniversalVariables.grey2,
                     onPressed: () => {
                       print("nameFilled: $nameFilled"),
                       print("bioFill: $bioFilled"),
                       print("userNameFilled: $userNameFilled"),
+                      _repository.getCurrentUser().then((FirebaseUser user) {
+                        _repository.updateProfiletoDb(
+                            user,
+                            loggedUserDisplayName,
+                            loggedUserEmail,
+                            loggedUserUserName,
+                            loggedUserStatus,
+                            loggedUserState,
+                            loggedUserProfilePic,
+                            loggedUseranswerPrice1,
+                            loggedUseranswerPrice2,
+                            loggedUseranswerPrice3,
+                            loggedUseranswerDuration,
+                            loggedUserBio,
+                            loggedUserisInfCert,
+                            loggedUsermaxQuestionCharcount,
+                            loggedUserRating,
+                            loggedUserCategory,
+                            loggedUserReviews,
+                            loggedUserinfWorth,
+                            loggedUserinfSent,
+                            loggedUserinfReceived,
+                            loggedUserisInfluencer,
+                            loggedUserHashtags,
+                            loggedUserTimeSlots);
+                      }),
 
-                      },
+                      Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()),
+                                  (Route<dynamic> route) => false,
+                                )
+                    },
                     child: Text(
                       ConStrings.NEXT,
                       style: TextStyles.nextButton,

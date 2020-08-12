@@ -2,6 +2,7 @@ import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/resources/auth_methods.dart';
+import 'package:fv/screens/registerChoice.dart';
 import 'package:fv/utils/appleSignInAvailable.dart';
 // import 'package:gradient_text/gradient_text.dart';
 import 'package:fv/onboarding/text_styles.dart';
@@ -328,7 +329,7 @@ class LoginScreenState extends State<LoginScreen>
         _repository.addDataToDb(user).then((value) {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return HomeScreen();
+            return RegisterChoice();
           }));
         });
       } else {
@@ -349,7 +350,7 @@ class LoginScreenState extends State<LoginScreen>
         _repository.addDataToDb(user).then((value) {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return HomeScreen();
+            return RegisterChoice();
           }));
         });
       } else {
