@@ -70,6 +70,32 @@ class TextStyles {
     ],
   );
 
+    static final TextStyle fzCodeHeading = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+  color: UniversalVariables.grey1,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
+      static final TextStyle fzSnackbar = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+  color: UniversalVariables.white2,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
     static final TextStyle nextButton = TextStyle(
     fontSize: 19,
     fontWeight: FontWeight.w400,

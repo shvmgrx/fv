@@ -12,4 +12,5 @@ class ConStrings {
   static const String VIDCALLPRICE = "Videocall Price";
   static const String NEXT = "Next";
   static const String PREFERREDCURRENCY = "Preferred Currency";
+  static const String FZCODEINFO = "Add the FZ-CODE provided to you by our team";
 }

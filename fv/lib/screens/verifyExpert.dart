@@ -39,7 +39,10 @@ class VerifyExpert extends StatefulWidget {
 class _VerifyExpertState extends State<VerifyExpert> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+final GlobalKey<FormState> _verifyKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
 
+  String verifyCode;
 
 
 
@@ -48,6 +51,11 @@ class _VerifyExpertState extends State<VerifyExpert> {
 
     var screenHeight = MediaQuery.of(context).size.height;
    var screenWidth = MediaQuery.of(context).size.width;
+
+   //  final snackBar = SnackBar(content: Container(color: UniversalVariables.white2 ,child: Text(ConStrings.FZCODEINFO,style: TextStyles.fzCodeHeading,)));
+
+  //   final snackBar = SnackBar(content: Text(ConStrings.FZCODEINFO,style: TextStyles.fzCodeHeading,));
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: UniversalVariables.backgroundGrey,
@@ -119,26 +127,89 @@ class _VerifyExpertState extends State<VerifyExpert> {
                 child: Column(
                  
                   children: <Widget>[
-                  Container(
-                       color:UniversalVariables.white2,
-                    width:screenWidth*0.8,
-                        child: OutlineButton(
-                           padding: EdgeInsets.all(5),
-                           color:UniversalVariables.receiverColor,
-                          splashColor: UniversalVariables.gold4,
-                          highlightColor: UniversalVariables.receiverColor,
-                          highlightedBorderColor: UniversalVariables.gold2,
-                          visualDensity: VisualDensity.adaptivePlatformDensity,
-                          onPressed: () => {
+                  // Container(
+                  //      color:UniversalVariables.white2,
+                  //   width:screenWidth*0.8,
+                  //       child: OutlineButton(
+                  //          padding: EdgeInsets.all(5),
+                  //          color:UniversalVariables.receiverColor,
+                  //         splashColor: UniversalVariables.gold4,
+                  //         highlightColor: UniversalVariables.receiverColor,
+                  //         highlightedBorderColor: UniversalVariables.gold2,
+                  //         visualDensity: VisualDensity.adaptivePlatformDensity,
+                  //         onPressed: () => {
                       
                             
-                          },
-                          child: Text(
-                            "REGISTER AS USER",
-                            style: TextStyles.registerChoice,
-                          ),
-                        ),
+                  //         },
+                  //         child: Text(
+                  //           "REGISTER AS USER",
+                  //           style: TextStyles.registerChoice,
+                  //         ),
+                  //       ),
+                  //     ),
+                  Form(
+                    key: _verifyKey,
+        autovalidate: _autoValidate,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:18.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text("FZ-CODE",
+                                              style: TextStyles.fzCodeHeading,
+                                              textAlign: TextAlign.left),
+                              IconButton(
+                      icon: Icon(
+                        Icons.info,
+                        color: UniversalVariables.grey2,
                       ),
+                      onPressed: () {
+     final snackBar = SnackBar(content: Text(ConStrings.FZCODEINFO,style: TextStyles.fzSnackbar,));
+
+_scaffoldKey.currentState.showSnackBar(snackBar);
+                       
+                      },
+                    ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top:18.0),
+                            child: Container(
+                              color:UniversalVariables.white2,
+                              //width: screenHeight*0.3,
+                              child: TextField(
+                                cursorColor: UniversalVariables.gold2,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(bottom: 10),
+                                  hintText: verifyCode,
+                                  hintStyle: TextStyles.hintTextStyle,
+                                ),
+                                //  maxLength: 20,
+                                style: TextStyles.whileEditing,
+                                // validator: (String value) {
+                                //   if (value.isEmpty) {
+                                //     return 'Name is Required';
+                                //   }
+
+                                //   return null;
+                                // },
+                                
+                                onChanged: (String value) {
+                                
+                                  setState(() {
+                                    verifyCode=value;
+                                  });
+                                    print(verifyCode);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),),
+           
                       SizedBox(height: 25),
                       Container(
                         width:screenWidth*0.3,
