@@ -43,6 +43,31 @@ final GlobalKey<FormState> _verifyKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
   String verifyCode;
+  bool codeVerified=false;
+
+  
+
+  
+
+FirebaseRepository _repository = FirebaseRepository();
+ List<String> fvCodes;
+
+ @override
+  void initState() {
+    
+
+
+      _repository.fetchFvCodes().then((List<String> list) {
+        setState(() {
+          fvCodes = list;
+        });
+      });
+
+
+
+
+    super.initState();
+  }
 
 
 
@@ -52,9 +77,7 @@ final GlobalKey<FormState> _verifyKey = GlobalKey<FormState>();
     var screenHeight = MediaQuery.of(context).size.height;
    var screenWidth = MediaQuery.of(context).size.width;
 
-   //  final snackBar = SnackBar(content: Container(color: UniversalVariables.white2 ,child: Text(ConStrings.FZCODEINFO,style: TextStyles.fzCodeHeading,)));
-
-  //   final snackBar = SnackBar(content: Text(ConStrings.FZCODEINFO,style: TextStyles.fzCodeHeading,));
+  
 
     return Scaffold(
       key: _scaffoldKey,
@@ -157,8 +180,8 @@ final GlobalKey<FormState> _verifyKey = GlobalKey<FormState>();
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text("FZ-CODE",
-                                              style: TextStyles.fzCodeHeading,
+                              Text(ConStrings.FVCODE,
+                                              style: TextStyles.fvCodeHeading,
                                               textAlign: TextAlign.left),
                               IconButton(
                       icon: Icon(
@@ -166,7 +189,7 @@ final GlobalKey<FormState> _verifyKey = GlobalKey<FormState>();
                         color: UniversalVariables.grey2,
                       ),
                       onPressed: () {
-     final snackBar = SnackBar(content: Text(ConStrings.FZCODEINFO,style: TextStyles.fzSnackbar,));
+     final snackBar = SnackBar(content: Text(ConStrings.FVCODEINFO,style: TextStyles.fvSnackbar,));
 
 _scaffoldKey.currentState.showSnackBar(snackBar);
                        
@@ -201,7 +224,19 @@ _scaffoldKey.currentState.showSnackBar(snackBar);
                                   setState(() {
                                     verifyCode=value;
                                   });
-                                    print(verifyCode);
+                                  if(fvCodes.contains(verifyCode))
+                                  {
+                                    setState(() {
+                                      codeVerified = true;
+                                    });
+                                  }
+                                  else{
+                                    setState(() {
+                                      codeVerified = false;
+                                    });
+                                  }
+                                
+                                    
                                 },
                               ),
                             ),
@@ -213,22 +248,27 @@ _scaffoldKey.currentState.showSnackBar(snackBar);
                       SizedBox(height: 25),
                       Container(
                         width:screenWidth*0.3,
-                        child: OutlineButton(
+                        child: CupertinoButton(
+                          
                          padding: EdgeInsets.all(5),
-                          color:UniversalVariables.white2,
-                          splashColor: UniversalVariables.gold4,
-                          highlightColor: UniversalVariables.white2,
-                           highlightedBorderColor: UniversalVariables.gold2,
-                          visualDensity: VisualDensity.adaptivePlatformDensity,
+                          color:codeVerified ? UniversalVariables.white2: UniversalVariables.greyColor,
+                          // splashColor: UniversalVariables.gold4,
+                          // highlightColor: UniversalVariables.white2,
+                          // highlightedBorderColor: UniversalVariables.gold2,
+                          // visualDensity: VisualDensity.adaptivePlatformDensity,
+                          
                           onPressed: () => {
+                      if (codeVerified) 
+                      {
+                         Navigator.pushNamed(context, "/onboard_expert_screen")
+                      },
+                   
+                      
+
                        
-                             Navigator.pushNamed(
-                                context, "/onboard_expert_screen")
+                            
                           },
-                          child: Text(
-                            ConStrings.NEXT,
-                            style: TextStyles.registerChoice,
-                          ),
+                          child: codeVerified ? Text(ConStrings.NEXT, style: TextStyles.registerChoice,): Text(ConStrings.NEXT, style: TextStyles.registerChoiceDisable,),
                         ),
                       ),
                     

@@ -78,6 +78,9 @@ class FirebaseRepository {
   Future<List<User>> fetchAllUsers(FirebaseUser user) =>
       _firebaseMethods.fetchAllUsers(user);
 
+  Future<List<String>> fetchFvCodes() =>
+      _firebaseMethods.fetchFvCodes();
+
   Future<List<User>> fetchAllInfluencers(FirebaseUser user) =>
       _firebaseMethods.fetchAllInfluencers(user);
   Future<List<User>> fetchFeaturedInfluencers(FirebaseUser user) =>

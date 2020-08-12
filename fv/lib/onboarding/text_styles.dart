@@ -70,7 +70,7 @@ class TextStyles {
     ],
   );
 
-    static final TextStyle fzCodeHeading = TextStyle(
+    static final TextStyle fvCodeHeading = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
   color: UniversalVariables.grey1,
@@ -83,7 +83,7 @@ class TextStyles {
     ],
   );
 
-      static final TextStyle fzSnackbar = TextStyle(
+      static final TextStyle fvSnackbar = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
   color: UniversalVariables.white2,
@@ -120,6 +120,14 @@ class TextStyles {
         color: Colors.white30,
       ),
     ],
+  );
+
+     static final TextStyle registerChoiceDisable = TextStyle(
+    fontSize: 25,
+    fontWeight: FontWeight.w400,
+  color: UniversalVariables.white2,
+    fontFamily: 'Poppins',
+
   );
 
     static final TextStyle getPremiumTimeslots = TextStyle(

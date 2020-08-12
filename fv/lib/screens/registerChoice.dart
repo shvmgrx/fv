@@ -102,10 +102,8 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                                 context, "/onboard_user_screen")
                             
                           },
-                          child: Text(
-                            "REGISTER AS USER",
-                            style: TextStyles.registerChoice,
-                          ),
+                          child: Text("REGISTER AS USER",
+style: TextStyles.registerChoice,),
                         ),
                       ),
                        SizedBox(height: 25),

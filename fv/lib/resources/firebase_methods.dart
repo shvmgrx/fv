@@ -204,6 +204,21 @@ class FirebaseMethods {
     return userList;
   }
 
+    Future<List<String>> fetchFvCodes() async {
+    List<String> fzCodes = List<String>();
+
+    QuerySnapshot querySnapshot =
+        await firestore.collection(FZCODES_COLLECTION).getDocuments();
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+   
+       fzCodes.add(querySnapshot.documents[i].documentID);
+      
+    }
+
+
+    return fzCodes;
+  }
+
   Future<List<User>> fetchAllInfluencers(FirebaseUser currentUser) async {
     List<User> allList = List<User>();
 
