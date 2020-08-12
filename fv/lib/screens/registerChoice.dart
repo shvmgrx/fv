@@ -54,9 +54,22 @@ class _RegisterChoiceState extends State<RegisterChoice> {
           Expanded(
             flex:1,
                       child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-            
+             Padding(
+             padding: const EdgeInsets.only(left:8.0),
+             child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: UniversalVariables.backgroundGrey,
+                      ),
+                      onPressed: () {
+                      
+
+                       
+                      },
+                    ),
+           ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
@@ -64,6 +77,19 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                       textAlign: TextAlign.center),
                   
                 ),
+                 Padding(
+             padding: const EdgeInsets.only(left:8.0),
+             child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: UniversalVariables.backgroundGrey,
+                      ),
+                      onPressed: () {
+                      
+
+                      },
+                    ),
+           ),
 
                 //       Navigator.pushAndRemoveUntil(
                 //         context,

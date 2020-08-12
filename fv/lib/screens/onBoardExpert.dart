@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
 import 'package:fv/enum/crop_state.dart';
+import 'package:fv/screens/verifyExpert.dart';
 // import 'package:google_fonts/google_fonts.dart';
 // import 'package:gradient_text/gradient_text.dart';
 import 'package:image_picker/image_picker.dart';
@@ -205,8 +206,24 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
           children: <Widget>[
             Container(height: screenHeight * 0.05),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: UniversalVariables.grey2,
+                      ),
+                      onPressed: () {
+                      
+
+                        Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VerifyExpert()),
+                                  (Route<dynamic> route) => false,
+                                );
+                      },
+                    ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
@@ -222,6 +239,17 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                   //     style: TextStyles.appNameLogoStyle,
                   //     textAlign: TextAlign.center),
                 ),
+                IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: UniversalVariables.backgroundGrey,
+                      ),
+                      onPressed: () {
+                      
+
+                       
+                      },
+                    ),
                 // Align(
                 //   alignment: Alignment.topRight,
                 //   child: IconButton(
@@ -779,6 +807,7 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                       style: TextStyles.nextButton,
                     ),
                   ),
+                  Container(height: screenHeight * 0.06),
                 ],
               ),
             )
