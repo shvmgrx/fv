@@ -6,8 +6,10 @@ class ConStrings {
   static const String BIO = "Bio";
   static const String USERNAME = "Username";
   static const String CATEGORY = "Category";
-  static const String HASHTAGS = "Faveez";
+  static const String HASHTAGS = "Hashtags";
   static const String TXTRPLYPRICE = "Text Reply Price";
   static const String VIDRPLYPRICE = "Video Reply Price";
   static const String VIDCALLPRICE = "Videocall Price";
+  static const String NEXT = "Next";
+  static const String PREFERREDCURRENCY = "Preferred Currency";
 }

@@ -119,7 +119,8 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                           visualDensity: VisualDensity.adaptivePlatformDensity,
                           onPressed: () => {
                        
-                            
+                             Navigator.pushNamed(
+                                context, "/onboard_expert_screen")
                           },
                           child: Text(
                             "REGISTER AS EXPERT",
