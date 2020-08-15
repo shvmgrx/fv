@@ -69,15 +69,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Map loggedUserTimeSlots;
 
 
-  static List ttSlots = new List()..length=7;
-  static List ttDurations = new List()..length=7;
 
+  static List ttSlots = new List()..length = 7;
+  static List ttDurations = new List()..length = 7;
 
   Map<String, List> tempTimeslots = {
-   "ttSlots": ttSlots,
-   "ttDurations": ttDurations,
+    "ttSlots": ttSlots,
+    "ttDurations": ttDurations,
   };
-
 
   bool showts1 = true;
   bool ts1Set = false;
@@ -85,8 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts1ErrorFlag = false;
   DateTime ts1;
   int ts1Duration;
-  bool isTs1bought= false;
-
+  bool isTs1bought = false;
 
   bool showts2 = false;
   bool ts2Set = false;
@@ -94,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts2ErrorFlag = false;
   DateTime ts2;
   int ts2Duration;
-  bool isTs2bought= false;
+  bool isTs2bought = false;
 
   bool showts3 = false;
   bool ts3Set = false;
@@ -102,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts3ErrorFlag = false;
   DateTime ts3;
   int ts3Duration;
-  bool isTs3bought= false;
+  bool isTs3bought = false;
 
   bool showts4 = false;
   bool ts4Set = false;
@@ -110,7 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts4ErrorFlag = false;
   DateTime ts4;
   int ts4Duration;
-  bool isTs4bought= false;
+  bool isTs4bought = false;
 
   bool showts5 = false;
   bool ts5Set = false;
@@ -118,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts5ErrorFlag = false;
   DateTime ts5;
   int ts5Duration;
-  bool isTs5bought= false;
+  bool isTs5bought = false;
 
   bool showts6 = false;
   bool ts6Set = false;
@@ -126,7 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts6ErrorFlag = false;
   DateTime ts6;
   int ts6Duration;
-  bool isTs6bought= false;
+  bool isTs6bought = false;
 
   bool showts7 = false;
   bool ts7Set = false;
@@ -134,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts7ErrorFlag = false;
   DateTime ts7;
   int ts7Duration;
-  bool isTs7bought= false;
+  bool isTs7bought = false;
 
   bool showts8 = false;
   bool ts8Set = false;
@@ -142,15 +140,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool ts8ErrorFlag = false;
   DateTime ts8;
   int ts8Duration;
-  bool isTs8bought= false;
+  bool isTs8bought = false;
 
   bool expertMode = false;
   bool textMode;
   bool videoMode;
   bool videoCallMode;
-
-  var de;
-  var d1;
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -180,24 +175,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
           loggedUserTimeSlots = loggedUser['timeSlots'];
           expertMode = loggedUser['isInfluencer'];
 
-      //    expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
+          expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
 
-      ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
-      ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
-      ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
-      ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
-      ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
-      ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
-      ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
+          // ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
+          // ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
+          // ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
+          // ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
+          // ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
+          // ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
+          // ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
 
-      ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
-      ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
-      ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
-      ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
-      ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
-      ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
-      ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
-
+          // ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
+          // ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
+          // ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
+          // ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
+          // ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
+          // ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
+          // ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
 
           textMode = loggedUseranswerPrice1 != null;
           videoMode = loggedUseranswerPrice2 != null;
@@ -234,7 +228,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //   });
   // }
 
-
   @override
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
@@ -268,8 +261,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                   // print(tempTimeslots);
-                   
+                    // print(tempTimeslots);
                   },
                   child: Align(
                     alignment: Alignment.center,
@@ -291,39 +283,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       }
 
                       setState(() {
-                        loggedUserTimeSlots=tempTimeslots;
+                        loggedUserTimeSlots = tempTimeslots;
                       });
 
                       print(loggedUserTimeSlots);
- 
+
                       _formKey.currentState.save();
 
                       _repository.getCurrentUser().then((FirebaseUser user) {
                         _repository.updateProfiletoDb(
-                          user,
-                          loggedUserDisplayName,
-                          loggedUserEmail,
-                          loggedUserUserName,
-                          loggedUserStatus,
-                          loggedUserState,
-                          loggedUserProfilePic,
-                          loggedUseranswerPrice1,
-                          loggedUseranswerPrice2,
-                          loggedUseranswerPrice3,
-                          loggedUseranswerDuration,
-                          loggedUserBio,
-                          loggedUserisInfCert,
-                          loggedUsermaxQuestionCharcount,
-                          loggedUserRating,
-                          loggedUserCategory,
-                          loggedUserReviews,
-                          loggedUserinfWorth,
-                          loggedUserinfSent,
-                          loggedUserinfReceived,
-                          loggedUserisInfluencer,
-                          loggedUserHashtags,
-                          loggedUserTimeSlots
-                        );
+                            user,
+                            loggedUserDisplayName,
+                            loggedUserEmail,
+                            loggedUserUserName,
+                            loggedUserStatus,
+                            loggedUserState,
+                            loggedUserProfilePic,
+                            loggedUseranswerPrice1,
+                            loggedUseranswerPrice2,
+                            loggedUseranswerPrice3,
+                            loggedUseranswerDuration,
+                            loggedUserBio,
+                            loggedUserisInfCert,
+                            loggedUsermaxQuestionCharcount,
+                            loggedUserRating,
+                            loggedUserCategory,
+                            loggedUserReviews,
+                            loggedUserinfWorth,
+                            loggedUserinfSent,
+                            loggedUserinfReceived,
+                            loggedUserisInfluencer,
+                            loggedUserHashtags,
+                            loggedUserTimeSlots);
                       });
 
                       Navigator.pushNamed(context, "/home_screen");
@@ -467,41 +458,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   Expanded(
                                     flex: 3,
-                                    child: Row(
-                                      children: <Widget>[
-                                        loggedUserinfReceived == 1? SvgPicture.asset(
-                                                        "assets/svgs/euro.svg",
-                                                        height: 30,
-                                                        width: 30,
-                                                        color: UniversalVariables.gold2):
-                                                        SvgPicture.asset(
-                                                        "assets/svgs/dollar.svg",
-                                                        height: 30,
-                                                        width: 30,
-                                                        color: UniversalVariables.gold2)
-                                                        
-                                                        ,
-                                        TextField(
-                                            enabled: textMode && expertMode,
-                                            cursorColor: UniversalVariables.gold2,
-                                            decoration: InputDecoration(
-                                              //icon: Icon(Icons.attach_money,size: 20),
-                                              contentPadding:
-                                                  EdgeInsets.only(bottom: 5),
-                                              hintText: '$loggedUseranswerPrice1',
-                                              hintStyle: TextStyles.hintTextStyle,
-                                            ),
-                                            //  keyboardType: TextInputType.number,
-                                            style: TextStyles.whileEditing,
-                                            inputFormatters: <TextInputFormatter>[
-                                              WhitelistingTextInputFormatter
-                                                  .digitsOnly
-                                            ],
-                                            onChanged: (input) =>
+                                    child: TextField(
+                                        enabled: textMode && expertMode,
+                                        cursorColor: UniversalVariables.gold2,
+                                        decoration: InputDecoration(
+                                          icon: loggedUserinfReceived == 1
+                                              ? Icon(Icons.euro, size: 20)
+                                              : Icon(Icons.attach_money,
+                                                  size: 20),
+                                          contentPadding:
+                                              EdgeInsets.only(bottom: 5),
+                                          hintText: '$loggedUseranswerPrice1',
+                                          hintStyle: TextStyles.hintTextStyle,
+                                        ),
+                                        //  keyboardType: TextInputType.number,
+                                        style: TextStyles.whileEditing,
+                                        inputFormatters: <TextInputFormatter>[
+                                          WhitelistingTextInputFormatter
+                                              .digitsOnly
+                                        ],
+                                        onChanged: (input) => {
+                                              setState(() {
                                                 loggedUseranswerPrice1 =
-                                                    num.tryParse(input)),
-                                      ],
-                                    ),
+                                                    num.tryParse(input);
+                                              })
+                                            }),
                                   )
                                 ],
                               ),
@@ -530,8 +511,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           enabled: videoMode && expertMode,
                                           cursorColor: UniversalVariables.gold2,
                                           decoration: InputDecoration(
-                                            icon: Icon(Icons.attach_money,
-                                                size: 20),
+                                            icon: loggedUserinfReceived == 1
+                                                ? Icon(Icons.euro, size: 20)
+                                                : Icon(Icons.attach_money,
+                                                    size: 20),
                                             contentPadding:
                                                 EdgeInsets.only(bottom: 5),
                                             hintText: '$loggedUseranswerPrice2',
@@ -575,8 +558,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           enabled: videoCallMode && expertMode,
                                           cursorColor: UniversalVariables.gold2,
                                           decoration: InputDecoration(
-                                            icon: Icon(Icons.attach_money,
-                                                size: 20),
+                                            icon: loggedUserinfReceived == 1
+                                                ? Icon(Icons.euro, size: 20)
+                                                : Icon(Icons.attach_money,
+                                                    size: 20),
                                             contentPadding:
                                                 EdgeInsets.only(bottom: 5),
                                             hintText: '$loggedUseranswerPrice3',
@@ -589,9 +574,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             WhitelistingTextInputFormatter
                                                 .digitsOnly
                                           ],
-                                          onChanged: (input) =>
-                                              loggedUseranswerPrice3 =
-                                                  num.tryParse(input)),
+                                          onChanged: (input) => {
+                                                loggedUseranswerPrice3 =
+                                                    num.tryParse(input)
+                                              }),
                                     ),
                                   )
                                 ],
@@ -611,7 +597,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text("Video Call Price (25 mins)",
+                                          Text("Video Call Price (15 mins)",
                                               style: TextStyles.editHeadingName,
                                               textAlign: TextAlign.left),
                                           SizedBox(height: 5),
@@ -626,10 +612,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 "Set videocall price",
                                                 style: TextStyles.hintTextStyle,
                                               )
-                                            : Text(
-                                                "${(loggedUseranswerPrice3 * 1.333).ceil()}",
-                                                style: TextStyles.hintTextStyle,
-                                              ),
+                                            : loggedUserinfReceived == 1
+                                                ? Text(
+                                                    "€ ${(loggedUseranswerPrice3 * 1.333).ceil()}",
+                                                    style: TextStyles
+                                                        .hintMoneyTextStyle,
+                                                  )
+                                                : Text(
+                                                    "\$ ${(loggedUseranswerPrice3 * 1.333).ceil()}",
+                                                    style: TextStyles
+                                                        .hintMoneyTextStyle,
+                                                  ),
                                       ),
                                     )
                                   ],
@@ -650,7 +643,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text("Video Call Price (45 mins)",
+                                          Text("Video Call Price (20 mins)",
                                               style: TextStyles.editHeadingName,
                                               textAlign: TextAlign.left),
                                           SizedBox(height: 5),
@@ -665,10 +658,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 "Set videocall price",
                                                 style: TextStyles.hintTextStyle,
                                               )
-                                            : Text(
-                                                "${(loggedUseranswerPrice3 * 2.667).ceil()}",
-                                                style: TextStyles.hintTextStyle,
-                                              ),
+                                            : loggedUserinfReceived == 1
+                                                ? Text(
+                                                    "€ ${(loggedUseranswerPrice3 * 2.667).ceil()}",
+                                                    style: TextStyles
+                                                        .hintMoneyTextStyle,
+                                                  )
+                                                : Text(
+                                                    "\$ ${(loggedUseranswerPrice3 * 2.667).ceil()}",
+                                                    style: TextStyles
+                                                        .hintMoneyTextStyle,
+                                                  ),
                                       ),
                                     )
                                   ],
@@ -723,16 +723,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             !ts1ErrorFlag,
                                                         child:
                                                             CupertinoDatePicker(
-                                                          minimumDate: DateTime.now(),
-                                                           
+                                                          minimumDate:
+                                                              DateTime.now(),
+
                                                           backgroundColor:
                                                               UniversalVariables
                                                                   .transparent,
                                                           mode:
                                                               CupertinoDatePickerMode
                                                                   .dateAndTime,
-                                                          initialDateTime: ts1,
-                                                            //  DateTime.now(),
+                                                          initialDateTime:
+                                                              DateTime.now(),
+                                                          //  DateTime.now(),
                                                           onDateTimeChanged:
                                                               (DateTime
                                                                   newTimeslot) {
@@ -784,8 +786,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           itemExtent: 30.0,
                                                           children: const [
                                                             Text('10 mins'),
-                                                            Text('25 mins'),
-                                                            Text('45 mins'),
+                                                            Text('15 mins'),
+                                                            Text('20 mins'),
                                                           ],
                                                         ),
                                                       ),
@@ -801,14 +803,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     onTap: () {
                                                       setState(() {
                                                         ts1Set = !ts1Set;
-                                                  
+
                                                         if (ts1Set &&
                                                             ts1Changed > 2) {
                                                           showts2 = true;
-                                                          
-                                                          ttSlots[0]=ts1;
-                                                          ttDurations[0]=ts1Duration;
-                                                          
+
+                                                          ttSlots[0] = ts1;
+                                                          ttDurations[0] =
+                                                              ts1Duration;
+
                                                           ts1ErrorFlag = false;
                                                         } else {
                                                           ts1ErrorFlag = true;
@@ -945,15 +948,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 (value) {
                                                               setState(() {
                                                                 ts2Changed++;
-                                                                ts2Duration =value;
-                                                                
+                                                                ts2Duration =
+                                                                    value;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
                                                             children: const [
                                                               Text('10 mins'),
-                                                              Text('25 mins'),
-                                                              Text('45 mins'),
+                                                              Text('15 mins'),
+                                                              Text('20 mins'),
                                                             ],
                                                           ),
                                                         ),
@@ -974,10 +977,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts2Changed > 2) {
                                                             showts3 = true;
 
-                                                          ttSlots[1]=ts2;
-                                                          ttDurations[1]=ts2Duration;
+                                                            ttSlots[1] = ts2;
+                                                            ttDurations[1] =
+                                                                ts2Duration;
 
-                                                           
                                                             ts2ErrorFlag =
                                                                 false;
                                                           } else {
@@ -1115,15 +1118,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             onSelectedItemChanged:
                                                                 (value) {
                                                               setState(() {
-                                                                ts3Duration = value;
+                                                                ts3Duration =
+                                                                    value;
                                                                 ts3Changed++;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
                                                             children: const [
                                                               Text('10 mins'),
-                                                              Text('25 mins'),
-                                                              Text('45 mins'),
+                                                              Text('15 mins'),
+                                                              Text('20 mins'),
                                                             ],
                                                           ),
                                                         ),
@@ -1144,10 +1148,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts3Changed > 2) {
                                                             showts4 = true;
 
-                                                          ttSlots[2]=ts3;
-                                                          ttDurations[2]=ts3Duration;
+                                                            ttSlots[2] = ts3;
+                                                            ttDurations[2] =
+                                                                ts3Duration;
 
-                                                           
                                                             ts3ErrorFlag =
                                                                 false;
                                                           } else {
@@ -1194,7 +1198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
-                                  
+
                                   //TS4
                                   Visibility(
                                     visible: showts4,
@@ -1286,15 +1290,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             onSelectedItemChanged:
                                                                 (value) {
                                                               setState(() {
-                                                                ts4Duration = value;
+                                                                ts4Duration =
+                                                                    value;
                                                                 ts4Changed++;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
                                                             children: const [
                                                               Text('10 mins'),
-                                                              Text('25 mins'),
-                                                              Text('45 mins'),
+                                                              Text('15 mins'),
+                                                              Text('20 mins'),
                                                             ],
                                                           ),
                                                         ),
@@ -1315,10 +1320,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts4Changed > 2) {
                                                             showts5 = true;
 
-                                                          ttSlots[3]=ts4;
-                                                          ttDurations[3]=ts4Duration;
+                                                            ttSlots[3] = ts4;
+                                                            ttDurations[3] =
+                                                                ts4Duration;
 
-                                                           
                                                             ts4ErrorFlag =
                                                                 false;
                                                           } else {
@@ -1456,15 +1461,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             onSelectedItemChanged:
                                                                 (value) {
                                                               setState(() {
-                                                                ts5Duration = value;
+                                                                ts5Duration =
+                                                                    value;
                                                                 ts5Changed++;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
                                                             children: const [
                                                               Text('10 mins'),
-                                                              Text('25 mins'),
-                                                              Text('45 mins'),
+                                                              Text('15 mins'),
+                                                              Text('20 mins'),
                                                             ],
                                                           ),
                                                         ),
@@ -1485,10 +1491,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts5Changed > 2) {
                                                             showts6 = true;
 
-                                                          ttSlots[4]=ts5;
-                                                          ttDurations[4]=ts5Duration;
+                                                            ttSlots[4] = ts5;
+                                                            ttDurations[4] =
+                                                                ts5Duration;
 
-                                                           
                                                             ts5ErrorFlag =
                                                                 false;
                                                           } else {
@@ -1535,7 +1541,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
-                                  
+
                                   //TS6
                                   Visibility(
                                     visible: showts6,
@@ -1627,15 +1633,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             onSelectedItemChanged:
                                                                 (value) {
                                                               setState(() {
-                                                                ts6Duration = value;
+                                                                ts6Duration =
+                                                                    value;
                                                                 ts6Changed++;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
                                                             children: const [
                                                               Text('10 mins'),
-                                                              Text('25 mins'),
-                                                              Text('45 mins'),
+                                                              Text('15 mins'),
+                                                              Text('20 mins'),
                                                             ],
                                                           ),
                                                         ),
@@ -1656,10 +1663,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts6Changed > 2) {
                                                             showts7 = true;
 
-                                                          ttSlots[5]=ts6;
-                                                          ttDurations[5]=ts6Duration;
+                                                            ttSlots[5] = ts6;
+                                                            ttDurations[5] =
+                                                                ts6Duration;
 
-                                                           
                                                             ts6ErrorFlag =
                                                                 false;
                                                           } else {
@@ -1797,15 +1804,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             onSelectedItemChanged:
                                                                 (value) {
                                                               setState(() {
-                                                                ts7Duration = value;
+                                                                ts7Duration =
+                                                                    value;
                                                                 ts7Changed++;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
                                                             children: const [
                                                               Text('10 mins'),
-                                                              Text('25 mins'),
-                                                              Text('45 mins'),
+                                                              Text('15 mins'),
+                                                              Text('20 mins'),
                                                             ],
                                                           ),
                                                         ),
@@ -1826,10 +1834,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts7Changed > 2) {
                                                             showts8 = true;
 
-                                                          ttSlots[6]=ts7;
-                                                          ttDurations[6]=ts7Duration;
+                                                            ttSlots[6] = ts7;
+                                                            ttDurations[6] =
+                                                                ts7Duration;
 
-                                                           
                                                             ts7ErrorFlag =
                                                                 false;
                                                           } else {

@@ -182,6 +182,19 @@ class TextStyles {
     // ],
   );
 
+    static final TextStyle hintMoneyTextStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w300,
+  color: UniversalVariables.gold2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
     static final TextStyle paymentTypeStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w300,
