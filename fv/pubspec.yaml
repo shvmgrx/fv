@@ -49,6 +49,7 @@ dependencies:
   swipedetector: ^1.2.0
   stripe_payment: ^1.0.7
   cloud_functions: ^0.5.0
+  flutter_svg: ^0.18.0
 
 
 

@@ -2,10 +2,8 @@ import 'dart:io';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/screens/chatscreens/widgets/modalTile.dart';
-// import 'package:fv/widgets/nmButton.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/enum/view_state.dart';
@@ -17,22 +15,18 @@ import 'package:fv/resources/chat_methods.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
-// import 'package:fv/ui_elements/loader.dart';
 import 'package:fv/utils/call_utilities.dart';
 import 'package:fv/utils/permissions.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/utils/utilities.dart';
 import 'package:fv/widgets/appbar.dart';
-import 'package:fv/widgets/custom_tile.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/widgets/nmBox.dart';
 import 'package:provider/provider.dart';
 import 'package:date_time_format/date_time_format.dart';
-// import 'package:flutter/services.dart';
-// import 'package:media_picker/media_picker.dart';
+
 
 import 'package:stripe_payment/stripe_payment.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -63,10 +57,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   int valueSelected = 0;
 
-  //For video
-  // String _platformVersion = 'Unknown';
-  // List<dynamic> _mediaPaths;
-
   @override
   void initState() {
     super.initState();
@@ -92,6 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
     print('Value = $value');
   }
 
+  //stripe payment
   void stripePayment(int billAmount) {
     StripePayment.setOptions(StripeOptions(
         publishableKey: "pk_live_FheU3MdCQh1zmfTBPEXZQNRP004f2b4pbj"));
@@ -151,21 +142,12 @@ class _ChatScreenState extends State<ChatScreen> {
           return Center(child: CircularProgressIndicator());
         }
 
-        // SchedulerBinding.instance.addPostFrameCallback((_) {
-        //   _listScrollController.animateTo(
-        //     _listScrollController.position.minScrollExtent,
-        //     duration: Duration(milliseconds: 250),
-        //     curve: Curves.easeInOut,
-        //   );
-        // });
-
         return ListView.builder(
           padding: EdgeInsets.all(10),
           itemCount: snapshot.data.documents.length,
           reverse: true,
           controller: _listScrollController,
           itemBuilder: (context, index) {
-            // mention the arrow syntax if you get the time
             return chatMessageItem(snapshot.data.documents[index]);
           },
         );

@@ -1,6 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/onboarding/strings.dart';
 import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -90,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedIninfReceived = loggedUser['infReceived'];
           //uncomment this and remove temporary loggedInisInfluencer
           loggedInisInfluencer = loggedUser['isInfluencer'];
-         // loggedInisInfluencer = true;
+          // loggedInisInfluencer = true;
         });
       });
     });
@@ -170,14 +171,12 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
                 child: GestureDetector(
-                  onTap: () => 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsScreen(),
-                      ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingsScreen(),
                     ),
-               
+                  ),
                   child: Container(
                     height: 40.0,
                     width: 40.0,
@@ -197,14 +196,12 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 45.0, top: 30.0, right: 15.0),
                 child: GestureDetector(
-                  onTap: () => 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditProfile(),
-                      ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfile(),
                     ),
-                  
+                  ),
                   child: Container(
                     height: 40.0,
                     width: 40.0,
@@ -347,8 +344,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         child: Align(
                                           alignment: Alignment.center,
                                           child: loggedInanswerPrice1 != null
-                                              ? Text(
-                                                  "\$ $loggedInanswerPrice1",
+                                              ? Text("\$ $loggedInanswerPrice1",
                                                   style: TextStyles.priceNumber,
                                                   textAlign: TextAlign.center)
                                               : Text("Not Set",
@@ -424,8 +420,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         child: Align(
                                           alignment: Alignment.center,
                                           child: loggedInanswerPrice2 != null
-                                              ? Text(
-                                                  "\$ $loggedInanswerPrice2",
+                                              ? Text("\$ $loggedInanswerPrice2",
                                                   style: TextStyles.priceNumber,
                                                   textAlign: TextAlign.center)
                                               : Text("Not Set",
@@ -501,8 +496,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         child: Align(
                                           alignment: Alignment.center,
                                           child: loggedInanswerPrice3 != null
-                                              ? Text(
-                                                  "\$ $loggedInanswerPrice3",
+                                              ? Text("\$ $loggedInanswerPrice3",
                                                   style: TextStyles.priceNumber,
                                                   textAlign: TextAlign.center)
                                               : Text("Not Set",
@@ -520,40 +514,164 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                       ),
                       SizedBox(height: 35),
-                      Center(
-                        child: loggedInisInfCert? 
-                        
-                        Container(
-                          child: OutlineButton(
-                            onPressed: (){
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => SettingsScreen(),
-                              //     ),
-                              //   );
-                            },
-                            focusColor: UniversalVariables.standardWhite,
-                           // borderSide: BorderSide.solid,
-                            child: Text("YOU ARE VERIFIED", style:TextStyles.verifiedStyle),
-                          ),
-                        ):
-                        Container(
-                          child: OutlineButton(
-                            onPressed: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SettingsScreen(),
+
+                      loggedInisInfCert
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: Container(
+                                height: 250,
+                                width: screenWidth * 0.9,
+                                color: UniversalVariables.transparent,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color:
+                                              UniversalVariables.standardWhite,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(100),
+                                            topRight: Radius.circular(100),
+                                            //   bottomLeft: Radius.circular(10),
+                                            //   bottomRight: Radius.circular(10),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 18.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text("July 23, 16:00",
+                                                  style: TextStyles
+                                                      .timeTextDetailStyle),
+                                              Container(
+                                                // color:Colors.orange,
+                                                width: 75,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      UniversalVariables.gold2,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomLeft:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Icon(
+                                                        Icons.shopping_cart,
+                                                        color:
+                                                            UniversalVariables
+                                                                .standardWhite,
+                                                      ),
+                                                      Text("BOOK",
+                                                          style: TextStyles
+                                                              .timeSlotDetails),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color:
+                                              UniversalVariables.standardWhite,
+                                          borderRadius: BorderRadius.only(
+                                            //  topLeft: Radius.circular(10),
+                                            //  topRight: Radius.circular(10),
+                                            bottomLeft: Radius.circular(50),
+                                            bottomRight: Radius.circular(50),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 80.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text("July 23, 16:00",
+                                                  style: TextStyles
+                                                      .timeTextDetailStyle),
+                                              Container(
+                                                // color:Colors.orange,
+                                                width: 75,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      UniversalVariables.gold2,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomLeft:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Icon(
+                                                        Icons.shopping_cart,
+                                                        color:
+                                                            UniversalVariables
+                                                                .standardWhite,
+                                                      ),
+                                                      Text("BOOK",
+                                                          style: TextStyles
+                                                              .timeSlotDetails),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                );
-                            },
-                            focusColor: UniversalVariables.standardWhite,
-                           // borderSide: BorderSide.solid,
-                            child: Text("GET VERIFIED", style:TextStyles.verifiedStyle),
-                          ),
-                        ),
-                      ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              child: OutlineButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SettingsScreen(),
+                                    ),
+                                  );
+                                },
+                                focusColor: UniversalVariables.standardWhite,
+                                // borderSide: BorderSide.solid,
+                                child: Text("GET VERIFIED",
+                                    style: TextStyles.verifiedStyle),
+                              ),
+                            ),
+
                       // Padding(
                       //   padding: const EdgeInsets.only(top: 20.0),
                       //   child: Container(
@@ -1062,13 +1180,12 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 30.0),
                 child: GestureDetector(
-                  onTap: () =>  {
+                  onTap: () => {
                     Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                              (Route<dynamic> route) => false,
-                            )
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      (Route<dynamic> route) => false,
+                    )
                   },
                   child: Container(
                     height: 40.0,
@@ -1380,7 +1497,6 @@ class _ProfileScreenState extends State<ProfileScreen>
           ],
         ),
       ),
-     
     );
   }
   // @override

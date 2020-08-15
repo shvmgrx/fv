@@ -26,6 +26,8 @@ import 'package:fv/utils/universal_variables.dart';
 import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -142,10 +144,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts8Duration;
   bool isTs8bought= false;
 
-  bool expertMode;
+  bool expertMode = false;
   bool textMode;
   bool videoMode;
   bool videoCallMode;
+
+  var de;
+  var d1;
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -175,7 +180,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
           loggedUserTimeSlots = loggedUser['timeSlots'];
           expertMode = loggedUser['isInfluencer'];
 
-          expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
+      //    expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
+
+      ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
+      ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
+      ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
+      ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
+      ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
+      ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
+      ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
+
+      ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
+      ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
+      ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
+      ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
+      ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
+      ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
+      ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
+
 
           textMode = loggedUseranswerPrice1 != null;
           videoMode = loggedUseranswerPrice2 != null;
@@ -212,6 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //   });
   // }
 
+
   @override
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
@@ -245,7 +268,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print(tempTimeslots);
+                   // print(tempTimeslots);
+                   
                   },
                   child: Align(
                     alignment: Alignment.center,
@@ -443,26 +467,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   Expanded(
                                     flex: 3,
-                                    child: TextField(
-                                        enabled: textMode && expertMode,
-                                        cursorColor: UniversalVariables.gold2,
-                                        decoration: InputDecoration(
-                                          icon: Icon(Icons.attach_money,
-                                              size: 20),
-                                          contentPadding:
-                                              EdgeInsets.only(bottom: 5),
-                                          hintText: '$loggedUseranswerPrice1',
-                                          hintStyle: TextStyles.hintTextStyle,
-                                        ),
-                                        //  keyboardType: TextInputType.number,
-                                        style: TextStyles.whileEditing,
-                                        inputFormatters: <TextInputFormatter>[
-                                          WhitelistingTextInputFormatter
-                                              .digitsOnly
-                                        ],
-                                        onChanged: (input) =>
-                                            loggedUseranswerPrice1 =
-                                                num.tryParse(input)),
+                                    child: Row(
+                                      children: <Widget>[
+                                        loggedUserinfReceived == 1? SvgPicture.asset(
+                                                        "assets/svgs/euro.svg",
+                                                        height: 30,
+                                                        width: 30,
+                                                        color: UniversalVariables.gold2):
+                                                        SvgPicture.asset(
+                                                        "assets/svgs/dollar.svg",
+                                                        height: 30,
+                                                        width: 30,
+                                                        color: UniversalVariables.gold2)
+                                                        
+                                                        ,
+                                        TextField(
+                                            enabled: textMode && expertMode,
+                                            cursorColor: UniversalVariables.gold2,
+                                            decoration: InputDecoration(
+                                              //icon: Icon(Icons.attach_money,size: 20),
+                                              contentPadding:
+                                                  EdgeInsets.only(bottom: 5),
+                                              hintText: '$loggedUseranswerPrice1',
+                                              hintStyle: TextStyles.hintTextStyle,
+                                            ),
+                                            //  keyboardType: TextInputType.number,
+                                            style: TextStyles.whileEditing,
+                                            inputFormatters: <TextInputFormatter>[
+                                              WhitelistingTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            onChanged: (input) =>
+                                                loggedUseranswerPrice1 =
+                                                    num.tryParse(input)),
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
@@ -684,16 +723,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             !ts1ErrorFlag,
                                                         child:
                                                             CupertinoDatePicker(
-                                                          minimumDate:
-                                                              DateTime.now(),
+                                                          minimumDate: DateTime.now(),
+                                                           
                                                           backgroundColor:
                                                               UniversalVariables
                                                                   .transparent,
                                                           mode:
                                                               CupertinoDatePickerMode
                                                                   .dateAndTime,
-                                                          initialDateTime:
-                                                              DateTime.now(),
+                                                          initialDateTime: ts1,
+                                                            //  DateTime.now(),
                                                           onDateTimeChanged:
                                                               (DateTime
                                                                   newTimeslot) {
