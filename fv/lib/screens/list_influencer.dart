@@ -276,14 +276,13 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                           setState(() {
                             paymentPressed = !paymentPressed;
                             if (paymentPressed) {
-                            Navigator.pushNamed(
-                                context, "/register_choice_screen");
+                            
                           }
                           });
                         },
                         child: NMButton(
                           down: paymentPressed,
-                          icon: Icons.attach_money,
+                          icon: Icons.wysiwyg,
                         ),
                       ),
                     ),
