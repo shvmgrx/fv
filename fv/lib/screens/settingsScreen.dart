@@ -25,6 +25,7 @@ import 'package:fv/utils/universal_variables.dart';
 // import 'package:fv/widgets/slideRoute.dart';
 import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
+import 'package:fv/utils/utilities.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,12 +69,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Map loggedUserTimeSlots;
 
-
-
+  static List ttIds = new List()..length = 7;
   static List ttSlots = new List()..length = 7;
   static List ttDurations = new List()..length = 7;
 
   Map<String, List> tempTimeslots = {
+    "ttIds":ttIds,
     "ttSlots": ttSlots,
     "ttDurations": ttDurations,
   };
@@ -85,6 +86,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts1;
   int ts1Duration;
   bool isTs1bought = false;
+  bool isTS1same =true;
+  String order1Id;
 
   bool showts2 = false;
   bool ts2Set = false;
@@ -93,6 +96,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts2;
   int ts2Duration;
   bool isTs2bought = false;
+  bool isTS2same =true;
+  String order2Id;
 
   bool showts3 = false;
   bool ts3Set = false;
@@ -101,6 +106,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts3;
   int ts3Duration;
   bool isTs3bought = false;
+  bool isTS3same =true;
+  String order3Id;
 
   bool showts4 = false;
   bool ts4Set = false;
@@ -109,6 +116,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts4;
   int ts4Duration;
   bool isTs4bought = false;
+  bool isTS4same =true;
+  String order4Id;
 
   bool showts5 = false;
   bool ts5Set = false;
@@ -117,6 +126,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts5;
   int ts5Duration;
   bool isTs5bought = false;
+  bool isTS5same =true;
+  String order5Id;
 
   bool showts6 = false;
   bool ts6Set = false;
@@ -125,6 +136,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts6;
   int ts6Duration;
   bool isTs6bought = false;
+  bool isTS6same =true;
+  String order6Id;
 
   bool showts7 = false;
   bool ts7Set = false;
@@ -133,6 +146,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts7;
   int ts7Duration;
   bool isTs7bought = false;
+  bool isTS7same =true;
+  String order7Id;
 
   bool showts8 = false;
   bool ts8Set = false;
@@ -141,6 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts8;
   int ts8Duration;
   bool isTs8bought = false;
+  String order8Id;
 
   bool expertMode = false;
   bool textMode;
@@ -177,21 +193,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
 
-          // ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
-          // ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
-          // ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
-          // ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
-          // ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
-          // ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
-          // ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
+          ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
+          ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
+          ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
+          ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
+          ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
+          ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
+          ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
 
-          // ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
-          // ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
-          // ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
-          // ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
-          // ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
-          // ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
-          // ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
+          ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
+          ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
+          ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
+          ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
+          ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
+          ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
+          ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
+
+          showts2 = (loggedUserTimeSlots['ttSlots'][1] !=null && loggedUserTimeSlots['ttDurations'][1] !=null)? true:false;
+          showts3 = (loggedUserTimeSlots['ttSlots'][2] !=null && loggedUserTimeSlots['ttDurations'][2] !=null)? true:false;
+          showts4 = (loggedUserTimeSlots['ttSlots'][3] !=null && loggedUserTimeSlots['ttDurations'][3] !=null)? true:false;
+          showts5 = (loggedUserTimeSlots['ttSlots'][4] !=null && loggedUserTimeSlots['ttDurations'][4] !=null)? true:false;
+          showts6 = (loggedUserTimeSlots['ttSlots'][5] !=null && loggedUserTimeSlots['ttDurations'][5] !=null)? true:false;
+          showts7 = (loggedUserTimeSlots['ttSlots'][6] !=null && loggedUserTimeSlots['ttDurations'][6] !=null)? true:false;
 
           textMode = loggedUseranswerPrice1 != null;
           videoMode = loggedUseranswerPrice2 != null;
@@ -262,6 +285,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 GestureDetector(
                   onTap: () {
                     // print(tempTimeslots);
+                 
                   },
                   child: Align(
                     alignment: Alignment.center,
@@ -282,11 +306,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return;
                       }
 
+                      if (ttSlots[0]!=null && ttDurations[0]!=null && ttIds[0] != loggedUserTimeSlots['ttIds'][0]) {
+                        ttIds[0]= Utils.generateRandomOrderId();
+                      }
+                      if (ttSlots[1]!=null && ttDurations[1]!=null && ttIds[1] != loggedUserTimeSlots['ttIds'][1]) {
+                        ttIds[1]= Utils.generateRandomOrderId();
+                      }
+                      if (ttSlots[2]!=null && ttDurations[2]!=null && ttIds[2] != loggedUserTimeSlots['ttIds'][2]) {
+                        ttIds[2]= Utils.generateRandomOrderId();
+                      }
+                      if (ttSlots[3]!=null && ttDurations[3]!=null && ttIds[3] != loggedUserTimeSlots['ttIds'][3]) {
+                        ttIds[3]= Utils.generateRandomOrderId();
+                      }
+                      if (ttSlots[4]!=null && ttDurations[4]!=null && ttIds[4] != loggedUserTimeSlots['ttIds'][4]) {
+                        ttIds[4]= Utils.generateRandomOrderId();
+                      }
+                      if (ttSlots[5]!=null && ttDurations[5]!=null && ttIds[5] != loggedUserTimeSlots['ttIds'][5]) {
+                        ttIds[5]= Utils.generateRandomOrderId();
+                      }
+                      if (ttSlots[6]!=null && ttDurations[6]!=null && ttIds[6] != loggedUserTimeSlots['ttIds'][6]) {
+                        ttIds[6]= Utils.generateRandomOrderId();
+                      }
+
                       setState(() {
                         loggedUserTimeSlots = tempTimeslots;
                       });
 
-                      print(loggedUserTimeSlots);
+                    
 
                       _formKey.currentState.save();
 
@@ -702,6 +748,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
                                             children: <Widget>[
+                                              ts1Set && !ts1ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                               Expanded(
                                                 flex: 5,
                                                 child: Visibility(
@@ -723,17 +782,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             !ts1ErrorFlag,
                                                         child:
                                                             CupertinoDatePicker(
-                                                          minimumDate:
-                                                              DateTime.now(),
-
+                                                          minimumDate: DateTime.now(),
+                                                            
                                                           backgroundColor:
                                                               UniversalVariables
                                                                   .transparent,
                                                           mode:
                                                               CupertinoDatePickerMode
                                                                   .dateAndTime,
-                                                          initialDateTime:
-                                                              DateTime.now(),
+                                                          initialDateTime: ts1 !=null? ts1:DateTime.now(),
+                                                             // DateTime.now(),
                                                           //  DateTime.now(),
                                                           onDateTimeChanged:
                                                               (DateTime
@@ -869,6 +927,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: <Widget>[
+                                                ts2Set && !ts2ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                                 Expanded(
                                                   flex: 5,
                                                   child: Visibility(
@@ -899,8 +970,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:
-                                                                DateTime.now(),
+                                                            initialDateTime: ts2 !=null? ts2:DateTime.now(),
+                                                              
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1040,6 +1111,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: <Widget>[
+                                                ts3Set && !ts3ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                                 Expanded(
                                                   flex: 5,
                                                   child: Visibility(
@@ -1070,8 +1154,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:
-                                                                DateTime.now(),
+                                                            initialDateTime:ts3 !=null? ts3:DateTime.now(),
+                                                              
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1212,6 +1296,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: <Widget>[
+                                                ts4Set && !ts4ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                                 Expanded(
                                                   flex: 5,
                                                   child: Visibility(
@@ -1242,8 +1339,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:
-                                                                DateTime.now(),
+                                                            initialDateTime: ts4 !=null? ts4:DateTime.now(),
+                                                             
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1383,6 +1480,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: <Widget>[
+                                                ts5Set && !ts5ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                                 Expanded(
                                                   flex: 5,
                                                   child: Visibility(
@@ -1413,8 +1523,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:
-                                                                DateTime.now(),
+                                                            initialDateTime: ts5 !=null? ts5:DateTime.now(),
+                                                               
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1555,6 +1665,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: <Widget>[
+                                                ts6Set && !ts6ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                                 Expanded(
                                                   flex: 5,
                                                   child: Visibility(
@@ -1585,8 +1708,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:
-                                                                DateTime.now(),
+                                                            initialDateTime: ts6 !=null? ts6:DateTime.now(),
+                                                               
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1726,6 +1849,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: <Widget>[
+                                                ts7Set && !ts7ErrorFlag
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                                        child: Icon(
+                                                            Icons.edit_off,
+                                                            size: 20),
+                                                      ),
+                                                    )
+                                                  : Icon(Icons.edit, size: 20),
                                                 Expanded(
                                                   flex: 5,
                                                   child: Visibility(
@@ -1756,8 +1892,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:
-                                                                DateTime.now(),
+                                                            initialDateTime: ts7 !=null? ts7:DateTime.now(),
+                                                             
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {

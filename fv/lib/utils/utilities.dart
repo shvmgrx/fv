@@ -12,6 +12,19 @@ class Utils {
     return "$name$rand";
   }
 
+  static String generateRandomOrderId() {
+
+    int r1 = Random().nextInt(9999);
+    var r2 =DateTime.now().hashCode.toRadixString(36);
+    int r3 = Random().nextInt(9999);
+    var r4 =DateTime.now().hashCode.toRadixString(20);
+    int r5 = Random().nextInt(9999);
+    var r6 =DateTime.now().hashCode.toRadixString(36);
+
+    
+    return "$r1$r2$r3$r4$r5$r6";
+  }
+
   static String getInitials(String email) {
     List<String> nameSplit = email.split(" ");
     String firstNameInitial = nameSplit[0][0];
