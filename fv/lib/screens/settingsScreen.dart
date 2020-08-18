@@ -201,6 +201,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
           ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
 
+
           ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
           ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
           ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;

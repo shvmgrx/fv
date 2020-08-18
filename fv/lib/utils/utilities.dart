@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 //import 'package:image/image.dart' as Im;
+import 'package:fv/constants/conStrings.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/enum/user_state.dart';
 import 'package:meta/meta.dart';
@@ -23,6 +24,19 @@ class Utils {
 
     
     return "$r1$r2$r3$r4$r5$r6";
+  }
+
+    static String getDuration(int duration) {
+
+    String timeDuration= ConStrings.timeDuration;  
+
+    if(duration == 1){
+      timeDuration = ConStrings.timeDuration1; 
+    }
+    if(duration == 2){
+      timeDuration = ConStrings.timeDuration2; 
+    }
+    return timeDuration;
   }
 
   static String getInitials(String email) {

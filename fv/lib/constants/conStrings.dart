@@ -14,4 +14,9 @@ class ConStrings {
   static const String PREFERREDCURRENCY = "Preferred Currency";
   static const String FVCODE = "FV-CODE";
   static const String FVCODEINFO = "Add the FV-CODE provided to you by our team";
+
+
+  static const String timeDuration = "10 mins";
+  static const String timeDuration1 = "15 mins";
+  static const String timeDuration2 = "20 mins";
 }

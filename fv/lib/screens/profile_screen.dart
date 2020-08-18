@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fv/onboarding/strings.dart';
 import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
+import 'package:fv/utils/utilities.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:gradient_text/gradient_text.dart';
 // import 'package:fv/models/user.dart';
@@ -26,6 +27,7 @@ import 'package:fv/widgets/nmBox.dart';
 // import 'package:fv/widgets/slideRoute.dart';
 // import 'package:flutter/services.dart';
 import 'package:swipedetector/swipedetector.dart';
+import 'package:intl/intl.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -60,6 +62,31 @@ class _ProfileScreenState extends State<ProfileScreen>
   int loggedIninfSent;
   int loggedIninfReceived;
   bool loggedInisInfluencer;
+  Map loggedUserTimeSlots;
+
+  DateTime ts1;
+  DateTime ts2;
+  DateTime ts3;
+  DateTime ts4;
+  DateTime ts5;
+  DateTime ts6;
+  DateTime ts7;
+
+  int ts1Duration;
+  int ts2Duration;
+  int ts3Duration;
+  int ts4Duration;
+  int ts5Duration;
+  int ts6Duration;
+  int ts7Duration;
+  
+  String ts1orderId;
+  String ts2orderId;
+  String ts3orderId;
+  String ts4orderId;
+  String ts5orderId;
+  String ts6orderId;
+  String ts7orderId;
 
   AnimationController controller;
   Animation animation;
@@ -87,11 +114,37 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedIncategory = loggedUser['category'];
           loggedInreviews = loggedUser['reviews'];
           loggedIninfWorth = loggedUser['infWorth'];
-          // loggedIninfSent = loggedUser['infSent'];
           loggedIninfReceived = loggedUser['infReceived'];
-          //uncomment this and remove temporary loggedInisInfluencer
           loggedInisInfluencer = loggedUser['isInfluencer'];
-          // loggedInisInfluencer = true;
+          loggedUserTimeSlots = loggedUser['timeSlots'];
+
+
+          ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
+          ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
+          ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
+          ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
+          ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
+          ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
+          ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
+
+          ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
+          ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
+          ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
+          ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
+          ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
+          ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
+          ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
+
+          ts1orderId = loggedUserTimeSlots['ttIds'][0] !=null ? loggedUserTimeSlots['ttIds'][0]:null;
+          ts2orderId = loggedUserTimeSlots['ttIds'][1] !=null ? loggedUserTimeSlots['ttIds'][1]:null;
+          ts3orderId = loggedUserTimeSlots['ttIds'][2] !=null ? loggedUserTimeSlots['ttIds'][2]:null;
+          ts4orderId = loggedUserTimeSlots['ttIds'][3] !=null ? loggedUserTimeSlots['ttIds'][3]:null;
+          ts5orderId = loggedUserTimeSlots['ttIds'][4] !=null ? loggedUserTimeSlots['ttIds'][4]:null;
+          ts6orderId = loggedUserTimeSlots['ttIds'][5] !=null ? loggedUserTimeSlots['ttIds'][5]:null;
+          ts7orderId = loggedUserTimeSlots['ttIds'][6] !=null ? loggedUserTimeSlots['ttIds'][6]:null;
+
+          print("loggedUserTimeSlots: $loggedUserTimeSlots");
+          
         });
       });
     });
@@ -513,13 +566,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ],
                         ),
                       ),
-                      SizedBox(height: 35),
+                      SizedBox(height: 15),
 
                       loggedInisInfCert
                           ? Padding(
                               padding: const EdgeInsets.only(top: 20.0),
                               child: Container(
-                                height: 250,
+                                height: screenHeight * 0.9,
                                 width: screenWidth * 0.9,
                                 color: UniversalVariables.transparent,
                                 child: SingleChildScrollView(
@@ -527,60 +580,70 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   child: Column(
                                     children: <Widget>[
                                       Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              UniversalVariables.standardWhite,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(100),
-                                            topRight: Radius.circular(100),
-                                            //   bottomLeft: Radius.circular(10),
-                                            //   bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
+                                        // decoration: BoxDecoration(
+                                        //   color:
+                                        //    //   UniversalVariables.white2,
+                                        //   //borderRadius: BorderRadius.only(
+                                        //     // topLeft: Radius.circular(100),
+                                        //     // topRight: Radius.circular(100),
+                                        //     //   bottomLeft: Radius.circular(10),
+                                        //     //   bottomRight: Radius.circular(10),
+                                        //   ),
+                                        // ),
                                         child: Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 18.0),
+                                              const EdgeInsets.only(top: 18.0, left:20,bottom:5),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: <Widget>[
-                                              Text("July 23, 16:00",
+                                              Text("${DateFormat('MMM d, kk:mm').format(ts1)}",
                                                   style: TextStyles
                                                       .timeTextDetailStyle),
-                                              Container(
-                                                // color:Colors.orange,
-                                                width: 75,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      UniversalVariables.gold2,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    topRight:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left:0.0),
+                                                child: Text("${Utils.getDuration(ts1Duration)}",
+                                                    style: TextStyles
+                                                        .timeDurationDetailStyle),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left:8.0),
+                                                child: Container(
+                                                  // color:Colors.orange,
+                                                 // width: 75,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        UniversalVariables.gold2,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10),
+                                                      topRight:
+                                                          Radius.circular(10),
+                                                      bottomLeft:
+                                                          Radius.circular(10),
+                                                      bottomRight:
+                                                          Radius.circular(10),
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.shopping_cart,
-                                                        color:
-                                                            UniversalVariables
-                                                                .standardWhite,
-                                                      ),
-                                                      Text("BOOK",
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
-                                                    ],
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(horizontal:5.0,vertical: 3),
+                                                    child: Row(
+                                                      
+                                                      children: <Widget>[
+                                                        Icon(
+                                                          Icons.shopping_cart,
+                                                          color:
+                                                              UniversalVariables
+                                                                  .standardWhite,
+                                                        ),
+                                                        Text("BOOKED",
+                                                            style: TextStyles
+                                                                .timeSlotDetails),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -588,68 +651,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              UniversalVariables.standardWhite,
-                                          borderRadius: BorderRadius.only(
-                                            //  topLeft: Radius.circular(10),
-                                            //  topRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(50),
-                                            bottomRight: Radius.circular(50),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 80.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              Text("July 23, 16:00",
-                                                  style: TextStyles
-                                                      .timeTextDetailStyle),
-                                              Container(
-                                                // color:Colors.orange,
-                                                width: 75,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      UniversalVariables.gold2,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    topRight:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10),
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.shopping_cart,
-                                                        color:
-                                                            UniversalVariables
-                                                                .standardWhite,
-                                                      ),
-                                                      Text("BOOK",
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                     
                                     ],
                                   ),
                                 ),
@@ -667,7 +669,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 },
                                 focusColor: UniversalVariables.standardWhite,
                                 // borderSide: BorderSide.solid,
-                                child: Text("GET VERIFIED",
+                                child: Text("",
                                     style: TextStyles.verifiedStyle),
                               ),
                             ),
