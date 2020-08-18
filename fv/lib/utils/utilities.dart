@@ -39,6 +39,15 @@ class Utils {
     return timeDuration;
   }
 
+        String randomString() {
+        var rand = new Random();
+        var codeUnits = new List.generate(9, (index) {
+          return rand.nextInt(33) + 89;
+        });
+
+        return new String.fromCharCodes(codeUnits);
+      }
+
   static String getInitials(String email) {
     List<String> nameSplit = email.split(" ");
     String firstNameInitial = nameSplit[0][0];

@@ -203,18 +203,11 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         return orderPrice;
       }
 
-      String _randomString() {
-        var rand = new Random();
-        var codeUnits = new List.generate(9, (index) {
-          return rand.nextInt(33) + 89;
-        });
 
-        return new String.fromCharCodes(codeUnits);
-      }
 
 
       Order _order = Order(
-          uid: _randomString(),
+          uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime] != null? widget.selectedInfluencer.timeSlots['ttIds'][sTime]:null,
           isBought: true,
           buyerId: userProvider.getUser.uid,
           buyerName: userProvider.getUser.name,
@@ -622,7 +615,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                          padding: const EdgeInsets.only(left:1.0,),
                                           child: InkWell(
                                           onTap: () =>{
-                                            sendOrder(0, 0, selectedUserinfReceived),
+                                            sendOrder(0, ts1Duration, selectedUserinfReceived),
                                           },
                                                 child: Container(
                                               // color:Colors.orange,
@@ -686,7 +679,327 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                          padding: const EdgeInsets.only(left:1.0,),
                                           child: InkWell(
                                           onTap: () =>{
-                                            sendOrder(0, 0, selectedUserinfReceived),
+                                            sendOrder(1, ts2Duration, selectedUserinfReceived),
+                                          },
+                                                child: Container(
+                                              // color:Colors.orange,
+                                          //    width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.online,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
+                                                child: Center(
+                                                  child: Text(ConStrings.bookUnavailable,
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //TS3
+                              Visibility(
+                                visible: (ts3!="nullDate"),
+                                  child: Container(
+                               
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                              child: Row(
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: <Widget>[
+                                                  Text("$ts3",
+                                                  style: TextStyles.timeTextDetailStyle),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left:1.0),
+                                                    child: Text("$ts3Duration mins",
+                                                    style: TextStyles.timeDurationDetailStyle),
+                                                  ),
+                                                ],
+                                              ),
+                                        ),
+
+                                        Padding(
+                                         padding: const EdgeInsets.only(left:1.0,),
+                                          child: InkWell(
+                                          onTap: () =>{
+                                            sendOrder(2, ts3Duration, selectedUserinfReceived),
+                                          },
+                                                child: Container(
+                                              // color:Colors.orange,
+                                          //    width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.online,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
+                                                child: Center(
+                                                  child: Text(ConStrings.bookUnavailable,
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //TS4
+                              Visibility(
+                                visible: (ts4!="nullDate"),
+                                  child: Container(
+                               
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                              child: Row(
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: <Widget>[
+                                                  Text("$ts4",
+                                                  style: TextStyles.timeTextDetailStyle),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left:1.0),
+                                                    child: Text("$ts4Duration mins",
+                                                    style: TextStyles.timeDurationDetailStyle),
+                                                  ),
+                                                ],
+                                              ),
+                                        ),
+
+                                        Padding(
+                                         padding: const EdgeInsets.only(left:1.0,),
+                                          child: InkWell(
+                                          onTap: () =>{
+                                            sendOrder(3, ts4Duration, selectedUserinfReceived),
+                                          },
+                                                child: Container(
+                                              // color:Colors.orange,
+                                          //    width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.online,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
+                                                child: Center(
+                                                  child: Text(ConStrings.bookUnavailable,
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //TS5
+                              Visibility(
+                                visible: (ts5!="nullDate"),
+                                  child: Container(
+                               
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                              child: Row(
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: <Widget>[
+                                                  Text("$ts5",
+                                                  style: TextStyles.timeTextDetailStyle),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left:1.0),
+                                                    child: Text("$ts5Duration mins",
+                                                    style: TextStyles.timeDurationDetailStyle),
+                                                  ),
+                                                ],
+                                              ),
+                                        ),
+
+                                        Padding(
+                                         padding: const EdgeInsets.only(left:1.0,),
+                                          child: InkWell(
+                                          onTap: () =>{
+                                             sendOrder(4, ts5Duration, selectedUserinfReceived),
+                                          },
+                                                child: Container(
+                                              // color:Colors.orange,
+                                          //    width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.online,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
+                                                child: Center(
+                                                  child: Text(ConStrings.bookUnavailable,
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //TS6
+                              Visibility(
+                                visible: (ts6!="nullDate"),
+                                  child: Container(
+                               
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                              child: Row(
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: <Widget>[
+                                                  Text("$ts6",
+                                                  style: TextStyles.timeTextDetailStyle),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left:1.0),
+                                                    child: Text("$ts6Duration mins",
+                                                    style: TextStyles.timeDurationDetailStyle),
+                                                  ),
+                                                ],
+                                              ),
+                                        ),
+
+                                        Padding(
+                                         padding: const EdgeInsets.only(left:1.0,),
+                                          child: InkWell(
+                                          onTap: () =>{
+                                             sendOrder(5, ts6Duration, selectedUserinfReceived),
+                                          },
+                                                child: Container(
+                                              // color:Colors.orange,
+                                          //    width: 75,
+                                              decoration: BoxDecoration(
+                                                color: UniversalVariables.online,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
+                                                child: Center(
+                                                  child: Text(ConStrings.bookUnavailable,
+                                                      style: TextStyles
+                                                          .timeSlotDetails),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //TS7
+                              Visibility(
+                                visible: (ts7!="nullDate"),
+                                  child: Container(
+                               
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                              child: Row(
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: <Widget>[
+                                                  Text("$ts7",
+                                                  style: TextStyles.timeTextDetailStyle),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left:1.0),
+                                                    child: Text("$ts7Duration mins",
+                                                    style: TextStyles.timeDurationDetailStyle),
+                                                  ),
+                                                ],
+                                              ),
+                                        ),
+
+                                        Padding(
+                                         padding: const EdgeInsets.only(left:1.0,),
+                                          child: InkWell(
+                                          onTap: () =>{
+                                             sendOrder(6, ts7Duration, selectedUserinfReceived),
                                           },
                                                 child: Container(
                                               // color:Colors.orange,
