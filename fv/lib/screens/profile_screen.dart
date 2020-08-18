@@ -603,7 +603,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                       .timeTextDetailStyle),
                                               Padding(
                                                 padding: const EdgeInsets.only(left:0.0),
-                                                child: Text("${Utils.getDuration(ts1Duration)}",
+                                                child: ts1Duration!=null? Text("${Utils.getDuration(ts1Duration)}",
+                                                    style: TextStyles
+                                                        .timeDurationDetailStyle):
+                                                        Text("10 mins",
                                                     style: TextStyles
                                                         .timeDurationDetailStyle),
                                               ),

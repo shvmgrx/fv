@@ -19,4 +19,7 @@ class ConStrings {
   static const String timeDuration = "10 mins";
   static const String timeDuration1 = "15 mins";
   static const String timeDuration2 = "20 mins";
+
+  static const String bookAvailable = "BOOK";
+  static const String bookUnavailable = "BOOKED";
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/constants/conStrings.dart';
 import 'package:fv/models/order.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/order_methods.dart';
@@ -73,6 +74,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   String ts7;
   int ts7Duration;
 
+  int selectedUserinfReceived;
+  //used for currency
+
   @override
   void initState() {
     super.initState();
@@ -113,13 +117,13 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         mins = 10;
         break;
       case 1:
-        mins = 25;
+        mins = 15;
         break;
       case 2:
-        mins = 45;
+        mins = 20;
         break;
       default:
-        mins = 5;
+        mins = 10;
     }
 
     return mins;
@@ -145,6 +149,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
     setState(() {
+
+      selectedUserinfReceived = widget.selectedInfluencer.infReceived;
       
       ts1 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][0]);
       ts2 = widget.selectedInfluencer.timeSlots== null? "nullDate": dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][1]);
@@ -163,7 +169,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       ts7Duration = widget.selectedInfluencer.timeSlots== null? 9 :durationMaker(widget.selectedInfluencer.timeSlots['ttDurations'][6]);
     });
 
-    sendOrder(int sTime, int sDuration) {
+    sendOrder(int sTime, int sDuration, int infReceived) {
       int orderPrice;
 
       int _generatePrice() {
@@ -217,7 +223,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           boughtOn: Timestamp.now(),
           slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime] != null? widget.selectedInfluencer.timeSlots['ttSlots'][sTime]:null,
           slotDuration: widget.selectedInfluencer.timeSlots['ttDurations'][sDuration] !=null ? widget.selectedInfluencer.timeSlots['ttDurations'][sDuration]:null,
-          price: _generatePrice());
+          price: _generatePrice(),
+          currency: infReceived,
+          );
 
       // Order _sellerOrder = Order(
       //     uid: widget.selectedInfluencer.uid,
@@ -572,11 +580,12 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                           ],
                         ),
                       ),
+                       SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Container(
-                         height: screenHeight*0.8,
-                        width: screenWidth * 0.90,
+                         height: screenHeight*0.9,
+                        width: screenWidth * 0.9,
                         color: UniversalVariables.transparent,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
@@ -584,36 +593,24 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                             children: <Widget>[
                               //TS1
                               Visibility(
-                                visible: (ts1!="nullDate" && ts1Duration!=5),
+                                visible: (ts1!="nullDate"),
                                   child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(100),
-                                      topRight: Radius.circular(100),
-                                      //   bottomLeft: Radius.circular(10),
-                                      //   bottomRight: Radius.circular(10),
-                                    ),
-                                  ),
+                               
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 18.0,
-                                        left: 15,
-                                        right: 8,
-                                        bottom: 8),
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.start,
                                       children: <Widget>[
                                         Expanded(
                                               child: Row(
-                                               mainAxisAlignment: MainAxisAlignment.end,
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                 children: <Widget>[
                                                   Text("$ts1",
                                                   style: TextStyles.timeTextDetailStyle),
                                                   Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
+                                                    padding: const EdgeInsets.only(left:1.0),
                                                     child: Text("$ts1Duration mins",
                                                     style: TextStyles.timeDurationDetailStyle),
                                                   ),
@@ -622,16 +619,16 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                         ),
 
                                         Padding(
-                                         padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
+                                         padding: const EdgeInsets.only(left:1.0,),
                                           child: InkWell(
                                           onTap: () =>{
-                                            sendOrder(0, 0),
+                                            sendOrder(0, 0, selectedUserinfReceived),
                                           },
                                                 child: Container(
                                               // color:Colors.orange,
-                                              width: 75,
+                                          //    width: 75,
                                               decoration: BoxDecoration(
-                                                color: UniversalVariables.separatorColor,
+                                                color: UniversalVariables.online,
                                                 borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(10),
                                                   topRight: Radius.circular(10),
@@ -643,9 +640,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(5.0),
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
                                                 child: Center(
-                                                  child: Text("BOOK",
+                                                  child: Text(ConStrings.bookUnavailable,
                                                       style: TextStyles
                                                           .timeSlotDetails),
                                                 ),
@@ -658,63 +655,58 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                 ),
                               ),
+                              //TS2
                               Visibility(
-                               visible: (ts2!="nullDate" && ts2Duration!=5),
+                                visible: (ts2!="nullDate"),
                                   child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    // borderRadius: BorderRadius.only(
-                                    //   topLeft: Radius.circular(10),
-                                    //   topRight: Radius.circular(10),
-                                    //   bottomLeft: Radius.circular(10),
-                                    //   bottomRight: Radius.circular(10),
-                                    // ),
-                                  ),
+                               
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left:15.0,right:8.0,top:8.0,bottom:8.0),
+                                    padding: const EdgeInsets.only(top: 18.0, left:0,bottom:5),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
-                                         MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.start,
                                       children: <Widget>[
                                         Expanded(
                                               child: Row(
-                                                 mainAxisAlignment: MainAxisAlignment.end,
+                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                 children: <Widget>[
                                                   Text("$ts2",
                                                   style: TextStyles.timeTextDetailStyle),
                                                   Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
+                                                    padding: const EdgeInsets.only(left:1.0),
                                                     child: Text("$ts2Duration mins",
                                                     style: TextStyles.timeDurationDetailStyle),
                                                   ),
                                                 ],
                                               ),
                                         ),
+
                                         Padding(
-                                            padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
+                                         padding: const EdgeInsets.only(left:1.0,),
                                           child: InkWell(
-                                            onTap: () =>{
-                                            sendOrder(1, 1),
+                                          onTap: () =>{
+                                            sendOrder(0, 0, selectedUserinfReceived),
                                           },
-                                                                                      child: Container(
+                                                child: Container(
                                               // color:Colors.orange,
-                                              width: 75,
+                                          //    width: 75,
                                               decoration: BoxDecoration(
-                                                color: UniversalVariables.separatorColor,
+                                                color: UniversalVariables.online,
                                                 borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(10),
                                                   topRight: Radius.circular(10),
-                                                  bottomLeft: Radius.circular(10),
+                                                  bottomLeft:
+                                                      Radius.circular(10),
                                                   bottomRight:
                                                       Radius.circular(10),
                                                 ),
                                               ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(5.0),
+                                                    const EdgeInsets.symmetric(horizontal:10.0, vertical:5),
                                                 child: Center(
-                                                  child: Text("BOOK",
+                                                  child: Text(ConStrings.bookUnavailable,
                                                       style: TextStyles
                                                           .timeSlotDetails),
                                                 ),
@@ -727,419 +719,12 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                 ),
                               ),
-                              Visibility(
-                                 visible: (ts3!="nullDate" && ts3Duration!=5),
-                                  child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    // borderRadius: BorderRadius.only(
-                                    //   topLeft: Radius.circular(10),
-                                    //   topRight: Radius.circular(10),
-                                    //   bottomLeft: Radius.circular(10),
-                                    //   bottomRight: Radius.circular(10),
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                   padding: const EdgeInsets.only(left:15.0,right:8.0,top:8.0,bottom:8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                         MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Expanded(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text("$ts3",
-                                                  style: TextStyles.timeTextDetailStyle),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
-                                                    child: Text("$ts3Duration mins",
-                                                    style: TextStyles.timeDurationDetailStyle),
-                                                  ),
-                                                ],
-                                              ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: InkWell(
-                                            onTap: () =>{
-                                            sendOrder(2, 2),
-                                          },
-                                                                                      child: Container(
-                                              // color:Colors.orange,
-                                              width: 75,
-                                              decoration: BoxDecoration(
-                                                color: UniversalVariables.separatorColor,
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  topRight: Radius.circular(10),
-                                                  bottomLeft: Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5.0),
-                                                child: Center(
-                                                  child: Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                 visible: (ts4!="nullDate" && ts4Duration!=5),
-                                  child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    // borderRadius: BorderRadius.only(
-                                    //   topLeft: Radius.circular(10),
-                                    //   topRight: Radius.circular(10),
-                                    //   bottomLeft: Radius.circular(10),
-                                    //   bottomRight: Radius.circular(10),
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                   padding: const EdgeInsets.only(left:15.0,right:8.0,top:8.0,bottom:8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                       Expanded(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text("$ts4",
-                                                  style: TextStyles.timeTextDetailStyle),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
-                                                    child: Text("$ts4Duration mins",
-                                                    style: TextStyles.timeDurationDetailStyle),
-                                                  ),
-                                                ],
-                                              ),
-                                        ),
-                                        Padding(
-                                           padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: InkWell(
-                                            onTap: () =>{
-                                            sendOrder(3, 3),
-                                          },
-                                                                                      child: Container(
-                                              // color:Colors.orange,
-                                              width: 75,
-                                              decoration: BoxDecoration(
-                                                color: UniversalVariables.separatorColor,
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  topRight: Radius.circular(10),
-                                                  bottomLeft: Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5.0),
-                                                child: Center(
-                                                  child: Text("BOOK",
-                                                      style: TextStyles
-                                                          .timeSlotDetails),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                 visible: (ts5!="nullDate" && ts5Duration!=5),
-                                                                  child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    // borderRadius: BorderRadius.only(
-                                    //   topLeft: Radius.circular(10),
-                                    //   topRight: Radius.circular(10),
-                                    //   bottomLeft: Radius.circular(10),
-                                    //   bottomRight: Radius.circular(10),
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left:15.0,right:8.0,top:8.0,bottom:8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Expanded(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text("$ts5",
-                                                  style: TextStyles.timeTextDetailStyle),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
-                                                    child: Text("$ts5Duration mins",
-                                                    style: TextStyles.timeDurationDetailStyle),
-                                                  ),
-                                                ],
-                                              ),
-                                        ),
-                                        Padding(
-                                           padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                 visible: (ts6!="nullDate" && ts6Duration!=5),
-                                                                  child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    // borderRadius: BorderRadius.only(
-                                    //   topLeft: Radius.circular(10),
-                                    //   topRight: Radius.circular(10),
-                                    //   bottomLeft: Radius.circular(10),
-                                    //   bottomRight: Radius.circular(10),
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left:15.0,right:8.0,top:8.0,bottom:8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Expanded(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text("$ts6",
-                                                  style: TextStyles.timeTextDetailStyle),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
-                                                    child: Text("$ts6Duration mins",
-                                                    style: TextStyles.timeDurationDetailStyle),
-                                                  ),
-                                                ],
-                                              ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                 visible: (ts7!="nullDate" && ts7Duration!=5),
-                                                                  child: Container(
-                                  decoration: BoxDecoration(
-                                    color: UniversalVariables.standardWhite,
-                                    borderRadius: BorderRadius.only(
-                                      //  topLeft: Radius.circular(10),
-                                      //   topRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(50),
-                                      bottomRight: Radius.circular(50),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8.0,
-                                        left: 15,
-                                        right: 8,
-                                        bottom: 80),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                       Expanded(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Container(
-                                                    
-                                                    child: Text("$ts7",
-                                                    style: TextStyles.timeTextDetailStyle),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal:20.0),
-                                                    child: Text("$ts7Duration mins",
-                                                    style: TextStyles.timeDurationDetailStyle),
-                                                  ),
-                                                ],
-                                              ),
-                                        ),
-                                                
-                                        Padding(
-                                        padding: const EdgeInsets.only(left:8.0,right:25.0,top:8.0,bottom:8.0),
-                                          child: Container(
-                                           
-                                            // color:Colors.orange,
-                                            width: 75,
-                                            decoration: BoxDecoration(
-                                              color: UniversalVariables.separatorColor,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: Text("BOOK",
-                                                    style: TextStyles
-                                                        .timeSlotDetails),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              
                             ],
                           ),
                         )),
                       ),
-                      // Container(
-                      //   width: 325,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //     children: [
-                      //       Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: <Widget>[
-                      //           Container(
-                      //             height: 75.0,
-                      //             width: 150.0,
-                      //             child: Center(
-                      //                 child: Column(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.center,
-                      //                     children: [
-                      //                   Icon(
-                      //                     Icons.text_format,
-                      //                     color: Colors.white,
-                      //                     size: 30,
-                      //                   ),
-                      //                   Text(Strings.TEXT_MESSAGE,
-                      //                       style: GoogleFonts.sourceSansPro(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w500,
-                      //                           color: UniversalVariables
-                      //                               .standardCream))
-                      //                 ])),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.all(
-                      //                   Radius.circular(35.0),
-                      //                 ),
-                      //                 color: UniversalVariables.standardPink),
-                      //           )
-                      //         ],
-                      //       ),
-                      //       Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: <Widget>[
-                      //           Container(
-                      //             height: 75.0,
-                      //             width: 150.0,
-                      //             child: Center(
-                      //                 child: Column(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.center,
-                      //                     children: [
-                      //                   Icon(
-                      //                     Icons.videocam,
-                      //                     color: Colors.white,
-                      //                     size: 30,
-                      //                   ),
-                      //                   Text(Strings.VIDEO_MESSAGE,
-                      //                       style: GoogleFonts.sourceSansPro(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w500,
-                      //                           color: UniversalVariables
-                      //                               .standardCream))
-                      //                 ])),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.all(
-                      //                   Radius.circular(35.0),
-                      //                 ),
-                      //                 color: UniversalVariables.standardPink),
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
+                      
                     ]),
                 decoration: BoxDecoration(
                   color: UniversalVariables.backgroundGrey,
@@ -1150,36 +735,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                 ),
               ),
             ),
-            // Align(
-            //     alignment: Alignment.bottomCenter,
-            //     child: Container(
-            //       height: 70.0,
-            //       width: MediaQuery.of(context).size.width,
-            //       child: Center(
-            //           child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //               //crossAxisAlignment: CrossAxisAlignment.stretch,
-            //               children: [
-            //             Icon(
-            //               Icons.expand_less,
-            //               color: Colors.white,
-            //               size: 30,
-            //             ),
-            //             Icon(
-            //               Icons.star_border,
-            //               color: Colors.white,
-            //               size: 30,
-            //             ),
-            //             Icon(
-            //               Icons.expand_more,
-            //               color: Colors.white,
-            //               size: 30,
-            //             ),
-            //           ])),
-            //       decoration: BoxDecoration(
-            //           //borderRadius: BorderRadius.only(topLeft: Radius.circular(55.0)),
-            //           color: UniversalVariables.standardWhite),
-            //     ),
-            //     ),
+            
             Align(
               alignment: Alignment.topLeft,
               child: Padding(

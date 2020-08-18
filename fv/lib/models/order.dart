@@ -12,6 +12,7 @@ class Order  {
   Timestamp slotTime;
   int slotDuration;
   int price;
+  int currency;
 
   Order({
     this.uid,
@@ -23,7 +24,8 @@ class Order  {
     this.boughtOn,
     this.slotTime,
     this.slotDuration,
-    this.price
+    this.price,
+    this.currency
 
   });
 
@@ -41,6 +43,7 @@ class Order  {
     data['slot_time'] = this.slotTime;
     data['slot_duration'] = this.slotDuration;
     data['price'] = this.price;
+    data['currency'] = this.currency;
     return data;
   }
 
@@ -56,5 +59,6 @@ class Order  {
     this.slotTime = mapData["slot_time"];
     this.slotDuration = mapData["slot_duration"];
     this.price = mapData["price"];
+    this.currency = mapData["currency"];
   }
 }
