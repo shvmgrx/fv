@@ -87,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts1Duration;
   bool isTs1bought = false;
   bool isTS1same =true;
-  String order1Id;
+  String ts1orderId;
 
   bool showts2 = false;
   bool ts2Set = false;
@@ -97,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts2Duration;
   bool isTs2bought = false;
   bool isTS2same =true;
-  String order2Id;
+  String ts2orderId;
 
   bool showts3 = false;
   bool ts3Set = false;
@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts3Duration;
   bool isTs3bought = false;
   bool isTS3same =true;
-  String order3Id;
+  String ts3orderId;
 
   bool showts4 = false;
   bool ts4Set = false;
@@ -117,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts4Duration;
   bool isTs4bought = false;
   bool isTS4same =true;
-  String order4Id;
+  String ts4orderId;
 
   bool showts5 = false;
   bool ts5Set = false;
@@ -127,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts5Duration;
   bool isTs5bought = false;
   bool isTS5same =true;
-  String order5Id;
+  String ts5orderId;
 
   bool showts6 = false;
   bool ts6Set = false;
@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts6Duration;
   bool isTs6bought = false;
   bool isTS6same =true;
-  String order6Id;
+  String ts6orderId;
 
   bool showts7 = false;
   bool ts7Set = false;
@@ -147,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int ts7Duration;
   bool isTs7bought = false;
   bool isTS7same =true;
-  String order7Id;
+  String ts7orderId;
 
   bool showts8 = false;
   bool ts8Set = false;
@@ -156,7 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts8;
   int ts8Duration;
   bool isTs8bought = false;
-  String order8Id;
+  String ts8orderId;
 
   bool expertMode = false;
   bool textMode;
@@ -208,6 +208,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
           ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
           ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
+
+          ts1orderId = loggedUserTimeSlots['ttIds'][0] !=null ? loggedUserTimeSlots['ttIds'][0]:null;
+          ts2orderId = loggedUserTimeSlots['ttIds'][1] !=null ? loggedUserTimeSlots['ttIds'][1]:null;
+          ts3orderId = loggedUserTimeSlots['ttIds'][2] !=null ? loggedUserTimeSlots['ttIds'][2]:null;
+          ts4orderId = loggedUserTimeSlots['ttIds'][3] !=null ? loggedUserTimeSlots['ttIds'][3]:null;
+          ts5orderId = loggedUserTimeSlots['ttIds'][4] !=null ? loggedUserTimeSlots['ttIds'][4]:null;
+          ts6orderId = loggedUserTimeSlots['ttIds'][5] !=null ? loggedUserTimeSlots['ttIds'][5]:null;
+          ts7orderId = loggedUserTimeSlots['ttIds'][6] !=null ? loggedUserTimeSlots['ttIds'][6]:null;
+
+          
 
           showts2 = (loggedUserTimeSlots['ttSlots'][1] !=null && loggedUserTimeSlots['ttDurations'][1] !=null)? true:false;
           showts3 = (loggedUserTimeSlots['ttSlots'][2] !=null && loggedUserTimeSlots['ttDurations'][2] !=null)? true:false;
@@ -306,25 +316,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return;
                       }
 
-                      if (ttSlots[0]!=null && ttDurations[0]!=null && ttIds[0] != loggedUserTimeSlots['ttIds'][0]) {
+                      if (ttIds[0]==null && ts1Changed>2) {
                         ttIds[0]= Utils.generateRandomOrderId();
                       }
-                      if (ttSlots[1]!=null && ttDurations[1]!=null && ttIds[1] != loggedUserTimeSlots['ttIds'][1]) {
+                      if (ttIds[1]==null && ts2Changed>2) {
                         ttIds[1]= Utils.generateRandomOrderId();
                       }
-                      if (ttSlots[2]!=null && ttDurations[2]!=null && ttIds[2] != loggedUserTimeSlots['ttIds'][2]) {
+                       if (ttIds[2]==null && ts3Changed>2) {
                         ttIds[2]= Utils.generateRandomOrderId();
                       }
-                      if (ttSlots[3]!=null && ttDurations[3]!=null && ttIds[3] != loggedUserTimeSlots['ttIds'][3]) {
+                       if (ttIds[3]==null && ts4Changed>2) {
                         ttIds[3]= Utils.generateRandomOrderId();
                       }
-                      if (ttSlots[4]!=null && ttDurations[4]!=null && ttIds[4] != loggedUserTimeSlots['ttIds'][4]) {
+                       if (ttIds[4]==null && ts5Changed>2) {
                         ttIds[4]= Utils.generateRandomOrderId();
                       }
-                      if (ttSlots[5]!=null && ttDurations[5]!=null && ttIds[5] != loggedUserTimeSlots['ttIds'][5]) {
+                       if (ttIds[5]==null && ts6Changed>2) {
                         ttIds[5]= Utils.generateRandomOrderId();
                       }
-                      if (ttSlots[6]!=null && ttDurations[6]!=null && ttIds[6] != loggedUserTimeSlots['ttIds'][6]) {
+                       if (ttIds[6]==null && ts7Changed>2) {
                         ttIds[6]= Utils.generateRandomOrderId();
                       }
 
@@ -830,6 +840,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         absorbing: ts1Set &&
                                                             !ts1ErrorFlag,
                                                         child: CupertinoPicker(
+                                                        
                                                           backgroundColor:
                                                               UniversalVariables
                                                                   .transparent,
@@ -842,11 +853,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             });
                                                           },
                                                           itemExtent: 30.0,
+                                                         
                                                           children: const [
                                                             Text('10 mins'),
                                                             Text('15 mins'),
                                                             Text('20 mins'),
                                                           ],
+                                                          scrollController: ts1Duration!=null? FixedExtentScrollController(initialItem: ts1Duration):FixedExtentScrollController(initialItem: 0),
                                                         ),
                                                       ),
                                                     ),
@@ -1028,7 +1041,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('10 mins'),
                                                               Text('15 mins'),
                                                               Text('20 mins'),
+
                                                             ],
+                                                            scrollController: ts2Duration!=null? FixedExtentScrollController(initialItem: ts2Duration):FixedExtentScrollController(initialItem: 0),
                                                           ),
                                                         ),
                                                       ),
@@ -1213,6 +1228,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
+                                                            scrollController: ts3Duration!=null? FixedExtentScrollController(initialItem: ts3Duration):FixedExtentScrollController(initialItem: 0),
                                                           ),
                                                         ),
                                                       ),
@@ -1398,6 +1414,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
+                                                            scrollController: ts4Duration!=null? FixedExtentScrollController(initialItem: ts4Duration):FixedExtentScrollController(initialItem: 0),
                                                           ),
                                                         ),
                                                       ),
@@ -1582,6 +1599,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
+                                                            scrollController: ts5Duration!=null? FixedExtentScrollController(initialItem: ts5Duration):FixedExtentScrollController(initialItem: 0),
                                                           ),
                                                         ),
                                                       ),
@@ -1767,6 +1785,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
+                                                            scrollController: ts6Duration!=null? FixedExtentScrollController(initialItem: ts6Duration):FixedExtentScrollController(initialItem: 0),
                                                           ),
                                                         ),
                                                       ),
@@ -1951,6 +1970,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
+                                                            scrollController: ts7Duration!=null? FixedExtentScrollController(initialItem: ts7Duration):FixedExtentScrollController(initialItem: 0),
                                                           ),
                                                         ),
                                                       ),
@@ -2035,6 +2055,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ],
                                     ),
                                   ),
+                                  Container(
+                                    height:50,
+                                  )
                                 ],
                               ),
                             ),
