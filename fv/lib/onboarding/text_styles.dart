@@ -367,10 +367,11 @@ class TextStyles {
 
 
           static final TextStyle verifiedStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: FontWeight.w400,
     color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
+    
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,

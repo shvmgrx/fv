@@ -1,6 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/constants/conStrings.dart';
 import 'package:fv/onboarding/strings.dart';
 import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
@@ -118,7 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedInisInfluencer = loggedUser['isInfluencer'];
           loggedUserTimeSlots = loggedUser['timeSlots'];
 
-          ts1 = loggedUserTimeSlots['ttSlots'][0] != null
+          if(loggedInisInfluencer ==true ){
+   ts1 = loggedUserTimeSlots['ttSlots'][0] != null
               ? loggedUserTimeSlots['ttSlots'][0].toDate()
               : null;
           ts2 = loggedUserTimeSlots['ttSlots'][1] != null
@@ -183,8 +185,10 @@ class _ProfileScreenState extends State<ProfileScreen>
           ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
               ? loggedUserTimeSlots['ttIds'][6]
               : null;
+          }
 
-          print("loggedUserTimeSlots: $loggedUserTimeSlots");
+       
+
         });
       });
     });
@@ -259,26 +263,29 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsScreen(),
+            Visibility(
+             visible: loggedInisInfluencer,
+                          child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsScreen(),
+                      ),
                     ),
-                  ),
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UniversalVariables.white2),
-                    child: Center(
-                      child: Icon(CupertinoIcons.settings,
-                          size: 30.0, color: UniversalVariables.grey1),
+                    child: Container(
+                      height: 40.0,
+                      width: 40.0,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: UniversalVariables.white2),
+                      child: Center(
+                        child: Icon(CupertinoIcons.settings,
+                            size: 30.0, color: UniversalVariables.grey1),
+                      ),
                     ),
                   ),
                 ),
@@ -313,7 +320,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               top: loggedInisInfluencer
                   ? screenHeight -
                       (screenHeight / 2.5) -
-                      (controller.value * screenHeight*0.4) -
+                      (controller.value * screenHeight * 0.4) -
                       55
                   : screenHeight -
                       (screenHeight / 2) -
@@ -367,848 +374,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                       //   )
                       // ),
                       SizedBox(height: 25.0),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SettingsScreen(),
-                                  ),
-                                );
-                              },
-                              child: Visibility(
-                                visible: loggedInisInfluencer,
-                                child: Container(
-                                  height: 80.0,
-                                  width: screenWidth / 4,
-                                  decoration: BoxDecoration(
-
-                                      //gradient: UniversalVariables.fabGradient,
-
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                        bottomLeft: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0),
-                                      ),
-                                      //color: UniversalVariables.white2
-                                      color: mC,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: mCD,
-                                          offset: Offset(-10, 10),
-                                          blurRadius: 10,
-                                        ),
-                                        BoxShadow(
-                                          color: mCL,
-                                          offset: Offset(0, -10),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Text("Text Reply",
-                                                style: TextStyles.priceType,
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: loggedInanswerPrice1 != null
-                                              ? Text("\$ $loggedInanswerPrice1",
-                                                  style: TextStyles.priceNumber,
-                                                  textAlign: TextAlign.center)
-                                              : Text("Not Set",
-                                                  style: TextStyles
-                                                      .notSetPriceNumber,
-                                                  textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SettingsScreen(),
-                                  ),
-                                );
-                              },
-                              child: Visibility(
-                                visible: loggedInisInfluencer,
-                                child: Container(
-                                  height: 80.0,
-                                  width: screenWidth / 4,
-                                  decoration: BoxDecoration(
-
-                                      //gradient: UniversalVariables.fabGradient,
-
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                        bottomLeft: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0),
-                                      ),
-                                      //color: UniversalVariables.white2
-                                      color: mC,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: mCD,
-                                          offset: Offset(-10, 10),
-                                          blurRadius: 10,
-                                        ),
-                                        BoxShadow(
-                                          color: mCL,
-                                          offset: Offset(0, -10),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Text("Video Reply",
-                                                style: TextStyles.priceType,
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: loggedInanswerPrice2 != null
-                                              ? Text("\$ $loggedInanswerPrice2",
-                                                  style: TextStyles.priceNumber,
-                                                  textAlign: TextAlign.center)
-                                              : Text("Not Set",
-                                                  style: TextStyles
-                                                      .notSetPriceNumber,
-                                                  textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SettingsScreen(),
-                                  ),
-                                );
-                              },
-                              child: Visibility(
-                                visible: loggedInisInfluencer,
-                                child: Container(
-                                  height: 80.0,
-                                  width: screenWidth / 4,
-                                  decoration: BoxDecoration(
-
-                                      //gradient: UniversalVariables.fabGradient,
-
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                        bottomLeft: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0),
-                                      ),
-                                      //color: UniversalVariables.white2
-                                      color: mC,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: mCD,
-                                          offset: Offset(-10, 10),
-                                          blurRadius: 10,
-                                        ),
-                                        BoxShadow(
-                                          color: mCL,
-                                          offset: Offset(0, -10),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Text("Videocall",
-                                                style: TextStyles.priceType,
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: loggedInanswerPrice3 != null
-                                              ? Text("\$ $loggedInanswerPrice3",
-                                                  style: TextStyles.priceNumber,
-                                                  textAlign: TextAlign.center)
-                                              : Text("Not Set",
-                                                  style: TextStyles
-                                                      .notSetPriceNumber,
-                                                  textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 15),
-
-                      loggedInisInfCert
-                          ? Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Container(
-                              height: screenHeight * 0.9,
-                              width: screenWidth * 0.9,
-                              color: UniversalVariables.transparent,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      // decoration: BoxDecoration(
-                                      //   color:
-                                      //    //   UniversalVariables.white2,
-                                      //   //borderRadius: BorderRadius.only(
-                                      //     // topLeft: Radius.circular(100),
-                                      //     // topRight: Radius.circular(100),
-                                      //     //   bottomLeft: Radius.circular(10),
-                                      //     //   bottomRight: Radius.circular(10),
-                                      //   ),
-                                      // ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 18.0,
-                                            left: 20,
-                                            bottom: 5),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceEvenly,
-                                          children: <Widget>[
-                                            Text(
-                                                "${DateFormat('MMM d, kk:mm').format(ts1)}",
-                                                style: TextStyles
-                                                    .timeTextDetailStyle),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(
-                                                      left: 0.0),
-                                              child: ts1Duration != null
-                                                  ? Text(
-                                                      "${Utils.getDuration(ts1Duration)}",
-                                                      style: TextStyles
-                                                          .timeDurationDetailStyle)
-                                                  : Text("10 mins",
-                                                      style: TextStyles
-                                                          .timeDurationDetailStyle),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(
-                                                      left: 8.0),
-                                              child: Container(
-                                                // color:Colors.orange,
-                                                // width: 75,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      UniversalVariables
-                                                          .gold2,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(
-                                                            10),
-                                                    topRight:
-                                                        Radius.circular(
-                                                            10),
-                                                    bottomLeft:
-                                                        Radius.circular(
-                                                            10),
-                                                    bottomRight:
-                                                        Radius.circular(
-                                                            10),
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons
-                                                            .shopping_cart,
-                                                        color: UniversalVariables
-                                                            .standardWhite,
-                                                      ),
-                                                      Text("BOOKED",
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0,
-                                                    left: 20,
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts2)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: ts2Duration != null
-                                                          ? Text(
-                                                              "${Utils.getDuration(ts2Duration)}",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle)
-                                                          : Text("10 mins",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0),
-                                                      child: Container(
-                                                        // color:Colors.orange,
-                                                        // width: 75,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal: 5.0,
-                                                                  vertical: 3),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons
-                                                                    .shopping_cart,
-                                                                color: UniversalVariables
-                                                                    .standardWhite,
-                                                              ),
-                                                              Text("BOOKED",
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                    ),
-                                    Container(
-                                      child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0,
-                                                    left: 20,
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts3)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: ts3Duration != null
-                                                          ? Text(
-                                                              "${Utils.getDuration(ts3Duration)}",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle)
-                                                          : Text("10 mins",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0),
-                                                      child: Container(
-                                                        // color:Colors.orange,
-                                                        // width: 75,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal: 5.0,
-                                                                  vertical: 3),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons
-                                                                    .shopping_cart,
-                                                                color: UniversalVariables
-                                                                    .standardWhite,
-                                                              ),
-                                                              Text("BOOKED",
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                    ),
-                                    Container(
-                                      child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0,
-                                                    left: 20,
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts4)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: ts4Duration != null
-                                                          ? Text(
-                                                              "${Utils.getDuration(ts4Duration)}",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle)
-                                                          : Text("10 mins",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0),
-                                                      child: Container(
-                                                        // color:Colors.orange,
-                                                        // width: 75,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal: 5.0,
-                                                                  vertical: 3),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons
-                                                                    .shopping_cart,
-                                                                color: UniversalVariables
-                                                                    .standardWhite,
-                                                              ),
-                                                              Text("BOOKED",
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                    ),
-                                    Container(
-                                      child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0,
-                                                    left: 20,
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts5)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: ts6Duration != null
-                                                          ? Text(
-                                                              "${Utils.getDuration(ts5Duration)}",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle)
-                                                          : Text("10 mins",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0),
-                                                      child: Container(
-                                                        // color:Colors.orange,
-                                                        // width: 75,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal: 5.0,
-                                                                  vertical: 3),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons
-                                                                    .shopping_cart,
-                                                                color: UniversalVariables
-                                                                    .standardWhite,
-                                                              ),
-                                                              Text("BOOKED",
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                    ),
-                                    Container(
-                                      child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0,
-                                                    left: 20,
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts6)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: ts6Duration != null
-                                                          ? Text(
-                                                              "${Utils.getDuration(ts6Duration)}",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle)
-                                                          : Text("10 mins",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0),
-                                                      child: Container(
-                                                        // color:Colors.orange,
-                                                        // width: 75,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal: 5.0,
-                                                                  vertical: 3),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons
-                                                                    .shopping_cart,
-                                                                color: UniversalVariables
-                                                                    .standardWhite,
-                                                              ),
-                                                              Text("BOOKED",
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                    ),
-                                    Container(
-                                      child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0,
-                                                    left: 20,
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts7)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: ts7Duration != null
-                                                          ? Text(
-                                                              "${Utils.getDuration(ts7Duration)}",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle)
-                                                          : Text("10 mins",
-                                                              style: TextStyles
-                                                                  .timeDurationDetailStyle),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0),
-                                                      child: Container(
-                                                        // color:Colors.orange,
-                                                        // width: 75,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              UniversalVariables
-                                                                  .gold2,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal: 5.0,
-                                                                  vertical: 3),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons
-                                                                    .shopping_cart,
-                                                                color: UniversalVariables
-                                                                    .standardWhite,
-                                                              ),
-                                                              Text("BOOKED",
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                    ),
-
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                          : Container(
-                              child: OutlineButton(
-                                onPressed: () {
+                      Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -1216,11 +390,830 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     ),
                                   );
                                 },
-                                focusColor: UniversalVariables.standardWhite,
-                                // borderSide: BorderSide.solid,
-                                child:
-                                    Text("", style: TextStyles.verifiedStyle),
+                                child: Visibility(
+                                  visible: loggedInisInfluencer,
+                                  child: Container(
+                                    height: 80.0,
+                                    width: screenWidth / 4,
+                                    decoration: BoxDecoration(
+
+                                        //gradient: UniversalVariables.fabGradient,
+
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(5.0),
+                                          bottomRight: Radius.circular(5.0),
+                                        ),
+                                        //color: UniversalVariables.white2
+                                        color: mC,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: mCD,
+                                            offset: Offset(-10, 10),
+                                            blurRadius: 10,
+                                          ),
+                                          BoxShadow(
+                                            color: mCL,
+                                            offset: Offset(0, -10),
+                                            blurRadius: 10,
+                                          ),
+                                        ]),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text("Text Reply",
+                                                  style: TextStyles.priceType,
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: loggedInanswerPrice1 != null
+                                                ? Text("\$ $loggedInanswerPrice1",
+                                                    style: TextStyles.priceNumber,
+                                                    textAlign: TextAlign.center)
+                                                : Text("Not Set",
+                                                    style: TextStyles
+                                                        .notSetPriceNumber,
+                                                    textAlign: TextAlign.center),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SettingsScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Visibility(
+                                  visible: loggedInisInfluencer,
+                                  child: Container(
+                                    height: 80.0,
+                                    width: screenWidth / 4,
+                                    decoration: BoxDecoration(
+
+                                        //gradient: UniversalVariables.fabGradient,
+
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(5.0),
+                                          bottomRight: Radius.circular(5.0),
+                                        ),
+                                        //color: UniversalVariables.white2
+                                        color: mC,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: mCD,
+                                            offset: Offset(-10, 10),
+                                            blurRadius: 10,
+                                          ),
+                                          BoxShadow(
+                                            color: mCL,
+                                            offset: Offset(0, -10),
+                                            blurRadius: 10,
+                                          ),
+                                        ]),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text("Video Reply",
+                                                  style: TextStyles.priceType,
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: loggedInanswerPrice2 != null
+                                                ? Text("\$ $loggedInanswerPrice2",
+                                                    style: TextStyles.priceNumber,
+                                                    textAlign: TextAlign.center)
+                                                : Text("Not Set",
+                                                    style: TextStyles
+                                                        .notSetPriceNumber,
+                                                    textAlign: TextAlign.center),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SettingsScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Visibility(
+                                  visible: loggedInisInfluencer,
+                                  child: Container(
+                                    height: 80.0,
+                                    width: screenWidth / 4,
+                                    decoration: BoxDecoration(
+
+                                        //gradient: UniversalVariables.fabGradient,
+
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(5.0),
+                                          bottomRight: Radius.circular(5.0),
+                                        ),
+                                        //color: UniversalVariables.white2
+                                        color: mC,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: mCD,
+                                            offset: Offset(-10, 10),
+                                            blurRadius: 10,
+                                          ),
+                                          BoxShadow(
+                                            color: mCL,
+                                            offset: Offset(0, -10),
+                                            blurRadius: 10,
+                                          ),
+                                        ]),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text("Videocall",
+                                                  style: TextStyles.priceType,
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: loggedInanswerPrice3 != null
+                                                ? Text("\$ $loggedInanswerPrice3",
+                                                    style: TextStyles.priceNumber,
+                                                    textAlign: TextAlign.center)
+                                                : Text("Not Set",
+                                                    style: TextStyles
+                                                        .notSetPriceNumber,
+                                                    textAlign: TextAlign.center),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+
+                      loggedInisInfCert
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Container(
+                                height: screenHeight * 0.9,
+                                width: screenWidth * 0.9,
+                                color: UniversalVariables.transparent,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Visibility(
+                                        visible: ts1 != null,
+                                        child: Container(
+                                          // decoration: BoxDecoration(
+                                          //   color:
+                                          //    //   UniversalVariables.white2,
+                                          //   //borderRadius: BorderRadius.only(
+                                          //     // topLeft: Radius.circular(100),
+                                          //     // topRight: Radius.circular(100),
+                                          //     //   bottomLeft: Radius.circular(10),
+                                          //     //   bottomRight: Radius.circular(10),
+                                          //   ),
+                                          // ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts1 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts1)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts1Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts1Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ts2 != null,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts2 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts2)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts2Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts2Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ts3 != null,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts3 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts3)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts3Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts3Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ts4 != null,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts4 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts4)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts4Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts4Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ts5 != null,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts5 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts5)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts6Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts5Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ts6 != null,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts6 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts6)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts6Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts6Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ts7 != null,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0, left: 20, bottom: 5),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                ts7 != null
+                                                    ? Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts7)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle)
+                                                    : Text("",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: ts7Duration != null
+                                                      ? Text(
+                                                          "${Utils.getDuration(ts7Duration)}",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle)
+                                                      : Text("10 mins",
+                                                          style: TextStyles
+                                                              .timeDurationDetailStyle),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    // color:Colors.orange,
+                                                    // width: 75,
+                                                    decoration: BoxDecoration(
+                                                      color: UniversalVariables
+                                                          .gold2,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(10),
+                                                        topRight:
+                                                            Radius.circular(10),
+                                                        bottomLeft:
+                                                            Radius.circular(10),
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: UniversalVariables
+                                                                .standardWhite,
+                                                          ),
+                                                          Text("BOOKED",
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                            width: screenWidth*0.9,
+                          
+                              // child: OutlineButton(
+                              //   onPressed: () {
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context) => SettingsScreen(),
+                              //       ),
+                              //     );
+                              //   },
+                              //   focusColor: UniversalVariables.standardWhite,
+                              //   // borderSide: BorderSide.solid,
+                              //   child:
+                              //       Text("", style: TextStyles.verifiedStyle),
+                              // ),
+
+                              child:
+                                    Center(child: Text(ConStrings.UPCOMINGFAVS, style: TextStyles.verifiedStyle)),
                             ),
 
                       // Padding(
@@ -1696,7 +1689,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
             ),
-            
+
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -1765,9 +1758,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ? screenHeight -
                       screenHeight / 2.5 -
                       65.0 -
-                      (controller.value * screenHeight*0.35) -
+                      (controller.value * screenHeight * 0.35) -
                       55
-                      
                   : screenHeight -
                       screenHeight / 2.5 -
                       65.0 -
@@ -1815,15 +1807,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
             ),
-
-                      
-                                
           ],
         ),
       ),
     );
   }
- 
-  
-
 }

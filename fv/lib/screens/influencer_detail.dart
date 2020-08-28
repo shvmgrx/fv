@@ -170,6 +170,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     });
 
     sendOrder(int sTime, int sDuration, int infReceived) {
+
+      print("sTime:$sTime");
+      print("sDuration:$sDuration");
+      print("currency:$infReceived");
       int orderPrice;
 
       int _generatePrice() {
@@ -338,239 +342,245 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                       //   )
                       // ),
                       SizedBox(height: 15.0),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      receiver: widget.selectedInfluencer,
+                      Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        receiver: widget.selectedInfluencer,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 80.0,
+                                    width: screenWidth / 4,
+                                    decoration: BoxDecoration(
+
+                                        //gradient: UniversalVariables.fabGradient,
+
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(5.0),
+                                          bottomRight: Radius.circular(5.0),
+                                        ),
+                                        //color: UniversalVariables.white2
+                                        color: mC,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: mCD,
+                                            offset: Offset(-10, 10),
+                                            blurRadius: 10,
+                                          ),
+                                          BoxShadow(
+                                            color: mCL,
+                                            offset: Offset(0, -10),
+                                            blurRadius: 10,
+                                          ),
+                                        ]),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text("Text Reply",
+                                                  style: TextStyles.priceType,
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: widget.selectedInfluencer
+                                                        .answerPrice1 !=
+                                                    null
+                                                ? Text(
+                                                    "\$ ${widget.selectedInfluencer.answerPrice1}",
+                                                    style: TextStyles.priceNumber,
+                                                    textAlign: TextAlign.center)
+                                                : Text("Not Set",
+                                                    style: TextStyles
+                                                        .notSetPriceNumber,
+                                                    textAlign: TextAlign.center),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                height: 80.0,
-                                width: screenWidth / 4,
-                                decoration: BoxDecoration(
-
-                                    //gradient: UniversalVariables.fabGradient,
-
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        receiver: widget.selectedInfluencer,
+                                      ),
                                     ),
-                                    //color: UniversalVariables.white2
-                                    color: mC,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: mCD,
-                                        offset: Offset(-10, 10),
-                                        blurRadius: 10,
+                                  );
+                                },
+                                child: Container(
+                                  height: 80.0,
+                                  width: screenWidth / 4,
+                                  decoration: BoxDecoration(
+
+                                      //gradient: UniversalVariables.fabGradient,
+
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                        bottomLeft: Radius.circular(5.0),
+                                        bottomRight: Radius.circular(5.0),
                                       ),
-                                      BoxShadow(
-                                        color: mCL,
-                                        offset: Offset(0, -10),
-                                        blurRadius: 10,
+                                      //color: UniversalVariables.white2
+                                      color: mC,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: mCD,
+                                          offset: Offset(-10, 10),
+                                          blurRadius: 10,
+                                        ),
+                                        BoxShadow(
+                                          color: mCL,
+                                          offset: Offset(0, -10),
+                                          blurRadius: 10,
+                                        ),
+                                      ]),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text("Video Reply",
+                                                style: TextStyles.priceType,
+                                                textAlign: TextAlign.center),
+                                          ),
+                                        ),
                                       ),
-                                    ]),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Padding(
+                                      Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 2.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: Text("Text Reply",
-                                              style: TextStyles.priceType,
-                                              textAlign: TextAlign.center),
+                                          child: widget.selectedInfluencer
+                                                      .answerPrice1 !=
+                                                  null
+                                              ? Text(
+                                                  "\$ ${widget.selectedInfluencer.answerPrice2}",
+                                                  style: TextStyles.priceNumber,
+                                                  textAlign: TextAlign.center)
+                                              : Text("Not Set",
+                                                  style: TextStyles
+                                                      .notSetPriceNumber,
+                                                  textAlign: TextAlign.center),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: widget.selectedInfluencer
-                                                    .answerPrice1 !=
-                                                null
-                                            ? Text(
-                                                "\$ ${widget.selectedInfluencer.answerPrice1}",
-                                                style: TextStyles.priceNumber,
-                                                textAlign: TextAlign.center)
-                                            : Text("Not Set",
-                                                style: TextStyles
-                                                    .notSetPriceNumber,
-                                                textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      receiver: widget.selectedInfluencer,
-                                    ),
+                                    ],
                                   ),
-                                );
-                              },
-                              child: Container(
-                                height: 80.0,
-                                width: screenWidth / 4,
-                                decoration: BoxDecoration(
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  pullUp();
+                                },
+                                child: Container(
+                                  height: 80.0,
+                                  width: screenWidth / 4,
+                                  decoration: BoxDecoration(
 
-                                    //gradient: UniversalVariables.fabGradient,
+                                      //gradient: UniversalVariables.fabGradient,
 
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
-                                    ),
-                                    //color: UniversalVariables.white2
-                                    color: mC,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: mCD,
-                                        offset: Offset(-10, 10),
-                                        blurRadius: 10,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                        bottomLeft: Radius.circular(5.0),
+                                        bottomRight: Radius.circular(5.0),
                                       ),
-                                      BoxShadow(
-                                        color: mCL,
-                                        offset: Offset(0, -10),
-                                        blurRadius: 10,
+                                      //color: UniversalVariables.white2
+                                      color: mC,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: mCD,
+                                          offset: Offset(-10, 10),
+                                          blurRadius: 10,
+                                        ),
+                                        BoxShadow(
+                                          color: mCL,
+                                          offset: Offset(0, -10),
+                                          blurRadius: 10,
+                                        ),
+                                      ]),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text("Videocall",
+                                                style: TextStyles.priceType,
+                                                textAlign: TextAlign.center),
+                                          ),
+                                        ),
                                       ),
-                                    ]),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Padding(
+                                      Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 2.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: Text("Video Reply",
-                                              style: TextStyles.priceType,
-                                              textAlign: TextAlign.center),
+                                          child: widget.selectedInfluencer
+                                                      .answerPrice1 !=
+                                                  null
+                                              ? Text(
+                                                  "\$ ${widget.selectedInfluencer.answerPrice3}",
+                                                  style: TextStyles.priceNumber,
+                                                  textAlign: TextAlign.center)
+                                              : Text("Not Set",
+                                                  style: TextStyles
+                                                      .notSetPriceNumber,
+                                                  textAlign: TextAlign.center),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: widget.selectedInfluencer
-                                                    .answerPrice1 !=
-                                                null
-                                            ? Text(
-                                                "\$ ${widget.selectedInfluencer.answerPrice2}",
-                                                style: TextStyles.priceNumber,
-                                                textAlign: TextAlign.center)
-                                            : Text("Not Set",
-                                                style: TextStyles
-                                                    .notSetPriceNumber,
-                                                textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                pullUp();
-                              },
-                              child: Container(
-                                height: 80.0,
-                                width: screenWidth / 4,
-                                decoration: BoxDecoration(
-
-                                    //gradient: UniversalVariables.fabGradient,
-
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
-                                    ),
-                                    //color: UniversalVariables.white2
-                                    color: mC,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: mCD,
-                                        offset: Offset(-10, 10),
-                                        blurRadius: 10,
-                                      ),
-                                      BoxShadow(
-                                        color: mCL,
-                                        offset: Offset(0, -10),
-                                        blurRadius: 10,
-                                      ),
-                                    ]),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: Text("Videocall",
-                                              style: TextStyles.priceType,
-                                              textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: widget.selectedInfluencer
-                                                    .answerPrice1 !=
-                                                null
-                                            ? Text(
-                                                "\$ ${widget.selectedInfluencer.answerPrice3}",
-                                                style: TextStyles.priceNumber,
-                                                textAlign: TextAlign.center)
-                                            : Text("Not Set",
-                                                style: TextStyles
-                                                    .notSetPriceNumber,
-                                                textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                        SizedBox(height: 15),
@@ -682,7 +692,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                             sendOrder(1, ts2Duration, selectedUserinfReceived),
                                           },
                                                 child: Container(
-                                              // color:Colors.orange,
+                                             //  color:Colors.orange,
                                           //    width: 75,
                                               decoration: BoxDecoration(
                                                 color: UniversalVariables.online,

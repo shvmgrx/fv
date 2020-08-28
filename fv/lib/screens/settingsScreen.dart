@@ -193,6 +193,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
 
+          if(loggedUserTimeSlots !=null){
+
+
           ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
           ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
           ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
@@ -202,13 +205,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
 
 
-          ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
-          ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
-          ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
-          ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
-          ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
-          ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
-          ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
+          ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:0;
+          ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:0;
+          ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:0;
+          ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:0;
+          ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:0;
+          ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:0;
+          ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:0;
 
           ts1orderId = loggedUserTimeSlots['ttIds'][0] !=null ? loggedUserTimeSlots['ttIds'][0]:null;
           ts2orderId = loggedUserTimeSlots['ttIds'][1] !=null ? loggedUserTimeSlots['ttIds'][1]:null;
@@ -226,6 +229,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           showts5 = (loggedUserTimeSlots['ttSlots'][4] !=null && loggedUserTimeSlots['ttDurations'][4] !=null)? true:false;
           showts6 = (loggedUserTimeSlots['ttSlots'][5] !=null && loggedUserTimeSlots['ttDurations'][5] !=null)? true:false;
           showts7 = (loggedUserTimeSlots['ttSlots'][6] !=null && loggedUserTimeSlots['ttDurations'][6] !=null)? true:false;
+          }
+
 
           textMode = loggedUseranswerPrice1 != null;
           videoMode = loggedUseranswerPrice2 != null;
@@ -316,26 +321,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
-
-                      if (ttIds[0]==null && ts1Changed>2) {
+                      if (ttIds[0]==null || ts1Changed>1) {
+                   
                         ttIds[0]= Utils.generateRandomOrderId();
                       }
-                      if (ttIds[1]==null && ts2Changed>2) {
+                      if (ttIds[1]==null || ts2Changed>1) {
                         ttIds[1]= Utils.generateRandomOrderId();
                       }
-                       if (ttIds[2]==null && ts3Changed>2) {
+                       if (ttIds[2]==null || ts3Changed>1) {
                         ttIds[2]= Utils.generateRandomOrderId();
                       }
-                       if (ttIds[3]==null && ts4Changed>2) {
+                       if (ttIds[3]==null || ts4Changed>1) {
                         ttIds[3]= Utils.generateRandomOrderId();
                       }
-                       if (ttIds[4]==null && ts5Changed>2) {
+                       if (ttIds[4]==null || ts5Changed>1) {
                         ttIds[4]= Utils.generateRandomOrderId();
                       }
-                       if (ttIds[5]==null && ts6Changed>2) {
+                       if (ttIds[5]==null || ts6Changed>1) {
                         ttIds[5]= Utils.generateRandomOrderId();
                       }
-                       if (ttIds[6]==null && ts7Changed>2) {
+                       if (ttIds[6]==null || ts7Changed>1) {
                         ttIds[6]= Utils.generateRandomOrderId();
                       }
 
@@ -581,7 +586,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           style: TextStyles.whileEditing,
                                           inputFormatters: <TextInputFormatter>[
                                             WhitelistingTextInputFormatter
-                                                .digitsOnly
+                                                .digitsOnly 
                                           ],
                                           onChanged: (input) =>
                                               loggedUseranswerPrice2 =
@@ -794,6 +799,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         child:
                                                             CupertinoDatePicker(
                                                           minimumDate: DateTime.now(),
+
+                                                          
                                                             
                                                           backgroundColor:
                                                               UniversalVariables
@@ -802,6 +809,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               CupertinoDatePickerMode
                                                                   .dateAndTime,
                                                           initialDateTime: ts1 !=null? ts1:DateTime.now(),
+                                                         
                                                              // DateTime.now(),
                                                           //  DateTime.now(),
                                                           onDateTimeChanged:
@@ -813,7 +821,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             });
                                                           },
                                                           use24hFormat: true,
-                                                          minuteInterval: 1,
+                                                           minuteInterval: 1,
                                                         ),
                                                       ),
                                                     ),
@@ -856,6 +864,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           itemExtent: 30.0,
                                                          
                                                           children: const [
+                                          
                                                             Text('10 mins'),
                                                             Text('15 mins'),
                                                             Text('20 mins'),
@@ -877,12 +886,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ts1Set = !ts1Set;
 
                                                         if (ts1Set &&
-                                                            ts1Changed > 2) {
+                                                            ts1Changed > 1) {
                                                           showts2 = true;
 
                                                           ttSlots[0] = ts1;
-                                                          ttDurations[0] =
-                                                              ts1Duration;
+                                                          ttDurations[0] = ts1Duration;
 
                                                           ts1ErrorFlag = false;
                                                         } else {
@@ -1061,7 +1069,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           ts2Set = !ts2Set;
 
                                                           if (ts2Set &&
-                                                              ts2Changed > 2) {
+                                                              ts2Changed > 1) {
                                                             showts3 = true;
 
                                                             ttSlots[1] = ts2;
@@ -1182,7 +1190,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                            minuteInterval: 1,
+                                                             minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1246,7 +1254,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           ts3Set = !ts3Set;
 
                                                           if (ts3Set &&
-                                                              ts3Changed > 2) {
+                                                              ts3Changed > 1) {
                                                             showts4 = true;
 
                                                             ttSlots[2] = ts3;
@@ -1368,7 +1376,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                            minuteInterval: 1,
+                                                             minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1432,7 +1440,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           ts4Set = !ts4Set;
 
                                                           if (ts4Set &&
-                                                              ts4Changed > 2) {
+                                                              ts4Changed > 1) {
                                                             showts5 = true;
 
                                                             ttSlots[3] = ts4;
@@ -1553,7 +1561,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                            minuteInterval: 1,
+                                                             minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1617,7 +1625,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           ts5Set = !ts5Set;
 
                                                           if (ts5Set &&
-                                                              ts5Changed > 2) {
+                                                              ts5Changed > 1) {
                                                             showts6 = true;
 
                                                             ttSlots[4] = ts5;
@@ -1739,7 +1747,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                            minuteInterval: 1,
+                                                             minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1803,7 +1811,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           ts6Set = !ts6Set;
 
                                                           if (ts6Set &&
-                                                              ts6Changed > 2) {
+                                                              ts6Changed > 1) {
                                                             showts7 = true;
 
                                                             ttSlots[5] = ts6;
@@ -1924,7 +1932,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                            minuteInterval: 1,
+                                                             minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1988,7 +1996,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           ts7Set = !ts7Set;
 
                                                           if (ts7Set &&
-                                                              ts7Changed > 2) {
+                                                              ts7Changed > 1) {
                                                             showts8 = true;
 
                                                             ttSlots[6] = ts7;
