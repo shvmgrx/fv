@@ -15,7 +15,7 @@ import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/nmBox.dart';
 import 'package:provider/provider.dart';
 // import 'package:fv/widgets/priceCard.dart';
-import 'dart:math';
+
 import 'package:intl/intl.dart';
 
 // import 'package:smooth_star_rating/smooth_star_rating.dart';

@@ -23,6 +23,8 @@ class FirebaseRepository {
 
   Future<void> fetchLoggedUser(FirebaseUser user) =>
       _firebaseMethods.fetchLoggedUser(user);
+
+      
   Future<void> updateProfiletoDb(
     FirebaseUser user,
     String name,
