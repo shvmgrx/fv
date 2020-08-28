@@ -334,13 +334,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                             ),
 
                       SizedBox(height: 5.0),
-                      // Text('Read More',
-                      //   style: GoogleFonts.sourceSansPro(
-                      //     fontSize: 14.0,
-                      //     fontWeight: FontWeight.w400,
-                      //     color: Color(0xFFF36F32)
-                      //   )
-                      // ),
+                     
                       SizedBox(height: 15.0),
                       Padding(
                         padding: const EdgeInsets.only(top:8.0),
@@ -597,6 +591,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                               //TS1
                               Visibility(
                                 visible: (ts1!="nullDate"),
+                                
                                   child: Container(
                                
                                   child: Padding(
