@@ -79,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   int ts5Duration;
   int ts6Duration;
   int ts7Duration;
-  
+
   String ts1orderId;
   String ts2orderId;
   String ts3orderId;
@@ -118,33 +118,73 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedInisInfluencer = loggedUser['isInfluencer'];
           loggedUserTimeSlots = loggedUser['timeSlots'];
 
+          ts1 = loggedUserTimeSlots['ttSlots'][0] != null
+              ? loggedUserTimeSlots['ttSlots'][0].toDate()
+              : null;
+          ts2 = loggedUserTimeSlots['ttSlots'][1] != null
+              ? loggedUserTimeSlots['ttSlots'][1].toDate()
+              : null;
+          ts3 = loggedUserTimeSlots['ttSlots'][2] != null
+              ? loggedUserTimeSlots['ttSlots'][2].toDate()
+              : null;
+          ts4 = loggedUserTimeSlots['ttSlots'][3] != null
+              ? loggedUserTimeSlots['ttSlots'][3].toDate()
+              : null;
+          ts5 = loggedUserTimeSlots['ttSlots'][4] != null
+              ? loggedUserTimeSlots['ttSlots'][4].toDate()
+              : null;
+          ts6 = loggedUserTimeSlots['ttSlots'][5] != null
+              ? loggedUserTimeSlots['ttSlots'][5].toDate()
+              : null;
+          ts7 = loggedUserTimeSlots['ttSlots'][6] != null
+              ? loggedUserTimeSlots['ttSlots'][6].toDate()
+              : null;
 
-          ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
-          ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
-          ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
-          ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
-          ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
-          ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
-          ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
+          ts1Duration = loggedUserTimeSlots['ttDurations'][0] != null
+              ? loggedUserTimeSlots['ttDurations'][0]
+              : null;
+          ts2Duration = loggedUserTimeSlots['ttDurations'][1] != null
+              ? loggedUserTimeSlots['ttDurations'][1]
+              : null;
+          ts3Duration = loggedUserTimeSlots['ttDurations'][2] != null
+              ? loggedUserTimeSlots['ttDurations'][2]
+              : null;
+          ts4Duration = loggedUserTimeSlots['ttDurations'][3] != null
+              ? loggedUserTimeSlots['ttDurations'][3]
+              : null;
+          ts5Duration = loggedUserTimeSlots['ttDurations'][4] != null
+              ? loggedUserTimeSlots['ttDurations'][4]
+              : null;
+          ts6Duration = loggedUserTimeSlots['ttDurations'][5] != null
+              ? loggedUserTimeSlots['ttDurations'][5]
+              : null;
+          ts7Duration = loggedUserTimeSlots['ttDurations'][6] != null
+              ? loggedUserTimeSlots['ttDurations'][6]
+              : null;
 
-          ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:null;
-          ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:null;
-          ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:null;
-          ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:null;
-          ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:null;
-          ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:null;
-          ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:null;
-
-          ts1orderId = loggedUserTimeSlots['ttIds'][0] !=null ? loggedUserTimeSlots['ttIds'][0]:null;
-          ts2orderId = loggedUserTimeSlots['ttIds'][1] !=null ? loggedUserTimeSlots['ttIds'][1]:null;
-          ts3orderId = loggedUserTimeSlots['ttIds'][2] !=null ? loggedUserTimeSlots['ttIds'][2]:null;
-          ts4orderId = loggedUserTimeSlots['ttIds'][3] !=null ? loggedUserTimeSlots['ttIds'][3]:null;
-          ts5orderId = loggedUserTimeSlots['ttIds'][4] !=null ? loggedUserTimeSlots['ttIds'][4]:null;
-          ts6orderId = loggedUserTimeSlots['ttIds'][5] !=null ? loggedUserTimeSlots['ttIds'][5]:null;
-          ts7orderId = loggedUserTimeSlots['ttIds'][6] !=null ? loggedUserTimeSlots['ttIds'][6]:null;
+          ts1orderId = loggedUserTimeSlots['ttIds'][0] != null
+              ? loggedUserTimeSlots['ttIds'][0]
+              : null;
+          ts2orderId = loggedUserTimeSlots['ttIds'][1] != null
+              ? loggedUserTimeSlots['ttIds'][1]
+              : null;
+          ts3orderId = loggedUserTimeSlots['ttIds'][2] != null
+              ? loggedUserTimeSlots['ttIds'][2]
+              : null;
+          ts4orderId = loggedUserTimeSlots['ttIds'][3] != null
+              ? loggedUserTimeSlots['ttIds'][3]
+              : null;
+          ts5orderId = loggedUserTimeSlots['ttIds'][4] != null
+              ? loggedUserTimeSlots['ttIds'][4]
+              : null;
+          ts6orderId = loggedUserTimeSlots['ttIds'][5] != null
+              ? loggedUserTimeSlots['ttIds'][5]
+              : null;
+          ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
+              ? loggedUserTimeSlots['ttIds'][6]
+              : null;
 
           print("loggedUserTimeSlots: $loggedUserTimeSlots");
-          
         });
       });
     });
@@ -273,7 +313,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               top: loggedInisInfluencer
                   ? screenHeight -
                       (screenHeight / 2.5) -
-                      (controller.value * 100) -
+                      (controller.value * screenHeight*0.4) -
                       55
                   : screenHeight -
                       (screenHeight / 2) -
@@ -298,9 +338,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                       SizedBox(height: 7.0),
 
-                      // SizedBox(height: 7.0),
-
-                      // SizedBox(height: 1.0),
                       loggedInbio != null
                           ? Container(
                               width: 180,
@@ -570,96 +607,605 @@ class _ProfileScreenState extends State<ProfileScreen>
 
                       loggedInisInfCert
                           ? Padding(
-                              padding: const EdgeInsets.only(top: 20.0),
-                              child: Container(
-                                height: screenHeight * 0.9,
-                                width: screenWidth * 0.9,
-                                color: UniversalVariables.transparent,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        // decoration: BoxDecoration(
-                                        //   color:
-                                        //    //   UniversalVariables.white2,
-                                        //   //borderRadius: BorderRadius.only(
-                                        //     // topLeft: Radius.circular(100),
-                                        //     // topRight: Radius.circular(100),
-                                        //     //   bottomLeft: Radius.circular(10),
-                                        //     //   bottomRight: Radius.circular(10),
-                                        //   ),
-                                        // ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 18.0, left:20,bottom:5),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              Text("${DateFormat('MMM d, kk:mm').format(ts1)}",
-                                                  style: TextStyles
-                                                      .timeTextDetailStyle),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left:0.0),
-                                                child: ts1Duration!=null? Text("${Utils.getDuration(ts1Duration)}",
-                                                    style: TextStyles
-                                                        .timeDurationDetailStyle):
-                                                        Text("10 mins",
-                                                    style: TextStyles
-                                                        .timeDurationDetailStyle),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left:8.0),
-                                                child: Container(
-                                                  // color:Colors.orange,
-                                                 // width: 75,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        UniversalVariables.gold2,
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(10),
-                                                      topRight:
-                                                          Radius.circular(10),
-                                                      bottomLeft:
-                                                          Radius.circular(10),
-                                                      bottomRight:
-                                                          Radius.circular(10),
-                                                    ),
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Container(
+                              height: screenHeight * 0.9,
+                              width: screenWidth * 0.9,
+                              color: UniversalVariables.transparent,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      // decoration: BoxDecoration(
+                                      //   color:
+                                      //    //   UniversalVariables.white2,
+                                      //   //borderRadius: BorderRadius.only(
+                                      //     // topLeft: Radius.circular(100),
+                                      //     // topRight: Radius.circular(100),
+                                      //     //   bottomLeft: Radius.circular(10),
+                                      //     //   bottomRight: Radius.circular(10),
+                                      //   ),
+                                      // ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 18.0,
+                                            left: 20,
+                                            bottom: 5),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceEvenly,
+                                          children: <Widget>[
+                                            Text(
+                                                "${DateFormat('MMM d, kk:mm').format(ts1)}",
+                                                style: TextStyles
+                                                    .timeTextDetailStyle),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(
+                                                      left: 0.0),
+                                              child: ts1Duration != null
+                                                  ? Text(
+                                                      "${Utils.getDuration(ts1Duration)}",
+                                                      style: TextStyles
+                                                          .timeDurationDetailStyle)
+                                                  : Text("10 mins",
+                                                      style: TextStyles
+                                                          .timeDurationDetailStyle),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(
+                                                      left: 8.0),
+                                              child: Container(
+                                                // color:Colors.orange,
+                                                // width: 75,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      UniversalVariables
+                                                          .gold2,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(
+                                                            10),
+                                                    topRight:
+                                                        Radius.circular(
+                                                            10),
+                                                    bottomLeft:
+                                                        Radius.circular(
+                                                            10),
+                                                    bottomRight:
+                                                        Radius.circular(
+                                                            10),
                                                   ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(horizontal:5.0,vertical: 3),
-                                                    child: Row(
-                                                      
-                                                      children: <Widget>[
-                                                        Icon(
-                                                          Icons.shopping_cart,
-                                                          color:
-                                                              UniversalVariables
-                                                                  .standardWhite,
-                                                        ),
-                                                        Text("BOOKED",
-                                                            style: TextStyles
-                                                                .timeSlotDetails),
-                                                      ],
-                                                    ),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 3),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Icon(
+                                                        Icons
+                                                            .shopping_cart,
+                                                        color: UniversalVariables
+                                                            .standardWhite,
+                                                      ),
+                                                      Text("BOOKED",
+                                                          style: TextStyles
+                                                              .timeSlotDetails),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                     
-                                    ],
-                                  ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0,
+                                                    left: 20,
+                                                    bottom: 5),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts2)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 0.0),
+                                                      child: ts2Duration != null
+                                                          ? Text(
+                                                              "${Utils.getDuration(ts2Duration)}",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle)
+                                                          : Text("10 mins",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Container(
+                                                        // color:Colors.orange,
+                                                        // width: 75,
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              UniversalVariables
+                                                                  .gold2,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 5.0,
+                                                                  vertical: 3),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .shopping_cart,
+                                                                color: UniversalVariables
+                                                                    .standardWhite,
+                                                              ),
+                                                              Text("BOOKED",
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0,
+                                                    left: 20,
+                                                    bottom: 5),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts3)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 0.0),
+                                                      child: ts3Duration != null
+                                                          ? Text(
+                                                              "${Utils.getDuration(ts3Duration)}",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle)
+                                                          : Text("10 mins",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Container(
+                                                        // color:Colors.orange,
+                                                        // width: 75,
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              UniversalVariables
+                                                                  .gold2,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 5.0,
+                                                                  vertical: 3),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .shopping_cart,
+                                                                color: UniversalVariables
+                                                                    .standardWhite,
+                                                              ),
+                                                              Text("BOOKED",
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0,
+                                                    left: 20,
+                                                    bottom: 5),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts4)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 0.0),
+                                                      child: ts4Duration != null
+                                                          ? Text(
+                                                              "${Utils.getDuration(ts4Duration)}",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle)
+                                                          : Text("10 mins",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Container(
+                                                        // color:Colors.orange,
+                                                        // width: 75,
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              UniversalVariables
+                                                                  .gold2,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 5.0,
+                                                                  vertical: 3),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .shopping_cart,
+                                                                color: UniversalVariables
+                                                                    .standardWhite,
+                                                              ),
+                                                              Text("BOOKED",
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0,
+                                                    left: 20,
+                                                    bottom: 5),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts5)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 0.0),
+                                                      child: ts6Duration != null
+                                                          ? Text(
+                                                              "${Utils.getDuration(ts5Duration)}",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle)
+                                                          : Text("10 mins",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Container(
+                                                        // color:Colors.orange,
+                                                        // width: 75,
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              UniversalVariables
+                                                                  .gold2,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 5.0,
+                                                                  vertical: 3),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .shopping_cart,
+                                                                color: UniversalVariables
+                                                                    .standardWhite,
+                                                              ),
+                                                              Text("BOOKED",
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0,
+                                                    left: 20,
+                                                    bottom: 5),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts6)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 0.0),
+                                                      child: ts6Duration != null
+                                                          ? Text(
+                                                              "${Utils.getDuration(ts6Duration)}",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle)
+                                                          : Text("10 mins",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Container(
+                                                        // color:Colors.orange,
+                                                        // width: 75,
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              UniversalVariables
+                                                                  .gold2,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 5.0,
+                                                                  vertical: 3),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .shopping_cart,
+                                                                color: UniversalVariables
+                                                                    .standardWhite,
+                                                              ),
+                                                              Text("BOOKED",
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0,
+                                                    left: 20,
+                                                    bottom: 5),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "${DateFormat('MMM d, kk:mm').format(ts7)}",
+                                                        style: TextStyles
+                                                            .timeTextDetailStyle),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 0.0),
+                                                      child: ts7Duration != null
+                                                          ? Text(
+                                                              "${Utils.getDuration(ts7Duration)}",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle)
+                                                          : Text("10 mins",
+                                                              style: TextStyles
+                                                                  .timeDurationDetailStyle),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Container(
+                                                        // color:Colors.orange,
+                                                        // width: 75,
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              UniversalVariables
+                                                                  .gold2,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 5.0,
+                                                                  vertical: 3),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .shopping_cart,
+                                                                color: UniversalVariables
+                                                                    .standardWhite,
+                                                              ),
+                                                              Text("BOOKED",
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                    ),
+
+                                  ],
                                 ),
                               ),
-                            )
+                            ),
+                          )
                           : Container(
                               child: OutlineButton(
                                 onPressed: () {
@@ -672,8 +1218,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 },
                                 focusColor: UniversalVariables.standardWhite,
                                 // borderSide: BorderSide.solid,
-                                child: Text("",
-                                    style: TextStyles.verifiedStyle),
+                                child:
+                                    Text("", style: TextStyles.verifiedStyle),
                               ),
                             ),
 
@@ -1150,36 +1696,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
             ),
-            // Align(
-            //     alignment: Alignment.bottomCenter,
-            //     child: Container(
-            //       height: 70.0,
-            //       width: MediaQuery.of(context).size.width,
-            //       child: Center(
-            //           child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //               //crossAxisAlignment: CrossAxisAlignment.stretch,
-            //               children: [
-            //             Icon(
-            //               Icons.expand_less,
-            //               color: Colors.white,
-            //               size: 30,
-            //             ),
-            //             Icon(
-            //               Icons.star_border,
-            //               color: Colors.white,
-            //               size: 30,
-            //             ),
-            //             Icon(
-            //               Icons.expand_more,
-            //               color: Colors.white,
-            //               size: 30,
-            //             ),
-            //           ])),
-            //       decoration: BoxDecoration(
-            //           //borderRadius: BorderRadius.only(topLeft: Radius.circular(55.0)),
-            //           color: UniversalVariables.standardWhite),
-            //     ),
-            //     ),
+            
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -1248,8 +1765,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ? screenHeight -
                       screenHeight / 2.5 -
                       65.0 -
-                      (controller.value * 100) -
-                      20
+                      (controller.value * screenHeight*0.35) -
+                      55
+                      
                   : screenHeight -
                       screenHeight / 2.5 -
                       65.0 -
@@ -1298,985 +1816,14 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
 
-            // Positioned(
-            //   top: screenHeight - screenHeight / 3.5,
-            //   left: 10,
-            //   right: 10,
-            //   child: Center(
-            //     child: Row(
-            //       children: <Widget>[
-            //         Padding(
-            //           padding: EdgeInsets.all(20.0),
-            //           child: Stack(
-            //             children: <Widget>[
-            //               Container(
-            //                   height: 110.0,
-            //                   width: 126.0,
-            //                   color: UniversalVariables.transparent),
-            //               Positioned(
-            //                   left: 1.0,
-            //                   top: 1.0,
-            //                   child: Column(
-            //                     children: <Widget>[
-            //                       GestureDetector(
-            //                         onTap: () {
-            //                           Navigator.push(
-            //                             context,
-            //                             MaterialPageRoute(
-            //                               builder: (context) => ChatScreen(
-            //                                 receiver: widget.selectedInfluencer,
-            //                               ),
-            //                             ),
-            //                           );
-            //                         },
-            //                         child: Container(
-            //                           height: 78.0,
-            //                           width: 115.0,
-            //                           decoration: BoxDecoration(
-
-            //                               //gradient: UniversalVariables.fabGradient,
-
-            //                               borderRadius: BorderRadius.only(
-            //                                 topLeft: Radius.circular(10.0),
-            //                                 topRight: Radius.circular(10.0),
-            //                               ),
-            //                               //color: UniversalVariables.white2
-            //                               color: mC,
-            //                               boxShadow: [
-            //                                 BoxShadow(
-            //                                   color: mCD,
-            //                                   offset: Offset(-10, 10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                                 BoxShadow(
-            //                                   color: mCL,
-            //                                   offset: Offset(0, -10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                               ]),
-            //                           child: Padding(
-            //                             padding: const EdgeInsets.symmetric(
-            //                                 vertical: 2.0),
-            //                             child: Align(
-            //                               alignment: Alignment.center,
-            //                               child: widget.selectedInfluencer
-            //                                           .answerPrice1 !=
-            //                                       null
-            //                                   ? Text(
-            //                                       "\$ ${widget.selectedInfluencer.answerPrice1}",
-            //                                       style: TextStyles.priceNumber,
-            //                                       textAlign: TextAlign.center)
-            //                                   : Text("Not Set",
-            //                                       style: TextStyles
-            //                                           .notSetPriceNumber,
-            //                                       textAlign: TextAlign.center),
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                       Container(
-            //                         height: 27.0,
-            //                         width: 115.0,
-            //                         decoration: BoxDecoration(
-            //                             //gradient: UniversalVariables.fabGradient,
-            //                             borderRadius: BorderRadius.only(
-            //                               bottomLeft: Radius.circular(10.0),
-            //                               bottomRight: Radius.circular(10.0),
-            //                             ),
-            //                             color: UniversalVariables.white2),
-            //                         child: Padding(
-            //                           padding: const EdgeInsets.symmetric(
-            //                               vertical: 2.0),
-            //                           child: Align(
-            //                             alignment: Alignment.center,
-            //                             child: Text("Text Reply",
-            //                                 style: TextStyles.priceType,
-            //                                 textAlign: TextAlign.center),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ))
-            //             ],
-            //           ),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.all(20.0),
-            //           child: Stack(
-            //             children: <Widget>[
-            //               Container(
-            //                   height: 110.0,
-            //                   width: 132.0,
-            //                   color: UniversalVariables.transparent),
-            //               Positioned(
-            //                   right: 1,
-            //                   top: 1.0,
-            //                   child: Column(
-            //                     children: <Widget>[
-            //                       GestureDetector(
-            //                         onTap: () {
-            //                           Navigator.push(
-            //                             context,
-            //                             MaterialPageRoute(
-            //                               builder: (context) => ChatScreen(
-            //                                 receiver: widget.selectedInfluencer,
-            //                               ),
-            //                             ),
-            //                           );
-            //                         },
-            //                         child: Container(
-            //                           height: 78.0,
-            //                           width: 120.0,
-            //                           decoration: BoxDecoration(
-
-            //                               //gradient: UniversalVariables.fabGradient,
-
-            //                               borderRadius: BorderRadius.only(
-            //                                 topLeft: Radius.circular(10.0),
-            //                                 topRight: Radius.circular(10.0),
-            //                               ),
-            //                               //color: UniversalVariables.white2
-            //                               color: mC,
-            //                               boxShadow: [
-            //                                 BoxShadow(
-            //                                   color: mCD,
-            //                                   offset: Offset(-10, 10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                                 BoxShadow(
-            //                                   color: mCL,
-            //                                   offset: Offset(0, -10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                               ]),
-            //                           child: Padding(
-            //                             padding: const EdgeInsets.symmetric(
-            //                                 vertical: 2.0),
-            //                             child: Align(
-            //                               alignment: Alignment.center,
-            //                               child: widget.selectedInfluencer
-            //                                           .answerPrice2 !=
-            //                                       null
-            //                                   ? Text(
-            //                                       "\$ ${widget.selectedInfluencer.answerPrice2}",
-            //                                       style: TextStyles.priceNumber,
-            //                                       textAlign: TextAlign.center)
-            //                                   : Text("Not Set",
-            //                                       style: TextStyles
-            //                                           .notSetPriceNumber,
-            //                                       textAlign: TextAlign.center),
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                       Container(
-            //                         height: 27.0,
-            //                         width: 120.0,
-            //                         decoration: BoxDecoration(
-            //                             //gradient: UniversalVariables.fabGradient,
-            //                             borderRadius: BorderRadius.only(
-            //                               bottomLeft: Radius.circular(10.0),
-            //                               bottomRight: Radius.circular(10.0),
-            //                             ),
-            //                             color: UniversalVariables.white2),
-            //                         child: Padding(
-            //                           padding: const EdgeInsets.symmetric(
-            //                               vertical: 2.0),
-            //                           child: Align(
-            //                             alignment: Alignment.center,
-            //                             child: Text("Video Reply",
-            //                                 style: TextStyles.priceType,
-            //                                 textAlign: TextAlign.center),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ))
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // )
+                      
+                                
           ],
         ),
       ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   var screenHeight = MediaQuery.of(context).size.height;
-  //   var screenWidth = MediaQuery.of(context).size.width;
-  //   return Scaffold(
-  //     body: Stack(
-  //       children: <Widget>[
-  //         Container(
-  //             height: screenHeight,
-  //             width: screenWidth,
-  //             color: Colors.transparent),
-  //         Container(
-  //           height: screenHeight - screenHeight / 3,
-  //           width: screenWidth,
-  //           decoration: BoxDecoration(
-  //             image: DecorationImage(
-  //                 image: AssetImage('assets/surfing.jpg'), fit: BoxFit.cover),
-  //           ),
-  //         ),
-  //         Positioned(
-  //           top: screenHeight - (screenHeight / 2.5) - 25,
-  //           child: Container(
-  //             padding: EdgeInsets.only(left: 20.0),
-  //             height: screenHeight / 3 + 25.0,
-  //             width: screenWidth,
-  //             child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   SizedBox(height: 25.0),
-  //                   Text(
-  //                     loggedInname != null ? loggedInname : "Add name",
-  //                     style: TextStyles.theNameStyle,
-  //                   ),
-  //                   SizedBox(height: 7.0),
-  //                   // Row(
-  //                   //   children: <Widget>[
-  //                   //     Text(
-  //                   //       widget.selectedInfluencer.username,
-  //                   //       style: TextStyles.usernameStyle,
-  //                   //     ),
-  //                   //     Icon(
-  //                   //       Icons.verified_user,
-  //                   //       color: UniversalVariables.gold2,
-  //                   //       size: 20,
-  //                   //     ),
-  //                   //   ],
-  //                   // ),
-  //                   // Text('Santa Monica, CA',
-  //                   // style: GoogleFonts.sourceSansPro(
-  //                   //   fontSize: 15.0,
-  //                   //   fontWeight: FontWeight.w400,
-  //                   //   color: Color(0xFF5E5B54)
-  //                   // )
-  //                   // ),
-  //                   SizedBox(height: 7.0),
-  //                   Row(
-  //                     children: <Widget>[
-  //                       // SmoothStarRating(
-  //                       //   allowHalfRating: false,
-  //                       //   starCount: 5,
-  //                       //   rating: 4.0,
-  //                       //   size: 15.0,
-  //                       //   color: Color(0xFFF36F32),
-  //                       //   borderColor: Color(0xFFF36F32),
-  //                       //   spacing:0.0
-  //                       // ),
-  //                       SizedBox(width: 3.0),
-  //                       // Text('4.7',
-  //                       //   style: GoogleFonts.sourceSansPro(
-  //                       //           fontSize: 14.0,
-  //                       //           fontWeight: FontWeight.w400,
-  //                       //           color: Color(0xFFD57843)
-  //                       //         )
-  //                       // ),
-  //                       // SizedBox(width: 3.0),
-  //                       // Text('(200 Reviews)',
-  //                       //   style: GoogleFonts.sourceSansPro(
-  //                       //           fontSize: 14.0,
-  //                       //           fontWeight: FontWeight.w400,
-  //                       //           color: Color(0xFFC2C0B6)
-  //                       //         )
-  //                       // )
-  //                     ],
-  //                   ),
-  //                   SizedBox(height: 5.0),
-  //                   Text(loggedInbio != null ? loggedInbio : "Add bio",
-  //                       style: GoogleFonts.sourceSansPro(
-  //                           fontSize: 14.0,
-  //                           fontWeight: FontWeight.w400,
-  //                           color: Color(0xFF201F1C))),
-  //                   SizedBox(height: 15.0),
-  //                   // Text('Read More',
-  //                   //   style: GoogleFonts.sourceSansPro(
-  //                   //     fontSize: 14.0,
-  //                   //     fontWeight: FontWeight.w400,
-  //                   //     color: Color(0xFFF36F32)
-  //                   //   )
-  //                   // ),
-  //                   SizedBox(height: 10.0),
+ 
+  
 
-  //                   // Container(
-  //                   //   width: 325,
-  //                   //   child: Row(
-  //                   //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //                   //     children: [
-  //                   //       Column(
-  //                   //         crossAxisAlignment: CrossAxisAlignment.start,
-  //                   //         children: <Widget>[
-  //                   //           Container(
-  //                   //             height: 75.0,
-  //                   //             width: 150.0,
-  //                   //             child: Center(
-  //                   //                 child: Column(
-  //                   //                     mainAxisAlignment:
-  //                   //                         MainAxisAlignment.center,
-  //                   //                     children: [
-  //                   //                   Icon(
-  //                   //                     Icons.text_format,
-  //                   //                     color: Colors.white,
-  //                   //                     size: 30,
-  //                   //                   ),
-  //                   //                   Text(Strings.TEXT_MESSAGE,
-  //                   //                       style: GoogleFonts.sourceSansPro(
-  //                   //                           fontSize: 12.0,
-  //                   //                           fontWeight: FontWeight.w500,
-  //                   //                           color: UniversalVariables
-  //                   //                               .standardCream))
-  //                   //                 ])),
-  //                   //             decoration: BoxDecoration(
-  //                   //                 borderRadius: BorderRadius.all(
-  //                   //                   Radius.circular(35.0),
-  //                   //                 ),
-  //                   //                 color: UniversalVariables.standardPink),
-  //                   //           )
-  //                   //         ],
-  //                   //       ),
-  //                   //       Column(
-  //                   //         crossAxisAlignment: CrossAxisAlignment.start,
-  //                   //         children: <Widget>[
-  //                   //           Container(
-  //                   //             height: 75.0,
-  //                   //             width: 150.0,
-  //                   //             child: Center(
-  //                   //                 child: Column(
-  //                   //                     mainAxisAlignment:
-  //                   //                         MainAxisAlignment.center,
-  //                   //                     children: [
-  //                   //                   Icon(
-  //                   //                     Icons.videocam,
-  //                   //                     color: Colors.white,
-  //                   //                     size: 30,
-  //                   //                   ),
-  //                   //                   Text(Strings.VIDEO_MESSAGE,
-  //                   //                       style: GoogleFonts.sourceSansPro(
-  //                   //                           fontSize: 12.0,
-  //                   //                           fontWeight: FontWeight.w500,
-  //                   //                           color: UniversalVariables
-  //                   //                               .standardCream))
-  //                   //                 ])),
-  //                   //             decoration: BoxDecoration(
-  //                   //                 borderRadius: BorderRadius.all(
-  //                   //                   Radius.circular(35.0),
-  //                   //                 ),
-  //                   //                 color: UniversalVariables.standardPink),
-  //                   //           )
-  //                   //         ],
-  //                   //       ),
-  //                   //     ],
-  //                   //   ),
-  //                   // )
-  //                 ]),
-  //             decoration: BoxDecoration(
-  //               color: UniversalVariables.backgroundGrey,
-  //               borderRadius: BorderRadius.only(
-  //                 topLeft: Radius.circular(25.0),
-  //                 topRight: Radius.circular(25.0),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //         // Align(
-  //         //     alignment: Alignment.bottomCenter,
-  //         //     child: Container(
-  //         //       height: 70.0,
-  //         //       width: MediaQuery.of(context).size.width,
-  //         //       child: Center(
-  //         //           child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //         //               //crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         //               children: [
-  //         //             Icon(
-  //         //               Icons.expand_less,
-  //         //               color: Colors.white,
-  //         //               size: 30,
-  //         //             ),
-  //         //             Icon(
-  //         //               Icons.star_border,
-  //         //               color: Colors.white,
-  //         //               size: 30,
-  //         //             ),
-  //         //             Icon(
-  //         //               Icons.expand_more,
-  //         //               color: Colors.white,
-  //         //               size: 30,
-  //         //             ),
-  //         //           ])),
-  //         //       decoration: BoxDecoration(
-  //         //           //borderRadius: BorderRadius.only(topLeft: Radius.circular(55.0)),
-  //         //           color: UniversalVariables.standardWhite),
-  //         //     ),
-  //         //     ),
-  //         Align(
-  //           alignment: Alignment.topLeft,
-  //           child: Padding(
-  //             padding: EdgeInsets.only(left: 15.0, top: 30.0),
-  //             child: GestureDetector(
-  //               onTap: () => {
-  //                 Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                     builder: (context) => HomeScreen(),
-  //                   ),
-  //                 ),
-  //               },
-  //               child: Container(
-  //                 height: 40.0,
-  //                 width: 40.0,
-  //                 decoration: BoxDecoration(
-  //                     shape: BoxShape.circle, color: UniversalVariables.white2),
-  //                 child: Center(
-  //                   child: Icon(Icons.arrow_back,
-  //                       size: 20.0, color: UniversalVariables.grey1),
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  // Align(
-  //   alignment: Alignment.topRight,
-  //   child: Padding(
-  //     padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 15.0),
-  //     child: GestureDetector(
-  //       onTap: () => {
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => EditProfile(),
-  //           ),
-  //         ),
-  //       },
-  //       child: Container(
-  //         height: 40.0,
-  //         width: 40.0,
-  //         decoration: BoxDecoration(
-  //             shape: BoxShape.circle, color: UniversalVariables.white2),
-  //         child: Center(
-  //           child: Icon(Icons.edit,
-  //               size: 20.0, color: UniversalVariables.grey1),
-  //         ),
-  //       ),
-  //     ),
-  //   ),
-  // ),
-  //         // Positioned(
-  //         //   top: (screenHeight - screenHeight / 3) / 2,
-  //         //   left: (screenWidth /2) - 75.0,
-  //         //   child: Container(
-  //         //     height: 40.0,
-  //         //     width: 150.0,
-  //         //     decoration: BoxDecoration(
-  //         //       color: Color(0xFFA4B2AE),
-  //         //       borderRadius: BorderRadius.circular(20.0)
-  //         //     ),
-  //         //     child: Center(
-  //         //       child: Text('Add Your intro video here',
-  //         //       style: GoogleFonts.sourceSansPro(
-  //         //         fontSize: 14.0,
-  //         //         fontWeight: FontWeight.w500,
-  //         //         color: Colors.white
-  //         //       )
-  //         //       )
-  //         //     )
-  //         //   )
-  //         // ),
-  //         Positioned(
-  //           top: screenHeight - screenHeight / 2.5 - 65.0,
-  //           right: 35.0,
-  //           child: Column(
-  //             children: <Widget>[
-  //               Container(
-  //                 height: 100.0,
-  //                 width: 100.0,
-  //                 decoration: BoxDecoration(
-  //                   image: DecorationImage(
-  //                     image: NetworkImage(loggedInprofilePhoto != null
-  //                         ? loggedInprofilePhoto
-  //                         : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
-  //                     fit: BoxFit.cover,
-  //                   ),
-  //                   borderRadius: BorderRadius.circular(15.0),
-  //                 ),
-  //               ),
-  //               SizedBox(height: 5),
-  //               Container(
-  //                 child: Row(
-  //                   children: <Widget>[
-  //                     Text(
-  //                       loggedInusername != null
-  //                           ? loggedInusername
-  //                           : "Add username",
-  //                       style: TextStyles.usernameStyleEnd,
-  //                     ),
-  //                     Icon(
-  //                       Icons.verified_user,
-  //                       color: UniversalVariables.gold2,
-  //                       size: 20,
-  //                     ),
-  //                   ],
-  //                 ),
-  //               )
-  //             ],
-  //           ),
-  //         ),
-
-  //         Positioned(
-  //           top: screenHeight - screenHeight / 4,
-  //           left: 10,
-  //           right: 10,
-  //           child: Container(
-  //                     child: Row(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                       mainAxisSize: MainAxisSize.max,
-  //                       children: <Widget>[
-  //                         GestureDetector(
-  //                           onTap: () {
-  //                            Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                     builder: (context) => SettingsScreen(),
-  //                   ),
-  //                 );
-  //                           },
-  //                           child: Container(
-  //                             height: 80.0,
-  //                             width: screenWidth / 4,
-  //                             decoration: BoxDecoration(
-
-  //                                 //gradient: UniversalVariables.fabGradient,
-
-  //                                 borderRadius: BorderRadius.only(
-  //                                   topLeft: Radius.circular(10.0),
-  //                                   topRight: Radius.circular(10.0),
-  //                                   bottomLeft: Radius.circular(5.0),
-  //                                   bottomRight: Radius.circular(5.0),
-  //                                 ),
-  //                                 //color: UniversalVariables.white2
-  //                                 color: mC,
-  //                                 boxShadow: [
-  //                                   BoxShadow(
-  //                                     color: mCD,
-  //                                     offset: Offset(-10, 10),
-  //                                     blurRadius: 10,
-  //                                   ),
-  //                                   BoxShadow(
-  //                                     color: mCL,
-  //                                     offset: Offset(0, -10),
-  //                                     blurRadius: 10,
-  //                                   ),
-  //                                 ]),
-  //                             child: Column(
-  //                               mainAxisAlignment:
-  //                                   MainAxisAlignment.spaceAround,
-  //                               children: <Widget>[
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(
-  //                                       vertical: 2.0),
-  //                                   child: Padding(
-  //                                     padding: const EdgeInsets.symmetric(
-  //                                         vertical: 2.0),
-  //                                     child: Align(
-  //                                       alignment: Alignment.center,
-  //                                       child: Text("Text Reply",
-  //                                           style: TextStyles.priceType,
-  //                                           textAlign: TextAlign.center),
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(
-  //                                       vertical: 2.0),
-  //                                   child: Align(
-  //                                     alignment: Alignment.center,
-  //                                     child: loggedInanswerPrice1 !=
-  //                                             null
-  //                                         ? Text(
-  //                                             "\$ ${loggedInanswerPrice1}",
-  //                                             style: TextStyles.priceNumber,
-  //                                             textAlign: TextAlign.center)
-  //                                         : Text("Not Set",
-  //                                             style:
-  //                                                 TextStyles.notSetPriceNumber,
-  //                                             textAlign: TextAlign.center),
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         GestureDetector(
-  //                           onTap: () {
-  //                             Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                     builder: (context) => SettingsScreen(),
-  //                   ),
-  //                 );
-  //                           },
-  //                           child: Container(
-  //                             height: 80.0,
-  //                             width: screenWidth / 4,
-  //                             decoration: BoxDecoration(
-
-  //                                 //gradient: UniversalVariables.fabGradient,
-
-  //                                 borderRadius: BorderRadius.only(
-  //                                   topLeft: Radius.circular(10.0),
-  //                                   topRight: Radius.circular(10.0),
-  //                                   bottomLeft: Radius.circular(5.0),
-  //                                   bottomRight: Radius.circular(5.0),
-  //                                 ),
-  //                                 //color: UniversalVariables.white2
-  //                                 color: mC,
-  //                                 boxShadow: [
-  //                                   BoxShadow(
-  //                                     color: mCD,
-  //                                     offset: Offset(-10, 10),
-  //                                     blurRadius: 10,
-  //                                   ),
-  //                                   BoxShadow(
-  //                                     color: mCL,
-  //                                     offset: Offset(0, -10),
-  //                                     blurRadius: 10,
-  //                                   ),
-  //                                 ]),
-  //                             child: Column(
-  //                               mainAxisAlignment:
-  //                                   MainAxisAlignment.spaceAround,
-  //                               children: <Widget>[
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(
-  //                                       vertical: 2.0),
-  //                                   child: Padding(
-  //                                     padding: const EdgeInsets.symmetric(
-  //                                         vertical: 2.0),
-  //                                     child: Align(
-  //                                       alignment: Alignment.center,
-  //                                       child: Text("Video Reply",
-  //                                           style: TextStyles.priceType,
-  //                                           textAlign: TextAlign.center),
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(
-  //                                       vertical: 2.0),
-  //                                   child: Align(
-  //                                     alignment: Alignment.center,
-  //                                     child: loggedInanswerPrice2 !=
-  //                                             null
-  //                                         ? Text(
-  //                                             "\$ ${loggedInanswerPrice2}",
-  //                                             style: TextStyles.priceNumber,
-  //                                             textAlign: TextAlign.center)
-  //                                         : Text("Not Set",
-  //                                             style:
-  //                                                 TextStyles.notSetPriceNumber,
-  //                                             textAlign: TextAlign.center),
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         GestureDetector(
-  //                           onTap: () {
-  //                             Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                     builder: (context) => SettingsScreen(),
-  //                   ),
-  //                 );
-  //                           },
-  //                           child: Container(
-  //                             height: 80.0,
-  //                             width: screenWidth / 4,
-  //                             decoration: BoxDecoration(
-
-  //                                 //gradient: UniversalVariables.fabGradient,
-
-  //                                 borderRadius: BorderRadius.only(
-  //                                   topLeft: Radius.circular(10.0),
-  //                                   topRight: Radius.circular(10.0),
-  //                                   bottomLeft: Radius.circular(5.0),
-  //                                   bottomRight: Radius.circular(5.0),
-  //                                 ),
-  //                                 //color: UniversalVariables.white2
-  //                                 color: mC,
-  //                                 boxShadow: [
-  //                                   BoxShadow(
-  //                                     color: mCD,
-  //                                     offset: Offset(-10, 10),
-  //                                     blurRadius: 10,
-  //                                   ),
-  //                                   BoxShadow(
-  //                                     color: mCL,
-  //                                     offset: Offset(0, -10),
-  //                                     blurRadius: 10,
-  //                                   ),
-  //                                 ]),
-  //                             child: Column(
-  //                               mainAxisAlignment:
-  //                                   MainAxisAlignment.spaceAround,
-  //                               children: <Widget>[
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(
-  //                                       vertical: 2.0),
-  //                                   child: Padding(
-  //                                     padding: const EdgeInsets.symmetric(
-  //                                         vertical: 2.0),
-  //                                     child: Align(
-  //                                       alignment: Alignment.center,
-  //                                       child: Text("Videocall",
-  //                                           style: TextStyles.priceType,
-  //                                           textAlign: TextAlign.center),
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(
-  //                                       vertical: 2.0),
-  //                                   child: Align(
-  //                                     alignment: Alignment.center,
-  //                                     child: loggedInanswerPrice3 !=
-  //                                             null
-  //                                         ? Text(
-  //                                             "\$ ${loggedInanswerPrice3}",
-  //                                             style: TextStyles.priceNumber,
-  //                                             textAlign: TextAlign.center)
-  //                                         : Text("Not Set",
-  //                                             style:
-  //                                                 TextStyles.notSetPriceNumber,
-  //                                             textAlign: TextAlign.center),
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   )
-  //         //     child: Row(
-  //         //       children: <Widget>[
-  //         //         Padding(
-  //         //           padding: EdgeInsets.all(20.0),
-  //         //           child: Stack(
-  //         //             children: <Widget>[
-  //         //               Container(
-  //         //                   height: 110.0,
-  //         //                   width: 120.0,
-  //         //                   color: UniversalVariables.transparent),
-  //         //               Positioned(
-  //         //                   left: 1.0,
-  //         //                   top: 1.0,
-  //         //                   child: Column(
-  //         //                     children: <Widget>[
-  //         //                       Container(
-  //         //                         height: 55.0,
-  //         //                         width: 115.0,
-  //         //                         decoration: BoxDecoration(
-
-  //         //                             //gradient: UniversalVariables.fabGradient,
-
-  //         //                             borderRadius: BorderRadius.only(
-  //         //                               topLeft: Radius.circular(10.0),
-  //         //                               topRight: Radius.circular(10.0),
-  //         //                             ),
-  //         //                             //color: UniversalVariables.white2
-  //         //                             color: mC,
-  //         //                             boxShadow: [
-  //         //                               BoxShadow(
-  //         //                                 color: mCD,
-  //         //                                 offset: Offset(10, 10),
-  //         //                                 blurRadius: 10,
-  //         //                               ),
-  //         //                               BoxShadow(
-  //         //                                 color: mCL,
-  //         //                                 offset: Offset(-10, -10),
-  //         //                                 blurRadius: 10,
-  //         //                               ),
-  //         //                             ]),
-  //         //                         child: Padding(
-  //         //                           padding: const EdgeInsets.symmetric(
-  //         //                               vertical: 2.0),
-  //         //                           child: Align(
-  //         //                             alignment: Alignment.center,
-  //         //                             child: loggedInanswerPrice1 != null
-  //         //                                 ? Text("\$ $loggedInanswerPrice1",
-  //         //                                     style: TextStyles.priceNumber,
-  //         //                                     textAlign: TextAlign.center)
-  //         //                                 : Text("\$0",
-  //         //                                     style: TextStyles.priceNumber,
-  //         //                                     textAlign: TextAlign.center),
-  //         //                           ),
-  //         //                         ),
-  //         //                       ),
-  //         //                       Container(
-  //         //                         height: 27.0,
-  //         //                         width: 115.0,
-  //         //                         decoration: BoxDecoration(
-  //         //                             //gradient: UniversalVariables.fabGradient,
-  //         //                             borderRadius: BorderRadius.only(
-  //         //                               bottomLeft: Radius.circular(10.0),
-  //         //                               bottomRight: Radius.circular(10.0),
-  //         //                             ),
-  //         //                             color: UniversalVariables.white2),
-  //         //                         child: Padding(
-  //         //                           padding: const EdgeInsets.symmetric(
-  //         //                               vertical: 2.0),
-  //         //                           child: Align(
-  //         //                             alignment: Alignment.center,
-  //         //                             child: Text("Text Reply",
-  //         //                                 style: TextStyles.priceType,
-  //         //                                 textAlign: TextAlign.center),
-  //         //                           ),
-  //         //                         ),
-  //         //                       ),
-  //         //                     ],
-  //         //                   ))
-  //         //             ],
-  //         //           ),
-  //         //         ),
-  //         //         Padding(
-  //         //           padding: EdgeInsets.all(20.0),
-  //         //           child: Stack(
-  //         //             children: <Widget>[
-  //         //               Container(
-  //         //                   height: 110.0,
-  //         //                   width: 125.0,
-  //         //                   color: UniversalVariables.transparent),
-  //         //               Positioned(
-  //         //                   left: 1.0,
-  //         //                   top: 1.0,
-  //         //                   child: Column(
-  //         //                     children: <Widget>[
-  //         //                       Container(
-  //         //                         height: 55.0,
-  //         //                         width: 120.0,
-  //         //                         decoration: BoxDecoration(
-
-  //         //                             //gradient: UniversalVariables.fabGradient,
-
-  //         //                             borderRadius: BorderRadius.only(
-  //         //                               topLeft: Radius.circular(10.0),
-  //         //                               topRight: Radius.circular(10.0),
-  //         //                             ),
-  //         //                             //color: UniversalVariables.white2
-  //         //                             color: mC,
-  //         //                             boxShadow: [
-  //         //                               BoxShadow(
-  //         //                                 color: mCD,
-  //         //                                 offset: Offset(10, 10),
-  //         //                                 blurRadius: 10,
-  //         //                               ),
-  //         //                               BoxShadow(
-  //         //                                 color: mCL,
-  //         //                                 offset: Offset(-10, -10),
-  //         //                                 blurRadius: 10,
-  //         //                               ),
-  //         //                             ]),
-  //         //                         child: Padding(
-  //         //                           padding: const EdgeInsets.symmetric(
-  //         //                               vertical: 2.0),
-  //         //                           child: Align(
-  //         //                             alignment: Alignment.center,
-  //         //                             child: loggedInanswerPrice2 != null
-  //         //                                 ? Text("\$ $loggedInanswerPrice2",
-  //         //                                     style: TextStyles.priceNumber,
-  //         //                                     textAlign: TextAlign.center)
-  //         //                                 : Text("\$0",
-  //         //                                     style: TextStyles.priceNumber,
-  //         //                                     textAlign: TextAlign.center),
-  //         //                           ),
-  //         //                         ),
-  //         //                       ),
-  //         //                       Container(
-  //         //                         height: 27.0,
-  //         //                         width: 120.0,
-  //         //                         decoration: BoxDecoration(
-  //         //                             //gradient: UniversalVariables.fabGradient,
-  //         //                             borderRadius: BorderRadius.only(
-  //         //                               bottomLeft: Radius.circular(10.0),
-  //         //                               bottomRight: Radius.circular(10.0),
-  //         //                             ),
-  //         //                             color: UniversalVariables.white2),
-  //         //                         child: Padding(
-  //         //                           padding: const EdgeInsets.symmetric(
-  //         //                               vertical: 2.0),
-  //         //                           child: Align(
-  //         //                             alignment: Alignment.center,
-  //         //                             child: Text("Video Reply",
-  //         //                                 style: TextStyles.priceType,
-  //         //                                 textAlign: TextAlign.center),
-  //         //                           ),
-  //         //                         ),
-  //         //                       ),
-  //         //                     ],
-  //         //                   ))
-  //         //             ],
-  //         //           ),
-  //         //         ),
-  //         //       ],
-  //         //     ),
-  //           ),
-
-  //       ],
-  //     ),
-  //     // floatingActionButton: Visibility(
-  //     //   child: FloatingActionButton(
-  //     //     onPressed: () {
-  //     //       Navigator.pushNamed(context, "/search_screen");
-  //     //     },
-  //     //     backgroundColor: UniversalVariables.standardWhite,
-  //     //     child: Icon(Icons.search, size: 45, color: UniversalVariables.grey2),
-  //     //   ),
-  //     // ),
-  //     // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-  //     // bottomNavigationBar: Visibility(
-  //     //   child: BottomAppBar(
-  //     //     shape: CircularNotchedRectangle(),
-  //     //     color: UniversalVariables.standardWhite,
-  //     //     elevation: 9.0,
-  //     //     clipBehavior: Clip.antiAlias,
-  //     //     notchMargin: 6.0,
-  //     //     child: Container(
-  //     //       height: 60,
-  //     //       child: Ink(
-  //     //         decoration: BoxDecoration(),
-  //     //         child: CupertinoTabBar(
-  //     //           backgroundColor: Colors.transparent,
-  //     //           items: <BottomNavigationBarItem>[
-  //     //             BottomNavigationBarItem(
-  //     //                 icon: GestureDetector(
-  //     //                   onTap: () {
-  //     //                       Navigator.pushNamed(
-  //     //                           context, "/home_screen");
-  //     //                     },
-  //     //                     child: Icon(Icons.home, color: UniversalVariables.grey2))),
-  //     //             BottomNavigationBarItem(
-  //     //                 icon: GestureDetector(
-  //     //                     onTap: () {
-  //     //                       // Navigator.pushNamed(
-  //     //                       //     context, "/profile_screen");
-  //     //                     },
-  //     //                     child: Icon(Icons.person,
-  //     //                         color: UniversalVariables.grey2))),
-  //     //           ],
-  //     //           //onTap: navigationTapped,
-  //     //           //currentIndex: _page,
-  //     //         ),
-  //     //       ),
-  //     //     ),
-  //     //   ),
-  //     // ),
-  //   );
-  // }
 }
