@@ -7,18 +7,17 @@ class TextStyles {
   TextStyles._();
 
   static final TextStyle appNameTextStyle = TextStyle(
-    
     fontSize: 26,
     color: Color(0xff280072),
     fontFamily: 'CL',
   );
-    static final TextStyle appNameLogoStyle = TextStyle(
+  static final TextStyle appNameLogoStyle = TextStyle(
     letterSpacing: 3.5,
     fontWeight: FontWeight.w800,
     fontSize: 30,
     color: UniversalVariables.gold2,
-      fontFamily: 'poppinsSB',
-        shadows: <Shadow>[
+    fontFamily: 'poppinsSB',
+    shadows: <Shadow>[
       Shadow(
         blurRadius: 2.0,
         color: Colors.white30,
@@ -44,9 +43,9 @@ class TextStyles {
     ],
   );
 
-    static final TextStyle profileName = TextStyle(
+  static final TextStyle profileName = TextStyle(
     fontSize: 25,
-   // fontWeight: FontWeight.w900,
+    // fontWeight: FontWeight.w900,
     //color: Color(0xffd07155),
 //fontFamily: 'kiona',
     // shadows: <Shadow>[
@@ -60,7 +59,7 @@ class TextStyles {
   static final TextStyle editHeadingName = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.grey1,
+    color: UniversalVariables.grey1,
     fontFamily: 'Poppins',
     shadows: <Shadow>[
       Shadow(
@@ -70,10 +69,10 @@ class TextStyles {
     ],
   );
 
-    static final TextStyle fvCodeHeading = TextStyle(
+  static final TextStyle fvCodeHeading = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.grey1,
+    color: UniversalVariables.grey1,
     fontFamily: 'Poppins',
     shadows: <Shadow>[
       Shadow(
@@ -83,10 +82,10 @@ class TextStyles {
     ],
   );
 
-      static final TextStyle fvSnackbar = TextStyle(
+  static final TextStyle fvSnackbar = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.white2,
+    color: UniversalVariables.white2,
     fontFamily: 'Poppins',
     shadows: <Shadow>[
       Shadow(
@@ -96,10 +95,10 @@ class TextStyles {
     ],
   );
 
-    static final TextStyle nextButton = TextStyle(
+  static final TextStyle nextButton = TextStyle(
     fontSize: 19,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.white2,
+    color: UniversalVariables.white2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -109,10 +108,10 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle registerChoice = TextStyle(
+  static final TextStyle registerChoice = TextStyle(
     fontSize: 25,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.gold2,
+    color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     shadows: <Shadow>[
       Shadow(
@@ -122,18 +121,17 @@ class TextStyles {
     ],
   );
 
-     static final TextStyle registerChoiceDisable = TextStyle(
+  static final TextStyle registerChoiceDisable = TextStyle(
     fontSize: 25,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.white2,
+    color: UniversalVariables.white2,
     fontFamily: 'Poppins',
-
   );
 
-    static final TextStyle getPremiumTimeslots = TextStyle(
+  static final TextStyle getPremiumTimeslots = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w600,
-  color: UniversalVariables.gold2,
+    color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     shadows: <Shadow>[
       Shadow(
@@ -143,10 +141,10 @@ class TextStyles {
     ],
   );
 
-    static final TextStyle postCommissionsPrice = TextStyle(
+  static final TextStyle postCommissionsPrice = TextStyle(
     fontSize: 8,
     fontWeight: FontWeight.w600,
-  color: UniversalVariables.grey2,
+    color: UniversalVariables.grey2,
     //fontFamily: 'kiona',
     // shadows: <Shadow>[
     //   Shadow(
@@ -156,10 +154,10 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle whileEditing = TextStyle(
+  static final TextStyle whileEditing = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
-  color: UniversalVariables.gold2,
+    color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -172,7 +170,7 @@ class TextStyles {
   static final TextStyle hintTextStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w300,
-  color: UniversalVariables.grey2,
+    color: UniversalVariables.grey2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -182,10 +180,10 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle hintMoneyTextStyle = TextStyle(
+  static final TextStyle hintMoneyTextStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w300,
-  color: UniversalVariables.gold2,
+    color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -195,10 +193,10 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle paymentTypeStyle = TextStyle(
+  static final TextStyle paymentTypeStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w300,
-  color: UniversalVariables.blackColor,
+    color: UniversalVariables.blackColor,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -208,10 +206,10 @@ class TextStyles {
     // ],
   );
 
-      static final TextStyle paymentModalStyle = TextStyle(
+  static final TextStyle paymentModalStyle = TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.w400,
-  color: UniversalVariables.blackColor,
+    color: UniversalVariables.blackColor,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -221,12 +219,12 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle moneyStyle = TextStyle(
+  static final TextStyle moneyStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
-  color: UniversalVariables.moneyColor1,
+    color: UniversalVariables.moneyColor1,
 
-   // fontFamily: 'Poppins',
+    // fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -235,11 +233,10 @@ class TextStyles {
     // ],
   );
 
-
-    static final TextStyle timeTextStyle = TextStyle(
+  static final TextStyle timeTextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w300,
-  color: UniversalVariables.grey2,
+    color: UniversalVariables.grey2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -249,11 +246,11 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle timeTextDetailStyle = TextStyle(
+  static final TextStyle timeTextDetailStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w700,
-  color: UniversalVariables.blackColor,
-   // fontFamily: 'Poppins',
+    color: UniversalVariables.blackColor,
+    // fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -262,11 +259,11 @@ class TextStyles {
     // ],
   );
 
-      static final TextStyle timeDurationDetailStyle = TextStyle(
+  static final TextStyle timeDurationDetailStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
-  color: UniversalVariables.blackColor,
-   // fontFamily: 'Poppins',
+    color: UniversalVariables.blackColor,
+    // fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -275,8 +272,7 @@ class TextStyles {
     // ],
   );
 
-
-      static final TextStyle chatProfileName = TextStyle(
+  static final TextStyle chatProfileName = TextStyle(
     fontSize: 25,
     fontWeight: FontWeight.w900,
     color: UniversalVariables.grey2,
@@ -289,11 +285,11 @@ class TextStyles {
     ],
   );
 
-        static final TextStyle chatListProfileName = TextStyle(
+  static final TextStyle chatListProfileName = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w700,
     color: UniversalVariables.blackColor,
-   // fontFamily: 'Ubuntu',
+    // fontFamily: 'Ubuntu',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -303,7 +299,7 @@ class TextStyles {
   );
   static final TextStyle mainScreenProfileName = TextStyle(
     fontSize: 16,
-   // letterSpacing: 1.5,
+    // letterSpacing: 1.5,
     fontWeight: FontWeight.w600,
     color: UniversalVariables.grey1,
     fontFamily: 'Poppins',
@@ -314,7 +310,7 @@ class TextStyles {
     //   ),
     // ],
   );
-    static final TextStyle priceCurrency = TextStyle(
+  static final TextStyle priceCurrency = TextStyle(
     fontSize: 25,
     fontWeight: FontWeight.w400,
     color: UniversalVariables.blackColor,
@@ -326,7 +322,7 @@ class TextStyles {
     //   ),
     // ],
   );
-      static final TextStyle priceNumber = TextStyle(
+  static final TextStyle priceNumber = TextStyle(
     fontSize: 25,
     fontWeight: FontWeight.w800,
     color: UniversalVariables.grey2,
@@ -338,7 +334,7 @@ class TextStyles {
     //   ),
     // ],
   );
-    static final TextStyle notSetPriceNumber = TextStyle(
+  static final TextStyle notSetPriceNumber = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w800,
     color: UniversalVariables.grey2,
@@ -351,7 +347,7 @@ class TextStyles {
     // ],
   );
 
-        static final TextStyle theNameStyle = TextStyle(
+  static final TextStyle theNameStyle = TextStyle(
     fontSize: 27,
     fontWeight: FontWeight.w200,
     color: UniversalVariables.grey2,
@@ -364,14 +360,12 @@ class TextStyles {
     // ],
   );
 
-
-
-          static final TextStyle verifiedStyle = TextStyle(
+  static final TextStyle verifiedStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w400,
     color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
-    
+
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -380,7 +374,7 @@ class TextStyles {
     // ],
   );
 
-            static final TextStyle replyTypeStyle = TextStyle(
+  static final TextStyle replyTypeStyle = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w900,
     color: UniversalVariables.blackColor,
@@ -393,7 +387,7 @@ class TextStyles {
     // ],
   );
 
-             static final TextStyle replyTypeSelectedStyle = TextStyle(
+  static final TextStyle replyTypeSelectedStyle = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w600,
     color: UniversalVariables.white1,
@@ -406,7 +400,7 @@ class TextStyles {
     // ],
   );
 
-         static final TextStyle bioStyle = TextStyle(
+  static final TextStyle bioStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w200,
     color: UniversalVariables.grey2,
@@ -419,7 +413,7 @@ class TextStyles {
     // ],
   );
 
-           static final TextStyle errorStyle = TextStyle(
+  static final TextStyle errorStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: UniversalVariables.offline,
@@ -432,10 +426,36 @@ class TextStyles {
     // ],
   );
 
-          static final TextStyle timeSlotDetails = TextStyle(
+  static final TextStyle timeSlotDetails = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: UniversalVariables.standardWhite,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
+  static final TextStyle doneStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.standardWhite,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.gold2,
+    //   ),
+    // ],
+  );
+
+  static final TextStyle cancelStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.grey1,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -449,7 +469,7 @@ class TextStyles {
     fontSize: 15,
     fontWeight: FontWeight.w500,
     color: UniversalVariables.gold2,
-   // fontFamily: 'Ubuntu',
+    // fontFamily: 'Ubuntu',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
@@ -458,7 +478,7 @@ class TextStyles {
     // ],
   );
 
-    static final TextStyle usernameStyleBegin = TextStyle(
+  static final TextStyle usernameStyleBegin = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
     color: UniversalVariables.blackColor,
@@ -471,7 +491,7 @@ class TextStyles {
     // ],
   );
 
-        static final TextStyle timeStampStyle = TextStyle(
+  static final TextStyle timeStampStyle = TextStyle(
     fontSize: 13,
     fontWeight: FontWeight.w500,
     color: UniversalVariables.grey2,
@@ -483,10 +503,10 @@ class TextStyles {
       ),
     ],
   );
-        static final TextStyle priceType = TextStyle(
+  static final TextStyle priceType = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    
+
     color: UniversalVariables.grey1,
     //fontFamily: 'Raleway',
     // shadows: <Shadow>[

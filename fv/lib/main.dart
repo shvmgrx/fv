@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/auth_methods.dart';
@@ -55,6 +56,16 @@ class _MyAppState extends State<MyApp> {
         title: "Faveez",
         debugShowCheckedModeBanner: false,
         initialRoute: "/",
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''),
+          const Locale('de', ''),
+          // ... other locales the app supports
+        ],
         routes: {
           '/landing_screen': (context) => LandingScreen(),
           '/search_screen': (context) => SearchScreen(),
@@ -72,6 +83,8 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primaryColor: UniversalVariables.gold2,
           brightness: Brightness.light,
+          primarySwatch: Colors.grey,
+          splashColor: UniversalVariables.gold2,
         ),
         home: FutureBuilder(
           future: _repository.getCurrentUser(),

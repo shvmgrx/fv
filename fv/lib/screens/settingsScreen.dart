@@ -1,6 +1,7 @@
 // import 'dart:io';
 // import 'package:fv/screens/chatscreens/widgets/cached_image.dart';
 // import 'package:avatar_glow/avatar_glow.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,8 @@ import 'package:fv/utils/utilities.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -173,6 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool videoCallMode;
 
   DateTime selectedDate = DateTime.now();
+  DateTime selectedDateTime = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -198,6 +202,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (picked != null && picked != selectedTime)
       setState(() {
         selectedTime = picked;
+        selectedDateTime = DateTime(
+            selectedDateTime.year,
+            selectedDateTime.month,
+            selectedDateTime.day,
+            selectedTime.hour,
+            selectedTime.minute);
       });
   }
 
@@ -867,7 +877,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       SizedBox(height: 5),
                                     ],
                                   ),
-                                  //TS1
+
+                                  //TS0
                                   Padding(
                                     padding: const EdgeInsets.only(top: 25.0),
                                     child: Visibility(
@@ -876,7 +887,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         children: <Widget>[
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                                                MainAxisAlignment.start,
                                             children: <Widget>[
                                               // ts1Set && !ts1ErrorFlag
                                               //     ? Padding(
@@ -892,62 +903,99 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               //       )
                                               //     : Icon(Icons.edit, size: 20),
                                               Expanded(
-                                                flex: 5,
+                                                flex: 4,
                                                 child: Visibility(
                                                   //visible: show1,
                                                   child: Container(
-                                                    height: 50,
-                                                    width: screenWidth / 2,
-                                                    child: CupertinoTheme(
-                                                      data: CupertinoThemeData(
-                                                        textTheme:
-                                                            CupertinoTextThemeData(
-                                                          dateTimePickerTextStyle:
-                                                              TextStyles
-                                                                  .timeTextStyle,
-                                                        ),
-                                                      ),
-                                                      child: AbsorbPointer(
-                                                        absorbing: ts1Set &&
-                                                            !ts1ErrorFlag,
-                                                        child:
-                                                            CupertinoDatePicker(
-                                                          minimumDate:
-                                                              DateTime.now(),
+                                                    //height: 50,
+                                                    color: Colors.transparent,
+                                                    //width: screenWidth / 2,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            DatePicker.showDateTimePicker(
+                                                                context,
+                                                                theme: DatePickerTheme(
+                                                                    backgroundColor:
+                                                                        UniversalVariables
+                                                                            .white2,
+                                                                    headerColor:
+                                                                        UniversalVariables
+                                                                            .gold2,
+                                                                    itemStyle:
+                                                                        TextStyles
+                                                                            .editHeadingName,
+                                                                    cancelStyle:
+                                                                        TextStyles
+                                                                            .cancelStyle,
+                                                                    doneStyle:
+                                                                        TextStyles
+                                                                            .doneStyle),
+                                                                minTime:
+                                                                    DateTime
+                                                                        .now(),
+                                                                showTitleActions:
+                                                                    true,
+                                                                onChanged:
+                                                                    (date) {},
+                                                                onConfirm:
+                                                                    (date) {
+                                                              setState(() {
+                                                                selectedDateTime =
+                                                                    date;
 
-                                                          backgroundColor:
-                                                              UniversalVariables
-                                                                  .transparent,
-                                                          mode:
-                                                              CupertinoDatePickerMode
-                                                                  .dateAndTime,
-                                                          initialDateTime:
-                                                              ts1 != null
-                                                                  ? ts1
-                                                                  : DateTime
-                                                                      .now(),
-
-                                                          // DateTime.now(),
-                                                          //  DateTime.now(),
-                                                          onDateTimeChanged:
-                                                              (DateTime
-                                                                  newTimeslot) {
-                                                            setState(() {
-                                                              ts1Changed++;
-                                                              ts1 = newTimeslot;
-                                                              ts1State =
-                                                                  TsState.UNSET;
-                                                            });
+                                                                ts1Changed++;
+                                                                ts1 = date;
+                                                                ts1State =
+                                                                    TsState
+                                                                        .UNSET;
+                                                              });
+                                                            },
+                                                                currentTime:
+                                                                    DateTime
+                                                                        .now());
                                                           },
-                                                          use24hFormat: true,
-                                                          minuteInterval: 1,
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                "assets/timeslot.svg",
+                                                                height: 20,
+                                                                width: 20,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                color:
+                                                                    UniversalVariables
+                                                                        .gold2,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                  "${DateFormat('MMM d, hh:mm a').format(ts1)}",
+                                                                  style: TextStyles
+                                                                      .editHeadingName,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                              Spacer(),
+
                                               Expanded(
                                                 flex: 2,
                                                 child: Visibility(
@@ -965,8 +1013,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ),
                                                       ),
                                                       child: AbsorbPointer(
-                                                        absorbing: ts1Set &&
-                                                            !ts1ErrorFlag,
+                                                        absorbing: ts1Set,
                                                         child: CupertinoPicker(
                                                           backgroundColor:
                                                               UniversalVariables
@@ -1009,20 +1056,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     onTap: () {
                                                       setState(() {
                                                         ts1Set = !ts1Set;
+                                                        if (ts1Set == false) {
+                                                          ts1State =
+                                                              TsState.UNSET;
+                                                        }
+                                                        if (ts1Set == true) {
+                                                          ts1State =
+                                                              TsState.SET;
+                                                        }
 
-                                                        if (ts1Set &&
-                                                            ts1Changed > 1) {
+                                                        if (ts1State ==
+                                                            TsState.SET) {
                                                           showts2 = true;
 
                                                           ttSlots[0] = ts1;
                                                           ttDurations[0] =
                                                               ts1Duration;
+                                                        }
 
-                                                          ts1ErrorFlag = false;
-                                                          ts1State =
-                                                              TsState.SET;
-                                                        } else {
-                                                          ts1ErrorFlag = true;
+                                                        if (ts1Set &&
+                                                            ts1Changed > 1) {
+                                                          //ts1ErrorFlag = false;
+
                                                         }
                                                       });
                                                     },
@@ -1047,23 +1102,220 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               ),
                                             ],
                                           ),
-                                          Visibility(
-                                            visible: ts1ErrorFlag,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 13.0),
-                                              child: Center(
-                                                child: Text(
-                                                    "SET CORRECT DURATION AND TIMESLOT",
-                                                    style:
-                                                        TextStyles.errorStyle),
-                                              ),
-                                            ),
-                                          ),
+                                          // Visibility(
+                                          //   visible: ts1ErrorFlag,
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 13.0),
+                                          //     child: Center(
+                                          //       child: Text(
+                                          //           "SET CORRECT DURATION AND TIMESLOT",
+                                          //           style:
+                                          //               TextStyles.errorStyle),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
                                   ),
+                                  //TS1
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(top: 25.0),
+                                  //   child: Visibility(
+                                  //     visible: expertMode && videoCallMode,
+                                  //     child: Column(
+                                  //       children: <Widget>[
+                                  //         Row(
+                                  //           mainAxisAlignment:
+                                  //               MainAxisAlignment.spaceAround,
+                                  //           children: <Widget>[
+                                  //             // ts1Set && !ts1ErrorFlag
+                                  //             //     ? Padding(
+                                  //             //         padding: const EdgeInsets
+                                  //             //                 .symmetric(
+                                  //             //             horizontal: 5.0),
+                                  //             //         child: Padding(
+                                  //             //           padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                  //             //           child: Icon(
+                                  //             //               Icons.edit_off,
+                                  //             //               size: 20),
+                                  //             //         ),
+                                  //             //       )
+                                  //             //     : Icon(Icons.edit, size: 20),
+                                  //             Expanded(
+                                  //               flex: 5,
+                                  //               child: Visibility(
+                                  //                 //visible: show1,
+                                  //                 child: Container(
+                                  //                   height: 50,
+                                  //                   width: screenWidth / 2,
+                                  //                   child: CupertinoTheme(
+                                  //                     data: CupertinoThemeData(
+                                  //                       textTheme:
+                                  //                           CupertinoTextThemeData(
+                                  //                         dateTimePickerTextStyle:
+                                  //                             TextStyles
+                                  //                                 .timeTextStyle,
+                                  //                       ),
+                                  //                     ),
+                                  //                     child: AbsorbPointer(
+                                  //                       absorbing: ts1Set &&
+                                  //                           !ts1ErrorFlag,
+                                  //                       child:
+                                  //                           CupertinoDatePicker(
+                                  //                         minimumDate:
+                                  //                             DateTime.now(),
+
+                                  //                         backgroundColor:
+                                  //                             UniversalVariables
+                                  //                                 .transparent,
+                                  //                         mode:
+                                  //                             CupertinoDatePickerMode
+                                  //                                 .dateAndTime,
+                                  //                         initialDateTime:
+                                  //                             ts1 != null
+                                  //                                 ? ts1
+                                  //                                 : DateTime
+                                  //                                     .now(),
+
+                                  //                         // DateTime.now(),
+                                  //                         //  DateTime.now(),
+                                  //                         onDateTimeChanged:
+                                  //                             (DateTime
+                                  //                                 newTimeslot) {
+                                  //                           setState(() {
+                                  //                             ts1Changed++;
+                                  //                             ts1 = newTimeslot;
+                                  //                             ts1State =
+                                  //                                 TsState.UNSET;
+                                  //                           });
+                                  //                         },
+                                  //                         use24hFormat: true,
+                                  //                         minuteInterval: 1,
+                                  //                       ),
+                                  //                     ),
+                                  //                   ),
+                                  //                 ),
+                                  //               ),
+                                  //             ),
+                                  //             Spacer(),
+                                  //             Expanded(
+                                  //               flex: 2,
+                                  //               child: Visibility(
+                                  //                 //visible: show1,
+                                  //                 child: Container(
+                                  //                   height: 50,
+                                  //                   width: screenWidth / 2,
+                                  //                   child: CupertinoTheme(
+                                  //                     data: CupertinoThemeData(
+                                  //                       textTheme:
+                                  //                           CupertinoTextThemeData(
+                                  //                         pickerTextStyle:
+                                  //                             TextStyles
+                                  //                                 .timeTextStyle,
+                                  //                       ),
+                                  //                     ),
+                                  //                     child: AbsorbPointer(
+                                  //                       absorbing: ts1Set &&
+                                  //                           !ts1ErrorFlag,
+                                  //                       child: CupertinoPicker(
+                                  //                         backgroundColor:
+                                  //                             UniversalVariables
+                                  //                                 .transparent,
+                                  //                         onSelectedItemChanged:
+                                  //                             (value) {
+                                  //                           setState(() {
+                                  //                             ts1Duration =
+                                  //                                 value;
+                                  //                             ts1Changed++;
+                                  //                             ts1State =
+                                  //                                 TsState.UNSET;
+                                  //                           });
+                                  //                         },
+                                  //                         itemExtent: 30.0,
+                                  //                         children: const [
+                                  //                           Text('10 mins'),
+                                  //                           Text('15 mins'),
+                                  //                           Text('20 mins'),
+                                  //                         ],
+                                  //                         scrollController: ts1Duration !=
+                                  //                                 null
+                                  //                             ? FixedExtentScrollController(
+                                  //                                 initialItem:
+                                  //                                     ts1Duration)
+                                  //                             : FixedExtentScrollController(
+                                  //                                 initialItem:
+                                  //                                     0),
+                                  //                       ),
+                                  //                     ),
+                                  //                   ),
+                                  //                 ),
+                                  //               ),
+                                  //             ),
+                                  //             Expanded(
+                                  //               flex: 1,
+                                  //               child: Visibility(
+                                  //                 //visible: show1,
+                                  //                 child: InkWell(
+                                  //                   onTap: () {
+                                  //                     setState(() {
+                                  //                       ts1Set = !ts1Set;
+
+                                  //                       if (ts1Set &&
+                                  //                           ts1Changed > 1) {
+                                  //                         showts2 = true;
+
+                                  //                         ttSlots[0] = ts1;
+                                  //                         ttDurations[0] =
+                                  //                             ts1Duration;
+
+                                  //                         ts1ErrorFlag = false;
+                                  //                         ts1State =
+                                  //                             TsState.SET;
+                                  //                       } else {
+                                  //                         ts1ErrorFlag = true;
+                                  //                       }
+                                  //                     });
+                                  //                   },
+                                  //                   child: ts1State ==
+                                  //                           TsState.SET
+                                  //                       ? Icon(
+                                  //                           CupertinoIcons
+                                  //                               .check_mark_circled_solid,
+                                  //                           size: 30.0,
+                                  //                           color:
+                                  //                               UniversalVariables
+                                  //                                   .gold2)
+                                  //                       : Icon(
+                                  //                           CupertinoIcons
+                                  //                               .check_mark_circled,
+                                  //                           size: 30.0,
+                                  //                           color:
+                                  //                               UniversalVariables
+                                  //                                   .grey1),
+                                  //                 ),
+                                  //               ),
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //         Visibility(
+                                  //           visible: ts1ErrorFlag,
+                                  //           child: Padding(
+                                  //             padding: const EdgeInsets.only(
+                                  //                 top: 13.0),
+                                  //             child: Center(
+                                  //               child: Text(
+                                  //                   "SET CORRECT DURATION AND TIMESLOT",
+                                  //                   style:
+                                  //                       TextStyles.errorStyle),
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   //TS2
                                   Visibility(
                                     visible: true,
