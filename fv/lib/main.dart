@@ -28,7 +28,7 @@ Future<void> main() async {
   SystemChrome.setEnabledSystemUIOverlays([]);
   WidgetsFlutterBinding.ensureInitialized();
   final appleSignInAvailable = await AppleSignInAvailable.check();
-    runApp(Provider<AppleSignInAvailable>.value(
+  runApp(Provider<AppleSignInAvailable>.value(
     value: appleSignInAvailable,
     child: MyApp(),
   ));
@@ -44,14 +44,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-   // _repository.signOut();
+    // _repository.signOut();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AuthMethods()),
-        
-        
       ],
       child: MaterialApp(
         title: "Faveez",
@@ -70,7 +68,6 @@ class _MyAppState extends State<MyApp> {
           '/onboard_user_screen': (context) => OnBoardUser(),
           '/onboard_expert_screen': (context) => OnBoardExpert(),
           '/verify_expert_screen': (context) => VerifyExpert(),
-      
         },
         theme: ThemeData(
           primaryColor: UniversalVariables.gold2,

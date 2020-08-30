@@ -75,7 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   static List ttDurations = new List()..length = 7;
 
   Map<String, List> tempTimeslots = {
-    "ttIds":ttIds,
+    "ttIds": ttIds,
     "ttSlots": ttSlots,
     "ttDurations": ttDurations,
   };
@@ -87,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts1;
   int ts1Duration;
   bool isTs1bought = false;
-  bool isTS1same =true;
+  bool isTS1same = true;
   String ts1orderId;
   var ts1State = TsState.UNSET;
 
@@ -98,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts2;
   int ts2Duration;
   bool isTs2bought = false;
-  bool isTS2same =true;
+  bool isTS2same = true;
   String ts2orderId;
   var ts2State = TsState.UNSET;
 
@@ -109,7 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts3;
   int ts3Duration;
   bool isTs3bought = false;
-  bool isTS3same =true;
+  bool isTS3same = true;
   String ts3orderId;
   var ts3State = TsState.UNSET;
 
@@ -120,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts4;
   int ts4Duration;
   bool isTs4bought = false;
-  bool isTS4same =true;
+  bool isTS4same = true;
   String ts4orderId;
   var ts4State = TsState.UNSET;
 
@@ -131,7 +131,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts5;
   int ts5Duration;
   bool isTs5bought = false;
-  bool isTS5same =true;
+  bool isTS5same = true;
   String ts5orderId;
   var ts5State = TsState.UNSET;
 
@@ -142,7 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts6;
   int ts6Duration;
   bool isTs6bought = false;
-  bool isTS6same =true;
+  bool isTS6same = true;
   String ts6orderId;
   var ts6State = TsState.UNSET;
 
@@ -153,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime ts7;
   int ts7Duration;
   bool isTs7bought = false;
-  bool isTS7same =true;
+  bool isTS7same = true;
   String ts7orderId;
   var ts7State = TsState.UNSET;
 
@@ -171,6 +171,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool textMode;
   bool videoMode;
   bool videoCallMode;
+
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1950, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.dial,
+      // firstDate: DateTime(1950, 8),
+      //lastDate: DateTime(2101)
+    );
+    if (picked != null && picked != selectedTime)
+      setState(() {
+        selectedTime = picked;
+      });
+  }
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -202,65 +231,119 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           expertMode = expertMode == null ? false : loggedUser['isInfluencer'];
 
-          if(loggedUserTimeSlots !=null){
+          if (loggedUserTimeSlots != null) {
+            ts1 = loggedUserTimeSlots['ttSlots'][0] != null
+                ? loggedUserTimeSlots['ttSlots'][0].toDate()
+                : null;
+            if (ts1 != null) {
+              ts1State = TsState.SET;
+            }
+            ts2 = loggedUserTimeSlots['ttSlots'][1] != null
+                ? loggedUserTimeSlots['ttSlots'][1].toDate()
+                : null;
+            if (ts2 != null) {
+              ts2State = TsState.SET;
+            }
+            ts3 = loggedUserTimeSlots['ttSlots'][2] != null
+                ? loggedUserTimeSlots['ttSlots'][2].toDate()
+                : null;
+            if (ts3 != null) {
+              ts3State = TsState.SET;
+            }
+            ts4 = loggedUserTimeSlots['ttSlots'][3] != null
+                ? loggedUserTimeSlots['ttSlots'][3].toDate()
+                : null;
+            if (ts4 != null) {
+              ts4State = TsState.SET;
+            }
+            ts5 = loggedUserTimeSlots['ttSlots'][4] != null
+                ? loggedUserTimeSlots['ttSlots'][4].toDate()
+                : null;
+            if (ts5 != null) {
+              ts5State = TsState.SET;
+            }
+            ts6 = loggedUserTimeSlots['ttSlots'][5] != null
+                ? loggedUserTimeSlots['ttSlots'][5].toDate()
+                : null;
+            if (ts6 != null) {
+              ts6State = TsState.SET;
+            }
+            ts7 = loggedUserTimeSlots['ttSlots'][6] != null
+                ? loggedUserTimeSlots['ttSlots'][6].toDate()
+                : null;
+            if (ts7 != null) {
+              ts7State = TsState.SET;
+            }
 
-          
-          ts1 = loggedUserTimeSlots['ttSlots'][0] !=null ? loggedUserTimeSlots['ttSlots'][0].toDate():null;
-          if (ts1!=null){
-            ts1State=TsState.SET;
-          }
-          ts2 = loggedUserTimeSlots['ttSlots'][1] !=null ? loggedUserTimeSlots['ttSlots'][1].toDate():null;
-          if (ts2!=null){
-            ts2State=TsState.SET;
-          }
-          ts3 = loggedUserTimeSlots['ttSlots'][2] !=null ? loggedUserTimeSlots['ttSlots'][2].toDate():null;
-          if (ts3!=null){
-            ts3State=TsState.SET;
-          }
-          ts4 = loggedUserTimeSlots['ttSlots'][3] !=null ? loggedUserTimeSlots['ttSlots'][3].toDate():null;
-          if (ts4!=null){
-            ts4State=TsState.SET;
-          }
-          ts5 = loggedUserTimeSlots['ttSlots'][4] !=null ? loggedUserTimeSlots['ttSlots'][4].toDate():null;
-          if (ts5!=null){
-            ts5State=TsState.SET;
-          }
-          ts6 = loggedUserTimeSlots['ttSlots'][5] !=null ? loggedUserTimeSlots['ttSlots'][5].toDate():null;
-          if (ts6!=null){
-            ts6State=TsState.SET;
-          }
-          ts7 = loggedUserTimeSlots['ttSlots'][6] !=null ? loggedUserTimeSlots['ttSlots'][6].toDate():null;
-          if (ts7!=null){
-            ts7State=TsState.SET;
-          }
+            ts1Duration = loggedUserTimeSlots['ttDurations'][0] != null
+                ? loggedUserTimeSlots['ttDurations'][0]
+                : 0;
+            ts2Duration = loggedUserTimeSlots['ttDurations'][1] != null
+                ? loggedUserTimeSlots['ttDurations'][1]
+                : 0;
+            ts3Duration = loggedUserTimeSlots['ttDurations'][2] != null
+                ? loggedUserTimeSlots['ttDurations'][2]
+                : 0;
+            ts4Duration = loggedUserTimeSlots['ttDurations'][3] != null
+                ? loggedUserTimeSlots['ttDurations'][3]
+                : 0;
+            ts5Duration = loggedUserTimeSlots['ttDurations'][4] != null
+                ? loggedUserTimeSlots['ttDurations'][4]
+                : 0;
+            ts6Duration = loggedUserTimeSlots['ttDurations'][5] != null
+                ? loggedUserTimeSlots['ttDurations'][5]
+                : 0;
+            ts7Duration = loggedUserTimeSlots['ttDurations'][6] != null
+                ? loggedUserTimeSlots['ttDurations'][6]
+                : 0;
 
+            ts1orderId = loggedUserTimeSlots['ttIds'][0] != null
+                ? loggedUserTimeSlots['ttIds'][0]
+                : null;
+            ts2orderId = loggedUserTimeSlots['ttIds'][1] != null
+                ? loggedUserTimeSlots['ttIds'][1]
+                : null;
+            ts3orderId = loggedUserTimeSlots['ttIds'][2] != null
+                ? loggedUserTimeSlots['ttIds'][2]
+                : null;
+            ts4orderId = loggedUserTimeSlots['ttIds'][3] != null
+                ? loggedUserTimeSlots['ttIds'][3]
+                : null;
+            ts5orderId = loggedUserTimeSlots['ttIds'][4] != null
+                ? loggedUserTimeSlots['ttIds'][4]
+                : null;
+            ts6orderId = loggedUserTimeSlots['ttIds'][5] != null
+                ? loggedUserTimeSlots['ttIds'][5]
+                : null;
+            ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
+                ? loggedUserTimeSlots['ttIds'][6]
+                : null;
 
-          ts1Duration = loggedUserTimeSlots['ttDurations'][0] !=null ? loggedUserTimeSlots['ttDurations'][0]:0;
-          ts2Duration = loggedUserTimeSlots['ttDurations'][1] !=null ? loggedUserTimeSlots['ttDurations'][1]:0;
-          ts3Duration = loggedUserTimeSlots['ttDurations'][2] !=null ? loggedUserTimeSlots['ttDurations'][2]:0;
-          ts4Duration = loggedUserTimeSlots['ttDurations'][3] !=null ? loggedUserTimeSlots['ttDurations'][3]:0;
-          ts5Duration = loggedUserTimeSlots['ttDurations'][4] !=null ? loggedUserTimeSlots['ttDurations'][4]:0;
-          ts6Duration = loggedUserTimeSlots['ttDurations'][5] !=null ? loggedUserTimeSlots['ttDurations'][5]:0;
-          ts7Duration = loggedUserTimeSlots['ttDurations'][6] !=null ? loggedUserTimeSlots['ttDurations'][6]:0;
-
-          ts1orderId = loggedUserTimeSlots['ttIds'][0] !=null ? loggedUserTimeSlots['ttIds'][0]:null;
-          ts2orderId = loggedUserTimeSlots['ttIds'][1] !=null ? loggedUserTimeSlots['ttIds'][1]:null;
-          ts3orderId = loggedUserTimeSlots['ttIds'][2] !=null ? loggedUserTimeSlots['ttIds'][2]:null;
-          ts4orderId = loggedUserTimeSlots['ttIds'][3] !=null ? loggedUserTimeSlots['ttIds'][3]:null;
-          ts5orderId = loggedUserTimeSlots['ttIds'][4] !=null ? loggedUserTimeSlots['ttIds'][4]:null;
-          ts6orderId = loggedUserTimeSlots['ttIds'][5] !=null ? loggedUserTimeSlots['ttIds'][5]:null;
-          ts7orderId = loggedUserTimeSlots['ttIds'][6] !=null ? loggedUserTimeSlots['ttIds'][6]:null;
-
-          
-
-          showts2 = (loggedUserTimeSlots['ttSlots'][1] !=null && loggedUserTimeSlots['ttDurations'][1] !=null)? true:false;
-          showts3 = (loggedUserTimeSlots['ttSlots'][2] !=null && loggedUserTimeSlots['ttDurations'][2] !=null)? true:false;
-          showts4 = (loggedUserTimeSlots['ttSlots'][3] !=null && loggedUserTimeSlots['ttDurations'][3] !=null)? true:false;
-          showts5 = (loggedUserTimeSlots['ttSlots'][4] !=null && loggedUserTimeSlots['ttDurations'][4] !=null)? true:false;
-          showts6 = (loggedUserTimeSlots['ttSlots'][5] !=null && loggedUserTimeSlots['ttDurations'][5] !=null)? true:false;
-          showts7 = (loggedUserTimeSlots['ttSlots'][6] !=null && loggedUserTimeSlots['ttDurations'][6] !=null)? true:false;
+            showts2 = (loggedUserTimeSlots['ttSlots'][1] != null &&
+                    loggedUserTimeSlots['ttDurations'][1] != null)
+                ? true
+                : false;
+            showts3 = (loggedUserTimeSlots['ttSlots'][2] != null &&
+                    loggedUserTimeSlots['ttDurations'][2] != null)
+                ? true
+                : false;
+            showts4 = (loggedUserTimeSlots['ttSlots'][3] != null &&
+                    loggedUserTimeSlots['ttDurations'][3] != null)
+                ? true
+                : false;
+            showts5 = (loggedUserTimeSlots['ttSlots'][4] != null &&
+                    loggedUserTimeSlots['ttDurations'][4] != null)
+                ? true
+                : false;
+            showts6 = (loggedUserTimeSlots['ttSlots'][5] != null &&
+                    loggedUserTimeSlots['ttDurations'][5] != null)
+                ? true
+                : false;
+            showts7 = (loggedUserTimeSlots['ttSlots'][6] != null &&
+                    loggedUserTimeSlots['ttDurations'][6] != null)
+                ? true
+                : false;
           }
-
 
           textMode = loggedUseranswerPrice1 != null;
           videoMode = loggedUseranswerPrice2 != null;
@@ -331,7 +414,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 GestureDetector(
                   onTap: () {
                     // print(tempTimeslots);
-                 
                   },
                   child: Align(
                     alignment: Alignment.center,
@@ -351,34 +433,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
-                      if (ttIds[0]==null || ts1Changed>1) {
-                   
-                        ttIds[0]= Utils.generateRandomOrderId();
+                      if (ttIds[0] == null || ts1Changed > 1) {
+                        ttIds[0] = Utils.generateRandomOrderId();
                       }
-                      if (ttIds[1]==null || ts2Changed>1) {
-                        ttIds[1]= Utils.generateRandomOrderId();
+                      if (ttIds[1] == null || ts2Changed > 1) {
+                        ttIds[1] = Utils.generateRandomOrderId();
                       }
-                       if (ttIds[2]==null || ts3Changed>1) {
-                        ttIds[2]= Utils.generateRandomOrderId();
+                      if (ttIds[2] == null || ts3Changed > 1) {
+                        ttIds[2] = Utils.generateRandomOrderId();
                       }
-                       if (ttIds[3]==null || ts4Changed>1) {
-                        ttIds[3]= Utils.generateRandomOrderId();
+                      if (ttIds[3] == null || ts4Changed > 1) {
+                        ttIds[3] = Utils.generateRandomOrderId();
                       }
-                       if (ttIds[4]==null || ts5Changed>1) {
-                        ttIds[4]= Utils.generateRandomOrderId();
+                      if (ttIds[4] == null || ts5Changed > 1) {
+                        ttIds[4] = Utils.generateRandomOrderId();
                       }
-                       if (ttIds[5]==null || ts6Changed>1) {
-                        ttIds[5]= Utils.generateRandomOrderId();
+                      if (ttIds[5] == null || ts6Changed > 1) {
+                        ttIds[5] = Utils.generateRandomOrderId();
                       }
-                       if (ttIds[6]==null || ts7Changed>1) {
-                        ttIds[6]= Utils.generateRandomOrderId();
+                      if (ttIds[6] == null || ts7Changed > 1) {
+                        ttIds[6] = Utils.generateRandomOrderId();
                       }
 
                       setState(() {
                         loggedUserTimeSlots = tempTimeslots;
                       });
-
-                    
 
                       _formKey.currentState.save();
 
@@ -616,7 +695,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           style: TextStyles.whileEditing,
                                           inputFormatters: <TextInputFormatter>[
                                             WhitelistingTextInputFormatter
-                                                .digitsOnly 
+                                                .digitsOnly
                                           ],
                                           onChanged: (input) =>
                                               loggedUseranswerPrice2 =
@@ -777,9 +856,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text("Videocall Timeslots",
-                                          style: TextStyles.editHeadingName,
-                                          textAlign: TextAlign.left),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _selectTime(context);
+                                        },
+                                        child: Text("Videocall Timeslots",
+                                            style: TextStyles.editHeadingName,
+                                            textAlign: TextAlign.left),
+                                      ),
                                       SizedBox(height: 5),
                                     ],
                                   ),
@@ -828,19 +912,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             !ts1ErrorFlag,
                                                         child:
                                                             CupertinoDatePicker(
-                                                          minimumDate: DateTime.now(),
+                                                          minimumDate:
+                                                              DateTime.now(),
 
-                                                          
-                                                            
                                                           backgroundColor:
                                                               UniversalVariables
                                                                   .transparent,
                                                           mode:
                                                               CupertinoDatePickerMode
                                                                   .dateAndTime,
-                                                          initialDateTime: ts1 !=null? ts1:DateTime.now(),
-                                                         
-                                                             // DateTime.now(),
+                                                          initialDateTime:
+                                                              ts1 != null
+                                                                  ? ts1
+                                                                  : DateTime
+                                                                      .now(),
+
+                                                          // DateTime.now(),
                                                           //  DateTime.now(),
                                                           onDateTimeChanged:
                                                               (DateTime
@@ -848,11 +935,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             setState(() {
                                                               ts1Changed++;
                                                               ts1 = newTimeslot;
-                                                              ts1State= TsState.UNSET;
+                                                              ts1State =
+                                                                  TsState.UNSET;
                                                             });
                                                           },
                                                           use24hFormat: true,
-                                                           minuteInterval: 1,
+                                                          minuteInterval: 1,
                                                         ),
                                                       ),
                                                     ),
@@ -880,7 +968,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         absorbing: ts1Set &&
                                                             !ts1ErrorFlag,
                                                         child: CupertinoPicker(
-                                                        
                                                           backgroundColor:
                                                               UniversalVariables
                                                                   .transparent,
@@ -890,18 +977,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               ts1Duration =
                                                                   value;
                                                               ts1Changed++;
-                                                              ts1State= TsState.UNSET;
+                                                              ts1State =
+                                                                  TsState.UNSET;
                                                             });
                                                           },
                                                           itemExtent: 30.0,
-                                                         
                                                           children: const [
-                                          
                                                             Text('10 mins'),
                                                             Text('15 mins'),
                                                             Text('20 mins'),
                                                           ],
-                                                          scrollController: ts1Duration!=null? FixedExtentScrollController(initialItem: ts1Duration):FixedExtentScrollController(initialItem: 0),
+                                                          scrollController: ts1Duration !=
+                                                                  null
+                                                              ? FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      ts1Duration)
+                                                              : FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      0),
                                                         ),
                                                       ),
                                                     ),
@@ -922,16 +1015,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           showts2 = true;
 
                                                           ttSlots[0] = ts1;
-                                                          ttDurations[0] = ts1Duration;
+                                                          ttDurations[0] =
+                                                              ts1Duration;
 
                                                           ts1ErrorFlag = false;
-                                                          ts1State = TsState.SET;
+                                                          ts1State =
+                                                              TsState.SET;
                                                         } else {
                                                           ts1ErrorFlag = true;
                                                         }
                                                       });
                                                     },
-                                                    child: ts1State == TsState.SET
+                                                    child: ts1State ==
+                                                            TsState.SET
                                                         ? Icon(
                                                             CupertinoIcons
                                                                 .check_mark_circled_solid,
@@ -971,9 +1067,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //TS2
                                   Visibility(
                                     visible: true,
-                                  //  visible: showts2,
-                                    
-                                
+                                    //  visible: showts2,
+
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
@@ -1027,8 +1122,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime: ts2 !=null? ts2:DateTime.now(),
-                                                              
+                                                            initialDateTime:
+                                                                ts2 != null
+                                                                    ? ts2
+                                                                    : DateTime
+                                                                        .now(),
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1036,7 +1134,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts2Changed++;
                                                                 ts2 =
                                                                     newTimeslot;
-                                                                    ts2State= TsState.UNSET;
+                                                                ts2State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             use24hFormat: true,
@@ -1079,7 +1179,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts2Changed++;
                                                                 ts2Duration =
                                                                     value;
-                                                                    ts2State= TsState.UNSET;
+                                                                ts2State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
@@ -1087,9 +1189,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('10 mins'),
                                                               Text('15 mins'),
                                                               Text('20 mins'),
-
                                                             ],
-                                                            scrollController: ts2Duration!=null? FixedExtentScrollController(initialItem: ts2Duration):FixedExtentScrollController(initialItem: 0),
+                                                            scrollController: ts2Duration !=
+                                                                    null
+                                                                ? FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        ts2Duration)
+                                                                : FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        0),
                                                           ),
                                                         ),
                                                       ),
@@ -1115,13 +1223,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                                             ts2ErrorFlag =
                                                                 false;
-                                                                ts2State= TsState.SET;
+                                                            ts2State =
+                                                                TsState.SET;
                                                           } else {
                                                             ts2ErrorFlag = true;
                                                           }
                                                         });
                                                       },
-                                                      child: ts2State == TsState.SET
+                                                      child: ts2State ==
+                                                              TsState.SET
                                                           ? Icon(
                                                               CupertinoIcons
                                                                   .check_mark_circled_solid,
@@ -1162,7 +1272,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //TS3
                                   Visibility(
                                     visible: true,
-                                   // visible: showts3,
+                                    // visible: showts3,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
@@ -1216,8 +1326,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime:ts3 !=null? ts3:DateTime.now(),
-                                                              
+                                                            initialDateTime:
+                                                                ts3 != null
+                                                                    ? ts3
+                                                                    : DateTime
+                                                                        .now(),
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1225,11 +1338,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts3Changed++;
                                                                 ts3 =
                                                                     newTimeslot;
-                                                                    ts3State=TsState.UNSET;
+                                                                ts3State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                             minuteInterval: 1,
+                                                            minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1268,7 +1383,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts3Duration =
                                                                     value;
                                                                 ts3Changed++;
-                                                                ts3State=TsState.UNSET;
+                                                                ts3State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
@@ -1277,7 +1394,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
-                                                            scrollController: ts3Duration!=null? FixedExtentScrollController(initialItem: ts3Duration):FixedExtentScrollController(initialItem: 0),
+                                                            scrollController: ts3Duration !=
+                                                                    null
+                                                                ? FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        ts3Duration)
+                                                                : FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        0),
                                                           ),
                                                         ),
                                                       ),
@@ -1303,13 +1427,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                                             ts3ErrorFlag =
                                                                 false;
-                                                                ts3State=TsState.SET;
+                                                            ts3State =
+                                                                TsState.SET;
                                                           } else {
                                                             ts3ErrorFlag = true;
                                                           }
                                                         });
                                                       },
-                                                      child: ts3State == TsState.SET
+                                                      child: ts3State ==
+                                                              TsState.SET
                                                           ? Icon(
                                                               CupertinoIcons
                                                                   .check_mark_circled_solid,
@@ -1351,7 +1477,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //TS4
                                   Visibility(
                                     visible: true,
-                                   //  visible: showts4,
+                                    //  visible: showts4,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
@@ -1405,8 +1531,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime: ts4 !=null? ts4:DateTime.now(),
-                                                             
+                                                            initialDateTime:
+                                                                ts4 != null
+                                                                    ? ts4
+                                                                    : DateTime
+                                                                        .now(),
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1414,11 +1543,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts4Changed++;
                                                                 ts4 =
                                                                     newTimeslot;
-                                                                ts4State = TsState.UNSET;
+                                                                ts4State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                             minuteInterval: 1,
+                                                            minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1457,7 +1588,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts4Duration =
                                                                     value;
                                                                 ts4Changed++;
-                                                                ts4State = TsState.UNSET;
+                                                                ts4State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
@@ -1466,7 +1599,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
-                                                            scrollController: ts4Duration!=null? FixedExtentScrollController(initialItem: ts4Duration):FixedExtentScrollController(initialItem: 0),
+                                                            scrollController: ts4Duration !=
+                                                                    null
+                                                                ? FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        ts4Duration)
+                                                                : FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        0),
                                                           ),
                                                         ),
                                                       ),
@@ -1492,13 +1632,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                                             ts4ErrorFlag =
                                                                 false;
-                                                                ts4State = TsState.SET;
+                                                            ts4State =
+                                                                TsState.SET;
                                                           } else {
                                                             ts4ErrorFlag = true;
                                                           }
                                                         });
                                                       },
-                                                      child: ts4State == TsState.SET
+                                                      child: ts4State ==
+                                                              TsState.SET
                                                           ? Icon(
                                                               CupertinoIcons
                                                                   .check_mark_circled_solid,
@@ -1539,7 +1681,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //TS5
                                   Visibility(
                                     visible: true,
-                                   // visible: showts5,
+                                    // visible: showts5,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
@@ -1593,8 +1735,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime: ts5 !=null? ts5:DateTime.now(),
-                                                               
+                                                            initialDateTime:
+                                                                ts5 != null
+                                                                    ? ts5
+                                                                    : DateTime
+                                                                        .now(),
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1602,11 +1747,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts5Changed++;
                                                                 ts5 =
                                                                     newTimeslot;
-                                                                ts5State = TsState.UNSET;
+                                                                ts5State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                             minuteInterval: 1,
+                                                            minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1645,7 +1792,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts5Duration =
                                                                     value;
                                                                 ts5Changed++;
-                                                                 ts5State = TsState.UNSET;
+                                                                ts5State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
@@ -1654,7 +1803,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
-                                                            scrollController: ts5Duration!=null? FixedExtentScrollController(initialItem: ts5Duration):FixedExtentScrollController(initialItem: 0),
+                                                            scrollController: ts5Duration !=
+                                                                    null
+                                                                ? FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        ts5Duration)
+                                                                : FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        0),
                                                           ),
                                                         ),
                                                       ),
@@ -1680,13 +1836,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                                             ts5ErrorFlag =
                                                                 false;
-                                                                 ts5State = TsState.SET;
+                                                            ts5State =
+                                                                TsState.SET;
                                                           } else {
                                                             ts5ErrorFlag = true;
                                                           }
                                                         });
                                                       },
-                                                      child:  ts5State == TsState.SET
+                                                      child: ts5State ==
+                                                              TsState.SET
                                                           ? Icon(
                                                               CupertinoIcons
                                                                   .check_mark_circled_solid,
@@ -1728,7 +1886,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //TS6
                                   Visibility(
                                     visible: true,
-                                   // visible: showts6,
+                                    // visible: showts6,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
@@ -1782,8 +1940,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime: ts6 !=null? ts6:DateTime.now(),
-                                                               
+                                                            initialDateTime:
+                                                                ts6 != null
+                                                                    ? ts6
+                                                                    : DateTime
+                                                                        .now(),
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1791,11 +1952,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts6Changed++;
                                                                 ts6 =
                                                                     newTimeslot;
-                                                                 ts6State = TsState.UNSET;
+                                                                ts6State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                             minuteInterval: 1,
+                                                            minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -1834,7 +1997,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts6Duration =
                                                                     value;
                                                                 ts6Changed++;
-                                                                ts6State = TsState.UNSET;
+                                                                ts6State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
@@ -1843,7 +2008,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
-                                                            scrollController: ts6Duration!=null? FixedExtentScrollController(initialItem: ts6Duration):FixedExtentScrollController(initialItem: 0),
+                                                            scrollController: ts6Duration !=
+                                                                    null
+                                                                ? FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        ts6Duration)
+                                                                : FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        0),
                                                           ),
                                                         ),
                                                       ),
@@ -1869,13 +2041,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                                             ts6ErrorFlag =
                                                                 false;
-                                                             ts6State = TsState.SET;
+                                                            ts6State =
+                                                                TsState.SET;
                                                           } else {
                                                             ts6ErrorFlag = true;
                                                           }
                                                         });
                                                       },
-                                                      child:  ts6State == TsState.SET
+                                                      child: ts6State ==
+                                                              TsState.SET
                                                           ? Icon(
                                                               CupertinoIcons
                                                                   .check_mark_circled_solid,
@@ -1916,7 +2090,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //TS7
                                   Visibility(
                                     visible: true,
-                                   // visible: showts7,
+                                    // visible: showts7,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 25.0),
                                       child: Visibility(
@@ -1970,8 +2144,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             mode:
                                                                 CupertinoDatePickerMode
                                                                     .dateAndTime,
-                                                            initialDateTime: ts7 !=null? ts7:DateTime.now(),
-                                                             
+                                                            initialDateTime:
+                                                                ts7 != null
+                                                                    ? ts7
+                                                                    : DateTime
+                                                                        .now(),
                                                             onDateTimeChanged:
                                                                 (DateTime
                                                                     newTimeslot) {
@@ -1979,11 +2156,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts7Changed++;
                                                                 ts7 =
                                                                     newTimeslot;
-                                                                 ts7State = TsState.UNSET;
+                                                                ts7State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             use24hFormat: true,
-                                                             minuteInterval: 1,
+                                                            minuteInterval: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -2022,7 +2201,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                 ts7Duration =
                                                                     value;
                                                                 ts7Changed++;
-                                                                 ts7State = TsState.UNSET;
+                                                                ts7State =
+                                                                    TsState
+                                                                        .UNSET;
                                                               });
                                                             },
                                                             itemExtent: 30.0,
@@ -2031,7 +2212,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               Text('15 mins'),
                                                               Text('20 mins'),
                                                             ],
-                                                            scrollController: ts7Duration!=null? FixedExtentScrollController(initialItem: ts7Duration):FixedExtentScrollController(initialItem: 0),
+                                                            scrollController: ts7Duration !=
+                                                                    null
+                                                                ? FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        ts7Duration)
+                                                                : FixedExtentScrollController(
+                                                                    initialItem:
+                                                                        0),
                                                           ),
                                                         ),
                                                       ),
@@ -2057,13 +2245,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                                             ts7ErrorFlag =
                                                                 false;
-                                                                 ts7State = TsState.SET;
+                                                            ts7State =
+                                                                TsState.SET;
                                                           } else {
                                                             ts7ErrorFlag = true;
                                                           }
                                                         });
                                                       },
-                                                      child:  ts7State == TsState.SET
+                                                      child: ts7State ==
+                                                              TsState.SET
                                                           ? Icon(
                                                               CupertinoIcons
                                                                   .check_mark_circled_solid,
@@ -2117,7 +2307,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   ),
                                   Container(
-                                    height:50,
+                                    height: 50,
                                   )
                                 ],
                               ),

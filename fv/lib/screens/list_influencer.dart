@@ -68,7 +68,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           loggedInprofilePhoto = loggedUser['profilePhoto'];
           //uncomment and remove temporary loggedUserisInfCert
           loggedUserisInfCert = loggedUser['isInfCert'];
-        // loggedUserisInfCert = false;
+          // loggedUserisInfCert = false;
         });
       });
     });
@@ -275,9 +275,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         onTap: () {
                           setState(() {
                             paymentPressed = !paymentPressed;
-                            if (paymentPressed) {
-                            
-                          }
+                            if (paymentPressed) {}
                           });
                         },
                         child: NMButton(
@@ -719,16 +717,13 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         padding: const EdgeInsets.symmetric(vertical: 2.0),
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text(influencer.name,
-                              // gradient: LinearGradient(colors: [
-                              //   UniversalVariables.grey1,
-                              //   UniversalVariables.white1,
-                              //   UniversalVariables.grey3,
-                              // ]
-                              // ),
-
-                              style: TextStyles.mainScreenProfileName,
-                              textAlign: TextAlign.center),
+                          child: influencer.name != null
+                              ? Text(influencer.name,
+                                  style: TextStyles.mainScreenProfileName,
+                                  textAlign: TextAlign.center)
+                              : Text("INF Name",
+                                  style: TextStyles.mainScreenProfileName,
+                                  textAlign: TextAlign.center),
                         ),
                       ),
                     ),
@@ -1446,8 +1441,11 @@ void showAlertDialog(BuildContext context) {
               children: <Widget>[
                 SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                                  child: Container(
-                    child: Text(pdfText,style: TextStyle(fontSize:9),),
+                  child: Container(
+                    child: Text(
+                      pdfText,
+                      style: TextStyle(fontSize: 9),
+                    ),
                   ),
                 ),
                 Align(
@@ -1510,7 +1508,6 @@ void showAlertDialog(BuildContext context) {
             )),
       ));
 }
-
 
 final String pdfText = """
 

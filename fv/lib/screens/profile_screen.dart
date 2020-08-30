@@ -119,76 +119,98 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedInisInfluencer = loggedUser['isInfluencer'];
           loggedUserTimeSlots = loggedUser['timeSlots'];
 
-          if(loggedInisInfluencer ==true ){
-   ts1 = loggedUserTimeSlots['ttSlots'][0] != null
-              ? loggedUserTimeSlots['ttSlots'][0].toDate()
-              : null;
-          ts2 = loggedUserTimeSlots['ttSlots'][1] != null
-              ? loggedUserTimeSlots['ttSlots'][1].toDate()
-              : null;
-          ts3 = loggedUserTimeSlots['ttSlots'][2] != null
-              ? loggedUserTimeSlots['ttSlots'][2].toDate()
-              : null;
-          ts4 = loggedUserTimeSlots['ttSlots'][3] != null
-              ? loggedUserTimeSlots['ttSlots'][3].toDate()
-              : null;
-          ts5 = loggedUserTimeSlots['ttSlots'][4] != null
-              ? loggedUserTimeSlots['ttSlots'][4].toDate()
-              : null;
-          ts6 = loggedUserTimeSlots['ttSlots'][5] != null
-              ? loggedUserTimeSlots['ttSlots'][5].toDate()
-              : null;
-          ts7 = loggedUserTimeSlots['ttSlots'][6] != null
-              ? loggedUserTimeSlots['ttSlots'][6].toDate()
-              : null;
+          if (loggedInisInfluencer == true) {
+            if (loggedUserTimeSlots['ttSlots'][0] != null) {
+              ts1 = loggedUserTimeSlots['ttSlots'][0] != null
+                  ? loggedUserTimeSlots['ttSlots'][0].toDate()
+                  : null;
 
-          ts1Duration = loggedUserTimeSlots['ttDurations'][0] != null
-              ? loggedUserTimeSlots['ttDurations'][0]
-              : null;
-          ts2Duration = loggedUserTimeSlots['ttDurations'][1] != null
-              ? loggedUserTimeSlots['ttDurations'][1]
-              : null;
-          ts3Duration = loggedUserTimeSlots['ttDurations'][2] != null
-              ? loggedUserTimeSlots['ttDurations'][2]
-              : null;
-          ts4Duration = loggedUserTimeSlots['ttDurations'][3] != null
-              ? loggedUserTimeSlots['ttDurations'][3]
-              : null;
-          ts5Duration = loggedUserTimeSlots['ttDurations'][4] != null
-              ? loggedUserTimeSlots['ttDurations'][4]
-              : null;
-          ts6Duration = loggedUserTimeSlots['ttDurations'][5] != null
-              ? loggedUserTimeSlots['ttDurations'][5]
-              : null;
-          ts7Duration = loggedUserTimeSlots['ttDurations'][6] != null
-              ? loggedUserTimeSlots['ttDurations'][6]
-              : null;
+              ts1Duration = loggedUserTimeSlots['ttDurations'][0] != null
+                  ? loggedUserTimeSlots['ttDurations'][0]
+                  : 0;
+            }
 
-          ts1orderId = loggedUserTimeSlots['ttIds'][0] != null
-              ? loggedUserTimeSlots['ttIds'][0]
-              : null;
-          ts2orderId = loggedUserTimeSlots['ttIds'][1] != null
-              ? loggedUserTimeSlots['ttIds'][1]
-              : null;
-          ts3orderId = loggedUserTimeSlots['ttIds'][2] != null
-              ? loggedUserTimeSlots['ttIds'][2]
-              : null;
-          ts4orderId = loggedUserTimeSlots['ttIds'][3] != null
-              ? loggedUserTimeSlots['ttIds'][3]
-              : null;
-          ts5orderId = loggedUserTimeSlots['ttIds'][4] != null
-              ? loggedUserTimeSlots['ttIds'][4]
-              : null;
-          ts6orderId = loggedUserTimeSlots['ttIds'][5] != null
-              ? loggedUserTimeSlots['ttIds'][5]
-              : null;
-          ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
-              ? loggedUserTimeSlots['ttIds'][6]
-              : null;
+            if (loggedUserTimeSlots['ttSlots'][1] != null) {
+              ts2 = loggedUserTimeSlots['ttSlots'][1] != null
+                  ? loggedUserTimeSlots['ttSlots'][1].toDate()
+                  : null;
+
+              ts2Duration = loggedUserTimeSlots['ttDurations'][1] != null
+                  ? loggedUserTimeSlots['ttDurations'][1]
+                  : 0;
+            }
+
+            if (loggedUserTimeSlots['ttSlots'][2] != null) {
+              ts3 = loggedUserTimeSlots['ttSlots'][2] != null
+                  ? loggedUserTimeSlots['ttSlots'][2].toDate()
+                  : null;
+
+              ts3Duration = loggedUserTimeSlots['ttDurations'][2] != null
+                  ? loggedUserTimeSlots['ttDurations'][2]
+                  : 0;
+            }
+
+            if (loggedUserTimeSlots['ttSlots'][3] != null) {
+              ts4 = loggedUserTimeSlots['ttSlots'][3] != null
+                  ? loggedUserTimeSlots['ttSlots'][3].toDate()
+                  : null;
+
+              ts4Duration = loggedUserTimeSlots['ttDurations'][3] != null
+                  ? loggedUserTimeSlots['ttDurations'][3]
+                  : 0;
+            }
+
+            if (loggedUserTimeSlots['ttSlots'][4] != null) {
+              ts5 = loggedUserTimeSlots['ttSlots'][4] != null
+                  ? loggedUserTimeSlots['ttSlots'][4].toDate()
+                  : null;
+
+              ts5Duration = loggedUserTimeSlots['ttDurations'][4] != null
+                  ? loggedUserTimeSlots['ttDurations'][4]
+                  : 0;
+            }
+
+            if (loggedUserTimeSlots['ttSlots'][5] != null) {
+              ts6 = loggedUserTimeSlots['ttSlots'][5] != null
+                  ? loggedUserTimeSlots['ttSlots'][5].toDate()
+                  : null;
+
+              ts6Duration = loggedUserTimeSlots['ttDurations'][5] != null
+                  ? loggedUserTimeSlots['ttDurations'][5]
+                  : 0;
+            }
+
+            if (loggedUserTimeSlots['ttSlots'][6] != null) {
+              ts7 = loggedUserTimeSlots['ttSlots'][6] != null
+                  ? loggedUserTimeSlots['ttSlots'][6].toDate()
+                  : null;
+              ts7Duration = loggedUserTimeSlots['ttDurations'][6] != null
+                  ? loggedUserTimeSlots['ttDurations'][6]
+                  : 0;
+            }
+
+            ts1orderId = loggedUserTimeSlots['ttIds'][0] != null
+                ? loggedUserTimeSlots['ttIds'][0]
+                : null;
+            ts2orderId = loggedUserTimeSlots['ttIds'][1] != null
+                ? loggedUserTimeSlots['ttIds'][1]
+                : null;
+            ts3orderId = loggedUserTimeSlots['ttIds'][2] != null
+                ? loggedUserTimeSlots['ttIds'][2]
+                : null;
+            ts4orderId = loggedUserTimeSlots['ttIds'][3] != null
+                ? loggedUserTimeSlots['ttIds'][3]
+                : null;
+            ts5orderId = loggedUserTimeSlots['ttIds'][4] != null
+                ? loggedUserTimeSlots['ttIds'][4]
+                : null;
+            ts6orderId = loggedUserTimeSlots['ttIds'][5] != null
+                ? loggedUserTimeSlots['ttIds'][5]
+                : null;
+            ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
+                ? loggedUserTimeSlots['ttIds'][6]
+                : null;
           }
-
-       
-
         });
       });
     });
@@ -264,8 +286,9 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
             Visibility(
-             visible: loggedInisInfluencer,
-                          child: Align(
+              visible:
+                  loggedInisInfluencer != null ? loggedInisInfluencer : false,
+              child: Align(
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
@@ -375,7 +398,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       // ),
                       SizedBox(height: 25.0),
                       Padding(
-                        padding: const EdgeInsets.only(top:8.0),
+                        padding: const EdgeInsets.only(top: 8.0),
                         child: Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -391,7 +414,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   );
                                 },
                                 child: Visibility(
-                                  visible: loggedInisInfluencer,
+                                  visible: loggedInisInfluencer != null
+                                      ? loggedInisInfluencer
+                                      : false,
                                   child: Container(
                                     height: 80.0,
                                     width: screenWidth / 4,
@@ -443,13 +468,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           child: Align(
                                             alignment: Alignment.center,
                                             child: loggedInanswerPrice1 != null
-                                                ? Text("\$ $loggedInanswerPrice1",
-                                                    style: TextStyles.priceNumber,
+                                                ? Text(
+                                                    "\$ $loggedInanswerPrice1",
+                                                    style:
+                                                        TextStyles.priceNumber,
                                                     textAlign: TextAlign.center)
                                                 : Text("Not Set",
                                                     style: TextStyles
                                                         .notSetPriceNumber,
-                                                    textAlign: TextAlign.center),
+                                                    textAlign:
+                                                        TextAlign.center),
                                           ),
                                         ),
                                       ],
@@ -467,7 +495,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   );
                                 },
                                 child: Visibility(
-                                  visible: loggedInisInfluencer,
+                                  visible: loggedInisInfluencer != null
+                                      ? loggedInisInfluencer
+                                      : false,
                                   child: Container(
                                     height: 80.0,
                                     width: screenWidth / 4,
@@ -519,13 +549,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           child: Align(
                                             alignment: Alignment.center,
                                             child: loggedInanswerPrice2 != null
-                                                ? Text("\$ $loggedInanswerPrice2",
-                                                    style: TextStyles.priceNumber,
+                                                ? Text(
+                                                    "\$ $loggedInanswerPrice2",
+                                                    style:
+                                                        TextStyles.priceNumber,
                                                     textAlign: TextAlign.center)
                                                 : Text("Not Set",
                                                     style: TextStyles
                                                         .notSetPriceNumber,
-                                                    textAlign: TextAlign.center),
+                                                    textAlign:
+                                                        TextAlign.center),
                                           ),
                                         ),
                                       ],
@@ -543,7 +576,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   );
                                 },
                                 child: Visibility(
-                                  visible: loggedInisInfluencer,
+                                  visible: loggedInisInfluencer != null
+                                      ? loggedInisInfluencer
+                                      : false,
                                   child: Container(
                                     height: 80.0,
                                     width: screenWidth / 4,
@@ -595,13 +630,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           child: Align(
                                             alignment: Alignment.center,
                                             child: loggedInanswerPrice3 != null
-                                                ? Text("\$ $loggedInanswerPrice3",
-                                                    style: TextStyles.priceNumber,
+                                                ? Text(
+                                                    "\$ $loggedInanswerPrice3",
+                                                    style:
+                                                        TextStyles.priceNumber,
                                                     textAlign: TextAlign.center)
                                                 : Text("Not Set",
                                                     style: TextStyles
                                                         .notSetPriceNumber,
-                                                    textAlign: TextAlign.center),
+                                                    textAlign:
+                                                        TextAlign.center),
                                           ),
                                         ),
                                       ],
@@ -615,7 +653,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                       SizedBox(height: 15),
 
-                      loggedInisInfCert
+                      loggedInisInfCert && (loggedUserTimeSlots != null)
                           ? Padding(
                               padding: const EdgeInsets.only(top: 15.0),
                               child: Container(
@@ -628,6 +666,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     children: <Widget>[
                                       Visibility(
                                         visible: ts1 != null,
+                                        //  visible: true,
                                         child: Container(
                                           // decoration: BoxDecoration(
                                           //   color:
@@ -717,6 +756,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                       Visibility(
                                         visible: ts2 != null,
+                                        //  visible: true,
                                         child: Container(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -796,6 +836,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                       Visibility(
                                         visible: ts3 != null,
+                                        // visible: true,
                                         child: Container(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -875,6 +916,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                       Visibility(
                                         visible: ts4 != null,
+                                        // visible: true,
                                         child: Container(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -954,6 +996,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                       Visibility(
                                         visible: ts5 != null,
+                                        //  visible: true,
                                         child: Container(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -1033,6 +1076,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                       Visibility(
                                         visible: ts6 != null,
+                                        // visible: true,
                                         child: Container(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -1112,6 +1156,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                       Visibility(
                                         visible: ts7 != null,
+                                        // visible: true,
                                         child: Container(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -1195,8 +1240,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                               ),
                             )
                           : Container(
-                            width: screenWidth*0.9,
-                          
+                              width: screenWidth * 0.9,
+
                               // child: OutlineButton(
                               //   onPressed: () {
                               //     Navigator.push(
@@ -1212,8 +1257,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                               //       Text("", style: TextStyles.verifiedStyle),
                               // ),
 
-                              child:
-                                    Center(child: Text(ConStrings.UPCOMINGFAVS, style: TextStyles.verifiedStyle)),
+                              child: Center(
+                                  child: loggedInisInfluencer
+                                      ? OutlineButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SettingsScreen(),
+                                              ),
+                                            );
+                                          },
+                                          focusColor:
+                                              UniversalVariables.standardWhite,
+                                          // borderSide: BorderSide.solid,
+                                          child: Text(ConStrings.ADDTS,
+                                              style: TextStyles.verifiedStyle),
+                                        )
+                                      : Text(ConStrings.UPCOMINGFAVS,
+                                          style: TextStyles.verifiedStyle)),
                             ),
 
                       // Padding(

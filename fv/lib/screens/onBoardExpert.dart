@@ -146,7 +146,6 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
 
     loggedUserinfWorth = 0;
 
-  
     loggedUserisInfluencer = true;
     loggedUserHashtags = "";
 
@@ -778,11 +777,6 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                         ? UniversalVariables.gold2
                         : UniversalVariables.grey2,
                     onPressed: () => {
-                      print("nameFilled: $nameFilled"),
-                      print("bioFill: $bioFilled"),
-                      print("userNameFilled: $userNameFilled"),
-                      print("loggedUserCategory: $loggedUserCategory"),
-                      print("loggedUserinfReceived: $loggedUserinfReceived"),
                       _repository.getCurrentUser().then((FirebaseUser user) {
                         _repository.updateProfiletoDb(
                             user,
