@@ -153,6 +153,18 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
     loggedUseranswerPrice2 = 2;
     loggedUseranswerPrice3 = 5;
 
+    List ttIds = new List()..length = 7;
+    List ttSlots = new List()..length = 7;
+    List ttDurations = new List()..length = 7;
+
+    Map<String, List> tempTimeslots = {
+      "ttIds": ttIds,
+      "ttSlots": ttSlots,
+      "ttDurations": ttDurations,
+    };
+
+    loggedUserTimeSlots = tempTimeslots;
+
     tempCurrency = "\$ Dollar";
     loggedUserinfReceived = 0;
 

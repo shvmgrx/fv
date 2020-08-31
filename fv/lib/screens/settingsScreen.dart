@@ -162,37 +162,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
   DateTime selectedDateTime = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1950, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
-  }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: selectedDate,
+  //       firstDate: DateTime(1950, 8),
+  //       lastDate: DateTime(2101));
+  //   if (picked != null && picked != selectedDate)
+  //     setState(() {
+  //       selectedDate = picked;
+  //     });
+  // }
 
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
-      // firstDate: DateTime(1950, 8),
-      //lastDate: DateTime(2101)
-    );
-    if (picked != null && picked != selectedTime)
-      setState(() {
-        selectedTime = picked;
-        selectedDateTime = DateTime(
-            selectedDateTime.year,
-            selectedDateTime.month,
-            selectedDateTime.day,
-            selectedTime.hour,
-            selectedTime.minute);
-      });
-  }
+  // Future<void> _selectTime(BuildContext context) async {
+  //   final TimeOfDay picked = await showTimePicker(
+  //     context: context,
+  //     initialTime: TimeOfDay.now(),
+  //     initialEntryMode: TimePickerEntryMode.dial,
+  //     // firstDate: DateTime(1950, 8),
+  //     //lastDate: DateTime(2101)
+  //   );
+  //   if (picked != null && picked != selectedTime)
+  //     setState(() {
+  //       selectedTime = picked;
+  //       selectedDateTime = DateTime(
+  //           selectedDateTime.year,
+  //           selectedDateTime.month,
+  //           selectedDateTime.day,
+  //           selectedTime.hour,
+  //           selectedTime.minute);
+  //     });
+  // }
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -222,11 +222,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           loggedUserTimeSlots = loggedUser['timeSlots'];
           expertMode = loggedUser['isInfluencer'];
 
-          // if (loggedUserTimeSlots != null) {
-          print("TS: ${loggedUserTimeSlots['ttSlots'][1]}");
-          print("TDR: ${loggedUserTimeSlots['ttDurations'][1]}");
-          print("TID: ${loggedUserTimeSlots['ttIds'][1]}");
-
           if (loggedUserTimeSlots['ttSlots'][0] != null) {
             ts1 = loggedUserTimeSlots['ttSlots'][0].toDate();
             ts1State = TsState.SET;
@@ -241,6 +236,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ts2 = DateTime.now();
           }
 
+          if (loggedUserTimeSlots['ttSlots'][2] != null) {
+            ts3 = loggedUserTimeSlots['ttSlots'][2].toDate();
+            ts3State = TsState.SET;
+          } else {
+            ts3 = DateTime.now();
+          }
+
+          if (loggedUserTimeSlots['ttSlots'][3] != null) {
+            ts4 = loggedUserTimeSlots['ttSlots'][3].toDate();
+            ts4State = TsState.SET;
+          } else {
+            ts4 = DateTime.now();
+          }
+
+          if (loggedUserTimeSlots['ttSlots'][4] != null) {
+            ts5 = loggedUserTimeSlots['ttSlots'][4].toDate();
+            ts5State = TsState.SET;
+          } else {
+            ts5 = DateTime.now();
+          }
+          if (loggedUserTimeSlots['ttSlots'][5] != null) {
+            ts6 = loggedUserTimeSlots['ttSlots'][5].toDate();
+            ts6State = TsState.SET;
+          } else {
+            ts6 = DateTime.now();
+          }
+          if (loggedUserTimeSlots['ttSlots'][6] != null) {
+            ts7 = loggedUserTimeSlots['ttSlots'][6].toDate();
+            ts7State = TsState.SET;
+          } else {
+            ts7 = DateTime.now();
+          }
           // ts1 = loggedUserTimeSlots['ttSlots'][0].toString() != null
           //     ? loggedUserTimeSlots['ttSlots'][0]
           //     : null;
@@ -290,21 +317,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ts2Duration = loggedUserTimeSlots['ttDurations'][1] != null
               ? loggedUserTimeSlots['ttDurations'][1]
               : 0;
-          //   ts3Duration = loggedUserTimeSlots['ttDurations'][2] != null
-          //       ? loggedUserTimeSlots['ttDurations'][2]
-          //       : 0;
-          //   ts4Duration = loggedUserTimeSlots['ttDurations'][3] != null
-          //       ? loggedUserTimeSlots['ttDurations'][3]
-          //       : 0;
-          //   ts5Duration = loggedUserTimeSlots['ttDurations'][4] != null
-          //       ? loggedUserTimeSlots['ttDurations'][4]
-          //       : 0;
-          //   ts6Duration = loggedUserTimeSlots['ttDurations'][5] != null
-          //       ? loggedUserTimeSlots['ttDurations'][5]
-          //       : 0;
-          //   ts7Duration = loggedUserTimeSlots['ttDurations'][6] != null
-          //       ? loggedUserTimeSlots['ttDurations'][6]
-          //       : 0;
+          ts3Duration = loggedUserTimeSlots['ttDurations'][2] != null
+              ? loggedUserTimeSlots['ttDurations'][2]
+              : 0;
+          ts4Duration = loggedUserTimeSlots['ttDurations'][3] != null
+              ? loggedUserTimeSlots['ttDurations'][3]
+              : 0;
+          ts5Duration = loggedUserTimeSlots['ttDurations'][4] != null
+              ? loggedUserTimeSlots['ttDurations'][4]
+              : 0;
+          ts6Duration = loggedUserTimeSlots['ttDurations'][5] != null
+              ? loggedUserTimeSlots['ttDurations'][5]
+              : 0;
+          ts7Duration = loggedUserTimeSlots['ttDurations'][6] != null
+              ? loggedUserTimeSlots['ttDurations'][6]
+              : 0;
 
           ts1orderId = loggedUserTimeSlots['ttIds'][0] != null
               ? loggedUserTimeSlots['ttIds'][0]
@@ -312,21 +339,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ts2orderId = loggedUserTimeSlots['ttIds'][1] != null
               ? loggedUserTimeSlots['ttIds'][1]
               : null;
-          //   ts3orderId = loggedUserTimeSlots['ttIds'][2] != null
-          //       ? loggedUserTimeSlots['ttIds'][2]
-          //       : null;
-          //   ts4orderId = loggedUserTimeSlots['ttIds'][3] != null
-          //       ? loggedUserTimeSlots['ttIds'][3]
-          //       : null;
-          //   ts5orderId = loggedUserTimeSlots['ttIds'][4] != null
-          //       ? loggedUserTimeSlots['ttIds'][4]
-          //       : null;
-          //   ts6orderId = loggedUserTimeSlots['ttIds'][5] != null
-          //       ? loggedUserTimeSlots['ttIds'][5]
-          //       : null;
-          //   ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
-          //       ? loggedUserTimeSlots['ttIds'][6]
-          //       : null;
+          ts3orderId = loggedUserTimeSlots['ttIds'][2] != null
+              ? loggedUserTimeSlots['ttIds'][2]
+              : null;
+          ts4orderId = loggedUserTimeSlots['ttIds'][3] != null
+              ? loggedUserTimeSlots['ttIds'][3]
+              : null;
+          ts5orderId = loggedUserTimeSlots['ttIds'][4] != null
+              ? loggedUserTimeSlots['ttIds'][4]
+              : null;
+          ts6orderId = loggedUserTimeSlots['ttIds'][5] != null
+              ? loggedUserTimeSlots['ttIds'][5]
+              : null;
+          ts7orderId = loggedUserTimeSlots['ttIds'][6] != null
+              ? loggedUserTimeSlots['ttIds'][6]
+              : null;
           // }
 
           textMode = loggedUseranswerPrice1 != null;
@@ -853,14 +880,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          _selectTime(context);
-                                        },
-                                        child: Text("Videocall Timeslots",
-                                            style: TextStyles.editHeadingName,
-                                            textAlign: TextAlign.left),
-                                      ),
+                                      Text("Videocall Timeslots",
+                                          style: TextStyles.editHeadingName,
+                                          textAlign: TextAlign.left),
                                       SizedBox(height: 5),
                                     ],
                                   ),
@@ -1284,7 +1306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       setState(() {
                                                         ts2Set = !ts2Set;
                                                         if (ts2Set == false) {
-                                                          ts1State =
+                                                          ts2State =
                                                               TsState.UNSET;
                                                         }
                                                         if (ts2Set == true) {
@@ -1346,6 +1368,1213 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   ),
 
+                                  //NTS2
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Visibility(
+                                      visible: expertMode && videoCallMode,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              // ts1Set && !ts1ErrorFlag
+                                              //     ? Padding(
+                                              //         padding: const EdgeInsets
+                                              //                 .symmetric(
+                                              //             horizontal: 5.0),
+                                              //         child: Padding(
+                                              //           padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                              //           child: Icon(
+                                              //               Icons.edit_off,
+                                              //               size: 20),
+                                              //         ),
+                                              //       )
+                                              //     : Icon(Icons.edit, size: 20),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    //height: 50,
+                                                    color: Colors.transparent,
+                                                    //width: screenWidth / 2,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            DatePicker.showDateTimePicker(
+                                                                context,
+                                                                theme: DatePickerTheme(
+                                                                    backgroundColor:
+                                                                        UniversalVariables
+                                                                            .white2,
+                                                                    headerColor:
+                                                                        UniversalVariables
+                                                                            .gold2,
+                                                                    itemStyle:
+                                                                        TextStyles
+                                                                            .editHeadingName,
+                                                                    cancelStyle:
+                                                                        TextStyles
+                                                                            .cancelStyle,
+                                                                    doneStyle:
+                                                                        TextStyles
+                                                                            .doneStyle),
+                                                                minTime:
+                                                                    DateTime
+                                                                        .now(),
+                                                                showTitleActions:
+                                                                    true,
+                                                                onChanged:
+                                                                    (date) {},
+                                                                onConfirm:
+                                                                    (date) {
+                                                              setState(() {
+                                                                selectedDateTime =
+                                                                    date;
+
+                                                                ts3Changed++;
+                                                                ts3 = date;
+                                                                ts3State =
+                                                                    TsState
+                                                                        .UNSET;
+                                                              });
+                                                            },
+                                                                currentTime:
+                                                                    DateTime
+                                                                        .now());
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                "assets/timeslot.svg",
+                                                                height: 20,
+                                                                width: 20,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                color:
+                                                                    UniversalVariables
+                                                                        .gold2,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                  "${DateFormat('MMM d, hh:mm a').format(ts3)}",
+                                                                  style: TextStyles
+                                                                      .editHeadingName,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Expanded(
+                                                flex: 2,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts3Set,
+                                                        child: CupertinoPicker(
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          onSelectedItemChanged:
+                                                              (value) {
+                                                            setState(() {
+                                                              ts3Duration =
+                                                                  value;
+                                                              ts3Changed++;
+                                                              ts3State =
+                                                                  TsState.UNSET;
+                                                            });
+                                                          },
+                                                          itemExtent: 30.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('15 mins'),
+                                                            Text('20 mins'),
+                                                          ],
+                                                          scrollController: ts3Duration !=
+                                                                  null
+                                                              ? FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      ts3Duration)
+                                                              : FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        ts3Set = !ts3Set;
+                                                        if (ts3Set == false) {
+                                                          ts3State =
+                                                              TsState.UNSET;
+                                                        }
+                                                        if (ts3Set == true) {
+                                                          ts3State =
+                                                              TsState.SET;
+                                                        }
+
+                                                        if (ts3State ==
+                                                            TsState.SET) {
+                                                          showts4 = true;
+
+                                                          ttSlots[2] = ts3;
+                                                          ttDurations[2] =
+                                                              ts3Duration;
+
+                                                          if (ts3Changed >= 1) {
+                                                            ttIds[2] = Utils
+                                                                .generateRandomOrderId();
+                                                          }
+                                                        }
+                                                      });
+                                                    },
+                                                    child: ts3State ==
+                                                            TsState.SET
+                                                        ? Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled_solid,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .gold2)
+                                                        : Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .grey1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Visibility(
+                                          //   visible: ts1ErrorFlag,
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 13.0),
+                                          //     child: Center(
+                                          //       child: Text(
+                                          //           "SET CORRECT DURATION AND TIMESLOT",
+                                          //           style:
+                                          //               TextStyles.errorStyle),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  //nts3
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Visibility(
+                                      visible: expertMode && videoCallMode,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              // ts1Set && !ts1ErrorFlag
+                                              //     ? Padding(
+                                              //         padding: const EdgeInsets
+                                              //                 .symmetric(
+                                              //             horizontal: 5.0),
+                                              //         child: Padding(
+                                              //           padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                              //           child: Icon(
+                                              //               Icons.edit_off,
+                                              //               size: 20),
+                                              //         ),
+                                              //       )
+                                              //     : Icon(Icons.edit, size: 20),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    //height: 50,
+                                                    color: Colors.transparent,
+                                                    //width: screenWidth / 2,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            DatePicker.showDateTimePicker(
+                                                                context,
+                                                                theme: DatePickerTheme(
+                                                                    backgroundColor:
+                                                                        UniversalVariables
+                                                                            .white2,
+                                                                    headerColor:
+                                                                        UniversalVariables
+                                                                            .gold2,
+                                                                    itemStyle:
+                                                                        TextStyles
+                                                                            .editHeadingName,
+                                                                    cancelStyle:
+                                                                        TextStyles
+                                                                            .cancelStyle,
+                                                                    doneStyle:
+                                                                        TextStyles
+                                                                            .doneStyle),
+                                                                minTime:
+                                                                    DateTime
+                                                                        .now(),
+                                                                showTitleActions:
+                                                                    true,
+                                                                onChanged:
+                                                                    (date) {},
+                                                                onConfirm:
+                                                                    (date) {
+                                                              setState(() {
+                                                                selectedDateTime =
+                                                                    date;
+
+                                                                ts4Changed++;
+                                                                ts4 = date;
+                                                                ts4State =
+                                                                    TsState
+                                                                        .UNSET;
+                                                              });
+                                                            },
+                                                                currentTime:
+                                                                    DateTime
+                                                                        .now());
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                "assets/timeslot.svg",
+                                                                height: 20,
+                                                                width: 20,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                color:
+                                                                    UniversalVariables
+                                                                        .gold2,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                  "${DateFormat('MMM d, hh:mm a').format(ts4)}",
+                                                                  style: TextStyles
+                                                                      .editHeadingName,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Expanded(
+                                                flex: 2,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts4Set,
+                                                        child: CupertinoPicker(
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          onSelectedItemChanged:
+                                                              (value) {
+                                                            setState(() {
+                                                              ts4Duration =
+                                                                  value;
+                                                              ts4Changed++;
+                                                              ts4State =
+                                                                  TsState.UNSET;
+                                                            });
+                                                          },
+                                                          itemExtent: 30.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('15 mins'),
+                                                            Text('20 mins'),
+                                                          ],
+                                                          scrollController: ts4Duration !=
+                                                                  null
+                                                              ? FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      ts4Duration)
+                                                              : FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        ts4Set = !ts4Set;
+                                                        if (ts4Set == false) {
+                                                          ts4State =
+                                                              TsState.UNSET;
+                                                        }
+                                                        if (ts4Set == true) {
+                                                          ts4State =
+                                                              TsState.SET;
+                                                        }
+
+                                                        if (ts4State ==
+                                                            TsState.SET) {
+                                                          showts5 = true;
+
+                                                          ttSlots[3] = ts4;
+                                                          ttDurations[3] =
+                                                              ts4Duration;
+
+                                                          if (ts4Changed >= 1) {
+                                                            ttIds[3] = Utils
+                                                                .generateRandomOrderId();
+                                                          }
+                                                        }
+                                                      });
+                                                    },
+                                                    child: ts4State ==
+                                                            TsState.SET
+                                                        ? Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled_solid,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .gold2)
+                                                        : Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .grey1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Visibility(
+                                          //   visible: ts1ErrorFlag,
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 13.0),
+                                          //     child: Center(
+                                          //       child: Text(
+                                          //           "SET CORRECT DURATION AND TIMESLOT",
+                                          //           style:
+                                          //               TextStyles.errorStyle),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  //nts4
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Visibility(
+                                      visible: expertMode && videoCallMode,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              // ts1Set && !ts1ErrorFlag
+                                              //     ? Padding(
+                                              //         padding: const EdgeInsets
+                                              //                 .symmetric(
+                                              //             horizontal: 5.0),
+                                              //         child: Padding(
+                                              //           padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                              //           child: Icon(
+                                              //               Icons.edit_off,
+                                              //               size: 20),
+                                              //         ),
+                                              //       )
+                                              //     : Icon(Icons.edit, size: 20),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    //height: 50,
+                                                    color: Colors.transparent,
+                                                    //width: screenWidth / 2,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            DatePicker.showDateTimePicker(
+                                                                context,
+                                                                theme: DatePickerTheme(
+                                                                    backgroundColor:
+                                                                        UniversalVariables
+                                                                            .white2,
+                                                                    headerColor:
+                                                                        UniversalVariables
+                                                                            .gold2,
+                                                                    itemStyle:
+                                                                        TextStyles
+                                                                            .editHeadingName,
+                                                                    cancelStyle:
+                                                                        TextStyles
+                                                                            .cancelStyle,
+                                                                    doneStyle:
+                                                                        TextStyles
+                                                                            .doneStyle),
+                                                                minTime:
+                                                                    DateTime
+                                                                        .now(),
+                                                                showTitleActions:
+                                                                    true,
+                                                                onChanged:
+                                                                    (date) {},
+                                                                onConfirm:
+                                                                    (date) {
+                                                              setState(() {
+                                                                selectedDateTime =
+                                                                    date;
+
+                                                                ts5Changed++;
+                                                                ts5 = date;
+                                                                ts5State =
+                                                                    TsState
+                                                                        .UNSET;
+                                                              });
+                                                            },
+                                                                currentTime:
+                                                                    DateTime
+                                                                        .now());
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                "assets/timeslot.svg",
+                                                                height: 20,
+                                                                width: 20,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                color:
+                                                                    UniversalVariables
+                                                                        .gold2,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                  "${DateFormat('MMM d, hh:mm a').format(ts5)}",
+                                                                  style: TextStyles
+                                                                      .editHeadingName,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Expanded(
+                                                flex: 2,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts4Set,
+                                                        child: CupertinoPicker(
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          onSelectedItemChanged:
+                                                              (value) {
+                                                            setState(() {
+                                                              ts5Duration =
+                                                                  value;
+                                                              ts5Changed++;
+                                                              ts5State =
+                                                                  TsState.UNSET;
+                                                            });
+                                                          },
+                                                          itemExtent: 30.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('15 mins'),
+                                                            Text('20 mins'),
+                                                          ],
+                                                          scrollController: ts5Duration !=
+                                                                  null
+                                                              ? FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      ts5Duration)
+                                                              : FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        ts5Set = !ts5Set;
+                                                        if (ts5Set == false) {
+                                                          ts5State =
+                                                              TsState.UNSET;
+                                                        }
+                                                        if (ts5Set == true) {
+                                                          ts5State =
+                                                              TsState.SET;
+                                                        }
+
+                                                        if (ts5State ==
+                                                            TsState.SET) {
+                                                          showts5 = true;
+
+                                                          ttSlots[4] = ts5;
+                                                          ttDurations[4] =
+                                                              ts5Duration;
+
+                                                          if (ts5Changed >= 1) {
+                                                            ttIds[4] = Utils
+                                                                .generateRandomOrderId();
+                                                          }
+                                                        }
+                                                      });
+                                                    },
+                                                    child: ts5State ==
+                                                            TsState.SET
+                                                        ? Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled_solid,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .gold2)
+                                                        : Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .grey1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Visibility(
+                                          //   visible: ts1ErrorFlag,
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 13.0),
+                                          //     child: Center(
+                                          //       child: Text(
+                                          //           "SET CORRECT DURATION AND TIMESLOT",
+                                          //           style:
+                                          //               TextStyles.errorStyle),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  //nts5
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Visibility(
+                                      visible: expertMode && videoCallMode,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              // ts1Set && !ts1ErrorFlag
+                                              //     ? Padding(
+                                              //         padding: const EdgeInsets
+                                              //                 .symmetric(
+                                              //             horizontal: 5.0),
+                                              //         child: Padding(
+                                              //           padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                              //           child: Icon(
+                                              //               Icons.edit_off,
+                                              //               size: 20),
+                                              //         ),
+                                              //       )
+                                              //     : Icon(Icons.edit, size: 20),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    //height: 50,
+                                                    color: Colors.transparent,
+                                                    //width: screenWidth / 2,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            DatePicker.showDateTimePicker(
+                                                                context,
+                                                                theme: DatePickerTheme(
+                                                                    backgroundColor:
+                                                                        UniversalVariables
+                                                                            .white2,
+                                                                    headerColor:
+                                                                        UniversalVariables
+                                                                            .gold2,
+                                                                    itemStyle:
+                                                                        TextStyles
+                                                                            .editHeadingName,
+                                                                    cancelStyle:
+                                                                        TextStyles
+                                                                            .cancelStyle,
+                                                                    doneStyle:
+                                                                        TextStyles
+                                                                            .doneStyle),
+                                                                minTime:
+                                                                    DateTime
+                                                                        .now(),
+                                                                showTitleActions:
+                                                                    true,
+                                                                onChanged:
+                                                                    (date) {},
+                                                                onConfirm:
+                                                                    (date) {
+                                                              setState(() {
+                                                                selectedDateTime =
+                                                                    date;
+
+                                                                ts6Changed++;
+                                                                ts6 = date;
+                                                                ts6State =
+                                                                    TsState
+                                                                        .UNSET;
+                                                              });
+                                                            },
+                                                                currentTime:
+                                                                    DateTime
+                                                                        .now());
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                "assets/timeslot.svg",
+                                                                height: 20,
+                                                                width: 20,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                color:
+                                                                    UniversalVariables
+                                                                        .gold2,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                  "${DateFormat('MMM d, hh:mm a').format(ts6)}",
+                                                                  style: TextStyles
+                                                                      .editHeadingName,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Expanded(
+                                                flex: 2,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts4Set,
+                                                        child: CupertinoPicker(
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          onSelectedItemChanged:
+                                                              (value) {
+                                                            setState(() {
+                                                              ts6Duration =
+                                                                  value;
+                                                              ts6Changed++;
+                                                              ts6State =
+                                                                  TsState.UNSET;
+                                                            });
+                                                          },
+                                                          itemExtent: 30.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('15 mins'),
+                                                            Text('20 mins'),
+                                                          ],
+                                                          scrollController: ts6Duration !=
+                                                                  null
+                                                              ? FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      ts6Duration)
+                                                              : FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        ts6Set = !ts6Set;
+                                                        if (ts6Set == false) {
+                                                          ts6State =
+                                                              TsState.UNSET;
+                                                        }
+                                                        if (ts6Set == true) {
+                                                          ts6State =
+                                                              TsState.SET;
+                                                        }
+
+                                                        if (ts6State ==
+                                                            TsState.SET) {
+                                                          showts7 = true;
+
+                                                          ttSlots[5] = ts6;
+                                                          ttDurations[5] =
+                                                              ts6Duration;
+
+                                                          if (ts6Changed >= 1) {
+                                                            ttIds[5] = Utils
+                                                                .generateRandomOrderId();
+                                                          }
+                                                        }
+                                                      });
+                                                    },
+                                                    child: ts6State ==
+                                                            TsState.SET
+                                                        ? Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled_solid,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .gold2)
+                                                        : Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .grey1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Visibility(
+                                          //   visible: ts1ErrorFlag,
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 13.0),
+                                          //     child: Center(
+                                          //       child: Text(
+                                          //           "SET CORRECT DURATION AND TIMESLOT",
+                                          //           style:
+                                          //               TextStyles.errorStyle),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  //nts6
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Visibility(
+                                      visible: expertMode && videoCallMode,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              // ts1Set && !ts1ErrorFlag
+                                              //     ? Padding(
+                                              //         padding: const EdgeInsets
+                                              //                 .symmetric(
+                                              //             horizontal: 5.0),
+                                              //         child: Padding(
+                                              //           padding: const EdgeInsets.symmetric(horizontal:5.0),
+                                              //           child: Icon(
+                                              //               Icons.edit_off,
+                                              //               size: 20),
+                                              //         ),
+                                              //       )
+                                              //     : Icon(Icons.edit, size: 20),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    //height: 50,
+                                                    color: Colors.transparent,
+                                                    //width: screenWidth / 2,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            DatePicker.showDateTimePicker(
+                                                                context,
+                                                                theme: DatePickerTheme(
+                                                                    backgroundColor:
+                                                                        UniversalVariables
+                                                                            .white2,
+                                                                    headerColor:
+                                                                        UniversalVariables
+                                                                            .gold2,
+                                                                    itemStyle:
+                                                                        TextStyles
+                                                                            .editHeadingName,
+                                                                    cancelStyle:
+                                                                        TextStyles
+                                                                            .cancelStyle,
+                                                                    doneStyle:
+                                                                        TextStyles
+                                                                            .doneStyle),
+                                                                minTime:
+                                                                    DateTime
+                                                                        .now(),
+                                                                showTitleActions:
+                                                                    true,
+                                                                onChanged:
+                                                                    (date) {},
+                                                                onConfirm:
+                                                                    (date) {
+                                                              setState(() {
+                                                                selectedDateTime =
+                                                                    date;
+
+                                                                ts7Changed++;
+                                                                ts7 = date;
+                                                                ts7State =
+                                                                    TsState
+                                                                        .UNSET;
+                                                              });
+                                                            },
+                                                                currentTime:
+                                                                    DateTime
+                                                                        .now());
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                "assets/timeslot.svg",
+                                                                height: 20,
+                                                                width: 20,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                color:
+                                                                    UniversalVariables
+                                                                        .gold2,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                  "${DateFormat('MMM d, hh:mm a').format(ts7)}",
+                                                                  style: TextStyles
+                                                                      .editHeadingName,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Expanded(
+                                                flex: 2,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: screenWidth / 2,
+                                                    child: CupertinoTheme(
+                                                      data: CupertinoThemeData(
+                                                        textTheme:
+                                                            CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyles
+                                                                  .timeTextStyle,
+                                                        ),
+                                                      ),
+                                                      child: AbsorbPointer(
+                                                        absorbing: ts4Set,
+                                                        child: CupertinoPicker(
+                                                          backgroundColor:
+                                                              UniversalVariables
+                                                                  .transparent,
+                                                          onSelectedItemChanged:
+                                                              (value) {
+                                                            setState(() {
+                                                              ts7Duration =
+                                                                  value;
+                                                              ts7Changed++;
+                                                              ts7State =
+                                                                  TsState.UNSET;
+                                                            });
+                                                          },
+                                                          itemExtent: 30.0,
+                                                          children: const [
+                                                            Text('10 mins'),
+                                                            Text('15 mins'),
+                                                            Text('20 mins'),
+                                                          ],
+                                                          scrollController: ts7Duration !=
+                                                                  null
+                                                              ? FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      ts7Duration)
+                                                              : FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Visibility(
+                                                  //visible: show1,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        ts7Set = !ts7Set;
+                                                        if (ts7Set == false) {
+                                                          ts7State =
+                                                              TsState.UNSET;
+                                                        }
+                                                        if (ts7Set == true) {
+                                                          ts7State =
+                                                              TsState.SET;
+                                                        }
+
+                                                        if (ts7State ==
+                                                            TsState.SET) {
+                                                          showts8 = true;
+
+                                                          ttSlots[6] = ts7;
+                                                          ttDurations[6] =
+                                                              ts7Duration;
+
+                                                          if (ts7Changed >= 1) {
+                                                            ttIds[6] = Utils
+                                                                .generateRandomOrderId();
+                                                          }
+                                                        }
+                                                      });
+                                                    },
+                                                    child: ts7State ==
+                                                            TsState.SET
+                                                        ? Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled_solid,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .gold2)
+                                                        : Icon(
+                                                            CupertinoIcons
+                                                                .check_mark_circled,
+                                                            size: 30.0,
+                                                            color:
+                                                                UniversalVariables
+                                                                    .grey1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Visibility(
+                                          //   visible: ts1ErrorFlag,
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 13.0),
+                                          //     child: Center(
+                                          //       child: Text(
+                                          //           "SET CORRECT DURATION AND TIMESLOT",
+                                          //           style:
+                                          //               TextStyles.errorStyle),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   //TS1
                                   // Padding(
                                   //   padding: const EdgeInsets.only(top: 25.0),
