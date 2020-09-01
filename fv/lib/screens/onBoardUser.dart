@@ -76,6 +76,10 @@ class _OnBoardUserState extends State<OnBoardUser> {
   File tempProfilePicture;
   String tempProfilePictureUrl;
 
+  List ttIds = new List()..length = 7;
+  List ttSlots = new List()..length = 7;
+  List ttDurations = new List()..length = 7;
+
   void pickProfilePhoto({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
 
@@ -145,6 +149,14 @@ class _OnBoardUserState extends State<OnBoardUser> {
       loggedUserinfWorth = 0;
 
       loggedUserisInfluencer = false;
+
+      Map<String, List> tempTimeslots = {
+        "ttIds": ttIds,
+        "ttSlots": ttSlots,
+        "ttDurations": ttDurations,
+      };
+
+      loggedUserTimeSlots = tempTimeslots;
     });
 
     super.initState();
@@ -488,13 +500,11 @@ class _OnBoardUserState extends State<OnBoardUser> {
                             loggedUserHashtags,
                             loggedUserTimeSlots);
                       }),
-
                       Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
-                                  (Route<dynamic> route) => false,
-                                )
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        (Route<dynamic> route) => false,
+                      )
                     },
                     child: Text(
                       ConStrings.NEXT,
