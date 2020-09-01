@@ -1,0 +1,237 @@
+import 'package:flutter/material.dart';
+import 'package:fv/onboarding/text_styles.dart';
+import 'package:fv/utils/universal_variables.dart';
+
+class OrderTile extends StatefulWidget {
+  final Widget sellerPhoto;
+  final Widget sellerName;
+  final Widget buyerPhoto;
+  final Widget buyerName;
+  final Widget orderId;
+  final Widget slotTime;
+  final Widget slotDuration;
+  final Widget currency;
+  final Widget price;
+
+  OrderTile({
+    this.sellerPhoto,
+    this.sellerName,
+    this.buyerPhoto,
+    this.buyerName,
+    this.orderId,
+    this.slotTime,
+    this.slotDuration,
+    this.currency,
+    this.price,
+  });
+
+  @override
+  _OrderTileState createState() => _OrderTileState();
+}
+
+class _OrderTileState extends State<OrderTile> {
+  bool arrowUp = false;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  void pullDown() {
+    setState(() {
+      arrowUp = true;
+    });
+  }
+
+  void pullUp() {
+    setState(() {
+      arrowUp = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Expanded(
+        child: Container(
+          decoration: BoxDecoration(
+            color: UniversalVariables.white2,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 120.0,
+                              height: 120.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      "https://images.pexels.com/photos/5119214/pexels-photo-5119214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text("inf name"),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        //add image here
+
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 120.0,
+                              height: 120.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      "https://images.pexels.com/photos/5119214/pexels-photo-5119214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text("user name"),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, left: 5.0),
+                      child: Row(
+                        children: [
+                          Text("Time:",
+                              style: TextStyles.orderDetailsStyle,
+                              textAlign: TextAlign.left),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              "August 20, 20:30",
+                              style: TextStyles.hintTextStyle,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (arrowUp) {
+                            pullUp();
+                          } else if (!arrowUp) {
+                            pullDown();
+                          }
+                        },
+                        child: Icon(
+                          arrowUp
+                              ? Icons.arrow_circle_up
+                              : Icons.arrow_circle_down,
+                          color: UniversalVariables.grey2,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Visibility(
+                  visible: arrowUp,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 5.0),
+                    child: Row(
+                      children: [
+                        Text("Duration:",
+                            style: TextStyles.orderDetailsStyle,
+                            textAlign: TextAlign.left),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            "15 mins",
+                            style: TextStyles.hintTextStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: arrowUp,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 5.0),
+                    child: Row(
+                      children: [
+                        Text("Price:",
+                            style: TextStyles.orderDetailsStyle,
+                            textAlign: TextAlign.left),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            "#15",
+                            style: TextStyles.hintTextStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: arrowUp,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 5.0),
+                    child: Row(
+                      children: [
+                        Text("Order ID:",
+                            style: TextStyles.orderDetailsStyle,
+                            textAlign: TextAlign.left),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            "dfvb34r68wfnu3378g4",
+                            style: TextStyles.hintTextStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

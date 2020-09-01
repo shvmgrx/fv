@@ -57,12 +57,14 @@ class TextStyles {
   );
   static final TextStyle ordersStyle = TextStyle(
     fontSize: 20,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
     color: UniversalVariables.grey2,
   );
 
   static final TextStyle selectedOrdersStyle = TextStyle(
     fontSize: 20,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
     color: UniversalVariables.blackColor,
   );
@@ -182,6 +184,18 @@ class TextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w300,
     color: UniversalVariables.grey2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+  static final TextStyle orderDetailsStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w300,
+    color: UniversalVariables.gold2,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
