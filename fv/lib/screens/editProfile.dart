@@ -28,7 +28,6 @@ import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:provider/provider.dart';
 
-
 class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -73,8 +72,7 @@ class _EditProfileState extends State<EditProfile> {
   String tempProfilePictureUrl;
 
   void pickProfilePhoto({@required ImageSource source}) async {
-    
-   File selectedImage = await Utils.pickImage(source: source);
+    File selectedImage = await Utils.pickImage(source: source);
 
     _repository.getCurrentUser().then((user) {
       _repository.changeProfilePhoto(
@@ -83,9 +81,8 @@ class _EditProfileState extends State<EditProfile> {
           currentUser: user);
     });
   }
-  
 
-    StorageReference _storageReference;
+  StorageReference _storageReference;
   Future<String> uploadImageToStorage(File tempProfilePicture) async {
     try {
       _storageReference = FirebaseStorage.instance
@@ -102,7 +99,7 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-    Future<File> pickProPic({@required ImageSource source}) async {
+  Future<File> pickProPic({@required ImageSource source}) async {
     File selectedProPic = await Utils.pickImage(source: source);
 
     //File compImgHigh;
@@ -203,32 +200,29 @@ class _EditProfileState extends State<EditProfile> {
                       color: UniversalVariables.grey2,
                     ),
                     onPressed: () {
-                    
-
                       Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
-                                (Route<dynamic> route) => false,
-                              );
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        (Route<dynamic> route) => false,
+                      );
                     },
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text("FAVEEZ",
-                      style: TextStyles.appNameLogoStyle,
-                      textAlign: TextAlign.center),
-                  // GradientText("FAVEEZ",
-                  //     gradient: LinearGradient(colors: [
-                  //       UniversalVariables.gold1,
-                  //       UniversalVariables.gold2,
-                  //       UniversalVariables.gold3,
-                  //       UniversalVariables.gold4
-                  //     ]),
-                  //     style: TextStyles.appNameLogoStyle,
-                  //     textAlign: TextAlign.center),
-                ),
+                // Align(
+                //   alignment: Alignment.center,
+                //   child: Text("FAVEEZ",
+                //       style: TextStyles.appNameLogoStyle,
+                //       textAlign: TextAlign.center),
+                //   // GradientText("FAVEEZ",
+                //   //     gradient: LinearGradient(colors: [
+                //   //       UniversalVariables.gold1,
+                //   //       UniversalVariables.gold2,
+                //   //       UniversalVariables.gold3,
+                //   //       UniversalVariables.gold4
+                //   //     ]),
+                //   //     style: TextStyles.appNameLogoStyle,
+                //   //     textAlign: TextAlign.center),
+                // ),
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
@@ -244,41 +238,37 @@ class _EditProfileState extends State<EditProfile> {
                       _formKey.currentState.save();
 
                       _repository.getCurrentUser().then((FirebaseUser user) {
-                       
                         _repository.updateProfiletoDb(
-                          user,
-                          loggedUserDisplayName,
-                          loggedUserEmail,
-                          loggedUserUserName,
-                          loggedUserStatus,
-                          loggedUserState,
-                          loggedUserProfilePic,
-                          loggedUseranswerPrice1,
-                          loggedUseranswerPrice2,
-                          loggedUseranswerPrice3,
-                          loggedUseranswerDuration,
-                          loggedUserBio,
-                          loggedUserisInfCert,
-                          loggedUsermaxQuestionCharcount,
-                          loggedUserRating,
-                          loggedUserCategory,
-                          loggedUserReviews,
-                          loggedUserinfWorth,
-                          loggedUserinfSent,
-                          loggedUserinfReceived,
-                          loggedUserisInfluencer,
-                          loggedUserHashtags,
-                          loggedUserTimeSlots
-
-                        );
+                            user,
+                            loggedUserDisplayName,
+                            loggedUserEmail,
+                            loggedUserUserName,
+                            loggedUserStatus,
+                            loggedUserState,
+                            loggedUserProfilePic,
+                            loggedUseranswerPrice1,
+                            loggedUseranswerPrice2,
+                            loggedUseranswerPrice3,
+                            loggedUseranswerDuration,
+                            loggedUserBio,
+                            loggedUserisInfCert,
+                            loggedUsermaxQuestionCharcount,
+                            loggedUserRating,
+                            loggedUserCategory,
+                            loggedUserReviews,
+                            loggedUserinfWorth,
+                            loggedUserinfSent,
+                            loggedUserinfReceived,
+                            loggedUserisInfluencer,
+                            loggedUserHashtags,
+                            loggedUserTimeSlots);
                       });
 
-                     Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
-                                (Route<dynamic> route) => false,
-                              );
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        (Route<dynamic> route) => false,
+                      );
                     },
                   ),
                 )
@@ -312,7 +302,6 @@ class _EditProfileState extends State<EditProfile> {
                     Container(
                       child: OutlineButton(
                         onPressed: () => {
-                     
                           pickProPic(source: ImageSource.gallery),
                         },
                         child: Text(

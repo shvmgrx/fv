@@ -232,60 +232,90 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Visibility(
-                      visible: loggedUserisInfCert,
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            settingsPressed = !settingsPressed;
-                            if (settingsPressed) {
-                              Navigator.pushNamed(context, "/settings_screen");
-                            }
-                          });
-                        },
-                        child: NMButton(
-                          down: settingsPressed,
-                          icon: Icons.settings,
-                        ),
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: loggedUserisInfCert
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                settingsPressed = !settingsPressed;
+                                if (settingsPressed) {
+                                  Navigator.pushNamed(
+                                      context, "/settings_screen");
+                                }
+                              });
+                            },
+                            child: NMButton(
+                              down: settingsPressed,
+                              icon: Icons.settings,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                profilePressed = !profilePressed;
+                                if (profilePressed) {
+                                  Navigator.pushNamed(
+                                      context, "/edit_profile_screen");
+                                }
+                              });
+                            },
+                            child: NMButton(
+                              down: profilePressed,
+                              icon: Icons.person,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                paymentPressed = !paymentPressed;
+                                if (paymentPressed) {}
+                              });
+                            },
+                            child: NMButton(
+                              down: paymentPressed,
+                              icon: Icons.wysiwyg,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                profilePressed = !profilePressed;
+                                if (profilePressed) {
+                                  Navigator.pushNamed(
+                                      context, "/edit_profile_screen");
+                                }
+                              });
+                            },
+                            child: NMButton(
+                              down: profilePressed,
+                              icon: Icons.person,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                paymentPressed = !paymentPressed;
+                                if (paymentPressed) {
+                                  Navigator.pushNamed(
+                                      context, "/user_orders_screen");
+                                }
+                              });
+                            },
+                            child: NMButton(
+                              down: paymentPressed,
+                              icon: Icons.wysiwyg,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          profilePressed = !profilePressed;
-                          if (profilePressed) {
-                            Navigator.pushNamed(
-                                context, "/edit_profile_screen");
-                          }
-                        });
-                      },
-                      child: NMButton(
-                        down: profilePressed,
-                        icon: Icons.person,
-                      ),
-                    ),
-                    Visibility(
-                      visible: loggedUserisInfCert,
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            paymentPressed = !paymentPressed;
-                            if (paymentPressed) {}
-                          });
-                        },
-                        child: NMButton(
-                          down: paymentPressed,
-                          icon: Icons.wysiwyg,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
               Divider(),
               SizedBox(height: 20),

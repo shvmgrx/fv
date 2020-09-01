@@ -235,6 +235,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         buyerName: userProvider.getUser.name,
         buyerPhoto: userProvider.getUser.profilePhoto,
         sellerId: widget.selectedInfluencer.uid,
+        sellerName: widget.selectedInfluencer.name,
+        sellerPhoto: widget.selectedInfluencer.profilePhoto,
         boughtOn: Timestamp.now(),
         slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime] != null
             ? widget.selectedInfluencer.timeSlots['ttSlots'][sTime]
@@ -249,6 +251,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           isBought: true,
           buyerId: userProvider.getUser.uid,
           sellerId: widget.selectedInfluencer.uid,
+          sellerName: widget.selectedInfluencer.name,
+          sellerPhoto: widget.selectedInfluencer.profilePhoto,
           buyerName: userProvider.getUser.name,
           buyerPhoto: userProvider.getUser.profilePhoto,
           currency: infReceived,
@@ -262,6 +266,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           isBought: true,
           buyerId: userProvider.getUser.uid,
           sellerId: widget.selectedInfluencer.uid,
+          sellerName: widget.selectedInfluencer.name,
+          sellerPhoto: widget.selectedInfluencer.profilePhoto,
           buyerName: userProvider.getUser.name,
           buyerPhoto: userProvider.getUser.profilePhoto,
           currency: infReceived,

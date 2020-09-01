@@ -20,6 +20,7 @@ import 'package:fv/screens/profile_screen.dart';
 import 'package:fv/screens/registerChoice.dart';
 import 'package:fv/screens/search_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
+import 'package:fv/screens/userOrders.dart';
 import 'package:fv/screens/verifyExpert.dart';
 import 'package:fv/utils/appleSignInAvailable.dart';
 import 'package:fv/utils/universal_variables.dart';
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
           '/onboard_user_screen': (context) => OnBoardUser(),
           '/onboard_expert_screen': (context) => OnBoardExpert(),
           '/verify_expert_screen': (context) => VerifyExpert(),
+          '/user_orders_screen': (context) => UserOrders(),
         },
         theme: ThemeData(
           primaryColor: UniversalVariables.gold2,

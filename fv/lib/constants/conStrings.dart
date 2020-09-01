@@ -25,4 +25,8 @@ class ConStrings {
 
   static const String bookAvailable = "BOOK";
   static const String bookUnavailable = "BOOKED";
+
+  static const String ORDERS = "ORDERS";
+  static const String VIDEOCALLS = "Videocalls";
+  static const String MESSAGES = "Messages";
 }

@@ -55,6 +55,17 @@ class TextStyles {
     //   ),
     // ],
   );
+  static final TextStyle ordersStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.grey2,
+  );
+
+  static final TextStyle selectedOrdersStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.blackColor,
+  );
 
   static final TextStyle editHeadingName = TextStyle(
     fontSize: 15,
