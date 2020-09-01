@@ -199,13 +199,12 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
       int _generatePrice() {
         int basePrice = widget.selectedInfluencer.answerPrice3;
-        print("basePrice: ${widget.selectedInfluencer.answerPrice3}");
 
-        switch (widget.selectedInfluencer.timeSlots['ttDurations'][sDuration]) {
+        switch (sDuration) {
           case 1:
             {
               setState(() {
-                orderPrice = basePrice * 1.333.ceil();
+                orderPrice = (basePrice * 1.333).ceil();
               });
             }
             break;
@@ -213,7 +212,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           case 2:
             {
               setState(() {
-                orderPrice = basePrice * 2.667.ceil();
+                orderPrice = (basePrice * 2.667).ceil();
               });
             }
             break;
@@ -229,13 +228,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         return orderPrice;
       }
 
-      print(
-          "sDuration:${widget.selectedInfluencer.timeSlots['ttDurations'][1]}");
-
       Order _order = Order(
-        uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime] != null
-            ? widget.selectedInfluencer.timeSlots['ttIds'][sTime]
-            : null,
+        uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime],
         isBought: true,
         buyerId: userProvider.getUser.uid,
         buyerName: userProvider.getUser.name,
@@ -251,29 +245,32 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       );
 
       Order _sellerOrder = Order(
-          uid: widget.selectedInfluencer.uid,
+          uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime],
           isBought: true,
           buyerId: userProvider.getUser.uid,
           sellerId: widget.selectedInfluencer.uid,
+          buyerName: userProvider.getUser.name,
+          buyerPhoto: userProvider.getUser.profilePhoto,
+          currency: infReceived,
           boughtOn: Timestamp.now(),
           slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
           slotDuration: sDuration,
           price: _generatePrice());
 
       Order _buyerOrder = Order(
-          uid: userProvider.getUser.uid,
+          uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime],
           isBought: true,
           buyerId: userProvider.getUser.uid,
           sellerId: widget.selectedInfluencer.uid,
+          buyerName: userProvider.getUser.name,
+          buyerPhoto: userProvider.getUser.profilePhoto,
+          currency: infReceived,
           boughtOn: Timestamp.now(),
           slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
           slotDuration: sDuration,
           price: _generatePrice());
-      if (widget.selectedInfluencer.timeSlots['ttSlots'][sTime] != null &&
-          widget.selectedInfluencer.timeSlots['ttDurations'][sDuration] !=
-              null) {
-        _orderMethods.addOrderToDb(_order);
-      }
+
+      _orderMethods.addOrderToDb(_order);
       _orderMethods.addOrderToSellerDb(_sellerOrder);
       _orderMethods.addOrderToBuyerDb(_buyerOrder);
     }

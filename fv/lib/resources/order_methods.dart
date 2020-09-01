@@ -22,25 +22,18 @@ class OrderMethods {
 
 //for faveez use
   Future<void> addOrderToDb(Order order) async {
-    print("popdgvo");
     var map = order.toMap();
-    _firestore.collection(ORDER_COLLECTION).document(order.uid).setData(map);
+    _firestore.collection(ORDER_COLLECTION).document().setData(map);
   }
 
   Future<void> addOrderToSellerDb(Order order) async {
     var map = order.toMap();
-    _firestore
-        .collection(SELLER_ORDER_COLLECTION)
-        .document(order.uid)
-        .setData(map);
+    _firestore.collection(SELLER_ORDER_COLLECTION).document().setData(map);
   }
 
   Future<void> addOrderToBuyerDb(Order order) async {
     var map = order.toMap();
-    _firestore
-        .collection(BUYER_ORDER_COLLECTION)
-        .document(order.uid)
-        .setData(map);
+    _firestore.collection(BUYER_ORDER_COLLECTION).document().setData(map);
   }
 
   Stream<QuerySnapshot> fetchSellerOrders({String userId}) => _orderCollection

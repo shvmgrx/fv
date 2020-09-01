@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Order  {
+class Order {
   String uid;
-
   bool isBought;
   String buyerId;
   String buyerName;
@@ -14,25 +13,22 @@ class Order  {
   int price;
   int currency;
 
-  Order({
-    this.uid,
-    this.isBought,
-    this.buyerId,
-    this.buyerName,
-    this.buyerPhoto,
-    this.sellerId,
-    this.boughtOn,
-    this.slotTime,
-    this.slotDuration,
-    this.price,
-    this.currency
-
-  });
+  Order(
+      {this.uid,
+      this.isBought,
+      this.buyerId,
+      this.buyerName,
+      this.buyerPhoto,
+      this.sellerId,
+      this.boughtOn,
+      this.slotTime,
+      this.slotDuration,
+      this.price,
+      this.currency});
 
   Map toMap() {
-    
     var data = Map<String, dynamic>();
-    data['seller_id'] = this.uid;
+    data['uid'] = this.uid;
 
     data['is_bought'] = this.isBought;
     data['buyer_id'] = this.buyerId;
@@ -48,7 +44,7 @@ class Order  {
   }
 
   Order.fromMap(Map<String, dynamic> mapData) {
-    this.uid = mapData['seller_id'];
+    this.uid = mapData['uid'];
 
     this.isBought = mapData["is_bought"];
     this.buyerId = mapData['buyer_id'];
