@@ -14,39 +14,36 @@ class Utils {
   }
 
   static String generateRandomOrderId() {
-
     int r1 = Random().nextInt(9999);
-    var r2 =DateTime.now().hashCode.toRadixString(36);
+    var r2 = DateTime.now().hashCode.toRadixString(36);
     int r3 = Random().nextInt(9999);
-    var r4 =DateTime.now().hashCode.toRadixString(20);
+    var r4 = DateTime.now().hashCode.toRadixString(20);
     int r5 = Random().nextInt(9999);
-    var r6 =DateTime.now().hashCode.toRadixString(36);
+    var r6 = DateTime.now().hashCode.toRadixString(36);
 
-    
     return "$r1$r2$r3$r4$r5$r6";
   }
 
-    static String getDuration(int duration) {
+  static String getDuration(int duration) {
+    String timeDuration = ConStrings.timeDuration;
 
-    String timeDuration= ConStrings.timeDuration;  
-
-    if(duration == 1){
-      timeDuration = ConStrings.timeDuration1; 
+    if (duration == 1) {
+      timeDuration = ConStrings.timeDuration1;
     }
-    if(duration == 2){
-      timeDuration = ConStrings.timeDuration2; 
+    if (duration == 2) {
+      timeDuration = ConStrings.timeDuration2;
     }
     return timeDuration;
   }
 
-        String randomString() {
-        var rand = new Random();
-        var codeUnits = new List.generate(9, (index) {
-          return rand.nextInt(33) + 89;
-        });
+  String randomString() {
+    var rand = new Random();
+    var codeUnits = new List.generate(9, (index) {
+      return rand.nextInt(33) + 89;
+    });
 
-        return new String.fromCharCodes(codeUnits);
-      }
+    return new String.fromCharCodes(codeUnits);
+  }
 
   static String getInitials(String email) {
     List<String> nameSplit = email.split(" ");
@@ -54,25 +51,22 @@ class Utils {
     return firstNameInitial;
   }
 
-
-     static Future<File> pickImage({@required ImageSource source}) async {
+  static Future<File> pickImage({@required ImageSource source}) async {
     //   print("1a");
     File _image;
     final iPicker = ImagePicker();
- //    print("21a");
+    //    print("21a");
 
- 
-    final pickedFile = await iPicker.getImage(source: ImageSource.gallery, maxWidth: 700.0, maxHeight: 700.0);
+    final pickedFile = await iPicker.getImage(
+        source: ImageSource.gallery, maxWidth: 700.0, maxHeight: 700.0);
     // print("31a");
 
     _image = File(pickedFile.path);
- //print("4a");
+    //print("4a");
     return _image;
   }
 
-
-
- static int stateToNum(UserState userState) {
+  static int stateToNum(UserState userState) {
     switch (userState) {
       case UserState.Offline:
         return 0;
@@ -86,7 +80,7 @@ class Utils {
   }
 
   static UserState numToState(int number) {
-     switch (number) {
+    switch (number) {
       case 0:
         return UserState.Offline;
 

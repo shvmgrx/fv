@@ -33,6 +33,12 @@ class _OrderTileState extends State<OrderTile> {
   bool arrowUp = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -78,44 +84,14 @@ class _OrderTileState extends State<OrderTile> {
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 120.0,
-                              height: 120.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "https://images.pexels.com/photos/5119214/pexels-photo-5119214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text("inf name"),
-                            ),
-                          ],
+                          children: [widget.sellerPhoto, widget.sellerName],
                         ),
                       ),
                       Container(
-                        //add image here
-
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
-                              width: 120.0,
-                              height: 120.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "https://images.pexels.com/photos/5119214/pexels-photo-5119214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
-                                ),
-                              ),
-                            ),
+                            widget.buyerPhoto,
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text("user name"),

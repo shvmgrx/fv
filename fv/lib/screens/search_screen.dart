@@ -107,55 +107,53 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   buildSuggestions(String query) {
-
-  
- 
-      final List<User> suggestionHashList = (query.isEmpty)
-          ? []
-          : userAllList.where((User user) {
-              String _getHashtags = user.hashtags==null? "none" : user.hashtags.toLowerCase();
-              String _filteredHashtags = _getHashtags.replaceAll("#", "");
-              String _filteredQuery = query.replaceAll("#", "");
-              _filteredQuery = _filteredQuery.toLowerCase();
-              bool matchesHashtags = _filteredHashtags.contains(_filteredQuery);
-              return (matchesHashtags);
-            }).toList();
-
-
-
+    final List<User> suggestionHashList = (query.isEmpty)
+        ? []
+        : userAllList.where((User user) {
+            String _getHashtags =
+                user.hashtags == null ? "none" : user.hashtags.toLowerCase();
+            String _filteredHashtags = _getHashtags.replaceAll("#", "");
+            String _filteredQuery = query.replaceAll("#", "");
+            _filteredQuery = _filteredQuery.toLowerCase();
+            bool matchesHashtags = _filteredHashtags.contains(_filteredQuery);
+            return (matchesHashtags);
+          }).toList();
 
     final List<User> suggestionList = (query.isEmpty)
         ? []
         : userAllList.where((User user) {
-            String _getUsername = user.username==null? "none" : user.username.toLowerCase();          
+            String _getUsername =
+                user.username == null ? "none" : user.username.toLowerCase();
             String _query = query.toLowerCase();
-            String _getName = user.name==null? "none" : user.name.toLowerCase();           
+            String _getName =
+                user.name == null ? "none" : user.name.toLowerCase();
             bool matchesUsername = _getUsername.contains(_query);
             bool matchesName = _getName.contains(_query);
             return (matchesUsername || matchesName);
           }).toList();
 
     return ListView.builder(
-
-      itemCount: suggestionHashList.length>0?suggestionHashList.length:suggestionList.length,
+      itemCount: suggestionHashList.length > 0
+          ? suggestionHashList.length
+          : suggestionList.length,
       itemBuilder: ((context, index) {
         User searchedUser = User(
-            uid: suggestionHashList.length>0?suggestionHashList[index].uid:suggestionList[index].uid,
-            profilePhoto: suggestionHashList.length>0?suggestionHashList[index].profilePhoto:suggestionList[index].profilePhoto,
-            name: suggestionHashList.length>0?suggestionHashList[index].name:suggestionList[index].name,
-            username: suggestionHashList.length>0?suggestionHashList[index].username:suggestionList[index].username);
-
-
-
-
-
-
-
+            uid: suggestionHashList.length > 0
+                ? suggestionHashList[index].uid
+                : suggestionList[index].uid,
+            profilePhoto: suggestionHashList.length > 0
+                ? suggestionHashList[index].profilePhoto
+                : suggestionList[index].profilePhoto,
+            name: suggestionHashList.length > 0
+                ? suggestionHashList[index].name
+                : suggestionList[index].name,
+            username: suggestionHashList.length > 0
+                ? suggestionHashList[index].username
+                : suggestionList[index].username);
 
         return CustomTile(
           mini: false,
           onTap: () {
-
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) =>
                     InfluencerDetails(selectedInfluencer: searchedUser)));

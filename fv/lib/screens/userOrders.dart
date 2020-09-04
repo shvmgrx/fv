@@ -236,7 +236,36 @@ class _UserOrderseState extends State<UserOrders> {
             ],
           ),
           SizedBox(height: 30),
-          OrderTile()
+          OrderTile(
+            sellerPhoto: Container(
+              width: 120.0,
+              height: 120.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      "https://images.pexels.com/photos/1933873/pexels-photo-1933873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                ),
+              ),
+            ),
+            sellerName: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text("inf name"),
+            ),
+            buyerPhoto: Container(
+              width: 120.0,
+              height: 120.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      "https://images.pexels.com/photos/5119214/pexels-photo-5119214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
