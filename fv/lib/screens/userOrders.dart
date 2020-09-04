@@ -79,18 +79,7 @@ class _UserOrderseState extends State<UserOrders> {
     });
   }
 
-  // buildSuggestions(String query) {
-  //   final List<User> suggestionHashList = (query.isEmpty)
-  //       ? []
-  //       : userAllList.where((User user) {
-  //           String _getHashtags =
-  //               user.hashtags == null ? "none" : user.hashtags.toLowerCase();
-  //           String _filteredHashtags = _getHashtags.replaceAll("#", "");
-  //           String _filteredQuery = query.replaceAll("#", "");
-  //           _filteredQuery = _filteredQuery.toLowerCase();
-  //           bool matchesHashtags = _filteredHashtags.contains(_filteredQuery);
-  //           return (matchesHashtags);
-  //         }).toList();
+  // buildOrders(String query) {
 
   //   final List<User> suggestionList = (query.isEmpty)
   //       ? []
@@ -263,6 +252,38 @@ class _UserOrderseState extends State<UserOrders> {
                   image: NetworkImage(
                       "https://images.pexels.com/photos/5119214/pexels-photo-5119214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
                 ),
+              ),
+            ),
+            buyerName: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text("user name"),
+            ),
+            slotTime: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "August 20, 20:30",
+                style: TextStyles.hintTextStyle,
+              ),
+            ),
+            slotDuration: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "15 mins",
+                style: TextStyles.hintTextStyle,
+              ),
+            ),
+            orderId: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "dfvb34r68wfnu3378g4",
+                style: TextStyles.hintTextStyle,
+              ),
+            ),
+            price: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "#15",
+                style: TextStyles.hintTextStyle,
               ),
             ),
           )

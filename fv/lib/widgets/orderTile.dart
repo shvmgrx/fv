@@ -10,7 +10,6 @@ class OrderTile extends StatefulWidget {
   final Widget orderId;
   final Widget slotTime;
   final Widget slotDuration;
-  final Widget currency;
   final Widget price;
 
   OrderTile({
@@ -21,7 +20,6 @@ class OrderTile extends StatefulWidget {
     this.orderId,
     this.slotTime,
     this.slotDuration,
-    this.currency,
     this.price,
   });
 
@@ -90,13 +88,7 @@ class _OrderTileState extends State<OrderTile> {
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            widget.buyerPhoto,
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text("user name"),
-                            ),
-                          ],
+                          children: [widget.buyerPhoto, widget.buyerName],
                         ),
                       )
                     ],
@@ -112,13 +104,7 @@ class _OrderTileState extends State<OrderTile> {
                           Text("Time:",
                               style: TextStyles.orderDetailsStyle,
                               textAlign: TextAlign.left),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              "August 20, 20:30",
-                              style: TextStyles.hintTextStyle,
-                            ),
-                          ),
+                          widget.slotTime
                         ],
                       ),
                     ),
@@ -152,13 +138,7 @@ class _OrderTileState extends State<OrderTile> {
                         Text("Duration:",
                             style: TextStyles.orderDetailsStyle,
                             textAlign: TextAlign.left),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            "15 mins",
-                            style: TextStyles.hintTextStyle,
-                          ),
-                        ),
+                        widget.slotDuration
                       ],
                     ),
                   ),
@@ -172,13 +152,7 @@ class _OrderTileState extends State<OrderTile> {
                         Text("Price:",
                             style: TextStyles.orderDetailsStyle,
                             textAlign: TextAlign.left),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            "#15",
-                            style: TextStyles.hintTextStyle,
-                          ),
-                        ),
+                        widget.price
                       ],
                     ),
                   ),
@@ -192,13 +166,7 @@ class _OrderTileState extends State<OrderTile> {
                         Text("Order ID:",
                             style: TextStyles.orderDetailsStyle,
                             textAlign: TextAlign.left),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            "dfvb34r68wfnu3378g4",
-                            style: TextStyles.hintTextStyle,
-                          ),
-                        ),
+                        widget.orderId
                       ],
                     ),
                   ),
