@@ -796,7 +796,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS2
                                   Visibility(
-                                    visible: (ts2 != "nullDate"),
+                                    visible: showts2,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -878,7 +878,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS3
                                   Visibility(
-                                    visible: (ts3 != "nullDate"),
+                                    visible: showts3,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -959,7 +959,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS4
                                   Visibility(
-                                    visible: (ts4 != "nullDate"),
+                                    visible: showts4,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1040,7 +1040,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS5
                                   Visibility(
-                                    visible: (ts5 != "nullDate"),
+                                    visible: showts5,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1121,7 +1121,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS6
                                   Visibility(
-                                    visible: (ts6 != "nullDate"),
+                                    visible: showts6,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1202,7 +1202,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS7
                                   Visibility(
-                                    visible: (ts7 != "nullDate"),
+                                    visible: showts7,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fv/models/order.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/message.dart';
@@ -19,7 +20,11 @@ class FirebaseMethods {
   static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
 
-  
+  static final CollectionReference _buyerCollection =
+      _firestore.collection(BUYER_ORDER_COLLECTION);
+
+  static final CollectionReference _sellerCollection =
+      _firestore.collection(SELLER_ORDER_COLLECTION);
 
   final CollectionReference _messageCollection =
       _firestore.collection(MESSAGES_COLLECTION);
@@ -70,8 +75,6 @@ class FirebaseMethods {
     return user;
   }
 
-  
-
   Future<bool> authenticateUser(FirebaseUser user) async {
     QuerySnapshot result = await firestore
         .collection(USERS_COLLECTION)
@@ -113,63 +116,59 @@ class FirebaseMethods {
   }
 
   Future<void> updateProfiletoDb(
-    FirebaseUser currentUser,
-    String name,
-    String email,
-    String username,
-    String status,
-    int state,
-    String profilePhoto,
-    int answerPrice1,
-    int answerPrice2,
-    int answerPrice3,
-    int answerDuration,
-    String bio,
-    bool isInfCert,
-    int maxQuestionCharcount,
-    int rating,
-    String category,
-    int reviews,
-    int infWorth,
-    int infSent,
-    int infReceived,
-    bool isInfluencer,
-    String hashtags,
-    Map timeSlots
-  ) async {
+      FirebaseUser currentUser,
+      String name,
+      String email,
+      String username,
+      String status,
+      int state,
+      String profilePhoto,
+      int answerPrice1,
+      int answerPrice2,
+      int answerPrice3,
+      int answerDuration,
+      String bio,
+      bool isInfCert,
+      int maxQuestionCharcount,
+      int rating,
+      String category,
+      int reviews,
+      int infWorth,
+      int infSent,
+      int infReceived,
+      bool isInfluencer,
+      String hashtags,
+      Map timeSlots) async {
     user = User(
-      uid: currentUser.uid,
-      name: name,
-      email:email,
-      username: username,
-      status:status,
-      state:state,
-      profilePhoto: profilePhoto,
-      answerPrice1: answerPrice1,
-      answerPrice2: answerPrice2,
-      answerPrice3: answerPrice3,
-      answerDuration: answerDuration,
-      bio: bio,
-      isInfCert: isInfCert,
-      maxQuestionCharcount: maxQuestionCharcount,
-      rating: rating,
-      category: category,
-      reviews: reviews,
-      infWorth: infWorth,
-      infSent: infSent,
-      infReceived: infReceived,
-      isInfluencer: isInfluencer,
-      hashtags: hashtags,
-      timeSlots:timeSlots
-    );
+        uid: currentUser.uid,
+        name: name,
+        email: email,
+        username: username,
+        status: status,
+        state: state,
+        profilePhoto: profilePhoto,
+        answerPrice1: answerPrice1,
+        answerPrice2: answerPrice2,
+        answerPrice3: answerPrice3,
+        answerDuration: answerDuration,
+        bio: bio,
+        isInfCert: isInfCert,
+        maxQuestionCharcount: maxQuestionCharcount,
+        rating: rating,
+        category: category,
+        reviews: reviews,
+        infWorth: infWorth,
+        infSent: infSent,
+        infReceived: infReceived,
+        isInfluencer: isInfluencer,
+        hashtags: hashtags,
+        timeSlots: timeSlots);
 
     firestore
         .collection(USERS_COLLECTION)
         .document(currentUser.uid)
         .updateData(user.toMap(user));
   }
-
-
 
   //void setImageMsg(String url, String receiverId, String senderId) async {
   void setProfilePhoto(String url, FirebaseUser currentUser) async {
@@ -181,8 +180,6 @@ class FirebaseMethods {
         .document(currentUser.uid)
         .updateData(user.toMap(user));
   }
-
-  
 
   Future<void> signOut() async {
     print("signed out start");
@@ -204,17 +201,14 @@ class FirebaseMethods {
     return userList;
   }
 
-    Future<List<String>> fetchFvCodes() async {
+  Future<List<String>> fetchFvCodes() async {
     List<String> fzCodes = List<String>();
 
     QuerySnapshot querySnapshot =
         await firestore.collection(FZCODES_COLLECTION).getDocuments();
     for (var i = 0; i < querySnapshot.documents.length; i++) {
-   
-       fzCodes.add(querySnapshot.documents[i].documentID);
-      
+      fzCodes.add(querySnapshot.documents[i].documentID);
     }
-
 
     return fzCodes;
   }
@@ -232,6 +226,19 @@ class FirebaseMethods {
       }
     }
     return allList;
+  }
+
+  Future<List<Order>> fetchBuyerOrders(String loggedUserId) async {
+    List<Order> orderList = List<Order>();
+
+    var querySnapshot = await firestore
+        .collection(ORDER_COLLECTION)
+        .where("buyer_id", isEqualTo: loggedUserId)
+        .getDocuments();
+
+    print(querySnapshot.documents[0].data['buyer_name']);
+
+    return orderList;
   }
 
   Future<List<User>> fetchFeaturedInfluencers(FirebaseUser currentUser) async {

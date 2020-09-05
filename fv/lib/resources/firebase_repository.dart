@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fv/models/message.dart';
+import 'package:fv/models/order.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/resources/firebase_methods.dart';
@@ -24,32 +25,30 @@ class FirebaseRepository {
   Future<void> fetchLoggedUser(FirebaseUser user) =>
       _firebaseMethods.fetchLoggedUser(user);
 
-      
   Future<void> updateProfiletoDb(
-    FirebaseUser user,
-    String name,
-    String email,
-    String username,
-    String status,
-    int state,
-    String profilePhoto,
-    int answerPrice1,
-    int answerPrice2,
-    int answerPrice3,
-    int answerDuration,
-    String bio,
-    bool isInfCert,
-    int maxQuestionCharcount,
-    int rating,
-    String category,
-    int reviews,
-    int infWorth,
-    int infSent,
-    int infReceived,
-    bool isInfluencer,
-    String hashtags,
-    Map timeSlots
-  ) =>
+          FirebaseUser user,
+          String name,
+          String email,
+          String username,
+          String status,
+          int state,
+          String profilePhoto,
+          int answerPrice1,
+          int answerPrice2,
+          int answerPrice3,
+          int answerDuration,
+          String bio,
+          bool isInfCert,
+          int maxQuestionCharcount,
+          int rating,
+          String category,
+          int reviews,
+          int infWorth,
+          int infSent,
+          int infReceived,
+          bool isInfluencer,
+          String hashtags,
+          Map timeSlots) =>
       _firebaseMethods.updateProfiletoDb(
           user,
           name,
@@ -80,8 +79,10 @@ class FirebaseRepository {
   Future<List<User>> fetchAllUsers(FirebaseUser user) =>
       _firebaseMethods.fetchAllUsers(user);
 
-  Future<List<String>> fetchFvCodes() =>
-      _firebaseMethods.fetchFvCodes();
+  Future<List<Order>> fetchBuyerOrders(String loggedUserId) =>
+      _firebaseMethods.fetchBuyerOrders(loggedUserId);
+
+  Future<List<String>> fetchFvCodes() => _firebaseMethods.fetchFvCodes();
 
   Future<List<User>> fetchAllInfluencers(FirebaseUser user) =>
       _firebaseMethods.fetchAllInfluencers(user);

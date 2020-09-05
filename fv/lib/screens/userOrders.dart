@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
+import 'package:fv/constants/strings.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
+import 'package:fv/resources/order_methods.dart';
 import 'package:fv/screens/home_screen.dart';
 import 'package:fv/models/influencer.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,8 +25,14 @@ class _UserOrderseState extends State<UserOrders> {
   final influencers = allInfluencers;
 
   FirebaseRepository _repository = FirebaseRepository();
+
+  final OrderMethods _orderMethods = OrderMethods();
+
+  ScrollController _oController = ScrollController();
+
   FirebaseUser loggedUser;
   String loggedUserDisplayName;
+  String loggedUserUID;
 
   String loggedUserUserName;
   String loggedUserProfilePic;
@@ -42,6 +51,7 @@ class _UserOrderseState extends State<UserOrders> {
       _repository.fetchLoggedUser(user).then((dynamic loggedUser) {
         setState(() {
           loggedUserDisplayName = loggedUser['name'];
+          loggedUserUID = loggedUser['uid'];
 
           loggedUserUserName = loggedUser['username'];
 
@@ -79,9 +89,9 @@ class _UserOrderseState extends State<UserOrders> {
     });
   }
 
-  // buildOrders(String query) {
+  //   buildOrders(loggedUserUID) {
 
-  //   final List<User> suggestionList = (query.isEmpty)
+  //   final List<> suggestionList = (loggedUserUID.isEmpty)
   //       ? []
   //       : userAllList.where((User user) {
   //           String _getUsername =
@@ -116,9 +126,9 @@ class _UserOrderseState extends State<UserOrders> {
   //       return CustomTile(
   //         mini: false,
   //         onTap: () {
-  //           // Navigator.of(context).push(MaterialPageRoute(
-  //           //     builder: (context) =>
-  //           //         InfluencerDetails(selectedInfluencer: searchedUser)));
+  //           Navigator.of(context).push(MaterialPageRoute(
+  //               builder: (context) =>
+  //                   InfluencerDetails(selectedInfluencer: searchedUser)));
   //         },
   //         leading: CircleAvatar(
   //           backgroundImage: NetworkImage("${searchedUser.profilePhoto}"),
@@ -139,6 +149,34 @@ class _UserOrderseState extends State<UserOrders> {
   //     }),
   //   );
   // }
+
+  Widget oList() {
+    print("startoooooo");
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection("orders")
+          // .document(loggedUserUID)
+          // .collection(loggedUserUID)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.data == null) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        print("TABLA: ${snapshot.data.documents}");
+
+        return ListView.builder(
+          padding: EdgeInsets.all(10),
+          itemCount: snapshot.data.documents.length,
+          reverse: true,
+          controller: _oController,
+          itemBuilder: (context, index) {
+            return Text("${snapshot.data}");
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,9 +217,11 @@ class _UserOrderseState extends State<UserOrders> {
                 child: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
-                    color: UniversalVariables.backgroundGrey,
+                    color: UniversalVariables.grey2,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    _repository.fetchBuyerOrders(loggedUserUID);
+                  },
                 ),
               ),
             ],
@@ -286,7 +326,10 @@ class _UserOrderseState extends State<UserOrders> {
                 style: TextStyles.hintTextStyle,
               ),
             ),
-          )
+          ),
+          Flexible(
+            child: oList(),
+          ),
         ],
       ),
     );
