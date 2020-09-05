@@ -28,12 +28,20 @@ class OrderMethods {
 
   Future<void> addOrderToSellerDb(Order order) async {
     var map = order.toMap();
-    _firestore.collection(SELLER_ORDER_COLLECTION).document().setData(map);
+    _firestore
+        .collection(SELLER_ORDER_COLLECTION)
+        .document(order.sellerId)
+        .collection(order.uid)
+        .add(map);
   }
 
   Future<void> addOrderToBuyerDb(Order order) async {
     var map = order.toMap();
-    _firestore.collection(BUYER_ORDER_COLLECTION).document().setData(map);
+    _firestore
+        .collection(BUYER_ORDER_COLLECTION)
+        .document(order.buyerId)
+        .collection(order.uid)
+        .add(map);
   }
 
   Stream<QuerySnapshot> fetchSellerOrders({String userId}) => _orderCollection

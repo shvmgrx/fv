@@ -171,6 +171,97 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           ? "nullDate"
           : dateMaker(widget.selectedInfluencer.timeSlots['ttSlots'][6]);
 
+      if (ts1 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t1 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t1.isBefore(now)) {
+          showts1 = false;
+        } else if (now.isBefore(t1)) {
+          showts1 = true;
+        }
+      }
+
+      if (ts2 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t2 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t2.isBefore(now)) {
+          showts2 = false;
+        } else if (now.isBefore(t2)) {
+          showts2 = true;
+        }
+      }
+
+      if (ts3 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t3 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t3.isBefore(now)) {
+          showts3 = false;
+        } else if (now.isBefore(t3)) {
+          showts3 = true;
+        }
+      }
+
+      if (ts4 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t4 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t4.isBefore(now)) {
+          showts4 = false;
+        } else if (now.isBefore(t4)) {
+          showts4 = true;
+        }
+      }
+
+      if (ts5 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t5 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t5.isBefore(now)) {
+          showts5 = false;
+        } else if (now.isBefore(t5)) {
+          showts5 = true;
+        }
+      }
+
+      if (ts6 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t6 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t6.isBefore(now)) {
+          showts6 = false;
+        } else if (now.isBefore(t6)) {
+          showts6 = true;
+        }
+      }
+
+      if (ts7 != "nullDate") {
+        var now = DateTime.now();
+
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t7 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+        if (t7.isBefore(now)) {
+          showts7 = false;
+        } else if (now.isBefore(t7)) {
+          showts7 = true;
+        }
+      }
+
       ts1Duration = widget.selectedInfluencer.timeSlots == null
           ? 0
           : widget.selectedInfluencer.timeSlots['ttDurations'][0];
@@ -277,7 +368,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           price: _generatePrice());
 
       _orderMethods.addOrderToDb(_order);
-      _orderMethods.addOrderToSellerDb(_sellerOrder);
+      _orderMethods.addOrderToSellerDb(
+        _sellerOrder,
+      );
       _orderMethods.addOrderToBuyerDb(_buyerOrder);
     }
 
@@ -622,7 +715,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                 children: <Widget>[
                                   //TS1
                                   Visibility(
-                                    // visible: (ts1 != "nullDate"),
+                                    visible: showts1,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -703,7 +796,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS2
                                   Visibility(
-                                    // visible: (ts2 != "nullDate"),
+                                    visible: (ts2 != "nullDate"),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -785,7 +878,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS3
                                   Visibility(
-                                    //   visible: (ts3 != "nullDate"),
+                                    visible: (ts3 != "nullDate"),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -866,7 +959,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS4
                                   Visibility(
-                                    //  visible: (ts4 != "nullDate"),
+                                    visible: (ts4 != "nullDate"),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -947,7 +1040,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS5
                                   Visibility(
-                                    //  visible: (ts5 != "nullDate"),
+                                    visible: (ts5 != "nullDate"),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1028,7 +1121,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS6
                                   Visibility(
-                                    //   visible: (ts6 != "nullDate"),
+                                    visible: (ts6 != "nullDate"),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1109,7 +1202,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                   ),
                                   //TS7
                                   Visibility(
-                                    //   visible: (ts7 != "nullDate"),
+                                    visible: (ts7 != "nullDate"),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
