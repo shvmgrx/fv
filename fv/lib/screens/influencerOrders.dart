@@ -12,17 +12,18 @@ import 'package:fv/screens/home_screen.dart';
 import 'package:fv/models/influencer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/widgets/influencerOrderTile.dart';
 import 'package:fv/widgets/orderTile.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
-class UserOrders extends StatefulWidget {
+class InfluencerOrders extends StatefulWidget {
   @override
-  _UserOrdersState createState() => _UserOrdersState();
+  _InfluencerOrdersState createState() => _InfluencerOrdersState();
 }
 
-class _UserOrdersState extends State<UserOrders> {
+class _InfluencerOrdersState extends State<InfluencerOrders> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final influencers = allInfluencers;
 
@@ -280,36 +281,25 @@ class _UserOrdersState extends State<UserOrders> {
             ],
           ),
           SizedBox(height: 30),
-          OrderTile(
-            sellerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[0].sellerPhoto}"),
+          InfluencerOrderTile(
+            buyerPhotoName: Row(
+              children: [
+                Container(
+                  width: 40.0,
+                  height: 40.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage("${buyerOrderList[0].buyerPhoto}"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            sellerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[0].sellerName}"),
-            ),
-            buyerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[0].buyerPhoto}"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text("${buyerOrderList[0].buyerName}"),
                 ),
-              ),
-            ),
-            buyerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[0].buyerName}"),
+              ],
             ),
             slotTime: Padding(
               padding: const EdgeInsets.only(left: 8.0),

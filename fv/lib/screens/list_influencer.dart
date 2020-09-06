@@ -271,7 +271,10 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                             onTap: () {
                               setState(() {
                                 paymentPressed = !paymentPressed;
-                                if (paymentPressed) {}
+                                if (paymentPressed) {
+                                  Navigator.pushNamed(
+                                      context, "/influencer_orders_screen");
+                                }
                               });
                             },
                             child: NMButton(

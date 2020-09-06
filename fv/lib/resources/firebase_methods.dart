@@ -240,8 +240,6 @@ class FirebaseMethods {
       }
     }
 
-    print("orderList:${orderList.length}");
-
     return orderList;
   }
 
