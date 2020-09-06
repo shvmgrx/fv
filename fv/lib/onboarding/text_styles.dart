@@ -192,6 +192,20 @@ class TextStyles {
     //   ),
     // ],
   );
+
+  static final TextStyle orderIDStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w300,
+    color: UniversalVariables.grey2,
+    fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: Colors.white30,
+    //   ),
+    // ],
+  );
+
   static final TextStyle orderDetailsStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w300,

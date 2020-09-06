@@ -23,7 +23,7 @@ class OrderMethods {
 //for faveez use
   Future<void> addOrderToDb(Order order) async {
     var map = order.toMap();
-    _firestore.collection(ORDER_COLLECTION).document().setData(map);
+    _firestore.collection(ORDER_COLLECTION).document(order.uid).setData(map);
   }
 
   Future<void> addOrderToSellerDb(Order order) async {

@@ -231,12 +231,30 @@ class FirebaseMethods {
   Future<List<Order>> fetchBuyerOrders(String loggedUserId) async {
     List<Order> orderList = List<Order>();
 
+    var querySnapshot =
+        await firestore.collection(ORDER_COLLECTION).getDocuments();
+
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+      if (querySnapshot.documents[i]['buyer_id'] == loggedUserId) {
+        orderList.add(Order.fromMap(querySnapshot.documents[i].data));
+      }
+    }
+
+    print("orderList:${orderList.length}");
+
+    return orderList;
+  }
+
+  Future<List<Order>> fetchSellerOrders(String loggedUserId) async {
+    print("dfgfdwerfcdf: $loggedUserId");
+    List<Order> orderList = List<Order>();
+
     var querySnapshot = await firestore
         .collection(ORDER_COLLECTION)
-        .where("buyer_id", isEqualTo: loggedUserId)
+        .where("seller_id", isEqualTo: loggedUserId)
         .getDocuments();
 
-    print(querySnapshot.documents[0].data['buyer_name']);
+    print("kfvdvku:${querySnapshot.documents}");
 
     return orderList;
   }
