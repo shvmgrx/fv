@@ -45,7 +45,8 @@ class _UserOrdersState extends State<UserOrders> {
   int loggedUserinfReceived;
   bool loggedUserisInfluencer;
 
-  bool showVideocalls = true;
+  bool showVideocalls = false;
+  bool showPreVideocalls = true;
   bool showMessages = false;
 
   List<Order> buyerOrderList;
@@ -71,24 +72,24 @@ class _UserOrdersState extends State<UserOrders> {
       });
     });
 
-    super.initState();
-
+    if (showVideocalls) {
+      showVideoOrders();
+    }
     _repository.getCurrentUser().then((FirebaseUser user) {
       loggedUserDisplayName = user.displayName;
       loggedUserProfilePic = user.photoUrl;
     });
 
-    // _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
-    //   setState(() {
-    //     buyerOrderList = list;
-    //   });
-    // });
+    _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
+      setState(() {
+        buyerOrderList = list;
+      });
+    });
 
-    pimd();
+    super.initState();
   }
 
-  void pimd() {
-    // print("ginghahahahah: $loggedUserUID");
+  void showVideoOrders() {
     _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
       setState(() {
         buyerOrderList = list;
@@ -201,76 +202,6 @@ class _UserOrdersState extends State<UserOrders> {
     return mins;
   }
 
-  Widget orderMaker(int i) {
-    return buyerOrderList[i] != null
-        ? OrderTile(
-            sellerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[i].sellerPhoto}"),
-                ),
-              ),
-            ),
-            sellerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[i].sellerName}"),
-            ),
-            buyerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[i].buyerPhoto}"),
-                ),
-              ),
-            ),
-            buyerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[i].buyerName}"),
-            ),
-            slotTime: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${dateMaker(buyerOrderList[i].slotTime)}",
-                style: TextStyles.hintTextStyle,
-              ),
-            ),
-            slotDuration: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${durationMaker(buyerOrderList[i].slotDuration)} mins",
-                style: TextStyles.hintTextStyle,
-              ),
-            ),
-            orderId: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${buyerOrderList[i].uid}",
-                style: TextStyles.orderIDStyle,
-              ),
-            ),
-            price: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: buyerOrderList[i].currency == 0
-                  ? Text(
-                      "\$ ${buyerOrderList[i].price}",
-                      style: TextStyles.hintTextStyle,
-                    )
-                  : Text(
-                      "€ ${buyerOrderList[i].price}",
-                      style: TextStyles.hintTextStyle,
-                    ),
-            ),
-          )
-        : Container();
-  }
-
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -313,7 +244,7 @@ class _UserOrdersState extends State<UserOrders> {
                     color: UniversalVariables.grey2,
                   ),
                   onPressed: () {
-                    pimd();
+                    showVideoOrders();
                   },
                 ),
               ),
@@ -331,6 +262,10 @@ class _UserOrdersState extends State<UserOrders> {
                       showVideocalls = true;
                       showMessages = false;
                     });
+
+                    if (showVideocalls) {
+                      showVideoOrders();
+                    }
                   },
                   child: Text(ConStrings.VIDEOCALLS,
                       style: showVideocalls
@@ -357,9 +292,70 @@ class _UserOrdersState extends State<UserOrders> {
               ),
             ],
           ),
-          SizedBox(height: 30),
-          // orderMaker(i);
-          getOrderWidgets(buyerOrderList),
+          SizedBox(height: screenHeight * 0.04),
+          Visibility(
+            visible: showPreVideocalls,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      bottomLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                      bottomRight: Radius.circular(25.0),
+                    ),
+                    color: UniversalVariables.white2,
+                  ),
+                  height: screenHeight * 0.45,
+                  width: screenWidth * 0.9,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Icon(
+                          CupertinoIcons.video_camera,
+                          color: UniversalVariables.gold2,
+                          size: screenHeight * 0.08,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(ConStrings.VIDEOCALLS_DETAIL,
+                            style: TextStyles.fvCodeHeading,
+                            textAlign: TextAlign.center),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Expanded(
+                          // flex: 3,
+                          child: OutlineButton(
+                            onPressed: () => {
+                              setState(() {
+                                showPreVideocalls = false;
+                                showVideocalls = true;
+                                showMessages = false;
+                              }),
+                              showVideoOrders()
+                            },
+                            child: Text(
+                              ConStrings.SHOW_VIDEOCALLS,
+                              style: TextStyles.editHeadingName,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: showVideocalls, child: getOrderWidgets(buyerOrderList)),
           // OrderTile(
           //   sellerPhoto: Container(
           //     width: 120.0,

@@ -29,4 +29,12 @@ class ConStrings {
   static const String ORDERS = "ORDERS";
   static const String VIDEOCALLS = "Videocalls";
   static const String MESSAGES = "Messages";
+
+  static const String VIDEOCALLS_DETAIL =
+      "Your VideoCall orders will be displayed here.";
+  static const String MESSAGES_DETAIL =
+      "Your Messages orders will be displayed here.";
+
+  static const String SHOW_VIDEOCALLS = "Show Videocalls";
+  static const String SHOW_MESSAGES = "Show Messages";
 }
