@@ -78,15 +78,20 @@ class _UserOrdersState extends State<UserOrders> {
       loggedUserProfilePic = user.photoUrl;
     });
 
+    // _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
+    //   setState(() {
+    //     buyerOrderList = list;
+    //   });
+    // });
+
+    pimd();
+  }
+
+  void pimd() {
+    // print("ginghahahahah: $loggedUserUID");
     _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
       setState(() {
         buyerOrderList = list;
-        print(list);
-        for (var i = 0; i < list.length; i++) {
-          buyerOrderList.add(list[i]);
-
-          print("ghg: ${list[i].buyerName}");
-        }
       });
     });
   }
@@ -101,6 +106,79 @@ class _UserOrdersState extends State<UserOrders> {
       var nullDate = "nullDate";
       return nullDate;
     }
+  }
+
+  Widget getOrderWidgets(List<Order> buyerOrderList) {
+    List<Widget> list = new List<Widget>();
+
+    for (var i = 0; i < buyerOrderList.length; i++) {
+      list.add(OrderTile(
+        sellerPhoto: Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage("${buyerOrderList[i].sellerPhoto}"),
+            ),
+          ),
+        ),
+        sellerName: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text("${buyerOrderList[i].sellerName}"),
+        ),
+        buyerPhoto: Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage("${buyerOrderList[i].buyerPhoto}"),
+            ),
+          ),
+        ),
+        buyerName: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text("${buyerOrderList[i].buyerName}"),
+        ),
+        slotTime: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            "${dateMaker(buyerOrderList[i].slotTime)}",
+            style: TextStyles.hintTextStyle,
+          ),
+        ),
+        slotDuration: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            "${durationMaker(buyerOrderList[i].slotDuration)} mins",
+            style: TextStyles.hintTextStyle,
+          ),
+        ),
+        orderId: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            "${buyerOrderList[i].uid}",
+            style: TextStyles.orderIDStyle,
+          ),
+        ),
+        price: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: buyerOrderList[i].currency == 0
+              ? Text(
+                  "\$ ${buyerOrderList[i].price}",
+                  style: TextStyles.hintTextStyle,
+                )
+              : Text(
+                  "€ ${buyerOrderList[i].price}",
+                  style: TextStyles.hintTextStyle,
+                ),
+        ),
+      ));
+    }
+    return new Column(children: list);
   }
 
   int durationMaker(int durationType) {
@@ -235,7 +313,7 @@ class _UserOrdersState extends State<UserOrders> {
                     color: UniversalVariables.grey2,
                   ),
                   onPressed: () {
-                    _repository.fetchBuyerOrders(loggedUserUID);
+                    pimd();
                   },
                 ),
               ),
@@ -280,71 +358,73 @@ class _UserOrdersState extends State<UserOrders> {
             ],
           ),
           SizedBox(height: 30),
-          OrderTile(
-            sellerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[0].sellerPhoto}"),
-                ),
-              ),
-            ),
-            sellerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[0].sellerName}"),
-            ),
-            buyerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[0].buyerPhoto}"),
-                ),
-              ),
-            ),
-            buyerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[0].buyerName}"),
-            ),
-            slotTime: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${dateMaker(buyerOrderList[0].slotTime)}",
-                style: TextStyles.hintTextStyle,
-              ),
-            ),
-            slotDuration: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${durationMaker(buyerOrderList[0].slotDuration)} mins",
-                style: TextStyles.hintTextStyle,
-              ),
-            ),
-            orderId: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${buyerOrderList[0].uid}",
-                style: TextStyles.orderIDStyle,
-              ),
-            ),
-            price: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: buyerOrderList[0].currency == 0
-                  ? Text(
-                      "\$ ${buyerOrderList[0].price}",
-                      style: TextStyles.hintTextStyle,
-                    )
-                  : Text(
-                      "€ ${buyerOrderList[0].price}",
-                      style: TextStyles.hintTextStyle,
-                    ),
-            ),
-          )
+          // orderMaker(i);
+          getOrderWidgets(buyerOrderList),
+          // OrderTile(
+          //   sellerPhoto: Container(
+          //     width: 120.0,
+          //     height: 120.0,
+          //     decoration: BoxDecoration(
+          //       shape: BoxShape.circle,
+          //       image: DecorationImage(
+          //         fit: BoxFit.cover,
+          //         image: NetworkImage("${buyerOrderList[0].sellerPhoto}"),
+          //       ),
+          //     ),
+          //   ),
+          //   sellerName: Padding(
+          //     padding: const EdgeInsets.only(top: 8.0),
+          //     child: Text("${buyerOrderList[0].sellerName}"),
+          //   ),
+          //   buyerPhoto: Container(
+          //     width: 120.0,
+          //     height: 120.0,
+          //     decoration: BoxDecoration(
+          //       shape: BoxShape.circle,
+          //       image: DecorationImage(
+          //         fit: BoxFit.cover,
+          //         image: NetworkImage("${buyerOrderList[0].buyerPhoto}"),
+          //       ),
+          //     ),
+          //   ),
+          //   buyerName: Padding(
+          //     padding: const EdgeInsets.only(top: 8.0),
+          //     child: Text("${buyerOrderList[0].buyerName}"),
+          //   ),
+          //   slotTime: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: Text(
+          //       "${dateMaker(buyerOrderList[0].slotTime)}",
+          //       style: TextStyles.hintTextStyle,
+          //     ),
+          //   ),
+          //   slotDuration: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: Text(
+          //       "${durationMaker(buyerOrderList[0].slotDuration)} mins",
+          //       style: TextStyles.hintTextStyle,
+          //     ),
+          //   ),
+          //   orderId: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: Text(
+          //       "${buyerOrderList[0].uid}",
+          //       style: TextStyles.orderIDStyle,
+          //     ),
+          //   ),
+          //   price: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: buyerOrderList[0].currency == 0
+          //         ? Text(
+          //             "\$ ${buyerOrderList[0].price}",
+          //             style: TextStyles.hintTextStyle,
+          //           )
+          //         : Text(
+          //             "€ ${buyerOrderList[0].price}",
+          //             style: TextStyles.hintTextStyle,
+          //           ),
+          //   ),
+          // )
         ],
       ),
     );

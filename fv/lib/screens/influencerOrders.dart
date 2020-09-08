@@ -49,7 +49,7 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   bool showVideocalls = true;
   bool showMessages = false;
 
-  List<Order> buyerOrderList;
+  List<Order> sellerOrderList;
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -79,12 +79,12 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
       loggedUserProfilePic = user.photoUrl;
     });
 
-    _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
+    _repository.fetchSellerOrders(loggedUserUID).then((List<Order> list) {
       setState(() {
-        buyerOrderList = list;
-        print(list);
+        sellerOrderList = list;
+        print("happu: $list");
         for (var i = 0; i < list.length; i++) {
-          buyerOrderList.add(list[i]);
+          sellerOrderList.add(list[i]);
 
           print("ghg: ${list[i].buyerName}");
         }
@@ -125,7 +125,7 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   }
 
   Widget orderMaker(int i) {
-    return buyerOrderList[i] != null
+    return sellerOrderList[i] != null
         ? OrderTile(
             sellerPhoto: Container(
               width: 120.0,
@@ -134,13 +134,13 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[i].sellerPhoto}"),
+                  image: NetworkImage("${sellerOrderList[i].sellerPhoto}"),
                 ),
               ),
             ),
             sellerName: Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[i].sellerName}"),
+              child: Text("${sellerOrderList[i].sellerName}"),
             ),
             buyerPhoto: Container(
               width: 120.0,
@@ -149,44 +149,44 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage("${buyerOrderList[i].buyerPhoto}"),
+                  image: NetworkImage("${sellerOrderList[i].buyerPhoto}"),
                 ),
               ),
             ),
             buyerName: Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${buyerOrderList[i].buyerName}"),
+              child: Text("${sellerOrderList[i].buyerName}"),
             ),
             slotTime: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                "${dateMaker(buyerOrderList[i].slotTime)}",
+                "${dateMaker(sellerOrderList[i].slotTime)}",
                 style: TextStyles.hintTextStyle,
               ),
             ),
             slotDuration: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                "${durationMaker(buyerOrderList[i].slotDuration)} mins",
+                "${durationMaker(sellerOrderList[i].slotDuration)} mins",
                 style: TextStyles.hintTextStyle,
               ),
             ),
             orderId: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                "${buyerOrderList[i].uid}",
+                "${sellerOrderList[i].uid}",
                 style: TextStyles.orderIDStyle,
               ),
             ),
             price: Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: buyerOrderList[i].currency == 0
+              child: sellerOrderList[i].currency == 0
                   ? Text(
-                      "\$ ${buyerOrderList[i].price}",
+                      "\$ ${sellerOrderList[i].price}",
                       style: TextStyles.hintTextStyle,
                     )
                   : Text(
-                      "€ ${buyerOrderList[i].price}",
+                      "€ ${sellerOrderList[i].price}",
                       style: TextStyles.hintTextStyle,
                     ),
             ),
@@ -236,7 +236,7 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                     color: UniversalVariables.grey2,
                   ),
                   onPressed: () {
-                    _repository.fetchBuyerOrders(loggedUserUID);
+                    _repository.fetchSellerOrders(loggedUserUID);
                   },
                 ),
               ),
@@ -281,60 +281,60 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
             ],
           ),
           SizedBox(height: 30),
-          InfluencerOrderTile(
-            buyerPhotoName: Row(
-              children: [
-                Container(
-                  width: 40.0,
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage("${buyerOrderList[0].buyerPhoto}"),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text("${buyerOrderList[0].buyerName}"),
-                ),
-              ],
-            ),
-            slotTime: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${dateMaker(buyerOrderList[0].slotTime)}",
-                style: TextStyles.hintTextStyle,
-              ),
-            ),
-            slotDuration: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${durationMaker(buyerOrderList[0].slotDuration)} mins",
-                style: TextStyles.hintTextStyle,
-              ),
-            ),
-            orderId: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "${buyerOrderList[0].uid}",
-                style: TextStyles.orderIDStyle,
-              ),
-            ),
-            price: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: buyerOrderList[0].currency == 0
-                  ? Text(
-                      "\$ ${buyerOrderList[0].price}",
-                      style: TextStyles.hintTextStyle,
-                    )
-                  : Text(
-                      "€ ${buyerOrderList[0].price}",
-                      style: TextStyles.hintTextStyle,
-                    ),
-            ),
-          )
+          // InfluencerOrderTile(
+          //   buyerPhotoName: Row(
+          //     children: [
+          //       Container(
+          //         width: 40.0,
+          //         height: 40.0,
+          //         decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           image: DecorationImage(
+          //             fit: BoxFit.cover,
+          //             image: NetworkImage("${sellerOrderList[0].buyerPhoto}"),
+          //           ),
+          //         ),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.only(left: 8.0),
+          //         child: Text("${sellerOrderList[0].buyerName}"),
+          //       ),
+          //     ],
+          //   ),
+          //   slotTime: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: Text(
+          //       "${dateMaker(sellerOrderList[0].slotTime)}",
+          //       style: TextStyles.hintTextStyle,
+          //     ),
+          //   ),
+          //   slotDuration: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: Text(
+          //       "${durationMaker(sellerOrderList[0].slotDuration)} mins",
+          //       style: TextStyles.hintTextStyle,
+          //     ),
+          //   ),
+          //   orderId: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: Text(
+          //       "${sellerOrderList[0].uid}",
+          //       style: TextStyles.orderIDStyle,
+          //     ),
+          //   ),
+          //   price: Padding(
+          //     padding: const EdgeInsets.only(left: 8.0),
+          //     child: sellerOrderList[0].currency == 0
+          //         ? Text(
+          //             "\$ ${sellerOrderList[0].price}",
+          //             style: TextStyles.hintTextStyle,
+          //           )
+          //         : Text(
+          //             "€ ${sellerOrderList[0].price}",
+          //             style: TextStyles.hintTextStyle,
+          //           ),
+          //   ),
+          // )
         ],
       ),
     );

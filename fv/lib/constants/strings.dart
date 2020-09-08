@@ -1,8 +1,9 @@
-  
 const String MESSAGES_COLLECTION = "messages";
 const String USERS_COLLECTION = "users";
 const String FZCODES_COLLECTION = "fzCodes";
 const String ORDER_COLLECTION = "orders";
+
+const String INFMONEY_COLLECTION = "infMoney";
 
 const String SELLER_ORDER_COLLECTION = "sellerOrders";
 
