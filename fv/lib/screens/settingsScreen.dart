@@ -1870,7 +1870,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ),
                                                       ),
                                                       child: AbsorbPointer(
-                                                        absorbing: ts4Set,
+                                                        absorbing: ts5Set,
                                                         child: CupertinoPicker(
                                                           backgroundColor:
                                                               UniversalVariables
@@ -2111,7 +2111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ),
                                                       ),
                                                       child: AbsorbPointer(
-                                                        absorbing: ts4Set,
+                                                        absorbing: ts6Set,
                                                         child: CupertinoPicker(
                                                           backgroundColor:
                                                               UniversalVariables
@@ -2352,7 +2352,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         ),
                                                       ),
                                                       child: AbsorbPointer(
-                                                        absorbing: ts4Set,
+                                                        absorbing: ts7Set,
                                                         child: CupertinoPicker(
                                                           backgroundColor:
                                                               UniversalVariables

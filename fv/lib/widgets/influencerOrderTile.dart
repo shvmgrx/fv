@@ -52,7 +52,7 @@ class _InfluencerOrderTileState extends State<InfluencerOrderTile> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
       child: Expanded(
         child: Container(
           decoration: BoxDecoration(
@@ -71,11 +71,11 @@ class _InfluencerOrderTileState extends State<InfluencerOrderTile> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [widget.buyerPhotoName],
                         ),
                       )

@@ -230,38 +230,34 @@ class FirebaseMethods {
 
   Future<List<Order>> fetchBuyerOrders(String loggedUserId) async {
     List<Order> orderList = List<Order>();
-    print("loggedUserId: $loggedUserId");
 
-    var querySnapshot =
-        await firestore.collection(ORDER_COLLECTION).getDocuments();
-
-    print("orderList0: ${querySnapshot.documents[0].data["buyer_id"]}");
-    print("orderList1: ${querySnapshot.documents[1].data["buyer_id"]}");
-    print("orderList2: ${querySnapshot.documents[2].data["buyer_id"]}");
+    var querySnapshot = await firestore
+        .collection(ORDER_COLLECTION)
+        .orderBy("slot_time")
+        .getDocuments();
 
     for (var i = 0; i < querySnapshot.documents.length; i++) {
       if (querySnapshot.documents[i].data["buyer_id"] == loggedUserId) {
         orderList.add(Order.fromMap(querySnapshot.documents[i].data));
       }
     }
-
-    print("dbfgnjh: ${orderList.length}");
-
     return orderList;
   }
 
   Future<List<Order>> fetchSellerOrders(String loggedUserId) async {
-    print("tumtu: $loggedUserId");
-    List<Order> orderList = List<Order>();
+    List<Order> iOrderList = List<Order>();
 
     var querySnapshot = await firestore
         .collection(ORDER_COLLECTION)
-        .where("seller_id", isEqualTo: loggedUserId)
+        .orderBy("slot_time")
         .getDocuments();
 
-    print("tetetete:${querySnapshot.documents[0].data}");
-
-    return orderList;
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+      if (querySnapshot.documents[i].data["seller_id"] == loggedUserId) {
+        iOrderList.add(Order.fromMap(querySnapshot.documents[i].data));
+      }
+    }
+    return iOrderList;
   }
 
   Future<List<User>> fetchFeaturedInfluencers(FirebaseUser currentUser) async {

@@ -46,7 +46,8 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   int loggedUserinfReceived;
   bool loggedUserisInfluencer;
 
-  bool showVideocalls = true;
+  bool showPreVideocalls = true;
+  bool showVideocalls = false;
   bool showMessages = false;
 
   List<Order> sellerOrderList;
@@ -77,18 +78,6 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
     _repository.getCurrentUser().then((FirebaseUser user) {
       loggedUserDisplayName = user.displayName;
       loggedUserProfilePic = user.photoUrl;
-    });
-
-    _repository.fetchSellerOrders(loggedUserUID).then((List<Order> list) {
-      setState(() {
-        sellerOrderList = list;
-        print("happu: $list");
-        for (var i = 0; i < list.length; i++) {
-          sellerOrderList.add(list[i]);
-
-          print("ghg: ${list[i].buyerName}");
-        }
-      });
     });
   }
 
@@ -124,38 +113,45 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
     return mins;
   }
 
-  Widget orderMaker(int i) {
-    return sellerOrderList[i] != null
-        ? OrderTile(
-            sellerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${sellerOrderList[i].sellerPhoto}"),
+  void showIVideoOrders() {
+    _repository.fetchSellerOrders(loggedUserUID).then((List<Order> list) {
+      setState(() {
+        sellerOrderList = list;
+      });
+    });
+  }
+
+  Widget getIOrderWidgets(List<Order> sellerOrderList) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    List<Widget> list = new List<Widget>();
+
+    if (sellerOrderList != null) {
+      if (sellerOrderList.length > 0) {
+        for (var i = 0; i < sellerOrderList.length; i++) {
+          list.add(InfluencerOrderTile(
+            buyerPhotoName: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 70.0,
+                  height: 70.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage("${sellerOrderList[i].buyerPhoto}"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            sellerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${sellerOrderList[i].sellerName}"),
-            ),
-            buyerPhoto: Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage("${sellerOrderList[i].buyerPhoto}"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text(
+                    "${sellerOrderList[i].buyerName}",
+                    style: TextStyles.hintTextStyle,
+                  ),
                 ),
-              ),
-            ),
-            buyerName: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("${sellerOrderList[i].buyerName}"),
+              ],
             ),
             slotTime: Padding(
               padding: const EdgeInsets.only(left: 8.0),
@@ -190,8 +186,12 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                       style: TextStyles.hintTextStyle,
                     ),
             ),
-          )
-        : Container();
+          ));
+        }
+      }
+    }
+
+    return new Column(children: list);
   }
 
   @override
@@ -236,7 +236,7 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                     color: UniversalVariables.grey2,
                   ),
                   onPressed: () {
-                    _repository.fetchSellerOrders(loggedUserUID);
+                    showIVideoOrders();
                   },
                 ),
               ),
@@ -281,60 +281,70 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
             ],
           ),
           SizedBox(height: 30),
-          // InfluencerOrderTile(
-          //   buyerPhotoName: Row(
-          //     children: [
-          //       Container(
-          //         width: 40.0,
-          //         height: 40.0,
-          //         decoration: BoxDecoration(
-          //           shape: BoxShape.circle,
-          //           image: DecorationImage(
-          //             fit: BoxFit.cover,
-          //             image: NetworkImage("${sellerOrderList[0].buyerPhoto}"),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsets.only(left: 8.0),
-          //         child: Text("${sellerOrderList[0].buyerName}"),
-          //       ),
-          //     ],
-          //   ),
-          //   slotTime: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: Text(
-          //       "${dateMaker(sellerOrderList[0].slotTime)}",
-          //       style: TextStyles.hintTextStyle,
-          //     ),
-          //   ),
-          //   slotDuration: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: Text(
-          //       "${durationMaker(sellerOrderList[0].slotDuration)} mins",
-          //       style: TextStyles.hintTextStyle,
-          //     ),
-          //   ),
-          //   orderId: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: Text(
-          //       "${sellerOrderList[0].uid}",
-          //       style: TextStyles.orderIDStyle,
-          //     ),
-          //   ),
-          //   price: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: sellerOrderList[0].currency == 0
-          //         ? Text(
-          //             "\$ ${sellerOrderList[0].price}",
-          //             style: TextStyles.hintTextStyle,
-          //           )
-          //         : Text(
-          //             "€ ${sellerOrderList[0].price}",
-          //             style: TextStyles.hintTextStyle,
-          //           ),
-          //   ),
-          // )
+          Visibility(
+            visible: showPreVideocalls,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      bottomLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                      bottomRight: Radius.circular(25.0),
+                    ),
+                    color: UniversalVariables.white2,
+                  ),
+                  height: screenHeight * 0.45,
+                  width: screenWidth * 0.9,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Icon(
+                          CupertinoIcons.video_camera,
+                          color: UniversalVariables.gold2,
+                          size: screenHeight * 0.08,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(ConStrings.VIDEOCALLS_DETAIL,
+                            style: TextStyles.fvCodeHeading,
+                            textAlign: TextAlign.center),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Expanded(
+                          // flex: 3,
+                          child: OutlineButton(
+                            onPressed: () => {
+                              setState(() {
+                                showPreVideocalls = false;
+                                showVideocalls = true;
+                                showMessages = false;
+                              }),
+                              showIVideoOrders()
+                            },
+                            child: Text(
+                              ConStrings.SHOW_VIDEOCALLS,
+                              style: TextStyles.editHeadingName,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: showVideocalls,
+              child: getIOrderWidgets(sellerOrderList)),
         ],
       ),
     );

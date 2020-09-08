@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
 import 'package:fv/models/order.dart';
 import 'package:fv/provider/user_provider.dart';
+import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/resources/order_methods.dart';
 // import 'package:fv/widgets/nmButton.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,8 +37,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   AnimationController controller;
   Animation animation;
   Animation anim;
-
   final OrderMethods _orderMethods = OrderMethods();
+  FirebaseRepository _repository = FirebaseRepository();
 
   bool showts1 = false;
   bool ts1Bought = false;
@@ -77,6 +78,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   int selectedUserinfReceived;
   //used for currency
 
+  List<Order> sellerOrderList;
+  List<String> compareList = [];
+
   @override
   void initState() {
     super.initState();
@@ -93,6 +97,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     controller.addListener(() {
       setState(() {});
     });
+
+    getIVideoOrders();
   }
 
   String dateMaker(Timestamp theSetDate) {
@@ -142,9 +148,67 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     controller.reverse();
   }
 
+  void getIVideoOrders() {
+    _repository
+        .fetchSellerOrders(widget.selectedInfluencer.uid)
+        .then((List<Order> list) {
+      setState(() {
+        sellerOrderList = list;
+      });
+
+      for (int i = 0; i < sellerOrderList.length; i++) {
+        setState(() {
+          compareList.add(sellerOrderList[i].uid);
+        });
+      }
+
+      for (int i = 0; i < compareList.length; i++) {
+        print(compareList[i]);
+        //case1
+        if (widget.selectedInfluencer.timeSlots['ttIds'][0] == compareList[i]) {
+          setState(() {
+            ts1Bought = true;
+          });
+        }
+        if (widget.selectedInfluencer.timeSlots['ttIds'][1] == compareList[i]) {
+          setState(() {
+            ts2Bought = true;
+          });
+        }
+        if (widget.selectedInfluencer.timeSlots['ttIds'][2] == compareList[i]) {
+          setState(() {
+            ts3Bought = true;
+          });
+        }
+        if (widget.selectedInfluencer.timeSlots['ttIds'][3] == compareList[i]) {
+          setState(() {
+            ts4Bought = true;
+          });
+        }
+        if (widget.selectedInfluencer.timeSlots['ttIds'][4] == compareList[i]) {
+          setState(() {
+            ts5Bought = true;
+          });
+        }
+        if (widget.selectedInfluencer.timeSlots['ttIds'][5] == compareList[i]) {
+          setState(() {
+            ts6Bought = true;
+          });
+        }
+        if (widget.selectedInfluencer.timeSlots['ttIds'][6] == compareList[i]) {
+          setState(() {
+            ts7Bought = true;
+          });
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final GlobalKey<ScaffoldState> _scaffoldKey =
+        new GlobalKey<ScaffoldState>();
 
     setState(() {
       selectedUserinfReceived = widget.selectedInfluencer.infReceived;
@@ -374,11 +438,16 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       _orderMethods.addOrderToBuyerDb(_buyerOrder);
     }
 
-    //bool showAppBar = true;
-
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    final snackBar = SnackBar(
+        content: Text(
+      ConStrings.ALREADYBOOKED,
+      style: TextStyles.fvSnackbar,
+    ));
+
     return Scaffold(
+      key: _scaffoldKey,
       body: SwipeDetector(
         onSwipeUp: () {
           pullUp();
@@ -752,15 +821,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  sendOrder(0, ts1Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts1Bought)
+                                                    {
+                                                      sendOrder(0, ts1Duration,
+                                                          selectedUserinfReceived)
+                                                    }
+                                                  else if (ts1Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   // color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .offline,
+                                                    color: ts1Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -779,11 +860,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts1Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -833,16 +920,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  print("blad: $ts2Duration"),
-                                                  sendOrder(1, ts2Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts2Bought)
+                                                    {
+                                                      sendOrder(1, ts2Duration,
+                                                          selectedUserinfReceived),
+                                                    }
+                                                  else if (ts2Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   //  color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .online,
+                                                    color: ts2Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -861,11 +959,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts2Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -915,15 +1019,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  sendOrder(2, ts3Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts3Bought)
+                                                    {
+                                                      sendOrder(2, ts3Duration,
+                                                          selectedUserinfReceived),
+                                                    }
+                                                  else if (ts3Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   // color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .online,
+                                                    color: ts3Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -942,11 +1058,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts3Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -996,15 +1118,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  sendOrder(3, ts4Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts4Bought)
+                                                    {
+                                                      sendOrder(3, ts4Duration,
+                                                          selectedUserinfReceived),
+                                                    }
+                                                  else if (ts4Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   // color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .online,
+                                                    color: ts4Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -1023,11 +1157,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts4Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -1077,15 +1217,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  sendOrder(4, ts5Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts5Bought)
+                                                    {
+                                                      sendOrder(4, ts5Duration,
+                                                          selectedUserinfReceived),
+                                                    }
+                                                  else if (ts5Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   // color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .online,
+                                                    color: ts5Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -1104,11 +1256,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts5Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -1158,15 +1316,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  sendOrder(5, ts6Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts6Bought)
+                                                    {
+                                                      sendOrder(5, ts6Duration,
+                                                          selectedUserinfReceived),
+                                                    }
+                                                  else if (ts6Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   // color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .online,
+                                                    color: ts6Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -1185,11 +1355,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts6Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -1239,15 +1415,27 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                               ),
                                               child: InkWell(
                                                 onTap: () => {
-                                                  sendOrder(6, ts7Duration,
-                                                      selectedUserinfReceived),
+                                                  if (!ts7Bought)
+                                                    {
+                                                      sendOrder(6, ts7Duration,
+                                                          selectedUserinfReceived),
+                                                    }
+                                                  else if (ts7Bought)
+                                                    {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              snackBar)
+                                                    }
                                                 },
                                                 child: Container(
                                                   // color:Colors.orange,
                                                   //    width: 75,
                                                   decoration: BoxDecoration(
-                                                    color: UniversalVariables
-                                                        .online,
+                                                    color: ts7Bought
+                                                        ? UniversalVariables
+                                                            .offline
+                                                        : UniversalVariables
+                                                            .online,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topLeft:
@@ -1266,11 +1454,17 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                         horizontal: 10.0,
                                                         vertical: 5),
                                                     child: Center(
-                                                      child: Text(
-                                                          ConStrings
-                                                              .bookUnavailable,
-                                                          style: TextStyles
-                                                              .timeSlotDetails),
+                                                      child: ts7Bought
+                                                          ? Text(
+                                                              ConStrings
+                                                                  .bookUnavailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails)
+                                                          : Text(
+                                                              ConStrings
+                                                                  .bookAvailable,
+                                                              style: TextStyles
+                                                                  .timeSlotDetails),
                                                     ),
                                                   ),
                                                 ),
@@ -1295,7 +1489,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                 ),
               ),
             ),
-
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -1316,43 +1509,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                 ),
               ),
             ),
-            // Align(
-            //   alignment: Alignment.topRight,
-            //   child: Padding(
-            //     padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 15.0),
-            //     child: Container(
-            //       height: 40.0,
-            //       width: 40.0,
-            //       decoration: BoxDecoration(
-            //           shape: BoxShape.circle, color: UniversalVariables.white2),
-            //       child: Center(
-            //         child: Icon(Icons.edit,
-            //             size: 20.0, color: UniversalVariables.grey1),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Positioned(
-            //   top: (screenHeight - screenHeight / 3) / 2,
-            //   left: (screenWidth /2) - 75.0,
-            //   child: Container(
-            //     height: 40.0,
-            //     width: 150.0,
-            //     decoration: BoxDecoration(
-            //       color: Color(0xFFA4B2AE),
-            //       borderRadius: BorderRadius.circular(20.0)
-            //     ),
-            //     child: Center(
-            //       child: Text('Add Your intro video here',
-            //       style: GoogleFonts.sourceSansPro(
-            //         fontSize: 14.0,
-            //         fontWeight: FontWeight.w500,
-            //         color: Colors.white
-            //       )
-            //       )
-            //     )
-            //   )
-            // ),
             Positioned(
               top: screenHeight -
                   screenHeight / 2.5 -
@@ -1375,277 +1531,38 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                     ),
                   ),
                   SizedBox(height: 5),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        widget.selectedInfluencer.username != null
-                            ? Text(
-                                widget.selectedInfluencer.username,
-                                // style: TextStyles.usernameStyle,
-                                style: anim.value,
-                              )
-                            : Text(
-                                "faveezUsername",
-                                style: TextStyles.usernameStyleEnd,
-                              ),
-                        Icon(
-                          Icons.verified_user,
-                          color: UniversalVariables.gold2,
-                          size: 20,
-                        ),
-                      ],
+                  InkWell(
+                    onTap: () {
+                      getIVideoOrders();
+                    },
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          widget.selectedInfluencer.username != null
+                              ? Text(
+                                  widget.selectedInfluencer.username,
+                                  //style: TextStyles.usernameStyleEnd,
+                                  style: anim.value,
+                                )
+                              : Text(
+                                  "faveezUsername",
+                                  style: TextStyles.usernameStyleEnd,
+                                ),
+                          Icon(
+                            Icons.verified_user,
+                            color: UniversalVariables.gold2,
+                            size: 20,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
             ),
-
-            // Positioned(
-            //   top: screenHeight - screenHeight / 3.5,
-            //   left: 10,
-            //   right: 10,
-            //   child: Center(
-            //     child: Row(
-            //       children: <Widget>[
-            //         Padding(
-            //           padding: EdgeInsets.all(20.0),
-            //           child: Stack(
-            //             children: <Widget>[
-            //               Container(
-            //                   height: 110.0,
-            //                   width: 126.0,
-            //                   color: UniversalVariables.transparent),
-            //               Positioned(
-            //                   left: 1.0,
-            //                   top: 1.0,
-            //                   child: Column(
-            //                     children: <Widget>[
-            //                       GestureDetector(
-            //                         onTap: () {
-            //                           Navigator.push(
-            //                             context,
-            //                             MaterialPageRoute(
-            //                               builder: (context) => ChatScreen(
-            //                                 receiver: widget.selectedInfluencer,
-            //                               ),
-            //                             ),
-            //                           );
-            //                         },
-            //                         child: Container(
-            //                           height: 78.0,
-            //                           width: 115.0,
-            //                           decoration: BoxDecoration(
-
-            //                               //gradient: UniversalVariables.fabGradient,
-
-            //                               borderRadius: BorderRadius.only(
-            //                                 topLeft: Radius.circular(10.0),
-            //                                 topRight: Radius.circular(10.0),
-            //                               ),
-            //                               //color: UniversalVariables.white2
-            //                               color: mC,
-            //                               boxShadow: [
-            //                                 BoxShadow(
-            //                                   color: mCD,
-            //                                   offset: Offset(-10, 10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                                 BoxShadow(
-            //                                   color: mCL,
-            //                                   offset: Offset(0, -10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                               ]),
-            //                           child: Padding(
-            //                             padding: const EdgeInsets.symmetric(
-            //                                 vertical: 2.0),
-            //                             child: Align(
-            //                               alignment: Alignment.center,
-            //                               child: widget.selectedInfluencer
-            //                                           .answerPrice1 !=
-            //                                       null
-            //                                   ? Text(
-            //                                       "\$ ${widget.selectedInfluencer.answerPrice1}",
-            //                                       style: TextStyles.priceNumber,
-            //                                       textAlign: TextAlign.center)
-            //                                   : Text("Not Set",
-            //                                       style: TextStyles
-            //                                           .notSetPriceNumber,
-            //                                       textAlign: TextAlign.center),
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                       Container(
-            //                         height: 27.0,
-            //                         width: 115.0,
-            //                         decoration: BoxDecoration(
-            //                             //gradient: UniversalVariables.fabGradient,
-            //                             borderRadius: BorderRadius.only(
-            //                               bottomLeft: Radius.circular(10.0),
-            //                               bottomRight: Radius.circular(10.0),
-            //                             ),
-            //                             color: UniversalVariables.white2),
-            //                         child: Padding(
-            //                           padding: const EdgeInsets.symmetric(
-            //                               vertical: 2.0),
-            //                           child: Align(
-            //                             alignment: Alignment.center,
-            //                             child: Text("Text Reply",
-            //                                 style: TextStyles.priceType,
-            //                                 textAlign: TextAlign.center),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ))
-            //             ],
-            //           ),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.all(20.0),
-            //           child: Stack(
-            //             children: <Widget>[
-            //               Container(
-            //                   height: 110.0,
-            //                   width: 132.0,
-            //                   color: UniversalVariables.transparent),
-            //               Positioned(
-            //                   right: 1,
-            //                   top: 1.0,
-            //                   child: Column(
-            //                     children: <Widget>[
-            //                       GestureDetector(
-            //                         onTap: () {
-            //                           Navigator.push(
-            //                             context,
-            //                             MaterialPageRoute(
-            //                               builder: (context) => ChatScreen(
-            //                                 receiver: widget.selectedInfluencer,
-            //                               ),
-            //                             ),
-            //                           );
-            //                         },
-            //                         child: Container(
-            //                           height: 78.0,
-            //                           width: 120.0,
-            //                           decoration: BoxDecoration(
-
-            //                               //gradient: UniversalVariables.fabGradient,
-
-            //                               borderRadius: BorderRadius.only(
-            //                                 topLeft: Radius.circular(10.0),
-            //                                 topRight: Radius.circular(10.0),
-            //                               ),
-            //                               //color: UniversalVariables.white2
-            //                               color: mC,
-            //                               boxShadow: [
-            //                                 BoxShadow(
-            //                                   color: mCD,
-            //                                   offset: Offset(-10, 10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                                 BoxShadow(
-            //                                   color: mCL,
-            //                                   offset: Offset(0, -10),
-            //                                   blurRadius: 10,
-            //                                 ),
-            //                               ]),
-            //                           child: Padding(
-            //                             padding: const EdgeInsets.symmetric(
-            //                                 vertical: 2.0),
-            //                             child: Align(
-            //                               alignment: Alignment.center,
-            //                               child: widget.selectedInfluencer
-            //                                           .answerPrice2 !=
-            //                                       null
-            //                                   ? Text(
-            //                                       "\$ ${widget.selectedInfluencer.answerPrice2}",
-            //                                       style: TextStyles.priceNumber,
-            //                                       textAlign: TextAlign.center)
-            //                                   : Text("Not Set",
-            //                                       style: TextStyles
-            //                                           .notSetPriceNumber,
-            //                                       textAlign: TextAlign.center),
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                       Container(
-            //                         height: 27.0,
-            //                         width: 120.0,
-            //                         decoration: BoxDecoration(
-            //                             //gradient: UniversalVariables.fabGradient,
-            //                             borderRadius: BorderRadius.only(
-            //                               bottomLeft: Radius.circular(10.0),
-            //                               bottomRight: Radius.circular(10.0),
-            //                             ),
-            //                             color: UniversalVariables.white2),
-            //                         child: Padding(
-            //                           padding: const EdgeInsets.symmetric(
-            //                               vertical: 2.0),
-            //                           child: Align(
-            //                             alignment: Alignment.center,
-            //                             child: Text("Video Reply",
-            //                                 style: TextStyles.priceType,
-            //                                 textAlign: TextAlign.center),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ))
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, "/search_screen");
-      //   },
-      //   backgroundColor: UniversalVariables.standardWhite,
-      //   child: Icon(Icons.search, size: 45, color: UniversalVariables.grey2),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: BottomAppBar(
-      //     shape: CircularNotchedRectangle(),
-      //     color: UniversalVariables.standardWhite,
-      //     elevation: 9.0,
-      //     clipBehavior: Clip.antiAlias,
-      //     notchMargin: 6.0,
-      //     child: Container(
-      //       height: 60,
-      //       child: Ink(
-      // decoration: BoxDecoration(),
-      // child: CupertinoTabBar(
-      //   backgroundColor: Colors.transparent,
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //         icon: GestureDetector(
-      //             onTap: () {
-      //               Navigator.pushNamed(context, "/home_screen");
-      //             },
-      //             child: Icon(Icons.home,
-      //                 color: UniversalVariables.grey2))),
-      //     BottomNavigationBarItem(
-      //         icon: GestureDetector(
-      //             onTap: () {
-      //               //  Navigator.pushNamed(context, "/profile_screen");
-      //             },
-      //             child: Icon(Icons.person,
-      //                 color: UniversalVariables.grey1))),
-      //   ],
-      //   //onTap: navigationTapped,
-      //   //currentIndex: _page,
-      // ),
-      //       ),
-      //     ),
-      //   ),
     );
   }
 }
