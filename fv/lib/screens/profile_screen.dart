@@ -2,6 +2,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
+import 'package:fv/models/order.dart';
 import 'package:fv/onboarding/strings.dart';
 import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
@@ -88,6 +89,25 @@ class _ProfileScreenState extends State<ProfileScreen>
   String ts5orderId;
   String ts6orderId;
   String ts7orderId;
+
+  bool ts1Bought = false;
+  bool ts2Bought = false;
+  bool ts3Bought = false;
+  bool ts4Bought = false;
+  bool ts5Bought = false;
+  bool ts6Bought = false;
+  bool ts7Bought = false;
+
+  bool showts1 = false;
+  bool showts2 = false;
+  bool showts3 = false;
+  bool showts4 = false;
+  bool showts5 = false;
+  bool showts6 = false;
+  bool showts7 = false;
+
+  List<Order> sellerOrderList;
+  List<String> compareList = [];
 
   AnimationController controller;
   Animation animation;
@@ -211,6 +231,97 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ? loggedUserTimeSlots['ttIds'][6]
                 : null;
           }
+
+          if (ts1 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t1 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t1.isBefore(now)) {
+              showts1 = false;
+            } else if (now.isBefore(t1)) {
+              showts1 = true;
+            }
+          }
+
+          if (ts2 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t2 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t2.isBefore(now)) {
+              showts2 = false;
+            } else if (now.isBefore(t2)) {
+              showts2 = true;
+            }
+          }
+
+          if (ts3 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t3 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t3.isBefore(now)) {
+              showts3 = false;
+            } else if (now.isBefore(t3)) {
+              showts3 = true;
+            }
+          }
+
+          if (ts4 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t4 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t4.isBefore(now)) {
+              showts4 = false;
+            } else if (now.isBefore(t4)) {
+              showts4 = true;
+            }
+          }
+
+          if (ts5 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t5 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t5.isBefore(now)) {
+              showts5 = false;
+            } else if (now.isBefore(t5)) {
+              showts5 = true;
+            }
+          }
+
+          if (ts6 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t6 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t6.isBefore(now)) {
+              showts6 = false;
+            } else if (now.isBefore(t6)) {
+              showts6 = true;
+            }
+          }
+
+          if (ts7 != null) {
+            var now = DateTime.now();
+
+            var t = loggedUserTimeSlots['ttSlots'][0].seconds;
+            var t7 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
+
+            if (t7.isBefore(now)) {
+              showts7 = false;
+            } else if (now.isBefore(t7)) {
+              showts7 = true;
+            }
+          }
         });
       });
     });
@@ -227,8 +338,62 @@ class _ProfileScreenState extends State<ProfileScreen>
     controller.addListener(() {
       setState(() {});
     });
-
+    getIVideoOrders();
     super.initState();
+  }
+
+  void getIVideoOrders() {
+    _repository.fetchSellerOrders(loggedInuid).then((List<Order> list) {
+      setState(() {
+        sellerOrderList = list;
+      });
+
+      for (int i = 0; i < sellerOrderList.length; i++) {
+        setState(() {
+          compareList.add(sellerOrderList[i].uid);
+        });
+      }
+
+      for (int i = 0; i < compareList.length; i++) {
+        print(compareList[i]);
+        //case1
+        if (loggedUserTimeSlots['ttIds'][0] == compareList[i]) {
+          setState(() {
+            ts1Bought = true;
+          });
+        }
+        if (loggedUserTimeSlots['ttIds'][1] == compareList[i]) {
+          setState(() {
+            ts2Bought = true;
+          });
+        }
+        if (loggedUserTimeSlots['ttIds'][2] == compareList[i]) {
+          setState(() {
+            ts3Bought = true;
+          });
+        }
+        if (loggedUserTimeSlots['ttIds'][3] == compareList[i]) {
+          setState(() {
+            ts4Bought = true;
+          });
+        }
+        if (loggedUserTimeSlots['ttIds'][4] == compareList[i]) {
+          setState(() {
+            ts5Bought = true;
+          });
+        }
+        if (loggedUserTimeSlots['ttIds'][5] == compareList[i]) {
+          setState(() {
+            ts6Bought = true;
+          });
+        }
+        if (loggedUserTimeSlots['ttIds'][6] == compareList[i]) {
+          setState(() {
+            ts7Bought = true;
+          });
+        }
+      }
+    });
   }
 
   @override
@@ -665,7 +830,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   child: Column(
                                     children: <Widget>[
                                       Visibility(
-                                        visible: ts1 != null,
+                                        visible: showts1,
                                         //  visible: true,
                                         child: Container(
                                           // decoration: BoxDecoration(
@@ -715,8 +880,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts1Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -741,9 +909,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts1Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),
@@ -755,7 +931,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ts2 != null,
+                                        visible: showts2,
                                         //  visible: true,
                                         child: Container(
                                           child: Padding(
@@ -795,8 +971,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts2Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -821,9 +1000,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts2Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),
@@ -835,7 +1022,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ts3 != null,
+                                        visible: showts3,
                                         // visible: true,
                                         child: Container(
                                           child: Padding(
@@ -875,8 +1062,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts3Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -901,9 +1091,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts3Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),
@@ -915,7 +1113,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ts4 != null,
+                                        visible: showts4,
                                         // visible: true,
                                         child: Container(
                                           child: Padding(
@@ -955,8 +1153,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts4Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -981,9 +1182,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts4Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),
@@ -995,7 +1204,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ts5 != null,
+                                        visible: showts5,
                                         //  visible: true,
                                         child: Container(
                                           child: Padding(
@@ -1035,8 +1244,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts5Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -1061,9 +1273,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts5Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),
@@ -1075,7 +1295,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ts6 != null,
+                                        visible: showts6,
                                         // visible: true,
                                         child: Container(
                                           child: Padding(
@@ -1115,8 +1335,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts6Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -1141,9 +1364,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts6Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),
@@ -1155,7 +1386,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ts7 != null,
+                                        visible: showts7,
                                         // visible: true,
                                         child: Container(
                                           child: Padding(
@@ -1195,8 +1426,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     // color:Colors.orange,
                                                     // width: 75,
                                                     decoration: BoxDecoration(
-                                                      color: UniversalVariables
-                                                          .gold2,
+                                                      color: ts7Bought
+                                                          ? UniversalVariables
+                                                              .offline
+                                                          : UniversalVariables
+                                                              .online,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -1221,9 +1455,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             color: UniversalVariables
                                                                 .standardWhite,
                                                           ),
-                                                          Text("BOOKED",
-                                                              style: TextStyles
-                                                                  .timeSlotDetails),
+                                                          ts7Bought
+                                                              ? Text(
+                                                                  ConStrings
+                                                                      .bought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails)
+                                                              : Text(
+                                                                  ConStrings
+                                                                      .notBought,
+                                                                  style: TextStyles
+                                                                      .timeSlotDetails),
                                                         ],
                                                       ),
                                                     ),

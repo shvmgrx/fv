@@ -751,9 +751,15 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                         child: Align(
                           alignment: Alignment.center,
                           child: influencer.name != null
-                              ? Text(influencer.name,
-                                  style: TextStyles.mainScreenProfileName,
-                                  textAlign: TextAlign.center)
+                              ? influencer.name.length > 8
+                                  ? Text("${influencer.name.substring(0, 6)}..",
+                                      style: TextStyles.mainScreenProfileName,
+                                      textAlign: TextAlign.left)
+                                  : Text(influencer.name,
+                                      style: TextStyles.mainScreenProfileName,
+                                      textAlign: TextAlign.center)
+
+                              // "${loggedInname.substring(0, 14)}..."
                               : Text("INF Name",
                                   style: TextStyles.mainScreenProfileName,
                                   textAlign: TextAlign.center),

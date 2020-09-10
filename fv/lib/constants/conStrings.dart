@@ -39,4 +39,7 @@ class ConStrings {
   static const String SHOW_MESSAGES = "Show Messages";
 
   static const String ALREADYBOOKED = "The timeslot is already booked";
+
+  static const String bought = "BOOKED";
+  static const String notBought = "AVAILABLE";
 }
