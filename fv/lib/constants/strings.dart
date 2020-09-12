@@ -6,6 +6,7 @@ const String ORDER_COLLECTION = "orders";
 const String INCOME_COLLECTION = "transactions";
 
 const String ORDER_INCOME = "orderIncome";
+const String EARNER = "earner";
 
 const String SELLER_ORDER_COLLECTION = "sellerOrders";
 

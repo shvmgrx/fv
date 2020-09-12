@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
 import 'package:fv/constants/strings.dart';
-import 'package:fv/models/income.dart';
-import 'package:fv/models/incomeTest.dart';
+// import 'package:fv/models/income.dart';
+// import 'package:fv/models/incomeTest.dart';
 import 'package:fv/models/order.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/firebase_repository.dart';
@@ -86,8 +86,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
   List<Order> sellerOrderList;
   List<String> compareList = [];
-
-  bool sellerInList = false;
 
   @override
   void initState() {
@@ -482,40 +480,14 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
 
       magicMap.add(tempIncome);
 
-      Income transactionsIncome = Income(
-          uid: widget.selectedInfluencer.uid,
-          currency: infReceived,
-          income: tempIncome);
-
-//START
-
-      // final Firestore firestore = Firestore.instance;
-      // QuerySnapshot result =
-      //     await firestore.collection(INCOME_COLLECTION).getDocuments();
-
-      // final List<DocumentSnapshot> docs = result.documents;
-
-      // for (int i = 0; i <= docs.length; i++) {
-      //   if (docs[i].documentID == _order.sellerId) {
-      //     setState(() {
-      //       sellerInList = true;
-      //     });
-      //   }
-      // }
-//ENDE
-
-      // IncomeTest transIncome = IncomeTest(tranz: magicMap);
-
-      // _orderMethods.addOrderTransactionToDb(transactionsIncome);
-
       _orderMethods.addOrderTransToDb(_order, magicMap);
 
       _orderMethods.addOrderToDb(_order);
 
-      // _orderMethods.addOrderToSellerDb(
-      //   _sellerOrder,
-      // );
-      // _orderMethods.addOrderToBuyerDb(_buyerOrder);
+      _orderMethods.addOrderToSellerDb(
+        _sellerOrder,
+      );
+      _orderMethods.addOrderToBuyerDb(_buyerOrder);
 
       refresh();
     }

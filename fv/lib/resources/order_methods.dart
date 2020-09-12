@@ -28,20 +28,6 @@ class OrderMethods {
     _firestore.collection(ORDER_COLLECTION).document(order.uid).setData(map);
   }
 
-  // Future<void> addOrderTransactionToDb(Income income) async {
-  //   var map = income.toMap();
-
-  //   // _firestore
-  //   //     .collection(INCOME_COLLECTION)
-  //   //     .document(income.uid)
-  //   //     .setData(map, merge: true);
-
-  //   _firestore
-  //       .collection(INCOME_COLLECTION)
-  //       .document(income.uid)
-  //       .updateData(map);
-  // }
-
   Future<void> addOrderTransToDb(Order order, List t) async {
     bool sellerInList = false;
 
@@ -60,11 +46,17 @@ class OrderMethods {
         ? Firestore.instance
             .collection(INCOME_COLLECTION)
             .document("${order.sellerId}")
-            .updateData({ORDER_INCOME: FieldValue.arrayUnion(t)})
+            .updateData({
+            EARNER: order.sellerId,
+            ORDER_INCOME: FieldValue.arrayUnion(t)
+          })
         : Firestore.instance
             .collection(INCOME_COLLECTION)
             .document("${order.sellerId}")
-            .setData({ORDER_INCOME: FieldValue.arrayUnion(t)});
+            .setData({
+            EARNER: order.sellerId,
+            ORDER_INCOME: FieldValue.arrayUnion(t)
+          });
   }
 
   Future<void> addOrderToSellerDb(Order order) async {
@@ -103,6 +95,24 @@ class OrderMethods {
         //.where(EMAIL_FIELD, isEqualTo: user.email)
         .getDocuments();
   }
+
+  Future<int> fetchIncome(String loggedUserId) async {
+    int worth = 0;
+
+    QuerySnapshot result = await firestore
+        .collection(INCOME_COLLECTION)
+        .where(EARNER, isEqualTo: loggedUserId)
+        .getDocuments();
+
+    var transactions = result.documents[0].data[ORDER_INCOME];
+
+    for (var i = 0; i < transactions.length; i++) {
+      worth = worth + transactions[i]["amount"][0];
+    }
+
+    return worth;
+  }
+
 //old working function
   // Future<List<User>> fetchForSellers(user) async {
   //   List<User> buyerList = List<User>();

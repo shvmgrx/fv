@@ -50,6 +50,8 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   bool showVideocalls = false;
   bool showMessages = false;
 
+  int loggedUserWorth;
+
   List<Order> sellerOrderList;
 
   void initState() {
@@ -69,15 +71,26 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
 
           loggedUserinfReceived = loggedUser['infReceived'];
           loggedUserisInfluencer = loggedUser['isInfluencer'];
+          loggedUserWorth = loggedUser['infWorth'];
         });
       });
     });
+
+    incomeRevealer();
 
     super.initState();
 
     _repository.getCurrentUser().then((FirebaseUser user) {
       loggedUserDisplayName = user.displayName;
       loggedUserProfilePic = user.photoUrl;
+    });
+  }
+
+  void incomeRevealer() {
+    _orderMethods.fetchIncome(loggedUserUID).then((int value) {
+      setState(() {
+        loggedUserWorth = value;
+      });
     });
   }
 
@@ -198,6 +211,10 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+
+    incomeRevealer();
+    // showIVideoOrders();
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: UniversalVariables.backgroundGrey,
@@ -228,16 +245,36 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                     style: TextStyles.appNameLogoStyle,
                     textAlign: TextAlign.center),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: UniversalVariables.backgroundGrey,
-                  ),
-                  onPressed: () {
-                    showIVideoOrders();
-                  },
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: loggedUserinfReceived == 1
+                      ? Text(
+                          "€ $loggedUserWorth",
+                          style: TextStyles.moneyStyle,
+                        )
+                      : Text(
+                          "\$ $loggedUserWorth",
+                          style: TextStyles.moneyStyle,
+                        ),
+
+                  //     IconButton(
+                  //   icon: Icon(
+                  //     Icons.arrow_back,
+                  //     color: UniversalVariables.white2,
+                  //   ),
+                  //   onPressed: () {
+                  //     // showIVideoOrders();
+                  //     incomeRevealer();
+
+                  //     // _orderMethods.fetchIncome(loggedUserUID).then((int value) {
+                  //     //   setState(() {
+                  //     //     loggedUserWorth = value;
+                  //     //   });
+                  //     // });
+                  //   },
+                  // ),
                 ),
               ),
             ],
