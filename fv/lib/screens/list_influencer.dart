@@ -603,27 +603,27 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
             //             ])),
             //   ),
             // ),
-            //  Row(
-            //    children: <Widget>[
-            //      DummyUser(),
-            //      DummyUser2(),
-            //      DummyUser3(),
-            //    ],
-            //  ),
-            //   Row(
-            //    children: <Widget>[
-            //      DummyUser4(),
-            //      DummyUser5(),
-            //      DummyUser6(),
-            //    ],
-            //  ),
-            //   Row(
-            //    children: <Widget>[
-            //      DummyUser7(),
-            //      DummyUser8(),
-            //      DummyUser9(),
-            //    ],
-            //  ),
+            // Row(
+            //   children: <Widget>[
+            //     DummyUser(),
+            //     DummyUser2(),
+            //     DummyUser3(),
+            //   ],
+            // ),
+            // Row(
+            //   children: <Widget>[
+            //     DummyUser4(),
+            //     DummyUser5(),
+            //     DummyUser6(),
+            //   ],
+            // ),
+            // Row(
+            //   children: <Widget>[
+            //     DummyUser7(),
+            //     DummyUser8(),
+            //     DummyUser9(),
+            //   ],
+            // ),
 
             Container(
               margin: EdgeInsets.only(left: 5),

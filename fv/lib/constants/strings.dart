@@ -3,7 +3,9 @@ const String USERS_COLLECTION = "users";
 const String FZCODES_COLLECTION = "fzCodes";
 const String ORDER_COLLECTION = "orders";
 
-const String INFMONEY_COLLECTION = "infMoney";
+const String INCOME_COLLECTION = "transactions";
+
+const String ORDER_INCOME = "orderIncome";
 
 const String SELLER_ORDER_COLLECTION = "sellerOrders";
 

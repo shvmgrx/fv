@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/contact.dart';
+import 'package:fv/models/income.dart';
+import 'package:fv/models/incomeTest.dart';
 import 'package:fv/models/message.dart';
 import 'package:fv/models/order.dart';
 import 'package:fv/models/user.dart';
@@ -26,13 +28,51 @@ class OrderMethods {
     _firestore.collection(ORDER_COLLECTION).document(order.uid).setData(map);
   }
 
+  // Future<void> addOrderTransactionToDb(Income income) async {
+  //   var map = income.toMap();
+
+  //   // _firestore
+  //   //     .collection(INCOME_COLLECTION)
+  //   //     .document(income.uid)
+  //   //     .setData(map, merge: true);
+
+  //   _firestore
+  //       .collection(INCOME_COLLECTION)
+  //       .document(income.uid)
+  //       .updateData(map);
+  // }
+
+  Future<void> addOrderTransToDb(Order order, List t) async {
+    bool sellerInList = false;
+
+    QuerySnapshot result =
+        await firestore.collection(INCOME_COLLECTION).getDocuments();
+
+    final List<DocumentSnapshot> docs = result.documents;
+
+    for (int i = 0; i < docs.length; i++) {
+      if (docs[i].documentID == order.sellerId) {
+        sellerInList = true;
+      }
+    }
+
+    sellerInList
+        ? Firestore.instance
+            .collection(INCOME_COLLECTION)
+            .document("${order.sellerId}")
+            .updateData({ORDER_INCOME: FieldValue.arrayUnion(t)})
+        : Firestore.instance
+            .collection(INCOME_COLLECTION)
+            .document("${order.sellerId}")
+            .setData({ORDER_INCOME: FieldValue.arrayUnion(t)});
+  }
+
   Future<void> addOrderToSellerDb(Order order) async {
     var map = order.toMap();
     _firestore
         .collection(SELLER_ORDER_COLLECTION)
         .document(order.sellerId)
-        .collection(order.uid)
-        .add(map);
+        .setData(map);
   }
 
   Future<void> addOrderToBuyerDb(Order order) async {

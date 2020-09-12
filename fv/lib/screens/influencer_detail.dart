@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
+import 'package:fv/constants/strings.dart';
+import 'package:fv/models/income.dart';
+import 'package:fv/models/incomeTest.dart';
 import 'package:fv/models/order.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/firebase_repository.dart';
@@ -84,6 +87,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   List<Order> sellerOrderList;
   List<String> compareList = [];
 
+  bool sellerInList = false;
+
   @override
   void initState() {
     super.initState();
@@ -152,7 +157,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
   }
 
   void getIVideoOrders() {
-    print("anfang");
     _repository
         .fetchSellerOrders(widget.selectedInfluencer.uid)
         .then((List<Order> list) {
@@ -167,7 +171,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       }
 
       for (int i = 0; i < compareList.length; i++) {
-        print(compareList[i]);
+        // print(compareList[i]);
         //case1
         if (widget.selectedInfluencer.timeSlots['ttIds'][0] == compareList[i]) {
           setState(() {
@@ -206,8 +210,9 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         }
       }
     });
-    print("ende");
   }
+
+  void getTrans(String uid) {}
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +385,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       // });
     }
 
-    sendOrder(int sTime, int sDuration, int infReceived) {
+    sendOrder(int sTime, int sDuration, int infReceived) async {
       int orderPrice;
 
       int _generatePrice() {
@@ -462,11 +467,55 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           slotDuration: sDuration,
           price: _generatePrice());
 
+      List iOrderId = [];
+      List iAmount = [];
+
+      List<Map> magicMap = [];
+
+      iOrderId.add(_order.uid);
+      iAmount.add(_order.price);
+
+      Map<String, List> tempIncome = {
+        "orderId": iOrderId,
+        "amount": iAmount,
+      };
+
+      magicMap.add(tempIncome);
+
+      Income transactionsIncome = Income(
+          uid: widget.selectedInfluencer.uid,
+          currency: infReceived,
+          income: tempIncome);
+
+//START
+
+      // final Firestore firestore = Firestore.instance;
+      // QuerySnapshot result =
+      //     await firestore.collection(INCOME_COLLECTION).getDocuments();
+
+      // final List<DocumentSnapshot> docs = result.documents;
+
+      // for (int i = 0; i <= docs.length; i++) {
+      //   if (docs[i].documentID == _order.sellerId) {
+      //     setState(() {
+      //       sellerInList = true;
+      //     });
+      //   }
+      // }
+//ENDE
+
+      // IncomeTest transIncome = IncomeTest(tranz: magicMap);
+
+      // _orderMethods.addOrderTransactionToDb(transactionsIncome);
+
+      _orderMethods.addOrderTransToDb(_order, magicMap);
+
       _orderMethods.addOrderToDb(_order);
-      _orderMethods.addOrderToSellerDb(
-        _sellerOrder,
-      );
-      _orderMethods.addOrderToBuyerDb(_buyerOrder);
+
+      // _orderMethods.addOrderToSellerDb(
+      //   _sellerOrder,
+      // );
+      // _orderMethods.addOrderToBuyerDb(_buyerOrder);
 
       refresh();
     }
@@ -511,8 +560,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                   width: screenWidth,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(
-                            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rd.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2016%2F03%2F03-nighttime-habits-great-skin-products.jpg&f=1&nofb=1'),
+                        image: AssetImage('assets/surfing.jpg'),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -1596,8 +1644,14 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                     ),
                     SizedBox(height: 5),
                     InkWell(
-                      onTap: () {
-                        getIVideoOrders();
+                      onTap: () async {
+                        // getIVideoOrders();
+
+                        //  getTrans(widget.selectedInfluencer.uid);
+
+                        // .asStream()
+                        // .contains("3eT7sFOvgIUVHaQgYtLqdVXob9A2")
+                        // .then((value) => print("GUGUG: $value"));
                       },
                       child: Container(
                         child: Row(

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fv/onboarding/text_styles.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/resources/firebase_repository.dart';
@@ -138,18 +139,34 @@ class _SearchScreenState extends State<SearchScreen> {
           : suggestionList.length,
       itemBuilder: ((context, index) {
         User searchedUser = User(
-            uid: suggestionHashList.length > 0
-                ? suggestionHashList[index].uid
-                : suggestionList[index].uid,
-            profilePhoto: suggestionHashList.length > 0
-                ? suggestionHashList[index].profilePhoto
-                : suggestionList[index].profilePhoto,
-            name: suggestionHashList.length > 0
-                ? suggestionHashList[index].name
-                : suggestionList[index].name,
-            username: suggestionHashList.length > 0
-                ? suggestionHashList[index].username
-                : suggestionList[index].username);
+          uid: suggestionHashList.length > 0
+              ? suggestionHashList[index].uid
+              : suggestionList[index].uid,
+          bio: suggestionHashList.length > 0
+              ? suggestionHashList[index].bio
+              : suggestionList[index].bio,
+          profilePhoto: suggestionHashList.length > 0
+              ? suggestionHashList[index].profilePhoto
+              : suggestionList[index].profilePhoto,
+          name: suggestionHashList.length > 0
+              ? suggestionHashList[index].name
+              : suggestionList[index].name,
+          username: suggestionHashList.length > 0
+              ? suggestionHashList[index].username
+              : suggestionList[index].username,
+          answerPrice1: suggestionHashList.length > 0
+              ? suggestionHashList[index].answerPrice1
+              : suggestionList[index].answerPrice1,
+          answerPrice2: suggestionHashList.length > 0
+              ? suggestionHashList[index].answerPrice2
+              : suggestionList[index].answerPrice2,
+          answerPrice3: suggestionHashList.length > 0
+              ? suggestionHashList[index].answerPrice3
+              : suggestionList[index].answerPrice3,
+          timeSlots: suggestionHashList.length > 0
+              ? suggestionHashList[index].timeSlots
+              : suggestionList[index].timeSlots,
+        );
 
         return CustomTile(
           mini: false,
@@ -169,10 +186,7 @@ class _SearchScreenState extends State<SearchScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Text(
-            searchedUser.name,
-            style: TextStyle(color: UniversalVariables.gold2),
-          ),
+          subtitle: Text(searchedUser.name, style: TextStyles.editHeadingName),
         );
       }),
     );
