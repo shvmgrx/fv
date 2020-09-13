@@ -76,6 +76,8 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   String loggedCover;
 
+  double coverOpacity = 1.0;
+
   DateTime ts1;
   DateTime ts2;
   DateTime ts3;
@@ -509,10 +511,12 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   void pullUp() {
     controller.forward();
+    coverOpacity = 0.0;
   }
 
   void pullDown() {
     controller.reverse();
+    coverOpacity = 1.0;
   }
 
   @override
@@ -2302,7 +2306,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                         onTap: () {
                           pickCoverPic(source: ImageSource.gallery);
                         },
-                        child: Container(
+                        child: Opacity(
+                          opacity: coverOpacity,
+                          child: Container(
                             decoration: BoxDecoration(
                                 color: UniversalVariables.white2,
                                 borderRadius: BorderRadius.circular(20.0)),
@@ -2318,7 +2324,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       style: TextStyles.bioStyle),
                                 ),
                               ],
-                            )),
+                            ),
+                          ),
+                        ),
                       )),
                   Positioned(
                     top: loggedInisInfluencer
