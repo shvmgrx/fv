@@ -67,11 +67,11 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
 
           loggedUserisInfCert = loggedUser['isInfCert'];
 
-          loggedUserinfWorth = loggedUser['infWorth'];
+          //loggedUserinfWorth = loggedUser['infWorth'];
 
           loggedUserinfReceived = loggedUser['infReceived'];
           loggedUserisInfluencer = loggedUser['isInfluencer'];
-          loggedUserWorth = loggedUser['infWorth'];
+          // loggedUserWorth = loggedUser['infWorth'];
         });
       });
     });

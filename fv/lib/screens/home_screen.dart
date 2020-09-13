@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:fv/enum/user_state.dart';
 import 'package:fv/provider/user_provider.dart';
 import 'package:fv/resources/auth_methods.dart';
+import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:fv/screens/list_influencer.dart';
 // import 'package:fv/screens/pageviews/chat_list_screen.dart';
@@ -15,42 +16,51 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-
-  
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   PageController pageController;
   int _page = 0;
 
   final AuthMethods _authMethods = AuthMethods();
 
+  FirebaseRepository _repository = FirebaseRepository();
+
   UserProvider userProvider;
 
   bool showBottomBar = true;
+  bool loggedUserisInfCert = false;
+  String loggedInUID;
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
 
-       SchedulerBinding.instance.addPostFrameCallback((_) async{
+    _repository.getCurrentUser().then((user) {
+      _repository.fetchLoggedUser(user).then((dynamic loggedUser) {
+        setState(() {
+          loggedUserisInfCert = loggedUser['isInfCert'];
+          loggedInUID = loggedUser['uid'];
+        });
+      });
+    });
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.refreshUser();
 
-
       _authMethods.setUserState(
         userId: userProvider.getUser.uid,
-        userState: UserState.Online, 
+        userState: UserState.Online,
       );
     });
 
     WidgetsBinding.instance.addObserver(this);
     pageController = PageController();
 
-
+    super.initState();
   }
 
   @override
@@ -96,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
     }
   }
 
-
   void onPageChanged(int page) {
     setState(() {
       _page = page;
@@ -109,10 +118,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
 
   @override
   Widget build(BuildContext context) {
-   // double _labelFontSize = 10;
+    // double _labelFontSize = 10;
 
     return PickupLayout(
-          scaffold: Scaffold(
+      scaffold: Scaffold(
         backgroundColor: UniversalVariables.standardWhite,
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
@@ -125,17 +134,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
           onPageChanged: onPageChanged,
         ),
         floatingActionButton: Visibility(
-          visible: showBottomBar,
+          visible: !loggedUserisInfCert,
           child: FloatingActionButton(
             onPressed: () {
               Navigator.pushNamed(context, "/search_screen");
             },
-            backgroundColor: UniversalVariables.standardWhite ,
-            child: Icon(
-              Icons.search,
-              size: 45,
-              color: UniversalVariables.grey2
-            ),
+            backgroundColor: UniversalVariables.standardWhite,
+            child:
+                Icon(Icons.search, size: 45, color: UniversalVariables.grey2),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -158,26 +164,24 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
                   ),
               child: Ink(
                 decoration: BoxDecoration(
-                  // gradient: LinearGradient(
-                  //   colors: [
-                  //     UniversalVariables.gold1,
-                  //     UniversalVariables.gold2,
-                  //     UniversalVariables.gold3,
-                  //   ],
-                  //   begin: Alignment.topCenter,
-                  //   end: Alignment.bottomRight,
-                  // ),
-                  //    borderRadius: BorderRadius.circular(30.0)
-                ),
+                    // gradient: LinearGradient(
+                    //   colors: [
+                    //     UniversalVariables.gold1,
+                    //     UniversalVariables.gold2,
+                    //     UniversalVariables.gold3,
+                    //   ],
+                    //   begin: Alignment.topCenter,
+                    //   end: Alignment.bottomRight,
+                    // ),
+                    //    borderRadius: BorderRadius.circular(30.0)
+                    ),
                 child: CupertinoTabBar(
                   backgroundColor: Colors.transparent,
                   items: <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                       icon: (_page == 0)
-                          ? Icon(Icons.home,
-                              color: UniversalVariables.grey1)
-                          : Icon(Icons.home,
-                              color: UniversalVariables.grey2),
+                          ? Icon(Icons.home, color: UniversalVariables.grey1)
+                          : Icon(Icons.home, color: UniversalVariables.grey2),
 
                       //  icon: Icon(Icons.chat,
                       //     color: (_page == 0)
@@ -208,8 +212,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
                     // ),
                     BottomNavigationBarItem(
                       icon: (_page == 1)
-                          ? Icon(Icons.person,
-                              color: UniversalVariables.grey1)
+                          ? Icon(Icons.person, color: UniversalVariables.grey1)
                           : Icon(Icons.person_outline,
                               color: UniversalVariables.grey2),
                       // title: Text(

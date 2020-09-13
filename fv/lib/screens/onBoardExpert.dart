@@ -187,6 +187,7 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
     _repository.getCurrentUser().then((FirebaseUser user) {
       loggedUserDisplayName = user.displayName;
       loggedUserProfilePic = user.photoUrl;
+      loggedUserEmail = user.email;
     });
   }
 
@@ -361,17 +362,19 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                   //   return null;
                                   // },
                                   onChanged: (String value) {
-                                    setState(() {
-                                      loggedUserDisplayName = value;
-                                      if (loggedUserDisplayName != null &&
-                                          loggedUserDisplayName != "") {
+                                    loggedUserDisplayName = value;
+                                    if (loggedUserDisplayName != null &&
+                                        loggedUserDisplayName != "") {
+                                      setState(() {
                                         nameFilled = true;
-                                      }
-                                      if (loggedUserDisplayName == null ||
-                                          loggedUserDisplayName == "") {
+                                      });
+                                    }
+                                    if (loggedUserDisplayName == null ||
+                                        loggedUserDisplayName == "") {
+                                      setState(() {
                                         nameFilled = false;
-                                      }
-                                    });
+                                      });
+                                    }
                                   },
                                 ),
                               )
@@ -407,18 +410,20 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                   //   return null;
                                   // },
                                   onChanged: (String value) {
-                                    setState(() {
-                                      loggedUserUserName = value;
-                                      _autoValidate = true;
-                                      if (loggedUserUserName != null &&
-                                          loggedUserUserName != "") {
+                                    loggedUserUserName = value;
+                                    _autoValidate = true;
+                                    if (loggedUserUserName != null &&
+                                        loggedUserUserName != "") {
+                                      setState(() {
                                         userNameFilled = true;
-                                      }
-                                      if (loggedUserUserName == null ||
-                                          loggedUserUserName == "") {
+                                      });
+                                    }
+                                    if (loggedUserUserName == null ||
+                                        loggedUserUserName == "") {
+                                      setState(() {
                                         userNameFilled = false;
-                                      }
-                                    });
+                                      });
+                                    }
                                   },
                                 ),
                               )
@@ -453,16 +458,18 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                                   //   return null;
                                   // },
                                   onChanged: (String value) {
-                                    setState(() {
-                                      loggedUserBio = value;
-                                      if (loggedUserBio != null &&
-                                          loggedUserBio != "") {
+                                    loggedUserBio = value;
+                                    if (loggedUserBio != null &&
+                                        loggedUserBio != "") {
+                                      setState(() {
                                         bioFilled = true;
-                                      } else if (loggedUserBio == null ||
-                                          loggedUserBio == "") {
+                                      });
+                                    } else if (loggedUserBio == null ||
+                                        loggedUserBio == "") {
+                                      setState(() {
                                         bioFilled = false;
-                                      }
-                                    });
+                                      });
+                                    }
                                   },
                                 ),
                               )

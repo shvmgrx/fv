@@ -66,6 +66,21 @@ class Utils {
     return _image;
   }
 
+  static Future<File> pickCover({@required ImageSource source}) async {
+    //   print("1a");
+    File _image;
+    final iPicker = ImagePicker();
+    //    print("21a");
+
+    final pickedFile =
+        await iPicker.getImage(source: ImageSource.gallery, imageQuality: 35);
+    // print("31a");
+
+    _image = File(pickedFile.path);
+    //print("4a");
+    return _image;
+  }
+
   static int stateToNum(UserState userState) {
     switch (userState) {
       case UserState.Offline:

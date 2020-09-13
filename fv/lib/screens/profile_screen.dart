@@ -1,11 +1,17 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
+import 'package:fv/enum/crop_state.dart';
 import 'package:fv/models/order.dart';
 import 'package:fv/onboarding/strings.dart';
 import 'package:fv/screens/home_screen.dart';
 import 'package:fv/screens/settingsScreen.dart';
+import 'package:fv/ui_elements/loader.dart';
 import 'package:fv/utils/utilities.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:gradient_text/gradient_text.dart';
@@ -24,6 +30,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:fv/utils/universal_variables.dart';
 // import 'package:fv/widgets/goldMask.dart';
 import 'package:fv/widgets/nmBox.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:fv/widgets/nmButton.dart';
 // import 'package:fv/widgets/nmCard.dart';
 // import 'package:fv/widgets/slideRoute.dart';
@@ -47,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   String loggedInname;
   String loggedInemail;
   String loggedInusername;
-  String loggedInstatus;
+  String loggedInstatus; //for cover pic
   int loggedInstate;
   String loggedInprofilePhoto;
   int loggedInanswerPrice1;
@@ -55,16 +62,19 @@ class _ProfileScreenState extends State<ProfileScreen>
   int loggedInanswerPrice3;
   int loggedInanswerDuration;
   String loggedInbio;
-  bool loggedInisInfCert;
+  bool loggedInisInfCert = false;
   int loggedInmaxQuestionCharcount;
   int loggedInrating;
   String loggedIncategory;
   int loggedInreviews;
   int loggedIninfWorth;
   int loggedIninfSent;
-  int loggedIninfReceived;
-  bool loggedInisInfluencer;
+  int loggedIninfReceived; //for currency
+  bool loggedInisInfluencer = false;
+  String loggedInHashtags;
   Map loggedUserTimeSlots;
+
+  String loggedCover;
 
   DateTime ts1;
   DateTime ts2;
@@ -106,6 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   bool showts6 = false;
   bool showts7 = false;
 
+  bool loading = false;
+
   List<Order> sellerOrderList;
   List<String> compareList = [];
 
@@ -113,7 +125,16 @@ class _ProfileScreenState extends State<ProfileScreen>
   Animation animation;
   Animation anim;
 
+  CropState state;
+
+  File tempProfilePicture;
+  String tempProfilePictureUrl;
+
   void initState() {
+    setState(() {
+      loading = true;
+    });
+
     _repository.getCurrentUser().then((user) {
       _repository.fetchLoggedUser(user).then((dynamic loggedUser) {
         setState(() {
@@ -121,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedInname = loggedUser['name'];
           loggedInemail = loggedUser['email'];
           loggedInusername = loggedUser['username'];
-          loggedInstatus = loggedUser['status'];
+
           loggedInstate = loggedUser['state'];
           loggedInprofilePhoto = loggedUser['profilePhoto'];
           loggedInanswerPrice1 = loggedUser['answerPrice1'];
@@ -138,6 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           loggedIninfReceived = loggedUser['infReceived'];
           loggedInisInfluencer = loggedUser['isInfluencer'];
           loggedUserTimeSlots = loggedUser['timeSlots'];
+          loggedCover = loggedUser['status'];
 
           if (loggedInisInfluencer == true) {
             if (loggedUserTimeSlots['ttSlots'][0] != null) {
@@ -339,7 +361,89 @@ class _ProfileScreenState extends State<ProfileScreen>
       setState(() {});
     });
     getIVideoOrders();
+
+    setState(() {
+      loading = false;
+    });
     super.initState();
+  }
+
+  void autoUpdate() {
+    _repository.getCurrentUser().then((FirebaseUser user) {
+      _repository.updateProfiletoDb(
+          user,
+          loggedInname,
+          loggedInemail,
+          loggedInusername,
+          loggedCover,
+          loggedInstate,
+          loggedInprofilePhoto,
+          loggedInanswerPrice1,
+          loggedInanswerPrice2,
+          loggedInanswerPrice3,
+          loggedInanswerDuration,
+          loggedInbio,
+          loggedInisInfCert,
+          loggedInmaxQuestionCharcount,
+          loggedInrating,
+          loggedIncategory,
+          loggedInreviews,
+          loggedIninfWorth,
+          loggedIninfSent,
+          loggedIninfReceived,
+          loggedInisInfluencer,
+          loggedInHashtags,
+          loggedUserTimeSlots);
+    });
+  }
+
+  Future<File> pickCoverPic({@required ImageSource source}) async {
+    File selectedProPic = await Utils.pickCover(source: source);
+
+    String oldCoverpicname = loggedCover;
+
+    //File compImgHigh;
+    //   File compImgLow;
+
+    // compImgLow = await compressImageLow(selectedImg);
+
+    setState(() {
+      tempProfilePicture = selectedProPic;
+    });
+
+    if (selectedProPic != null) {
+      setState(() {
+        state = CropState.picked;
+      });
+    }
+    // // compImgHigh = await compressImageHigh(selectedImg);
+
+    tempProfilePictureUrl = await uploadImageToStorage(tempProfilePicture);
+
+    setState(() {
+      loggedCover = tempProfilePictureUrl;
+    });
+
+    if (oldCoverpicname != loggedCover) {
+      autoUpdate();
+    }
+  }
+
+  StorageReference _storageReference;
+  Future<String> uploadImageToStorage(File tempProfilePicture) async {
+    try {
+      _storageReference = FirebaseStorage.instance
+          .ref()
+          .child('${DateTime.now().millisecondsSinceEpoch}');
+
+      StorageUploadTask storageUploadTask =
+          _storageReference.putFile(tempProfilePicture);
+      var url = await (await storageUploadTask.onComplete).ref.getDownloadURL();
+
+      return url;
+    } catch (e) {
+      return null;
+    }
   }
 
   void getIVideoOrders() {
@@ -430,1690 +534,1847 @@ class _ProfileScreenState extends State<ProfileScreen>
           verticalSwipeMinDisplacement: 20.0,
           verticalSwipeMaxWidthThreshold: 120.0,
         ),
-        child: Stack(
-          children: <Widget>[
-            Container(
-                height: screenHeight,
-                width: screenWidth,
-                color: Colors.transparent),
-            GestureDetector(
-              onTap: () {
-                pullDown();
-              },
-              child: Container(
-                height: screenHeight - screenHeight / 3,
-                width: screenWidth,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/surfing.jpg'),
-                      fit: BoxFit.cover),
-                ),
-              ),
-            ),
-            Visibility(
-              visible:
-                  loggedInisInfluencer != null ? loggedInisInfluencer : false,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsScreen(),
-                      ),
-                    ),
+        child: loading
+            ? ColorLoader5()
+            : Stack(
+                children: <Widget>[
+                  Container(
+                      height: screenHeight,
+                      width: screenWidth,
+                      color: Colors.transparent),
+                  GestureDetector(
+                    onTap: () {
+                      pullDown();
+                    },
                     child: Container(
-                      height: 40.0,
-                      width: 40.0,
+                      height: screenHeight - screenHeight / 3,
+                      width: screenWidth,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: UniversalVariables.white2),
-                      child: Center(
-                        child: Icon(CupertinoIcons.settings,
-                            size: 30.0, color: UniversalVariables.grey1),
+                        image: DecorationImage(
+                            image: loggedCover != null && loggedCover != ""
+                                ? NetworkImage(loggedCover)
+                                : AssetImage('assets/surfing.jpg'),
+                            fit: BoxFit.cover),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.only(left: 45.0, top: 30.0, right: 15.0),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProfile(),
+                  Visibility(
+                    visible: loggedInisInfluencer != null
+                        ? loggedInisInfluencer
+                        : false,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(left: 15.0, top: 30.0, right: 65.0),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SettingsScreen(),
+                            ),
+                          ),
+                          child: Container(
+                            height: 40.0,
+                            width: 40.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: UniversalVariables.white2),
+                            child: Center(
+                              child: Icon(CupertinoIcons.settings,
+                                  size: 30.0, color: UniversalVariables.grey1),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UniversalVariables.white2),
-                    child: Center(
-                      child: Icon(CupertinoIcons.pen,
-                          size: 20.0, color: UniversalVariables.grey1),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: loggedInisInfluencer
-                  ? screenHeight -
-                      (screenHeight / 2.5) -
-                      (controller.value * screenHeight * 0.4) -
-                      55
-                  : screenHeight -
-                      (screenHeight / 2) -
-                      (controller.value * 100) +
-                      120,
-              child: Container(
-                padding: EdgeInsets.only(left: 20.0),
-                height: screenHeight,
-                width: screenWidth,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 25.0),
-                      loggedInname != null
-                          ? Text(
-                              loggedInname,
-                              style: TextStyles.theNameStyle,
-                            )
-                          : Text(
-                              "Favees User",
-                              style: TextStyles.theNameStyle,
-                            ),
-                      SizedBox(height: 7.0),
-
-                      loggedInbio != null
-                          ? Container(
-                              width: 180,
-                              child: Text(loggedInbio,
-                                  style: GoogleFonts.sourceSansPro(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: UniversalVariables.grey2)),
-                            )
-                          : Container(
-                              width: 175,
-                              child: Text(
-                                "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
-                                style: GoogleFonts.sourceSansPro(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: UniversalVariables.grey2),
-                              ),
-                            ),
-
-                      SizedBox(height: 15.0),
-                      // Text('Read More',
-                      //   style: GoogleFonts.sourceSansPro(
-                      //     fontSize: 14.0,
-                      //     fontWeight: FontWeight.w400,
-                      //     color: Color(0xFFF36F32)
-                      //   )
-                      // ),
-                      SizedBox(height: 25.0),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(left: 45.0, top: 30.0, right: 15.0),
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfile(),
+                          ),
+                        ),
                         child: Container(
+                          height: 40.0,
+                          width: 40.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: UniversalVariables.white2),
+                          child: Center(
+                            child: Icon(CupertinoIcons.pen,
+                                size: 20.0, color: UniversalVariables.grey1),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: loggedInisInfluencer
+                        ? screenHeight -
+                            (screenHeight / 2.5) -
+                            (controller.value * screenHeight * 0.4) -
+                            55
+                        : screenHeight -
+                            (screenHeight / 2) -
+                            (controller.value * 100) +
+                            120,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20.0),
+                      height: screenHeight,
+                      width: screenWidth,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 25.0),
+                            loggedInname != null
+                                ? Text(
+                                    loggedInname,
+                                    style: TextStyles.theNameStyle,
+                                  )
+                                : Text(
+                                    "Favees User",
+                                    style: TextStyles.theNameStyle,
+                                  ),
+                            SizedBox(height: 7.0),
+
+                            loggedInbio != null
+                                ? Container(
+                                    width: 180,
+                                    child: Text(loggedInbio,
+                                        style: GoogleFonts.sourceSansPro(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w400,
+                                            color: UniversalVariables.grey2)),
+                                  )
+                                : Container(
+                                    width: 175,
+                                    child: Text(
+                                      "Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molest",
+                                      style: GoogleFonts.sourceSansPro(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: UniversalVariables.grey2),
+                                    ),
+                                  ),
+
+                            SizedBox(height: 15.0),
+                            // Text('Read More',
+                            //   style: GoogleFonts.sourceSansPro(
+                            //     fontSize: 14.0,
+                            //     fontWeight: FontWeight.w400,
+                            //     color: Color(0xFFF36F32)
+                            //   )
+                            // ),
+                            SizedBox(height: 25.0),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SettingsScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Visibility(
+                                        visible: loggedInisInfluencer != null
+                                            ? loggedInisInfluencer
+                                            : false,
+                                        child: Container(
+                                          height: 80.0,
+                                          width: screenWidth / 4,
+                                          decoration: BoxDecoration(
+
+                                              //gradient: UniversalVariables.fabGradient,
+
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                                bottomLeft:
+                                                    Radius.circular(5.0),
+                                                bottomRight:
+                                                    Radius.circular(5.0),
+                                              ),
+                                              //color: UniversalVariables.white2
+                                              color: mC,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: mCD,
+                                                  offset: Offset(-10, 10),
+                                                  blurRadius: 10,
+                                                ),
+                                                BoxShadow(
+                                                  color: mCL,
+                                                  offset: Offset(0, -10),
+                                                  blurRadius: 10,
+                                                ),
+                                              ]),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 2.0),
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text("Text Reply",
+                                                        style: TextStyles
+                                                            .priceType,
+                                                        textAlign:
+                                                            TextAlign.center),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: loggedInanswerPrice1 !=
+                                                          null
+                                                      ? Text("\$ $loggedInanswerPrice1",
+                                                          style: TextStyles
+                                                              .priceNumber,
+                                                          textAlign:
+                                                              TextAlign.center)
+                                                      : Text("Not Set",
+                                                          style: TextStyles
+                                                              .notSetPriceNumber,
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SettingsScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Visibility(
+                                        visible: loggedInisInfluencer != null
+                                            ? loggedInisInfluencer
+                                            : false,
+                                        child: Container(
+                                          height: 80.0,
+                                          width: screenWidth / 4,
+                                          decoration: BoxDecoration(
+
+                                              //gradient: UniversalVariables.fabGradient,
+
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                                bottomLeft:
+                                                    Radius.circular(5.0),
+                                                bottomRight:
+                                                    Radius.circular(5.0),
+                                              ),
+                                              //color: UniversalVariables.white2
+                                              color: mC,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: mCD,
+                                                  offset: Offset(-10, 10),
+                                                  blurRadius: 10,
+                                                ),
+                                                BoxShadow(
+                                                  color: mCL,
+                                                  offset: Offset(0, -10),
+                                                  blurRadius: 10,
+                                                ),
+                                              ]),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 2.0),
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text("Video Reply",
+                                                        style: TextStyles
+                                                            .priceType,
+                                                        textAlign:
+                                                            TextAlign.center),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: loggedInanswerPrice2 !=
+                                                          null
+                                                      ? Text("\$ $loggedInanswerPrice2",
+                                                          style: TextStyles
+                                                              .priceNumber,
+                                                          textAlign:
+                                                              TextAlign.center)
+                                                      : Text("Not Set",
+                                                          style: TextStyles
+                                                              .notSetPriceNumber,
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SettingsScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Visibility(
+                                        visible: loggedInisInfluencer != null
+                                            ? loggedInisInfluencer
+                                            : false,
+                                        child: Container(
+                                          height: 80.0,
+                                          width: screenWidth / 4,
+                                          decoration: BoxDecoration(
+
+                                              //gradient: UniversalVariables.fabGradient,
+
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                                bottomLeft:
+                                                    Radius.circular(5.0),
+                                                bottomRight:
+                                                    Radius.circular(5.0),
+                                              ),
+                                              //color: UniversalVariables.white2
+                                              color: mC,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: mCD,
+                                                  offset: Offset(-10, 10),
+                                                  blurRadius: 10,
+                                                ),
+                                                BoxShadow(
+                                                  color: mCL,
+                                                  offset: Offset(0, -10),
+                                                  blurRadius: 10,
+                                                ),
+                                              ]),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 2.0),
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text("Videocall",
+                                                        style: TextStyles
+                                                            .priceType,
+                                                        textAlign:
+                                                            TextAlign.center),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: loggedInanswerPrice3 !=
+                                                          null
+                                                      ? Text("\$ $loggedInanswerPrice3",
+                                                          style: TextStyles
+                                                              .priceNumber,
+                                                          textAlign:
+                                                              TextAlign.center)
+                                                      : Text("Not Set",
+                                                          style: TextStyles
+                                                              .notSetPriceNumber,
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 15),
+
+                            loggedInisInfCert && (loggedUserTimeSlots != null)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 15.0),
+                                    child: Container(
+                                      height: screenHeight * 0.9,
+                                      width: screenWidth * 0.9,
+                                      color: UniversalVariables.transparent,
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Visibility(
+                                              visible: showts1,
+                                              //  visible: true,
+                                              child: Container(
+                                                // decoration: BoxDecoration(
+                                                //   color:
+                                                //    //   UniversalVariables.white2,
+                                                //   //borderRadius: BorderRadius.only(
+                                                //     // topLeft: Radius.circular(100),
+                                                //     // topRight: Radius.circular(100),
+                                                //     //   bottomLeft: Radius.circular(10),
+                                                //     //   bottomRight: Radius.circular(10),
+                                                //   ),
+                                                // ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts1 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts1)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts1Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts1Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts1Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts1Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: showts2,
+                                              //  visible: true,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts2 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts2)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts2Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts2Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts2Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts2Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: showts3,
+                                              // visible: true,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts3 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts3)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts3Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts3Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts3Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts3Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: showts4,
+                                              // visible: true,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts4 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts4)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts4Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts4Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts4Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts4Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: showts5,
+                                              //  visible: true,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts5 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts5)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts6Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts5Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts5Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts5Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: showts6,
+                                              // visible: true,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts6 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts6)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts6Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts6Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts6Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts6Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: showts7,
+                                              // visible: true,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0,
+                                                          left: 20,
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      ts7 != null
+                                                          ? Text(
+                                                              "${DateFormat('MMM d, kk:mm').format(ts7)}",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle)
+                                                          : Text("",
+                                                              style: TextStyles
+                                                                  .timeTextDetailStyle),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: ts7Duration !=
+                                                                null
+                                                            ? Text(
+                                                                "${Utils.getDuration(ts7Duration)}",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle)
+                                                            : Text("10 mins",
+                                                                style: TextStyles
+                                                                    .timeDurationDetailStyle),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Container(
+                                                          // color:Colors.orange,
+                                                          // width: 75,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ts7Bought
+                                                                ? UniversalVariables
+                                                                    .offline
+                                                                : UniversalVariables
+                                                                    .online,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0,
+                                                                    vertical:
+                                                                        3),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart,
+                                                                  color: UniversalVariables
+                                                                      .standardWhite,
+                                                                ),
+                                                                ts7Bought
+                                                                    ? Text(
+                                                                        ConStrings
+                                                                            .bought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails)
+                                                                    : Text(
+                                                                        ConStrings
+                                                                            .notBought,
+                                                                        style: TextStyles
+                                                                            .timeSlotDetails),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    width: screenWidth * 0.9,
+
+                                    // child: OutlineButton(
+                                    //   onPressed: () {
+                                    //     Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //         builder: (context) => SettingsScreen(),
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    //   focusColor: UniversalVariables.standardWhite,
+                                    //   // borderSide: BorderSide.solid,
+                                    //   child:
+                                    //       Text("", style: TextStyles.verifiedStyle),
+                                    // ),
+
+                                    child: Center(
+                                        child: loggedInisInfluencer
+                                            ? OutlineButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SettingsScreen(),
+                                                    ),
+                                                  );
+                                                },
+                                                focusColor: UniversalVariables
+                                                    .standardWhite,
+                                                // borderSide: BorderSide.solid,
+                                                child: Text(ConStrings.ADDTS,
+                                                    style: TextStyles
+                                                        .verifiedStyle),
+                                              )
+                                            : Text(ConStrings.UPCOMINGFAVS,
+                                                style:
+                                                    TextStyles.verifiedStyle)),
+                                  ),
+
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 20.0),
+                            //   child: Container(
+                            //       height: 250,
+                            //       width: screenWidth * 0.9,
+                            //       color: UniversalVariables.transparent,
+                            //       child: SingleChildScrollView(
+                            //         scrollDirection: Axis.vertical,
+                            //         child: Column(
+                            //           children: <Widget>[
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 borderRadius: BorderRadius.only(
+                            //                   topLeft: Radius.circular(100),
+                            //                   topRight: Radius.circular(100),
+                            //                   //   bottomLeft: Radius.circular(10),
+                            //                   //   bottomRight: Radius.circular(10),
+                            //                 ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.only(top: 18.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 // borderRadius: BorderRadius.only(
+                            //                 //   topLeft: Radius.circular(10),
+                            //                 //   topRight: Radius.circular(10),
+                            //                 //   bottomLeft: Radius.circular(10),
+                            //                 //   bottomRight: Radius.circular(10),
+                            //                 // ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.all(8.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 // borderRadius: BorderRadius.only(
+                            //                 //   topLeft: Radius.circular(10),
+                            //                 //   topRight: Radius.circular(10),
+                            //                 //   bottomLeft: Radius.circular(10),
+                            //                 //   bottomRight: Radius.circular(10),
+                            //                 // ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.all(8.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 // borderRadius: BorderRadius.only(
+                            //                 //   topLeft: Radius.circular(10),
+                            //                 //   topRight: Radius.circular(10),
+                            //                 //   bottomLeft: Radius.circular(10),
+                            //                 //   bottomRight: Radius.circular(10),
+                            //                 // ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.all(8.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 // borderRadius: BorderRadius.only(
+                            //                 //   topLeft: Radius.circular(10),
+                            //                 //   topRight: Radius.circular(10),
+                            //                 //   bottomLeft: Radius.circular(10),
+                            //                 //   bottomRight: Radius.circular(10),
+                            //                 // ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.all(8.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 // borderRadius: BorderRadius.only(
+                            //                 //   topLeft: Radius.circular(10),
+                            //                 //   topRight: Radius.circular(10),
+                            //                 //   bottomLeft: Radius.circular(10),
+                            //                 //   bottomRight: Radius.circular(10),
+                            //                 // ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.all(8.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //               decoration: BoxDecoration(
+                            //                 color: UniversalVariables.standardWhite,
+                            //                 borderRadius: BorderRadius.only(
+                            //                   //  topLeft: Radius.circular(10),
+                            //                   //  topRight: Radius.circular(10),
+                            //                   bottomLeft: Radius.circular(50),
+                            //                   bottomRight: Radius.circular(50),
+                            //                 ),
+                            //               ),
+                            //               child: Padding(
+                            //                 padding:
+                            //                     const EdgeInsets.only(bottom: 80.0),
+                            //                 child: Row(
+                            //                   mainAxisSize: MainAxisSize.max,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: <Widget>[
+                            //                     Text("July 23, 16:00",
+                            //                         style: TextStyles
+                            //                             .timeTextDetailStyle),
+                            //                     Container(
+                            //                       // color:Colors.orange,
+                            //                       width: 75,
+                            //                       decoration: BoxDecoration(
+                            //                         color: UniversalVariables.gold2,
+                            //                         borderRadius: BorderRadius.only(
+                            //                           topLeft: Radius.circular(10),
+                            //                           topRight: Radius.circular(10),
+                            //                           bottomLeft: Radius.circular(10),
+                            //                           bottomRight:
+                            //                               Radius.circular(10),
+                            //                         ),
+                            //                       ),
+                            //                       child: Padding(
+                            //                         padding:
+                            //                             const EdgeInsets.all(5.0),
+                            //                         child: Row(
+                            //                           children: <Widget>[
+                            //                             Icon(
+                            //                               Icons.shopping_cart,
+                            //                               color: UniversalVariables
+                            //                                   .standardWhite,
+                            //                             ),
+                            //                             Text("BOOK",
+                            //                                 style: TextStyles
+                            //                                     .timeSlotDetails),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       )),
+                            // ),
+                            // Container(
+                            //   width: 325,
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //     children: [
+                            //       Column(
+                            //         crossAxisAlignment: CrossAxisAlignment.start,
+                            //         children: <Widget>[
+                            //           Container(
+                            //             height: 75.0,
+                            //             width: 150.0,
+                            //             child: Center(
+                            //                 child: Column(
+                            //                     mainAxisAlignment:
+                            //                         MainAxisAlignment.center,
+                            //                     children: [
+                            //                   Icon(
+                            //                     Icons.text_format,
+                            //                     color: Colors.white,
+                            //                     size: 30,
+                            //                   ),
+                            //                   Text(Strings.TEXT_MESSAGE,
+                            //                       style: GoogleFonts.sourceSansPro(
+                            //                           fontSize: 12.0,
+                            //                           fontWeight: FontWeight.w500,
+                            //                           color: UniversalVariables
+                            //                               .standardCream))
+                            //                 ])),
+                            //             decoration: BoxDecoration(
+                            //                 borderRadius: BorderRadius.all(
+                            //                   Radius.circular(35.0),
+                            //                 ),
+                            //                 color: UniversalVariables.standardPink),
+                            //           )
+                            //         ],
+                            //       ),
+                            //       Column(
+                            //         crossAxisAlignment: CrossAxisAlignment.start,
+                            //         children: <Widget>[
+                            //           Container(
+                            //             height: 75.0,
+                            //             width: 150.0,
+                            //             child: Center(
+                            //                 child: Column(
+                            //                     mainAxisAlignment:
+                            //                         MainAxisAlignment.center,
+                            //                     children: [
+                            //                   Icon(
+                            //                     Icons.videocam,
+                            //                     color: Colors.white,
+                            //                     size: 30,
+                            //                   ),
+                            //                   Text(Strings.VIDEO_MESSAGE,
+                            //                       style: GoogleFonts.sourceSansPro(
+                            //                           fontSize: 12.0,
+                            //                           fontWeight: FontWeight.w500,
+                            //                           color: UniversalVariables
+                            //                               .standardCream))
+                            //                 ])),
+                            //             decoration: BoxDecoration(
+                            //                 borderRadius: BorderRadius.all(
+                            //                   Radius.circular(35.0),
+                            //                 ),
+                            //                 color: UniversalVariables.standardPink),
+                            //           )
+                            //         ],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // )
+                          ]),
+                      decoration: BoxDecoration(
+                        color: UniversalVariables.backgroundGrey,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0, top: 30.0),
+                      child: GestureDetector(
+                        onTap: () => {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                            (Route<dynamic> route) => false,
+                          )
+                        },
+                        child: Container(
+                          height: 40.0,
+                          width: 40.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: UniversalVariables.white2),
+                          child: Center(
+                            child: Icon(Icons.arrow_back,
+                                size: 20.0, color: UniversalVariables.grey1),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 15.0),
+                  //     child: Container(
+                  //       height: 40.0,
+                  //       width: 40.0,
+                  //       decoration: BoxDecoration(
+                  //           shape: BoxShape.circle, color: UniversalVariables.white2),
+                  //       child: Center(
+                  //         child: Icon(Icons.edit,
+                  //             size: 20.0, color: UniversalVariables.grey1),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Positioned(
+                      top: (screenHeight - screenHeight / 12) / 2,
+                      left: 15,
+                      child: InkWell(
+                        onTap: () {
+                          pickCoverPic(source: ImageSource.gallery);
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: UniversalVariables.white2,
+                                borderRadius: BorderRadius.circular(20.0)),
+                            child: Row(
+                              children: [
+                                Icon(CupertinoIcons.add,
+                                    size: 30.0,
+                                    color: UniversalVariables.grey1),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 8.0, top: 2),
+                                  child: Text('Edit Cover',
+                                      style: TextStyles.bioStyle),
+                                ),
+                              ],
+                            )),
+                      )),
+                  Positioned(
+                    top: loggedInisInfluencer
+                        ? screenHeight -
+                            screenHeight / 2.5 -
+                            65.0 -
+                            (controller.value * screenHeight * 0.35) -
+                            55
+                        : screenHeight -
+                            screenHeight / 2.5 -
+                            65.0 -
+                            (controller.value * 100) +
+                            60,
+                    right: 35.0,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 110.0,
+                          width: 110.0,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(loggedInprofilePhoto != null
+                                  ? loggedInprofilePhoto
+                                  : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Container(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SettingsScreen(),
+                              loggedInusername != null
+                                  ? Text(
+                                      loggedInusername,
+                                      // style: TextStyles.usernameStyle,
+                                      style: anim.value,
+                                    )
+                                  : Text(
+                                      "faveezUsername",
+                                      style: TextStyles.usernameStyleEnd,
                                     ),
-                                  );
-                                },
-                                child: Visibility(
-                                  visible: loggedInisInfluencer != null
-                                      ? loggedInisInfluencer
-                                      : false,
-                                  child: Container(
-                                    height: 80.0,
-                                    width: screenWidth / 4,
-                                    decoration: BoxDecoration(
-
-                                        //gradient: UniversalVariables.fabGradient,
-
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(5.0),
-                                          bottomRight: Radius.circular(5.0),
-                                        ),
-                                        //color: UniversalVariables.white2
-                                        color: mC,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: mCD,
-                                            offset: Offset(-10, 10),
-                                            blurRadius: 10,
-                                          ),
-                                          BoxShadow(
-                                            color: mCL,
-                                            offset: Offset(0, -10),
-                                            blurRadius: 10,
-                                          ),
-                                        ]),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 2.0),
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text("Text Reply",
-                                                  style: TextStyles.priceType,
-                                                  textAlign: TextAlign.center),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: loggedInanswerPrice1 != null
-                                                ? Text(
-                                                    "\$ $loggedInanswerPrice1",
-                                                    style:
-                                                        TextStyles.priceNumber,
-                                                    textAlign: TextAlign.center)
-                                                : Text("Not Set",
-                                                    style: TextStyles
-                                                        .notSetPriceNumber,
-                                                    textAlign:
-                                                        TextAlign.center),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SettingsScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Visibility(
-                                  visible: loggedInisInfluencer != null
-                                      ? loggedInisInfluencer
-                                      : false,
-                                  child: Container(
-                                    height: 80.0,
-                                    width: screenWidth / 4,
-                                    decoration: BoxDecoration(
-
-                                        //gradient: UniversalVariables.fabGradient,
-
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(5.0),
-                                          bottomRight: Radius.circular(5.0),
-                                        ),
-                                        //color: UniversalVariables.white2
-                                        color: mC,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: mCD,
-                                            offset: Offset(-10, 10),
-                                            blurRadius: 10,
-                                          ),
-                                          BoxShadow(
-                                            color: mCL,
-                                            offset: Offset(0, -10),
-                                            blurRadius: 10,
-                                          ),
-                                        ]),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 2.0),
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text("Video Reply",
-                                                  style: TextStyles.priceType,
-                                                  textAlign: TextAlign.center),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: loggedInanswerPrice2 != null
-                                                ? Text(
-                                                    "\$ $loggedInanswerPrice2",
-                                                    style:
-                                                        TextStyles.priceNumber,
-                                                    textAlign: TextAlign.center)
-                                                : Text("Not Set",
-                                                    style: TextStyles
-                                                        .notSetPriceNumber,
-                                                    textAlign:
-                                                        TextAlign.center),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SettingsScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Visibility(
-                                  visible: loggedInisInfluencer != null
-                                      ? loggedInisInfluencer
-                                      : false,
-                                  child: Container(
-                                    height: 80.0,
-                                    width: screenWidth / 4,
-                                    decoration: BoxDecoration(
-
-                                        //gradient: UniversalVariables.fabGradient,
-
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(5.0),
-                                          bottomRight: Radius.circular(5.0),
-                                        ),
-                                        //color: UniversalVariables.white2
-                                        color: mC,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: mCD,
-                                            offset: Offset(-10, 10),
-                                            blurRadius: 10,
-                                          ),
-                                          BoxShadow(
-                                            color: mCL,
-                                            offset: Offset(0, -10),
-                                            blurRadius: 10,
-                                          ),
-                                        ]),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 2.0),
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text("Videocall",
-                                                  style: TextStyles.priceType,
-                                                  textAlign: TextAlign.center),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: loggedInanswerPrice3 != null
-                                                ? Text(
-                                                    "\$ $loggedInanswerPrice3",
-                                                    style:
-                                                        TextStyles.priceNumber,
-                                                    textAlign: TextAlign.center)
-                                                : Text("Not Set",
-                                                    style: TextStyles
-                                                        .notSetPriceNumber,
-                                                    textAlign:
-                                                        TextAlign.center),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              Icon(
+                                Icons.verified_user,
+                                color: UniversalVariables.gold2,
+                                size: 20,
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 15),
-
-                      loggedInisInfCert && (loggedUserTimeSlots != null)
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 15.0),
-                              child: Container(
-                                height: screenHeight * 0.9,
-                                width: screenWidth * 0.9,
-                                color: UniversalVariables.transparent,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Visibility(
-                                        visible: showts1,
-                                        //  visible: true,
-                                        child: Container(
-                                          // decoration: BoxDecoration(
-                                          //   color:
-                                          //    //   UniversalVariables.white2,
-                                          //   //borderRadius: BorderRadius.only(
-                                          //     // topLeft: Radius.circular(100),
-                                          //     // topRight: Radius.circular(100),
-                                          //     //   bottomLeft: Radius.circular(10),
-                                          //     //   bottomRight: Radius.circular(10),
-                                          //   ),
-                                          // ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts1 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts1)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts1Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts1Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts1Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts1Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: showts2,
-                                        //  visible: true,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts2 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts2)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts2Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts2Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts2Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts2Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: showts3,
-                                        // visible: true,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts3 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts3)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts3Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts3Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts3Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts3Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: showts4,
-                                        // visible: true,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts4 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts4)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts4Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts4Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts4Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts4Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: showts5,
-                                        //  visible: true,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts5 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts5)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts6Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts5Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts5Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts5Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: showts6,
-                                        // visible: true,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts6 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts6)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts6Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts6Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts6Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts6Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: showts7,
-                                        // visible: true,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0, left: 20, bottom: 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                ts7 != null
-                                                    ? Text(
-                                                        "${DateFormat('MMM d, kk:mm').format(ts7)}",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle)
-                                                    : Text("",
-                                                        style: TextStyles
-                                                            .timeTextDetailStyle),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: ts7Duration != null
-                                                      ? Text(
-                                                          "${Utils.getDuration(ts7Duration)}",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle)
-                                                      : Text("10 mins",
-                                                          style: TextStyles
-                                                              .timeDurationDetailStyle),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    // color:Colors.orange,
-                                                    // width: 75,
-                                                    decoration: BoxDecoration(
-                                                      color: ts7Bought
-                                                          ? UniversalVariables
-                                                              .offline
-                                                          : UniversalVariables
-                                                              .online,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                        topRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5.0,
-                                                          vertical: 3),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.shopping_cart,
-                                                            color: UniversalVariables
-                                                                .standardWhite,
-                                                          ),
-                                                          ts7Bought
-                                                              ? Text(
-                                                                  ConStrings
-                                                                      .bought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails)
-                                                              : Text(
-                                                                  ConStrings
-                                                                      .notBought,
-                                                                  style: TextStyles
-                                                                      .timeSlotDetails),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(
-                              width: screenWidth * 0.9,
-
-                              // child: OutlineButton(
-                              //   onPressed: () {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context) => SettingsScreen(),
-                              //       ),
-                              //     );
-                              //   },
-                              //   focusColor: UniversalVariables.standardWhite,
-                              //   // borderSide: BorderSide.solid,
-                              //   child:
-                              //       Text("", style: TextStyles.verifiedStyle),
-                              // ),
-
-                              child: Center(
-                                  child: loggedInisInfluencer
-                                      ? OutlineButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SettingsScreen(),
-                                              ),
-                                            );
-                                          },
-                                          focusColor:
-                                              UniversalVariables.standardWhite,
-                                          // borderSide: BorderSide.solid,
-                                          child: Text(ConStrings.ADDTS,
-                                              style: TextStyles.verifiedStyle),
-                                        )
-                                      : Text(ConStrings.UPCOMINGFAVS,
-                                          style: TextStyles.verifiedStyle)),
-                            ),
-
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 20.0),
-                      //   child: Container(
-                      //       height: 250,
-                      //       width: screenWidth * 0.9,
-                      //       color: UniversalVariables.transparent,
-                      //       child: SingleChildScrollView(
-                      //         scrollDirection: Axis.vertical,
-                      //         child: Column(
-                      //           children: <Widget>[
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 borderRadius: BorderRadius.only(
-                      //                   topLeft: Radius.circular(100),
-                      //                   topRight: Radius.circular(100),
-                      //                   //   bottomLeft: Radius.circular(10),
-                      //                   //   bottomRight: Radius.circular(10),
-                      //                 ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.only(top: 18.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 // borderRadius: BorderRadius.only(
-                      //                 //   topLeft: Radius.circular(10),
-                      //                 //   topRight: Radius.circular(10),
-                      //                 //   bottomLeft: Radius.circular(10),
-                      //                 //   bottomRight: Radius.circular(10),
-                      //                 // ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.all(8.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 // borderRadius: BorderRadius.only(
-                      //                 //   topLeft: Radius.circular(10),
-                      //                 //   topRight: Radius.circular(10),
-                      //                 //   bottomLeft: Radius.circular(10),
-                      //                 //   bottomRight: Radius.circular(10),
-                      //                 // ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.all(8.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 // borderRadius: BorderRadius.only(
-                      //                 //   topLeft: Radius.circular(10),
-                      //                 //   topRight: Radius.circular(10),
-                      //                 //   bottomLeft: Radius.circular(10),
-                      //                 //   bottomRight: Radius.circular(10),
-                      //                 // ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.all(8.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 // borderRadius: BorderRadius.only(
-                      //                 //   topLeft: Radius.circular(10),
-                      //                 //   topRight: Radius.circular(10),
-                      //                 //   bottomLeft: Radius.circular(10),
-                      //                 //   bottomRight: Radius.circular(10),
-                      //                 // ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.all(8.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 // borderRadius: BorderRadius.only(
-                      //                 //   topLeft: Radius.circular(10),
-                      //                 //   topRight: Radius.circular(10),
-                      //                 //   bottomLeft: Radius.circular(10),
-                      //                 //   bottomRight: Radius.circular(10),
-                      //                 // ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.all(8.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: UniversalVariables.standardWhite,
-                      //                 borderRadius: BorderRadius.only(
-                      //                   //  topLeft: Radius.circular(10),
-                      //                   //  topRight: Radius.circular(10),
-                      //                   bottomLeft: Radius.circular(50),
-                      //                   bottomRight: Radius.circular(50),
-                      //                 ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding:
-                      //                     const EdgeInsets.only(bottom: 80.0),
-                      //                 child: Row(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceEvenly,
-                      //                   children: <Widget>[
-                      //                     Text("July 23, 16:00",
-                      //                         style: TextStyles
-                      //                             .timeTextDetailStyle),
-                      //                     Container(
-                      //                       // color:Colors.orange,
-                      //                       width: 75,
-                      //                       decoration: BoxDecoration(
-                      //                         color: UniversalVariables.gold2,
-                      //                         borderRadius: BorderRadius.only(
-                      //                           topLeft: Radius.circular(10),
-                      //                           topRight: Radius.circular(10),
-                      //                           bottomLeft: Radius.circular(10),
-                      //                           bottomRight:
-                      //                               Radius.circular(10),
-                      //                         ),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding:
-                      //                             const EdgeInsets.all(5.0),
-                      //                         child: Row(
-                      //                           children: <Widget>[
-                      //                             Icon(
-                      //                               Icons.shopping_cart,
-                      //                               color: UniversalVariables
-                      //                                   .standardWhite,
-                      //                             ),
-                      //                             Text("BOOK",
-                      //                                 style: TextStyles
-                      //                                     .timeSlotDetails),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       )),
-                      // ),
-                      // Container(
-                      //   width: 325,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //     children: [
-                      //       Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: <Widget>[
-                      //           Container(
-                      //             height: 75.0,
-                      //             width: 150.0,
-                      //             child: Center(
-                      //                 child: Column(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.center,
-                      //                     children: [
-                      //                   Icon(
-                      //                     Icons.text_format,
-                      //                     color: Colors.white,
-                      //                     size: 30,
-                      //                   ),
-                      //                   Text(Strings.TEXT_MESSAGE,
-                      //                       style: GoogleFonts.sourceSansPro(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w500,
-                      //                           color: UniversalVariables
-                      //                               .standardCream))
-                      //                 ])),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.all(
-                      //                   Radius.circular(35.0),
-                      //                 ),
-                      //                 color: UniversalVariables.standardPink),
-                      //           )
-                      //         ],
-                      //       ),
-                      //       Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: <Widget>[
-                      //           Container(
-                      //             height: 75.0,
-                      //             width: 150.0,
-                      //             child: Center(
-                      //                 child: Column(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.center,
-                      //                     children: [
-                      //                   Icon(
-                      //                     Icons.videocam,
-                      //                     color: Colors.white,
-                      //                     size: 30,
-                      //                   ),
-                      //                   Text(Strings.VIDEO_MESSAGE,
-                      //                       style: GoogleFonts.sourceSansPro(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w500,
-                      //                           color: UniversalVariables
-                      //                               .standardCream))
-                      //                 ])),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.all(
-                      //                   Radius.circular(35.0),
-                      //                 ),
-                      //                 color: UniversalVariables.standardPink),
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
-                    ]),
-                decoration: BoxDecoration(
-                  color: UniversalVariables.backgroundGrey,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0),
-                  ),
-                ),
-              ),
-            ),
-
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.0, top: 30.0),
-                child: GestureDetector(
-                  onTap: () => {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                      (Route<dynamic> route) => false,
-                    )
-                  },
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UniversalVariables.white2),
-                    child: Center(
-                      child: Icon(Icons.arrow_back,
-                          size: 20.0, color: UniversalVariables.grey1),
+                        )
+                      ],
                     ),
                   ),
-                ),
+                ],
               ),
-            ),
-            // Align(
-            //   alignment: Alignment.topRight,
-            //   child: Padding(
-            //     padding: EdgeInsets.only(left: 15.0, top: 30.0, right: 15.0),
-            //     child: Container(
-            //       height: 40.0,
-            //       width: 40.0,
-            //       decoration: BoxDecoration(
-            //           shape: BoxShape.circle, color: UniversalVariables.white2),
-            //       child: Center(
-            //         child: Icon(Icons.edit,
-            //             size: 20.0, color: UniversalVariables.grey1),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Positioned(
-            //   top: (screenHeight - screenHeight / 3) / 2,
-            //   left: (screenWidth /2) - 75.0,
-            //   child: Container(
-            //     height: 40.0,
-            //     width: 150.0,
-            //     decoration: BoxDecoration(
-            //       color: Color(0xFFA4B2AE),
-            //       borderRadius: BorderRadius.circular(20.0)
-            //     ),
-            //     child: Center(
-            //       child: Text('Add Your intro video here',
-            //       style: GoogleFonts.sourceSansPro(
-            //         fontSize: 14.0,
-            //         fontWeight: FontWeight.w500,
-            //         color: Colors.white
-            //       )
-            //       )
-            //     )
-            //   )
-            // ),
-            Positioned(
-              top: loggedInisInfluencer
-                  ? screenHeight -
-                      screenHeight / 2.5 -
-                      65.0 -
-                      (controller.value * screenHeight * 0.35) -
-                      55
-                  : screenHeight -
-                      screenHeight / 2.5 -
-                      65.0 -
-                      (controller.value * 100) +
-                      60,
-              right: 35.0,
-              child: Hero(
-                tag: loggedInprofilePhoto,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: 110.0,
-                      width: 110.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(loggedInprofilePhoto),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Container(
-                      child: Row(
-                        children: <Widget>[
-                          loggedInusername != null
-                              ? Text(
-                                  loggedInusername,
-                                  // style: TextStyles.usernameStyle,
-                                  style: anim.value,
-                                )
-                              : Text(
-                                  "faveezUsername",
-                                  style: TextStyles.usernameStyleEnd,
-                                ),
-                          Icon(
-                            Icons.verified_user,
-                            color: UniversalVariables.gold2,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

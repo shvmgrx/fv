@@ -150,6 +150,7 @@ class _EditProfileState extends State<EditProfile> {
           loggedUserinfReceived = loggedUser['infReceived'];
           loggedUserisInfluencer = loggedUser['isInfluencer'];
           loggedUserHashtags = loggedUser['hashtags'];
+          loggedUserTimeSlots = loggedUser['timeSlots'];
         });
       });
     });
@@ -181,6 +182,7 @@ class _EditProfileState extends State<EditProfile> {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
     // var screenHeight = MediaQuery.of(context).size.height;
     // var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: UniversalVariables.backgroundGrey,

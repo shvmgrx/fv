@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fv/resources/order_methods.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:fv/enum/user_state.dart';
@@ -31,6 +33,8 @@ class ListInfluencerPage extends StatefulWidget {
 class _ListInfluencerPageState extends State<ListInfluencerPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  final OrderMethods _orderMethods = OrderMethods();
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
   final influencers = allInfluencers;
@@ -45,6 +49,9 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
 
   String loggedUserDisplayName;
   String loggedUserProfilePic;
+  int loggedUserinfWorth;
+
+  String loggedInUID;
   bool paymentPressed = false;
   bool profilePressed = false;
   bool settingsPressed = false;
@@ -59,6 +66,8 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
   String loggedInname;
   String loggedInprofilePhoto;
 
+  int loggedUserWorth;
+
   void initState() {
     _repository.getCurrentUser().then((user) {
       _repository.fetchLoggedUser(user).then((dynamic loggedUser) {
@@ -68,6 +77,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           loggedInprofilePhoto = loggedUser['profilePhoto'];
           //uncomment and remove temporary loggedUserisInfCert
           loggedUserisInfCert = loggedUser['isInfCert'];
+          loggedInUID = loggedUser['uid'];
           // loggedUserisInfCert = false;
         });
       });
@@ -111,6 +121,21 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
         setState(() {
           mostActiveList = list;
         });
+      });
+    });
+
+    _orderMethods.fetchIncome(loggedInUID).then((int value) {
+      setState(() {
+        loggedUserWorth = value;
+        print("loggedInUID:$loggedInUID  loggedUserWorth:$loggedUserWorth");
+      });
+    });
+  }
+
+  void incomeRevealer() {
+    _orderMethods.fetchIncome(loggedInUID).then((int value) {
+      setState(() {
+        loggedUserWorth = value;
       });
     });
   }
@@ -422,22 +447,37 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                             //     Navigator.pushNamed(context, "/messages_screen");
                             // },
                             // ),
-                            Text(
-                              "\$ 243",
-                              style: TextStyles.moneyStyle,
-                            ),
+                            // Text(
+                            //   "\$ $loggedUserWorth",
+                            //   style: TextStyles.moneyStyle,
+                            // ),
                           ],
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.message,
-                          color: UniversalVariables.grey2,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/messages_screen");
+                          },
+                          child: SvgPicture.asset(
+                            "assets/message.svg",
+                            height: 25,
+                            width: 25,
+                            // alignment: Alignment.topCenter,
+                            color: UniversalVariables.grey2,
+                          ),
                         ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/messages_screen");
-                        },
                       ),
+                      // IconButton(
+                      //   icon: Icon(
+                      //     CupertinoIcons.news,
+                      //     color: UniversalVariables.grey2,
+                      //   ),
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, "/messages_screen");
+                      //   },
+                      // ),
                     ],
                   ),
                 )
@@ -624,53 +664,54 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
             //     DummyUser9(),
             //   ],
             // ),
+            loggedUserisInfCert
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(left: 5),
+                    height: MediaQuery.of(context).size.height - 200.0,
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 2,
+                      childAspectRatio: 0.65,
+                      primary: false,
+                      children: <Widget>[
+                        // Text("Main screen"),
+                        // CupertinoButton(
+                        //     child: Text("update data"),
+                        //     onPressed: () {
+                        //       _repository.getCurrentUser().then((FirebaseUser user) {
+                        //         print(user.displayName);
+                        //         _repository.updateDatatoDb(
+                        //             user, user.displayName, user.displayName, 6);
+                        //       });
+                        //     }),
+                        if (category1Pressed)
+                          if (featuredList != null)
+                            ...featuredList.map((e) {
+                              return buildInfluencerGrid(e);
+                            }).toList(),
 
-            Container(
-              margin: EdgeInsets.only(left: 5),
-              height: MediaQuery.of(context).size.height - 200.0,
-              child: GridView.count(
-                crossAxisCount: 3,
-                crossAxisSpacing: 0,
-                mainAxisSpacing: 2,
-                childAspectRatio: 0.65,
-                primary: false,
-                children: <Widget>[
-                  // Text("Main screen"),
-                  // CupertinoButton(
-                  //     child: Text("update data"),
-                  //     onPressed: () {
-                  //       _repository.getCurrentUser().then((FirebaseUser user) {
-                  //         print(user.displayName);
-                  //         _repository.updateDatatoDb(
-                  //             user, user.displayName, user.displayName, 6);
-                  //       });
-                  //     }),
-                  if (category1Pressed)
-                    if (featuredList != null)
-                      ...featuredList.map((e) {
-                        return buildInfluencerGrid(e);
-                      }).toList(),
+                        if (category2Pressed)
+                          if (trendingList != null)
+                            ...trendingList.map((e) {
+                              return buildInfluencerGrid(e);
+                            }).toList(),
 
-                  if (category2Pressed)
-                    if (trendingList != null)
-                      ...trendingList.map((e) {
-                        return buildInfluencerGrid(e);
-                      }).toList(),
+                        if (category3Pressed)
+                          if (newList != null)
+                            ...newList.map((e) {
+                              return buildInfluencerGrid(e);
+                            }).toList(),
 
-                  if (category3Pressed)
-                    if (newList != null)
-                      ...newList.map((e) {
-                        return buildInfluencerGrid(e);
-                      }).toList(),
-
-                  if (category4Pressed)
-                    if (mostActiveList != null)
-                      ...mostActiveList.map((e) {
-                        return buildInfluencerGrid(e);
-                      }).toList()
-                ],
-              ),
-            ),
+                        if (category4Pressed)
+                          if (mostActiveList != null)
+                            ...mostActiveList.map((e) {
+                              return buildInfluencerGrid(e);
+                            }).toList()
+                      ],
+                    ),
+                  ),
           ],
         ),
       ),
