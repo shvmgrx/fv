@@ -30,6 +30,17 @@ class ConStrings {
   static const String VIDEOCALLS = "Videocalls";
   static const String MESSAGES = "Messages";
 
+  static const String FAVING = "Start Faving";
+
+  static const String FAVSTATS = "Order statistics in next app update";
+
+  static const String FAVEREC1 =
+      "1. Set you availibility timeslots in settings so your fans can reach you.";
+  static const String FAVEREC2 =
+      "2. Set your text reply, video reply and videocall price in settings.";
+  static const String FAVEREC3 =
+      "3. Post a story on your social media and invite your fans to personally interact you on Faveez.";
+
   static const String VIDEOCALLS_DETAIL =
       "Your VideoCall orders will be displayed here.";
   static const String MESSAGES_DETAIL =

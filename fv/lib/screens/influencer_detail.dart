@@ -466,15 +466,18 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           price: _generatePrice());
 
       List iOrderId = [];
+      List iOrderDate = [];
       List iAmount = [];
 
       List<Map> magicMap = [];
 
       iOrderId.add(_order.uid);
+      iOrderDate.add(_order.boughtOn);
       iAmount.add(_order.price);
 
       Map<String, List> tempIncome = {
         "orderId": iOrderId,
+        "orderDate": iOrderDate,
         "amount": iAmount,
       };
 

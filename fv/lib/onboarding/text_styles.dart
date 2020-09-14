@@ -43,6 +43,19 @@ class TextStyles {
     ],
   );
 
+  static final TextStyle startFaving = TextStyle(
+    fontSize: 25,
+    fontWeight: FontWeight.w900,
+    color: UniversalVariables.gold2,
+    fontFamily: 'kiona',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
   static final TextStyle profileName = TextStyle(
     fontSize: 25,
     // fontWeight: FontWeight.w900,
@@ -60,6 +73,14 @@ class TextStyles {
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
     color: UniversalVariables.grey2,
+  );
+
+  static final TextStyle nextUpdate = TextStyle(
+    fontSize: 20,
+    fontFamily: 'Raleway',
+    letterSpacing: 1.5,
+    fontWeight: FontWeight.w500,
+    color: UniversalVariables.gold2,
   );
 
   static final TextStyle selectedOrdersStyle = TextStyle(
@@ -260,6 +281,20 @@ class TextStyles {
 
   static final TextStyle moneyStyle = TextStyle(
     fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: UniversalVariables.moneyColor1,
+
+    // fontFamily: 'Poppins',
+    // shadows: <Shadow>[
+    //   Shadow(
+    //     blurRadius: 2.0,
+    //     color: UniversalVariables.standardWhite,
+    //   ),
+    // ],
+  );
+
+  static final TextStyle moneyStyleMain = TextStyle(
+    fontSize: 85,
     fontWeight: FontWeight.w600,
     color: UniversalVariables.moneyColor1,
 

@@ -2350,7 +2350,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             image: DecorationImage(
                               image: NetworkImage(loggedInprofilePhoto != null
                                   ? loggedInprofilePhoto
-                                  : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png"),
+                                  : "https://firebasestorage.googleapis.com/v0/b/fvv1-481e5.appspot.com/o/default-avatar.png?alt=media&token=c033a4de-fb76-49e3-961c-e7d10488da18"),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(15.0),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fv/constants/conStrings.dart';
 import 'package:fv/resources/order_methods.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_text/gradient_text.dart';
@@ -24,6 +25,8 @@ import 'package:fv/widgets/nmButton.dart';
 // import 'package:fv/widgets/slideRoute.dart';
 // import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
 class ListInfluencerPage extends StatefulWidget {
   @override
@@ -66,6 +69,8 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
   String loggedInname;
   String loggedInprofilePhoto;
 
+  int currency;
+
   int loggedUserWorth;
 
   void initState() {
@@ -78,6 +83,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           //uncomment and remove temporary loggedUserisInfCert
           loggedUserisInfCert = loggedUser['isInfCert'];
           loggedInUID = loggedUser['uid'];
+          currency = loggedUser['infReceived'];
           // loggedUserisInfCert = false;
         });
       });
@@ -418,7 +424,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: GradientText("",
+                  child: GradientText("FAVEEZ",
                       gradient: LinearGradient(colors: [
                         UniversalVariables.gold1,
                         UniversalVariables.gold2,
@@ -664,8 +670,147 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
             //     DummyUser9(),
             //   ],
             // ),
+            SizedBox(height: screenHeight * 0.1),
             loggedUserisInfCert
-                ? Container()
+                ? Container(
+                    child: Column(
+                      children: [
+                        currency == 0
+                            ? Text(
+                                "\$$loggedUserWorth",
+                                style: TextStyles.moneyStyleMain,
+                              )
+                            : Text(
+                                "€$loggedUserWorth",
+                                style: TextStyles.moneyStyleMain,
+                              ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FAProgressBar(
+                            progressColor: UniversalVariables.gold2,
+                            currentValue: (loggedUserWorth * 0.1).ceil(),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.05),
+                        loggedUserWorth < 10
+                            ? Container(
+                                width: screenWidth * 0.85,
+                                height: screenHeight * 0.4,
+                                decoration: BoxDecoration(
+
+                                    //gradient: UniversalVariables.fabGradient,
+
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0),
+                                      bottomLeft: Radius.circular(5.0),
+                                      bottomRight: Radius.circular(5.0),
+                                    ),
+                                    //color: UniversalVariables.white2
+                                    color: mC,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: mCD,
+                                        offset: Offset(-10, 10),
+                                        blurRadius: 10,
+                                      ),
+                                      BoxShadow(
+                                        color: mCL,
+                                        offset: Offset(0, -10),
+                                        blurRadius: 10,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        ConStrings.FAVING,
+                                        style: TextStyles.startFaving,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 15.0),
+                                        child: Text(
+                                          ConStrings.FAVEREC1,
+                                          style: TextStyles.editHeadingName,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: Text(
+                                          ConStrings.FAVEREC2,
+                                          style: TextStyles.editHeadingName,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: Text(
+                                          ConStrings.FAVEREC3,
+                                          style: TextStyles.editHeadingName,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                width: screenWidth * 0.85,
+                                height: screenHeight * 0.25,
+                                decoration: BoxDecoration(
+
+                                    //gradient: UniversalVariables.fabGradient,
+
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0),
+                                      bottomLeft: Radius.circular(5.0),
+                                      bottomRight: Radius.circular(5.0),
+                                    ),
+                                    //color: UniversalVariables.white2
+                                    color: mC,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: mCD,
+                                        offset: Offset(-10, 10),
+                                        blurRadius: 10,
+                                      ),
+                                      BoxShadow(
+                                        color: mCL,
+                                        offset: Offset(0, -10),
+                                        blurRadius: 10,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/stats.svg",
+                                        height: 45,
+                                        width: 45,
+                                        alignment: Alignment.topCenter,
+                                        color: UniversalVariables.gold2,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 15.0),
+                                        child: Text(
+                                          ConStrings.FAVSTATS,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyles.nextUpdate,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                      ],
+                    ),
+                  )
                 : Container(
                     margin: EdgeInsets.only(left: 5),
                     height: MediaQuery.of(context).size.height - 200.0,
