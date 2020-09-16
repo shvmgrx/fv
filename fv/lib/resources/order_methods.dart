@@ -76,11 +76,22 @@ class OrderMethods {
         .add(map);
   }
 
-  Stream<QuerySnapshot> fetchSellerOrders({String userId}) => _orderCollection
+  Stream<QuerySnapshot> fetchOrders({String userId}) {
+    return _orderCollection
+        //  .document(userId)
+        //  .collection(ORDER_COLLECTION)
+        //   .where("seller_id", isEqualTo: userId)
+        // .where("slot_time", isGreaterThanOrEqualTo: DateTime.now().day)
+        // .orderBy('slot_time', descending: false)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> fetchBuyerOrders({String userId}) => _orderCollection
       //  .document(userId)
       //  .collection(ORDER_COLLECTION)
-      .where("seller_id", isEqualTo: userId)
-      .orderBy('slot_time', descending: false)
+      // .where("buyer_id", isEqualTo: userId)
+      //  .where("slot_time", isGreaterThanOrEqualTo: DateTime.now().day)
+      //  .orderBy('slot_time', descending: false)
       .snapshots();
 
   // Future<Order> fetchFutureOrders({String userId}) => _orderCollection

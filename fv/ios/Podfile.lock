@@ -237,6 +237,9 @@ PODS:
     - Firebase/Core
     - Firebase/Functions (~> 6.0)
     - Flutter
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
   - Firebase/Auth (6.27.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.6.0)
@@ -414,10 +417,11 @@ PODS:
   - nanopb/encode (1.30905.0)
   - path_provider (0.0.1):
     - Flutter
-  - permission_handler (2.2.0):
+  - permission_handler (3.0.0):
     - Flutter
   - PromisesObjC (1.2.9)
   - Protobuf (3.12.0)
+  - Reachability (3.2)
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
@@ -431,6 +435,7 @@ DEPENDENCIES:
   - apple_sign_in (from `.symlinks/plugins/apple_sign_in/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -475,6 +480,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - Reachability
     - Stripe
 
 EXTERNAL SOURCES:
@@ -486,6 +492,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_functions:
     :path: ".symlinks/plugins/cloud_functions/ios"
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -520,6 +528,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: 4cc700e236ebfe2d5d980e49cb066d202cfee0e9
   cloud_functions: 20ba5a917ef4e8f5e60648c7398c272b38a66051
+  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   Firebase: fc4cbf6f1592636431821ef9a3c557e4dfd9f268
   firebase_auth: af8784c4d8d87c36f730a305f97bfbcb24db024b
   firebase_core: 335c02abd48672b7c83c683df833d0488a72e73e
@@ -552,9 +561,10 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  permission_handler: 0fc6d6641c09e4bfd5541dd39b0f44c7e369aa6b
+  permission_handler: 047f11d44db785922214783da5f7a3cc8874c843
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
   stripe_payment: ad86f099179edb7b9fe12b9b62ac3746d5e56802

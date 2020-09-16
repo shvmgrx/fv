@@ -25,6 +25,7 @@ import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/cust_app_bar.dart';
 import 'package:fv/widgets/custom_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ChatListScreen extends StatefulWidget {
   @override
@@ -225,13 +226,6 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _repository.getCurrentUser().then((FirebaseUser user) {
-    //     _orderMethods.fetchForSellers(user).then((List<Order> list) {
-    //     setState(() {
-    //       ordersList = list;
-    //     });
-    //   });
-    //  });
   }
 
   final AuthMethods _authMethods = AuthMethods();
@@ -239,75 +233,99 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
+    String dateMaker(Timestamp theSetDate) {
+      if (theSetDate != null) {
+        var temp = theSetDate.toDate();
+        var formatter = new DateFormat('MMMM d, HH:mm');
+        String convertedDate = formatter.format(temp);
+        return convertedDate;
+      } else {
+        var nullDate = "nullDate";
+        return nullDate;
+      }
+    }
+
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-          stream: _orderMethods.fetchSellerOrders(
+          stream: _orderMethods.fetchOrders(
             userId: userProvider.getUser.uid,
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              //make a for loop and only add the snapshot to List<doc snapshot> when suitable and todays date
+              for (int i = 0; i < snapshot.data.documents.length; i++) {
+                print("edfgr: ${snapshot.data.documents[i]['seller_name']}");
+              }
               var docList = snapshot.data.documents;
 
               if (docList.isEmpty) {
                 return QuietBox();
               }
 
-              Future<void> getUserDetails(String buyerId) async {
-                DocumentSnapshot documentSnapshot =
-                    await _userCollection.document(buyerId).get();
+              // Future<void> getUserDetails(String buyerId) async {
+              //   DocumentSnapshot documentSnapshot =
+              //       await _userCollection.document(buyerId).get();
 
-                setState(() {
-                  currentBuyer = User.fromMap(documentSnapshot.data);
-                });
-              }
+              //   setState(() {
+              //     currentBuyer = User.fromMap(documentSnapshot.data);
+              //   });
+              // }
 
               return ListView.builder(
-                // reverse: true,
                 padding: EdgeInsets.all(10),
                 itemCount: docList.length,
                 itemBuilder: (context, index) {
+                  bool loggedUserIsInfluencer =
+                      userProvider.getUser.isInfluencer;
+
                   Order buyerOrder = Order.fromMap(docList[index].data);
 
-                  //  User theBuyer=currentBuyer;
-
-                  getUserDetails(buyerOrder.buyerId);
-
-                  return CustomTile(
-                    mini: false,
-                    onTap: () => {},
-
-                    title: Text(
-                      buyerOrder.buyerName,
-                      // style: TextStyles.chatListProfileName,
-                    ),
-                    subtitle: Text(
-                      "${buyerOrder.slotTime.toDate()}",
-                      // style: TextStyles.chatListProfileName,
-                    ),
-                    // LastMessageContainer(
-                    //   stream: _chatMethods.fetchLastMessageBetween(
-                    //     senderId: userProvider.getUser.uid,
-                    //     receiverId: contact.uid,
-                    //   ),
-                    // ),
-                    leading: Container(
-                      constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
-                      child: Stack(
-                        children: <Widget>[
-                          CachedImage(
-                            buyerOrder.buyerPhoto,
-                            radius: 80,
-                            isRound: true,
+                  return buyerOrder != null
+                      ? CustomTile(
+                          mini: false,
+                          onTap: () => {},
+                          title: loggedUserIsInfluencer
+                              ? Text(
+                                  buyerOrder.buyerName,
+                                  style: TextStyles.chatListProfileName,
+                                )
+                              : Text(
+                                  buyerOrder.sellerName,
+                                  style: TextStyles.chatListProfileName,
+                                ),
+                          subtitle: Text(
+                            "${dateMaker(buyerOrder.slotTime)}",
+                            //style: TextStyles.chatListProfileName,
                           ),
-                          OnlineDotIndicator(
-                            uid: buyerOrder.uid,
+                          leading: Container(
+                            constraints:
+                                BoxConstraints(maxHeight: 60, maxWidth: 60),
+                            child: Stack(
+                              children: <Widget>[
+                                loggedUserIsInfluencer
+                                    ? CachedImage(
+                                        buyerOrder.buyerPhoto,
+                                        radius: 80,
+                                        isRound: true,
+                                      )
+                                    : CachedImage(
+                                        buyerOrder.sellerPhoto,
+                                        radius: 80,
+                                        isRound: true,
+                                      ),
+                                OnlineDotIndicator(
+                                  uid: loggedUserIsInfluencer
+                                      ? buyerOrder.buyerId
+                                      : buyerOrder.sellerId,
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-
-                    trailing: VideoCallUser(currentBuyer),
-                  );
+                          trailing: Visibility(
+                              visible: loggedUserIsInfluencer,
+                              child: VideoCallUser(currentBuyer)),
+                        )
+                      : Container();
                 },
               );
             }

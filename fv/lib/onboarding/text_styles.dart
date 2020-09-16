@@ -363,7 +363,7 @@ class TextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w700,
     color: UniversalVariables.blackColor,
-    // fontFamily: 'Ubuntu',
+    fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
     //     blurRadius: 2.0,
