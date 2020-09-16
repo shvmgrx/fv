@@ -9,9 +9,11 @@ import 'package:fv/models/user.dart';
 class ChatMethods {
   static final Firestore _firestore = Firestore.instance;
 
-  final CollectionReference _messageCollection =_firestore.collection(MESSAGES_COLLECTION);
+  final CollectionReference _messageCollection =
+      _firestore.collection(MESSAGES_COLLECTION);
 
-  final CollectionReference _userCollection = _firestore.collection(USERS_COLLECTION);
+  final CollectionReference _userCollection =
+      _firestore.collection(USERS_COLLECTION);
 
   Future<void> addMessageToDb(
       Message message, User sender, User receiver) async {
@@ -117,6 +119,13 @@ class ChatMethods {
       .document(userId)
       .collection(CONTACTS_COLLECTION)
       .snapshots();
+
+  Future<void> deleteContacts({String userId, String contactId}) =>
+      _userCollection
+          .document(userId)
+          .collection(CONTACTS_COLLECTION)
+          .document(contactId)
+          .delete();
 
   Stream<QuerySnapshot> fetchLastMessageBetween({
     @required String senderId,

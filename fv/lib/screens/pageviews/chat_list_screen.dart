@@ -171,7 +171,28 @@ class ChatListContainer extends StatelessWidget {
                 itemBuilder: (context, index) {
                   Contact contact = Contact.fromMap(docList[index].data);
 
-                  return ContactView(contact);
+                  return Dismissible(
+                    key: ValueKey(docList[index].data),
+                    direction: DismissDirection.endToStart,
+                    child: ContactView(contact),
+                    onDismissed: (direction) {
+                      _chatMethods.deleteContacts(
+                          userId: userProvider.getUser.uid,
+                          contactId: contact.uid);
+                    },
+                    background: Container(
+                        color: UniversalVariables.redBack,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(CupertinoIcons.clear,
+                                  size: 40, color: UniversalVariables.white2),
+                            ),
+                          ],
+                        )),
+                  );
                 },
               );
             }
@@ -193,7 +214,6 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
   User currentBuyer;
   User callGetter;
 
-
   static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
 
@@ -213,12 +233,11 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
     //   });
     //  });
   }
- final AuthMethods _authMethods = AuthMethods();
+
+  final AuthMethods _authMethods = AuthMethods();
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
-
-
 
     return Container(
       child: StreamBuilder<QuerySnapshot>(
@@ -233,14 +252,14 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                 return QuietBox();
               }
 
-                  Future<void> getUserDetails(String buyerId) async {
-      DocumentSnapshot documentSnapshot =
-          await _userCollection.document(buyerId).get();
+              Future<void> getUserDetails(String buyerId) async {
+                DocumentSnapshot documentSnapshot =
+                    await _userCollection.document(buyerId).get();
 
-      setState(() {
-        currentBuyer = User.fromMap(documentSnapshot.data);
-      });
-    }
+                setState(() {
+                  currentBuyer = User.fromMap(documentSnapshot.data);
+                });
+              }
 
               return ListView.builder(
                 // reverse: true,
@@ -249,9 +268,7 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                 itemBuilder: (context, index) {
                   Order buyerOrder = Order.fromMap(docList[index].data);
 
-                //  User theBuyer=currentBuyer;
-
-                 
+                  //  User theBuyer=currentBuyer;
 
                   getUserDetails(buyerOrder.buyerId);
 
@@ -299,27 +316,21 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
   }
 }
 
-
 class VideoCallUser extends StatefulWidget {
-
   final User callReceiver;
 
   VideoCallUser(this.callReceiver);
 
-  
   @override
   _VideoCallUserState createState() => _VideoCallUserState();
 }
 
 class _VideoCallUserState extends State<VideoCallUser> {
-
- FirebaseRepository _repository = FirebaseRepository();
+  FirebaseRepository _repository = FirebaseRepository();
   User sender;
-   String _currentUserId;
+  String _currentUserId;
 
-
-
-    @override
+  @override
   void initState() {
     super.initState();
 
@@ -336,25 +347,23 @@ class _VideoCallUserState extends State<VideoCallUser> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: IconButton(
-                color: UniversalVariables.grey2,
-                icon: Icon(
-                  Icons.video_call,
-                ),
-                onPressed: () async =>
-                    await Permissions.cameraAndMicrophonePermissionsGranted()
-                        ? CallUtils.dial(
-                            from: sender,
-                            to: widget.callReceiver,
-                            context: context,
-                          )
-                        : {},
-              ),
-      
+        color: UniversalVariables.grey2,
+        icon: Icon(
+          Icons.video_call,
+        ),
+        onPressed: () async =>
+            await Permissions.cameraAndMicrophonePermissionsGranted()
+                ? CallUtils.dial(
+                    from: sender,
+                    to: widget.callReceiver,
+                    context: context,
+                  )
+                : {},
+      ),
     );
   }
 }

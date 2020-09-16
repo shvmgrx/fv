@@ -16,6 +16,7 @@ class UniversalVariables {
   static final Color separatorColor = Color(0xff272c35);
 
   static final Color offline = Color(0xffFA1304);
+  static final Color redBack = Color(0xffBA000D);
   static final Color online = Color(0xff5e9e1c);
   static final Color away = Color(0xffa95f39);
 
