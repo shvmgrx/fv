@@ -14,7 +14,7 @@ class UserCircle extends StatelessWidget {
       width: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        color: UniversalVariables.grey2,
+        color: UniversalVariables.gold2,
       ),
       child: Stack(
         children: <Widget>[
@@ -23,9 +23,10 @@ class UserCircle extends StatelessWidget {
             child: Text(
               Utils.getInitials(userProvider.getUser.name),
               style: TextStyle(
+                fontFamily: 'Adam',
                 fontWeight: FontWeight.bold,
-                color: UniversalVariables.standardWhite,
-                fontSize: 13,
+                color: UniversalVariables.white2,
+                fontSize: 17,
               ),
             ),
           ),
