@@ -197,7 +197,8 @@ class ChatListContainer extends StatelessWidget {
                   );
                 },
               );
-            }
+            } else
+              return QuietBox();
           }),
     );
   }
@@ -257,90 +258,166 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
       return currentBuyer;
     }
 
-    return Container(
-      child: StreamBuilder<QuerySnapshot>(
-          stream: _orderMethods.fetchOrders(
-            userId: userProvider.getUser.uid,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<DocumentSnapshot> buyerList = [];
-              for (int i = 0; i < snapshot.data.documents.length; i++) {
-                if (snapshot.data.documents[i]['seller_id'] ==
-                    userProvider.getUser.uid) {
-                  buyerList.add(snapshot.data.documents[i]);
-                }
-              }
-              var docList = buyerList;
+    bool isInf = userProvider.getUser.isInfluencer;
 
-              if (docList.isEmpty) {
-                return VideoQuietBox();
-              }
+    return isInf
+        ? Container(
+            child: StreamBuilder<QuerySnapshot>(
+                stream: _orderMethods.fetchOrders(
+                  userId: userProvider.getUser.uid,
+                ),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<DocumentSnapshot> buyerList = [];
 
-              return ListView.builder(
-                padding: EdgeInsets.all(10),
-                itemCount: docList.length,
-                itemBuilder: (context, index) {
-                  bool loggedUserIsInfluencer =
-                      userProvider.getUser.isInfluencer;
+                    for (int i = 0; i < snapshot.data.documents.length; i++) {
+                      if (snapshot.data.documents[i]['seller_id'] ==
+                          userProvider.getUser.uid) {
+                        buyerList.add(snapshot.data.documents[i]);
+                      }
+                    }
+                    var docList = buyerList;
 
-                  Order buyerOrder = Order.fromMap(docList[index].data);
+                    if (docList.isEmpty) {
+                      return VideoQuietBox();
+                    }
 
-                  return buyerOrder != null
-                      ? CustomTile(
-                          mini: false,
-                          onTap: () => {},
-                          title: loggedUserIsInfluencer
-                              ? Text(
-                                  buyerOrder.buyerName,
-                                  style: TextStyles.chatListProfileName,
-                                )
-                              : Text(
+                    return ListView.builder(
+                      padding: EdgeInsets.all(10),
+                      itemCount: docList.length,
+                      itemBuilder: (context, index) {
+                        bool loggedUserIsInfluencer =
+                            userProvider.getUser.isInfluencer;
+
+                        Order buyerOrder = Order.fromMap(docList[index].data);
+
+                        return buyerOrder != null
+                            ? CustomTile(
+                                mini: false,
+                                onTap: () => {},
+                                title: loggedUserIsInfluencer
+                                    ? Text(
+                                        buyerOrder.buyerName,
+                                        style: TextStyles.chatListProfileName,
+                                      )
+                                    : Text(
+                                        buyerOrder.sellerName,
+                                        style: TextStyles.chatListProfileName,
+                                      ),
+                                subtitle: Text(
+                                  "${dateMaker(buyerOrder.slotTime)}",
+                                  //style: TextStyles.chatListProfileName,
+                                ),
+                                leading: Container(
+                                  constraints: BoxConstraints(
+                                      maxHeight: 60, maxWidth: 60),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      loggedUserIsInfluencer
+                                          ? CachedImage(
+                                              buyerOrder.buyerPhoto,
+                                              radius: 80,
+                                              isRound: true,
+                                            )
+                                          : CachedImage(
+                                              buyerOrder.sellerPhoto,
+                                              radius: 80,
+                                              isRound: true,
+                                            ),
+                                      OnlineDotIndicator(
+                                        uid: loggedUserIsInfluencer
+                                            ? buyerOrder.buyerId
+                                            : buyerOrder.sellerId,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                trailing: Visibility(
+                                    visible: loggedUserIsInfluencer,
+                                    child: GestureDetector(
+                                        onTap: () async {
+                                          getUserDetails(buyerOrder.buyerId);
+                                        },
+                                        child:
+                                            VideoCallUser(buyerOrder.buyerId))),
+                              )
+                            : Container();
+                      },
+                    );
+                  }
+                  if (!snapshot.hasData) {
+                    return VideoQuietBox();
+                  }
+                }),
+          )
+        : Container(
+            child: StreamBuilder<QuerySnapshot>(
+                stream: _orderMethods.fetchOrders(
+                  userId: userProvider.getUser.uid,
+                ),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<DocumentSnapshot> buyerList = [];
+
+                    for (int i = 0; i < snapshot.data.documents.length; i++) {
+                      if (snapshot.data.documents[i]['buyer_id'] ==
+                          userProvider.getUser.uid) {
+                        buyerList.add(snapshot.data.documents[i]);
+                      }
+                    }
+                    var docList = buyerList;
+
+                    if (docList.isEmpty) {
+                      return VideoQuietBox();
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.all(10),
+                      itemCount: docList.length,
+                      itemBuilder: (context, index) {
+                        bool loggedUserIsInfluencer =
+                            userProvider.getUser.isInfluencer;
+
+                        Order buyerOrder = Order.fromMap(docList[index].data);
+
+                        return buyerOrder != null
+                            ? CustomTile(
+                                mini: false,
+                                onTap: () => {},
+                                title: Text(
                                   buyerOrder.sellerName,
                                   style: TextStyles.chatListProfileName,
                                 ),
-                          subtitle: Text(
-                            "${dateMaker(buyerOrder.slotTime)}",
-                            //style: TextStyles.chatListProfileName,
-                          ),
-                          leading: Container(
-                            constraints:
-                                BoxConstraints(maxHeight: 60, maxWidth: 60),
-                            child: Stack(
-                              children: <Widget>[
-                                loggedUserIsInfluencer
-                                    ? CachedImage(
-                                        buyerOrder.buyerPhoto,
-                                        radius: 80,
-                                        isRound: true,
-                                      )
-                                    : CachedImage(
+                                subtitle: Text(
+                                  "${dateMaker(buyerOrder.slotTime)}",
+                                  //style: TextStyles.chatListProfileName,
+                                ),
+                                leading: Container(
+                                  constraints: BoxConstraints(
+                                      maxHeight: 60, maxWidth: 60),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      CachedImage(
                                         buyerOrder.sellerPhoto,
                                         radius: 80,
                                         isRound: true,
                                       ),
-                                OnlineDotIndicator(
-                                  uid: loggedUserIsInfluencer
-                                      ? buyerOrder.buyerId
-                                      : buyerOrder.sellerId,
+                                      OnlineDotIndicator(
+                                        uid: buyerOrder.sellerId,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          trailing: Visibility(
-                              visible: loggedUserIsInfluencer,
-                              child: GestureDetector(
-                                  onTap: () async {
-                                    getUserDetails(buyerOrder.buyerId);
-                                  },
-                                  child: VideoCallUser(buyerOrder.buyerId))),
-                        )
-                      : Container();
-                },
-              );
-            }
-          }),
-    );
+                              )
+                            : Container();
+                      },
+                    );
+                  }
+                  if (!snapshot.hasData) {
+                    return VideoQuietBox();
+                  }
+                }),
+          );
   }
 }
 
