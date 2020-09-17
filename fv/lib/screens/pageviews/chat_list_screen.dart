@@ -19,6 +19,7 @@ import 'package:fv/screens/pageviews/widgets/online_dot_indicator.dart';
 // import 'package:fv/screens/pageviews/widgets/new_chat_button.dart';
 import 'package:fv/screens/pageviews/widgets/quiet_box.dart';
 import 'package:fv/screens/pageviews/widgets/user_circle.dart';
+import 'package:fv/screens/pageviews/widgets/video_quiet_box.dart';
 import 'package:fv/utils/call_utilities.dart';
 import 'package:fv/utils/permissions.dart';
 import 'package:fv/utils/universal_variables.dart';
@@ -245,6 +246,17 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
       }
     }
 
+    Future<User> getUserDetails(String buyerId) async {
+      DocumentSnapshot documentSnapshot =
+          await _userCollection.document(buyerId).get();
+
+      setState(() {
+        currentBuyer = User.fromMap(documentSnapshot.data);
+      });
+
+      return currentBuyer;
+    }
+
     return Container(
       child: StreamBuilder<QuerySnapshot>(
           stream: _orderMethods.fetchOrders(
@@ -252,24 +264,18 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              //make a for loop and only add the snapshot to List<doc snapshot> when suitable and todays date
+              List<DocumentSnapshot> buyerList = [];
               for (int i = 0; i < snapshot.data.documents.length; i++) {
-                print("edfgr: ${snapshot.data.documents[i]['seller_name']}");
+                if (snapshot.data.documents[i]['seller_id'] ==
+                    userProvider.getUser.uid) {
+                  buyerList.add(snapshot.data.documents[i]);
+                }
               }
-              var docList = snapshot.data.documents;
+              var docList = buyerList;
 
               if (docList.isEmpty) {
-                return QuietBox();
+                return VideoQuietBox();
               }
-
-              // Future<void> getUserDetails(String buyerId) async {
-              //   DocumentSnapshot documentSnapshot =
-              //       await _userCollection.document(buyerId).get();
-
-              //   setState(() {
-              //     currentBuyer = User.fromMap(documentSnapshot.data);
-              //   });
-              // }
 
               return ListView.builder(
                 padding: EdgeInsets.all(10),
@@ -323,7 +329,11 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
                           ),
                           trailing: Visibility(
                               visible: loggedUserIsInfluencer,
-                              child: VideoCallUser(currentBuyer)),
+                              child: GestureDetector(
+                                  onTap: () async {
+                                    getUserDetails(buyerOrder.buyerId);
+                                  },
+                                  child: VideoCallUser(buyerOrder.buyerId))),
                         )
                       : Container();
                 },
@@ -335,9 +345,11 @@ class _VideoChatListContainerState extends State<VideoChatListContainer> {
 }
 
 class VideoCallUser extends StatefulWidget {
-  final User callReceiver;
+  // final User callReceiver;
 
-  VideoCallUser(this.callReceiver);
+  final String receiverId;
+
+  VideoCallUser(this.receiverId);
 
   @override
   _VideoCallUserState createState() => _VideoCallUserState();
@@ -347,13 +359,22 @@ class _VideoCallUserState extends State<VideoCallUser> {
   FirebaseRepository _repository = FirebaseRepository();
   User sender;
   String _currentUserId;
+  static final Firestore _firestore = Firestore.instance;
+  static final CollectionReference _userCollection =
+      _firestore.collection(USERS_COLLECTION);
+
+  User callReceiver;
 
   @override
   void initState() {
     super.initState();
 
     _repository.getCurrentUser().then((user) {
+      print("sender id h: ${user.uid}");
+      print("receiver id h: ${widget.receiverId}");
+
       _currentUserId = user.uid;
+      getUserDetails(widget.receiverId);
 
       setState(() {
         sender = User(
@@ -362,6 +383,15 @@ class _VideoCallUserState extends State<VideoCallUser> {
           profilePhoto: user.photoUrl,
         );
       });
+    });
+  }
+
+  Future<void> getUserDetails(String buyerId) async {
+    DocumentSnapshot documentSnapshot =
+        await _userCollection.document(buyerId).get();
+
+    setState(() {
+      callReceiver = User.fromMap(documentSnapshot.data);
     });
   }
 
@@ -377,7 +407,7 @@ class _VideoCallUserState extends State<VideoCallUser> {
             await Permissions.cameraAndMicrophonePermissionsGranted()
                 ? CallUtils.dial(
                     from: sender,
-                    to: widget.callReceiver,
+                    to: callReceiver,
                     context: context,
                   )
                 : {},

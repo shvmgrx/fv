@@ -53,4 +53,10 @@ class ConStrings {
 
   static const String bought = "BOOKED";
   static const String notBought = "AVAILABLE";
+
+  static const String UPCOMING_CONTACTS =
+      "This is where your chats will be listed";
+
+  static const String UPCOMING_VCONTACTS =
+      "This is where your videocalls will be listed";
 }

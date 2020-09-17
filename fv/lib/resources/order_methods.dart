@@ -77,22 +77,17 @@ class OrderMethods {
   }
 
   Stream<QuerySnapshot> fetchOrders({String userId}) {
+    var durationStart = DateTime.now().subtract(new Duration(days: 1));
+    var durationEnd = DateTime.now().add(new Duration(days: 7));
     return _orderCollection
         //  .document(userId)
         //  .collection(ORDER_COLLECTION)
         //   .where("seller_id", isEqualTo: userId)
-        // .where("slot_time", isGreaterThanOrEqualTo: DateTime.now().day)
-        // .orderBy('slot_time', descending: false)
+        .where("slot_time", isGreaterThanOrEqualTo: durationStart)
+        .where("slot_time", isLessThanOrEqualTo: durationEnd)
+        .orderBy('slot_time', descending: false)
         .snapshots();
   }
-
-  Stream<QuerySnapshot> fetchBuyerOrders({String userId}) => _orderCollection
-      //  .document(userId)
-      //  .collection(ORDER_COLLECTION)
-      // .where("buyer_id", isEqualTo: userId)
-      //  .where("slot_time", isGreaterThanOrEqualTo: DateTime.now().day)
-      //  .orderBy('slot_time', descending: false)
-      .snapshots();
 
   // Future<Order> fetchFutureOrders({String userId}) => _orderCollection
   //   //  .document(userId)

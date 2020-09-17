@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fv/constants/conStrings.dart';
@@ -6,7 +7,7 @@ import 'package:fv/screens/search_screen.dart';
 import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/nmBox.dart';
 
-class QuietBox extends StatelessWidget {
+class VideoQuietBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -46,17 +47,12 @@ class QuietBox extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    "assets/message.svg",
-                    height: 45,
-                    width: 45,
-                    alignment: Alignment.topCenter,
-                    color: UniversalVariables.gold2,
-                  ),
+                  Icon(CupertinoIcons.video_camera,
+                      color: UniversalVariables.gold2, size: 45),
                   Padding(
                     padding: const EdgeInsets.only(top: 35.0),
                     child: Text(
-                      ConStrings.UPCOMING_CONTACTS,
+                      ConStrings.UPCOMING_VCONTACTS,
                       textAlign: TextAlign.center,
                       style: TextStyles.nextUpdate,
                     ),
