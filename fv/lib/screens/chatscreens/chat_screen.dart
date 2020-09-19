@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fv/screens/chatscreens/widgets/modalTile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/constants/strings.dart';
@@ -30,7 +31,9 @@ import 'package:stripe_payment/stripe_payment.dart';
 class ChatScreen extends StatefulWidget {
   final User receiver;
 
-  ChatScreen({this.receiver});
+  final int replyType;
+
+  ChatScreen({this.receiver, this.replyType});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -613,7 +616,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () => showAlertDialog(context),
+                  onTap: () {},
                   // sendMessage(),
                 )
               : Container()
@@ -739,18 +742,33 @@ class _ChatScreenState extends State<ChatScreen> {
         style: TextStyles.chatProfileName,
       ),
       actions: <Widget>[
-        IconButton(
-          color: UniversalVariables.gold2,
-          icon: Icon(
-            Icons.text_snippet,
-          ),
-        ),
-        IconButton(
-          color: UniversalVariables.gold2,
-          icon: Icon(
-            Icons.save,
-          ),
-        )
+        // IconButton(
+        //   color: UniversalVariables.gold2,
+        //   icon: Icon(
+        //     Icons.text_snippet,
+        //   ),
+        // ),
+        // // IconButton(
+        // //   color: UniversalVariables.gold2,
+        // //   icon: Icon(
+        // //     Icons.save,
+        // //   ),
+        // // ),
+        widget.replyType == 0
+            ? SvgPicture.asset(
+                "assets/tr.svg",
+                height: 25,
+                width: 25,
+                // alignment: Alignment.topCenter,
+                color: UniversalVariables.gold2,
+              )
+            : SvgPicture.asset(
+                "assets/vr.svg",
+                height: 25,
+                width: 25,
+                // alignment: Alignment.topCenter,
+                color: UniversalVariables.gold2,
+              ),
         // (userProvider.getUser.isInfCert = true &&
         //         userProvider.getUser.answerPrice3 != null)
         //     ? IconButton(

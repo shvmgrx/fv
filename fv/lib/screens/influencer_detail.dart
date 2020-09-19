@@ -600,8 +600,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatScreen(
-                                          receiver: widget.selectedInfluencer,
-                                        ),
+                                            receiver: widget.selectedInfluencer,
+                                            replyType: 0),
                                       ),
                                     );
                                   },
@@ -686,8 +686,8 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatScreen(
-                                          receiver: widget.selectedInfluencer,
-                                        ),
+                                            receiver: widget.selectedInfluencer,
+                                            replyType: 1),
                                       ),
                                     );
                                   },
