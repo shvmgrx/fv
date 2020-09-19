@@ -25,7 +25,6 @@ import 'package:fv/widgets/nmBox.dart';
 import 'package:provider/provider.dart';
 import 'package:date_time_format/date_time_format.dart';
 
-
 import 'package:stripe_payment/stripe_payment.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -92,8 +91,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
     StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
         .then((paymentMethod) {
-    double amount = billAmount * 100.0; // multipliying with 100 to change $ to cents
-  //  double amount = 1 * 100.0; 
+      double amount =
+          billAmount * 100.0; // multipliying with 100 to change $ to cents
+      //  double amount = 1 * 100.0;
       INTENT.call(<String, dynamic>{'amount': amount, 'currency': 'usd'}).then(
           (response) {
         confirmDialog(response.data["client_secret"], paymentMethod,
@@ -298,7 +298,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerLeft,
-
                         ),
                       ),
                     ],
@@ -503,8 +502,6 @@ class _ChatScreenState extends State<ChatScreen> {
                             //   }
 
                             sendMessage()
-
-
                           },
                           //Navigator.pop(context),
 
@@ -573,11 +570,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 filled: true,
                 fillColor: UniversalVariables.standardWhite,
-
               ),
             ),
           ),
-
           isWriting
               ? GestureDetector(
                   child: Container(
@@ -665,7 +660,6 @@ class _ChatScreenState extends State<ChatScreen> {
       ],
     );
 
-
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -683,30 +677,28 @@ class _ChatScreenState extends State<ChatScreen> {
         content: Text('Payment Successfull'),
       );
       Scaffold.of(context).showSnackBar(snackBar);
-
-      
     });
   }
 
-    //   sendMessage() {
-    //   var text = textFieldController.text;
+  //   sendMessage() {
+  //   var text = textFieldController.text;
 
-    //   Message _message = Message(
-    //     receiverId: widget.receiver.uid,
-    //     senderId: sender.uid,
-    //     message: text,
-    //     timestamp: Timestamp.now(),
-    //     type: 'text',
-    //   );
+  //   Message _message = Message(
+  //     receiverId: widget.receiver.uid,
+  //     senderId: sender.uid,
+  //     message: text,
+  //     timestamp: Timestamp.now(),
+  //     type: 'text',
+  //   );
 
-    //   setState(() {
-    //     isWriting = false;
-    //   });
+  //   setState(() {
+  //     isWriting = false;
+  //   });
 
-    //   textFieldController.text = "";
+  //   textFieldController.text = "";
 
-    //   _chatMethods.addMessageToDb(_message, sender, widget.receiver);
-    // }
+  //   _chatMethods.addMessageToDb(_message, sender, widget.receiver);
+  // }
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
@@ -747,24 +739,35 @@ class _ChatScreenState extends State<ChatScreen> {
         style: TextStyles.chatProfileName,
       ),
       actions: <Widget>[
-        
-        (userProvider.getUser.isInfCert == true &&
-                userProvider.getUser.answerPrice3 != null)
-            ? IconButton(
-                color: UniversalVariables.grey2,
-                icon: Icon(
-                  Icons.video_call,
-                ),
-                onPressed: () async =>
-                    await Permissions.cameraAndMicrophonePermissionsGranted()
-                        ? CallUtils.dial(
-                            from: sender,
-                            to: widget.receiver,
-                            context: context,
-                          )
-                        : {},
-              )
-            : Container(),
+        IconButton(
+          color: UniversalVariables.gold2,
+          icon: Icon(
+            Icons.text_snippet,
+          ),
+        ),
+        IconButton(
+          color: UniversalVariables.gold2,
+          icon: Icon(
+            Icons.save,
+          ),
+        )
+        // (userProvider.getUser.isInfCert = true &&
+        //         userProvider.getUser.answerPrice3 != null)
+        //     ? IconButton(
+        //         color: UniversalVariables.grey2,
+        //         icon: Icon(
+        //           Icons.video_call,
+        //         ),
+        //         onPressed: () async =>
+        //             await Permissions.cameraAndMicrophonePermissionsGranted()
+        //                 ? CallUtils.dial(
+        //                     from: sender,
+        //                     to: widget.receiver,
+        //                     context: context,
+        //                   )
+        //                 : {},
+        //       )
+        //     : Container(),
       ],
     );
   }

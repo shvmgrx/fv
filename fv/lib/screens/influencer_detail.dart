@@ -259,7 +259,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       if (ts2 != "nullDate") {
         var now = DateTime.now();
 
-        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][1].seconds;
         var t2 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
 
         if (t2.isBefore(now)) {
@@ -272,7 +272,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       if (ts3 != "nullDate") {
         var now = DateTime.now();
 
-        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][2].seconds;
         var t3 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
 
         if (t3.isBefore(now)) {
@@ -285,7 +285,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       if (ts4 != "nullDate") {
         var now = DateTime.now();
 
-        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][3].seconds;
         var t4 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
 
         if (t4.isBefore(now)) {
@@ -298,7 +298,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       if (ts5 != "nullDate") {
         var now = DateTime.now();
 
-        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][4].seconds;
         var t5 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
 
         if (t5.isBefore(now)) {
@@ -311,7 +311,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       if (ts6 != "nullDate") {
         var now = DateTime.now();
 
-        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][5].seconds;
         var t6 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
 
         if (t6.isBefore(now)) {
@@ -324,7 +324,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       if (ts7 != "nullDate") {
         var now = DateTime.now();
 
-        var t = widget.selectedInfluencer.timeSlots['ttSlots'][0].seconds;
+        var t = widget.selectedInfluencer.timeSlots['ttSlots'][6].seconds;
         var t7 = new DateTime.fromMillisecondsSinceEpoch(t * 1000);
 
         if (t7.isBefore(now)) {
