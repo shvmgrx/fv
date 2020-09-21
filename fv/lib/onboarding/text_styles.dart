@@ -516,7 +516,7 @@ class TextStyles {
   static final TextStyle doneStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
-    color: UniversalVariables.standardWhite,
+    color: UniversalVariables.online,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(
@@ -529,7 +529,7 @@ class TextStyles {
   static final TextStyle cancelStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
-    color: UniversalVariables.grey1,
+    color: UniversalVariables.offline,
     fontFamily: 'Poppins',
     // shadows: <Shadow>[
     //   Shadow(

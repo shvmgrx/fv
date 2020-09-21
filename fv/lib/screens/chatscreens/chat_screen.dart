@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fv/models/txtOrder.dart';
+import 'package:fv/resources/order_methods.dart';
 import 'package:fv/screens/chatscreens/widgets/modalTile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/constants/strings.dart';
@@ -46,6 +48,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final ChatMethods _chatMethods = ChatMethods();
 
+  final OrderMethods _orderMethods = OrderMethods();
+
   User sender;
 
   String _currentUserId;
@@ -58,6 +62,11 @@ class _ChatScreenState extends State<ChatScreen> {
   bool videoReplyChosen = false;
 
   int valueSelected = 0;
+
+  bool isLoggedUserInfluencer = false;
+  String loggedUserId;
+  String loggedUserName;
+  String loggedUserphoto;
 
   @override
   void initState() {
@@ -85,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   //stripe payment
-  void stripePayment(int billAmount) {
+  void stripePayment(int billAmount, int currency) {
     StripePayment.setOptions(StripeOptions(
         publishableKey: "pk_live_FheU3MdCQh1zmfTBPEXZQNRP004f2b4pbj"));
 
@@ -99,8 +108,8 @@ class _ChatScreenState extends State<ChatScreen> {
       //  double amount = 1 * 100.0;
       INTENT.call(<String, dynamic>{'amount': amount, 'currency': 'usd'}).then(
           (response) {
-        confirmDialog(response.data["client_secret"], paymentMethod,
-            billAmount); //function for confirmation for payment
+        confirmDialog(response.data["client_secret"], paymentMethod, billAmount,
+            currency); //function for confirmation for payment
       });
     });
   }
@@ -108,6 +117,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
+    setState(() {
+      isLoggedUserInfluencer = userProvider.getUser.isInfluencer;
+      loggedUserId = userProvider.getUser.uid;
+      loggedUserName = userProvider.getUser.username;
+      loggedUserphoto = userProvider.getUser.profilePhoto;
+    });
 
     return PickupLayout(
       scaffold: Scaffold(
@@ -177,27 +194,31 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget senderLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
 
-    return Container(
-        margin: EdgeInsets.only(top: 0),
-        constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-        decoration: BoxDecoration(
-          color: UniversalVariables.standardWhite,
-          borderRadius: BorderRadius.only(
-            topLeft: messageRadius,
-            topRight: messageRadius,
-            bottomLeft: messageRadius,
-          ),
-        ),
-        child: message.type != MESSAGE_TYPE_IMAGE
-            ? Padding(
-                padding: EdgeInsets.all(10),
-                child: getMessage(message),
-              )
-            : Padding(
-                padding: EdgeInsets.all(5),
-                child: getMessage(message),
-              ));
+    return Column(
+      children: [
+        Container(
+            margin: EdgeInsets.only(top: 0),
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.65),
+            decoration: BoxDecoration(
+              color: UniversalVariables.standardWhite,
+              borderRadius: BorderRadius.only(
+                topLeft: messageRadius,
+                topRight: messageRadius,
+                bottomLeft: messageRadius,
+              ),
+            ),
+            child: message.type != MESSAGE_TYPE_IMAGE
+                ? Padding(
+                    padding: EdgeInsets.all(10),
+                    child: getMessage(message),
+                  )
+                : Padding(
+                    padding: EdgeInsets.all(5),
+                    child: getMessage(message),
+                  )),
+      ],
+    );
   }
 
   getMessage(Message message) {
@@ -208,12 +229,34 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  message.message,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: UniversalVariables.grey2,
-                    fontSize: 16.0,
+                Container(
+                  child: message.reqMessage == 3
+                      ? Container()
+                      : message.reqMessage == 0
+                          ? SvgPicture.asset(
+                              "assets/tr.svg",
+                              height: 15,
+                              width: 15,
+                              // alignment: Alignment.topCenter,
+                              color: UniversalVariables.gold2,
+                            )
+                          : SvgPicture.asset(
+                              "assets/vr.svg",
+                              height: 15,
+                              width: 15,
+                              // alignment: Alignment.topCenter,
+                              color: UniversalVariables.gold2,
+                            ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    message.message,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: UniversalVariables.grey2,
+                        fontSize: 16.0,
+                        fontFamily: 'Poppins'),
                   ),
                 ),
                 SizedBox(
@@ -249,27 +292,31 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget receiverLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
 
-    return Container(
-        margin: EdgeInsets.only(top: 0),
-        constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.45),
-        decoration: BoxDecoration(
-          color: UniversalVariables.standardWhite,
-          borderRadius: BorderRadius.only(
-            bottomRight: messageRadius,
-            topRight: messageRadius,
-            bottomLeft: messageRadius,
-          ),
-        ),
-        child: message.type != MESSAGE_TYPE_IMAGE
-            ? Padding(
-                padding: EdgeInsets.all(10),
-                child: getMessage(message),
-              )
-            : Padding(
-                padding: EdgeInsets.all(5),
-                child: getMessage(message),
-              ));
+    return Column(
+      children: [
+        Container(
+            margin: EdgeInsets.only(top: 0),
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.45),
+            decoration: BoxDecoration(
+              color: UniversalVariables.standardWhite,
+              borderRadius: BorderRadius.only(
+                bottomRight: messageRadius,
+                topRight: messageRadius,
+                bottomLeft: messageRadius,
+              ),
+            ),
+            child: message.type != MESSAGE_TYPE_IMAGE
+                ? Padding(
+                    padding: EdgeInsets.all(10),
+                    child: getMessage(message),
+                  )
+                : Padding(
+                    padding: EdgeInsets.all(5),
+                    child: getMessage(message),
+                  )),
+      ],
+    );
   }
 
   Widget chatControls() {
@@ -345,12 +392,12 @@ class _ChatScreenState extends State<ChatScreen> {
       var text = textFieldController.text;
 
       Message _message = Message(
-        receiverId: widget.receiver.uid,
-        senderId: sender.uid,
-        message: text,
-        timestamp: Timestamp.now(),
-        type: 'text',
-      );
+          receiverId: widget.receiver.uid,
+          senderId: sender.uid,
+          message: text,
+          timestamp: Timestamp.now(),
+          type: 'text',
+          reqMessage: 3);
 
       setState(() {
         isWriting = false;
@@ -531,17 +578,22 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.only(bottom: 25, left: 10, right: 10),
       child: Row(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            child: GestureDetector(
-              onTap: () => addMediaModal(context),
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: UniversalVariables.grey2,
-                  shape: BoxShape.circle,
+          Visibility(
+            visible: isLoggedUserInfluencer,
+            //visible: true,
+            child: Container(
+              margin: EdgeInsets.only(left: 5, right: 5),
+              child: GestureDetector(
+                onTap: () => addMediaModal(context),
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: UniversalVariables.grey2,
+                    shape: BoxShape.circle,
+                  ),
+                  child:
+                      Icon(Icons.add, color: UniversalVariables.standardWhite),
                 ),
-                child: Icon(Icons.add, color: UniversalVariables.standardWhite),
               ),
             ),
           ),
@@ -616,7 +668,18 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    if (isLoggedUserInfluencer) {
+                      sendMessage();
+                    }
+                    if (!isLoggedUserInfluencer) {
+                      widget.replyType == 0
+                          ? stripePayment(widget.receiver.answerPrice1,
+                              widget.receiver.infReceived)
+                          : stripePayment(widget.receiver.answerPrice2,
+                              widget.receiver.infReceived);
+                    }
+                  },
                   // sendMessage(),
                 )
               : Container()
@@ -625,37 +688,42 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  confirmDialog(String clientSecret, PaymentMethod paymentMethod, int amount) {
+  confirmDialog(String clientSecret, PaymentMethod paymentMethod, int amount,
+      int currency) {
     var confirm = AlertDialog(
-      title: Text("Confirm Payement"),
-      content: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              "Make Payment",
-              // style: TextStyle(fontSize: 25),
-            ),
-            Text("Charge amount:\$ ${amount}")
-          ],
-        ),
-      ),
+      title: Text("Confirm payment: \$${amount}"),
+      // content: Container(
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.center,
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: <Widget>[
+      //       Text(
+      //         "Charge amount: \$${amount}",
+      //         style: TextStyles.editHeadingName,
+      //       )
+      //     ],
+      //   ),
+      // ),
       actions: <Widget>[
         new RaisedButton(
-          child: new Text('CANCEL'),
+          child: new Text(
+            'CANCEL',
+            style: TextStyles.cancelStyle,
+          ),
           onPressed: () {
-            Navigator.of(context).pop();
             final snackBar = SnackBar(
               content: Text('Payment Cancelled'),
             );
-            Scaffold.of(context).showSnackBar(snackBar);
+            // Scaffold.of(context).showSnackBar(snackBar);
+            // sendMessage();
+            sendMessage();
+            Navigator.pop(context);
           },
         ),
         new RaisedButton(
-          child: new Text('Confirm'),
+          child: new Text('CONFIRM', style: TextStyles.doneStyle),
           onPressed: () {
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
             confirmPayment(
                 clientSecret, paymentMethod); // function to confirm Payment
           },
@@ -676,32 +744,59 @@ class _ChatScreenState extends State<ChatScreen> {
       PaymentIntent(clientSecret: sec, paymentMethodId: paymentMethod.id),
     ).then((val) {
       // addPaymentDetailsToFirestore(); //Function to add Payment details to firestore
-      final snackBar = SnackBar(
-        content: Text('Payment Successfull'),
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      // final snackBar = SnackBar(
+      //   content: Text('Payment Successfull'),
+      // );
+      // Scaffold.of(context).showSnackBar(snackBar);
+      sendMessage();
+      Navigator.pop(context);
     });
   }
 
-  //   sendMessage() {
-  //   var text = textFieldController.text;
+  sendMessage() {
+    int replyType = widget.replyType;
 
-  //   Message _message = Message(
-  //     receiverId: widget.receiver.uid,
-  //     senderId: sender.uid,
-  //     message: text,
-  //     timestamp: Timestamp.now(),
-  //     type: 'text',
-  //   );
+    var text = textFieldController.text;
 
-  //   setState(() {
-  //     isWriting = false;
-  //   });
+    Message _message = Message(
+        receiverId: widget.receiver.uid,
+        senderId: sender.uid,
+        message: text,
+        timestamp: Timestamp.now(),
+        type: 'text',
+        reqMessage: widget.replyType);
 
-  //   textFieldController.text = "";
+    if (!isLoggedUserInfluencer) {
+      TxtOrder _txtorder = TxtOrder(
+        uid: Utils.generateRandomOrderId(),
+        buyerId: loggedUserId,
+        buyerName: loggedUserName,
+        buyerPhoto: loggedUserphoto,
+        sellerId: widget.receiver.uid,
+        sellerName: widget.receiver.name,
+        sellerPhoto: widget.receiver.profilePhoto,
+        boughtOn: Timestamp.now(),
+        price: replyType == 0
+            ? widget.receiver.answerPrice1
+            : widget.receiver.answerPrice2,
+      );
 
-  //   _chatMethods.addMessageToDb(_message, sender, widget.receiver);
-  // }
+      _orderMethods.addTxtOrderToDb(_txtorder);
+
+      _orderMethods.addTxtOrderToSellerDb(
+        _txtorder,
+      );
+      _orderMethods.addTxtOrderToBuyerDb(_txtorder);
+    }
+
+    setState(() {
+      isWriting = false;
+    });
+
+    textFieldController.text = "";
+
+    _chatMethods.addMessageToDb(_message, sender, widget.receiver);
+  }
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
@@ -754,21 +849,26 @@ class _ChatScreenState extends State<ChatScreen> {
         // //     Icons.save,
         // //   ),
         // // ),
-        widget.replyType == 0
-            ? SvgPicture.asset(
-                "assets/tr.svg",
-                height: 25,
-                width: 25,
-                // alignment: Alignment.topCenter,
-                color: UniversalVariables.gold2,
-              )
-            : SvgPicture.asset(
-                "assets/vr.svg",
-                height: 25,
-                width: 25,
-                // alignment: Alignment.topCenter,
-                color: UniversalVariables.gold2,
-              ),
+        Visibility(
+          visible: !isLoggedUserInfluencer,
+          child: Container(
+            child: widget.replyType == 0
+                ? SvgPicture.asset(
+                    "assets/tr.svg",
+                    height: 25,
+                    width: 25,
+                    // alignment: Alignment.topCenter,
+                    color: UniversalVariables.gold2,
+                  )
+                : SvgPicture.asset(
+                    "assets/vr.svg",
+                    height: 25,
+                    width: 25,
+                    // alignment: Alignment.topCenter,
+                    color: UniversalVariables.gold2,
+                  ),
+          ),
+        ),
         // (userProvider.getUser.isInfCert = true &&
         //         userProvider.getUser.answerPrice3 != null)
         //     ? IconButton(

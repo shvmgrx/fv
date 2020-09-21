@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fv/models/order.dart';
+import 'package:fv/models/txtOrder.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/message.dart';
@@ -242,6 +243,22 @@ class FirebaseMethods {
       }
     }
     return orderList;
+  }
+
+  Future<List<TxtOrder>> fetchBuyerTxtOrders(String loggedUserId) async {
+    List<TxtOrder> txtOrderList = List<TxtOrder>();
+
+    var querySnapshot = await firestore
+        .collection(TXT_ORDER_COLLECTION)
+        .orderBy("bought_on")
+        .getDocuments();
+
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+      if (querySnapshot.documents[i].data["buyer_id"] == loggedUserId) {
+        txtOrderList.add(TxtOrder.fromMap(querySnapshot.documents[i].data));
+      }
+    }
+    return txtOrderList;
   }
 
   Future<List<Order>> fetchSellerOrders(String loggedUserId) async {

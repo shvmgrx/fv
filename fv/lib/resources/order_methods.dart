@@ -6,6 +6,7 @@ import 'package:fv/models/income.dart';
 import 'package:fv/models/incomeTest.dart';
 import 'package:fv/models/message.dart';
 import 'package:fv/models/order.dart';
+import 'package:fv/models/txtOrder.dart';
 import 'package:fv/models/user.dart';
 
 //sender = buyer
@@ -26,6 +27,14 @@ class OrderMethods {
   Future<void> addOrderToDb(Order order) async {
     var map = order.toMap();
     _firestore.collection(ORDER_COLLECTION).document(order.uid).setData(map);
+  }
+
+  Future<void> addTxtOrderToDb(TxtOrder txtOrder) async {
+    var map = txtOrder.toMap();
+    _firestore
+        .collection(TXT_ORDER_COLLECTION)
+        .document(txtOrder.uid)
+        .setData(map);
   }
 
   Future<void> addOrderTransToDb(Order order, List t) async {
@@ -67,12 +76,29 @@ class OrderMethods {
         .setData(map);
   }
 
+  Future<void> addTxtOrderToSellerDb(TxtOrder txtOrder) async {
+    var map = txtOrder.toMap();
+    _firestore
+        .collection(SELLER_TXTORDER_COLLECTION)
+        .document(txtOrder.sellerId)
+        .setData(map);
+  }
+
   Future<void> addOrderToBuyerDb(Order order) async {
     var map = order.toMap();
     _firestore
         .collection(BUYER_ORDER_COLLECTION)
         .document(order.buyerId)
         .collection(order.uid)
+        .add(map);
+  }
+
+  Future<void> addTxtOrderToBuyerDb(TxtOrder txtOrder) async {
+    var map = txtOrder.toMap();
+    _firestore
+        .collection(BUYER_TXTORDER_COLLECTION)
+        .document(txtOrder.buyerId)
+        .collection(txtOrder.uid)
         .add(map);
   }
 

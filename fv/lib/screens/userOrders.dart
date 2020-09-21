@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fv/constants/conStrings.dart';
 // import 'package:fv/constants/strings.dart';
 import 'package:fv/models/order.dart';
+import 'package:fv/models/txtOrder.dart';
 // import 'package:fv/models/user.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
@@ -48,8 +50,10 @@ class _UserOrdersState extends State<UserOrders> {
   bool showVideocalls = false;
   bool showPreVideocalls = true;
   bool showMessages = false;
+  bool showPreMessages = false;
 
   List<Order> buyerOrderList;
+  List<TxtOrder> buyerTxtOrderList;
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -76,8 +80,10 @@ class _UserOrdersState extends State<UserOrders> {
       showVideoOrders();
     }
     _repository.getCurrentUser().then((FirebaseUser user) {
-      loggedUserDisplayName = user.displayName;
-      loggedUserProfilePic = user.photoUrl;
+      setState(() {
+        loggedUserDisplayName = user.displayName;
+        loggedUserProfilePic = user.photoUrl;
+      });
     });
 
     _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
@@ -93,6 +99,16 @@ class _UserOrdersState extends State<UserOrders> {
     _repository.fetchBuyerOrders(loggedUserUID).then((List<Order> list) {
       setState(() {
         buyerOrderList = list;
+      });
+    });
+  }
+
+  void showTxtOrders() {
+    _repository
+        .fetchBuyerTxtOrders(loggedUserUID)
+        .then((List<TxtOrder> txtlist) {
+      setState(() {
+        buyerTxtOrderList = txtlist;
       });
     });
   }
@@ -182,6 +198,65 @@ class _UserOrdersState extends State<UserOrders> {
     return new Column(children: list);
   }
 
+  Widget getTxtOrderWidgets(List<TxtOrder> buyerTxtOrderList) {
+    List<Widget> txtList = new List<Widget>();
+
+    for (var i = 0; i < buyerTxtOrderList.length; i++) {
+      txtList.add(OrderTile(
+        sellerPhoto: Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage("${buyerTxtOrderList[i].sellerPhoto}"),
+            ),
+          ),
+        ),
+        sellerName: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text("${buyerTxtOrderList[i].sellerName}"),
+        ),
+        buyerPhoto: Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage("${buyerTxtOrderList[i].buyerPhoto}"),
+            ),
+          ),
+        ),
+        buyerName: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text("${buyerTxtOrderList[i].buyerName}"),
+        ),
+        orderId: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            "${buyerTxtOrderList[i].uid}",
+            style: TextStyles.orderIDStyle,
+          ),
+        ),
+        price: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: buyerTxtOrderList[i].currency == 0
+              ? Text(
+                  "\$ ${buyerTxtOrderList[i].price}",
+                  style: TextStyles.hintTextStyle,
+                )
+              : Text(
+                  "€ ${buyerTxtOrderList[i].price}",
+                  style: TextStyles.hintTextStyle,
+                ),
+        ),
+      ));
+    }
+    return new Column(children: txtList);
+  }
+
   int durationMaker(int durationType) {
     int mins;
 
@@ -243,9 +318,7 @@ class _UserOrdersState extends State<UserOrders> {
                     Icons.arrow_back,
                     color: UniversalVariables.backgroundGrey,
                   ),
-                  onPressed: () {
-                    showVideoOrders();
-                  },
+                  onPressed: () {},
                 ),
               ),
             ],
@@ -259,8 +332,10 @@ class _UserOrdersState extends State<UserOrders> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      showVideocalls = true;
+                      showVideocalls = false;
                       showMessages = false;
+                      showPreMessages = false;
+                      showPreVideocalls = true;
                     });
 
                     if (showVideocalls) {
@@ -268,7 +343,7 @@ class _UserOrdersState extends State<UserOrders> {
                     }
                   },
                   child: Text(ConStrings.VIDEOCALLS,
-                      style: showVideocalls
+                      style: showPreVideocalls || showVideocalls
                           ? TextStyles.selectedOrdersStyle
                           : TextStyles.ordersStyle,
                       textAlign: TextAlign.center),
@@ -280,11 +355,13 @@ class _UserOrdersState extends State<UserOrders> {
                   onTap: () {
                     setState(() {
                       showVideocalls = false;
-                      showMessages = true;
+                      showMessages = false;
+                      showPreMessages = true;
+                      showPreVideocalls = false;
                     });
                   },
                   child: Text(ConStrings.MESSAGES,
-                      style: showMessages
+                      style: showPreMessages || showMessages
                           ? TextStyles.selectedOrdersStyle
                           : TextStyles.ordersStyle,
                       textAlign: TextAlign.center),
@@ -315,13 +392,14 @@ class _UserOrdersState extends State<UserOrders> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 3,
-                        child: Icon(
-                          CupertinoIcons.video_camera,
-                          color: UniversalVariables.gold2,
-                          size: screenHeight * 0.08,
-                        ),
-                      ),
+                          flex: 3,
+                          child: SvgPicture.asset(
+                            "assets/vr.svg",
+                            height: screenHeight * 0.08,
+                            // width: 25,
+                            // alignment: Alignment.topCenter,
+                            color: UniversalVariables.gold2,
+                          )),
                       Expanded(
                         flex: 3,
                         child: Text(ConStrings.VIDEOCALLS_DETAIL,
@@ -356,71 +434,72 @@ class _UserOrdersState extends State<UserOrders> {
           ),
           Visibility(
               visible: showVideocalls, child: getOrderWidgets(buyerOrderList)),
-          // OrderTile(
-          //   sellerPhoto: Container(
-          //     width: 120.0,
-          //     height: 120.0,
-          //     decoration: BoxDecoration(
-          //       shape: BoxShape.circle,
-          //       image: DecorationImage(
-          //         fit: BoxFit.cover,
-          //         image: NetworkImage("${buyerOrderList[0].sellerPhoto}"),
-          //       ),
-          //     ),
-          //   ),
-          //   sellerName: Padding(
-          //     padding: const EdgeInsets.only(top: 8.0),
-          //     child: Text("${buyerOrderList[0].sellerName}"),
-          //   ),
-          //   buyerPhoto: Container(
-          //     width: 120.0,
-          //     height: 120.0,
-          //     decoration: BoxDecoration(
-          //       shape: BoxShape.circle,
-          //       image: DecorationImage(
-          //         fit: BoxFit.cover,
-          //         image: NetworkImage("${buyerOrderList[0].buyerPhoto}"),
-          //       ),
-          //     ),
-          //   ),
-          //   buyerName: Padding(
-          //     padding: const EdgeInsets.only(top: 8.0),
-          //     child: Text("${buyerOrderList[0].buyerName}"),
-          //   ),
-          //   slotTime: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: Text(
-          //       "${dateMaker(buyerOrderList[0].slotTime)}",
-          //       style: TextStyles.hintTextStyle,
-          //     ),
-          //   ),
-          //   slotDuration: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: Text(
-          //       "${durationMaker(buyerOrderList[0].slotDuration)} mins",
-          //       style: TextStyles.hintTextStyle,
-          //     ),
-          //   ),
-          //   orderId: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: Text(
-          //       "${buyerOrderList[0].uid}",
-          //       style: TextStyles.orderIDStyle,
-          //     ),
-          //   ),
-          //   price: Padding(
-          //     padding: const EdgeInsets.only(left: 8.0),
-          //     child: buyerOrderList[0].currency == 0
-          //         ? Text(
-          //             "\$ ${buyerOrderList[0].price}",
-          //             style: TextStyles.hintTextStyle,
-          //           )
-          //         : Text(
-          //             "€ ${buyerOrderList[0].price}",
-          //             style: TextStyles.hintTextStyle,
-          //           ),
-          //   ),
-          // )
+          Visibility(
+            visible: showPreMessages,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      bottomLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                      bottomRight: Radius.circular(25.0),
+                    ),
+                    color: UniversalVariables.white2,
+                  ),
+                  height: screenHeight * 0.45,
+                  width: screenWidth * 0.9,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: SvgPicture.asset(
+                            "assets/tr.svg",
+                            height: screenHeight * 0.08,
+                            // width: 25,
+                            // alignment: Alignment.topCenter,
+                            color: UniversalVariables.gold2,
+                          )),
+                      Expanded(
+                        flex: 3,
+                        child: Text(ConStrings.MESSAGES_DETAIL,
+                            style: TextStyles.fvCodeHeading,
+                            textAlign: TextAlign.center),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Expanded(
+                          // flex: 3,
+                          child: OutlineButton(
+                            onPressed: () => {
+                              setState(() {
+                                showPreVideocalls = false;
+                                showPreMessages = false;
+                                showVideocalls = false;
+                                showMessages = true;
+                              }),
+                              showTxtOrders()
+                            },
+                            child: Text(
+                              ConStrings.SHOW_MESSAGES,
+                              style: TextStyles.editHeadingName,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: showMessages,
+              child: getTxtOrderWidgets(buyerTxtOrderList)),
         ],
       ),
     );

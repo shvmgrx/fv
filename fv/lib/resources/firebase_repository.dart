@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fv/models/message.dart';
 import 'package:fv/models/order.dart';
+import 'package:fv/models/txtOrder.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/resources/firebase_methods.dart';
@@ -82,6 +83,9 @@ class FirebaseRepository {
 
   Future<List<Order>> fetchBuyerOrders(String loggedUserId) =>
       _firebaseMethods.fetchBuyerOrders(loggedUserId);
+
+  Future<List<TxtOrder>> fetchBuyerTxtOrders(String loggedUserId) =>
+      _firebaseMethods.fetchBuyerTxtOrders(loggedUserId);
 
   Future<List<Order>> fetchSellerOrders(String loggedUserId) =>
       _firebaseMethods.fetchSellerOrders(loggedUserId);
