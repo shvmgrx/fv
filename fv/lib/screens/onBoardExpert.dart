@@ -26,7 +26,7 @@ import 'package:fv/utils/utilities.dart';
 // import 'package:fv/widgets/nmButton.dart';
 // import 'package:fv/widgets/nmCard.dart';
 // import 'package:fv/widgets/slideRoute.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:fv/provider/image_upload_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -195,7 +195,7 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    // var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: UniversalVariables.backgroundGrey,

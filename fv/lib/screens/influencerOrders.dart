@@ -135,8 +135,8 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   }
 
   Widget getIOrderWidgets(List<Order> sellerOrderList) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    // var screenHeight = MediaQuery.of(context).size.height;
+    // var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> list = new List<Widget>();
 
     if (sellerOrderList != null) {

@@ -20,11 +20,11 @@ class FirebaseMethods {
   static final CollectionReference _userCollection =
       _firestore.collection(USERS_COLLECTION);
 
-  static final CollectionReference _buyerCollection =
-      _firestore.collection(BUYER_ORDER_COLLECTION);
+  // static final CollectionReference _buyerCollection =
+  //     _firestore.collection(BUYER_ORDER_COLLECTION);
 
-  static final CollectionReference _sellerCollection =
-      _firestore.collection(SELLER_ORDER_COLLECTION);
+  // static final CollectionReference _sellerCollection =
+  //     _firestore.collection(SELLER_ORDER_COLLECTION);
 
   final CollectionReference _messageCollection =
       _firestore.collection(MESSAGES_COLLECTION);

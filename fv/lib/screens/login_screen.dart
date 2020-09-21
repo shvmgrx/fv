@@ -45,8 +45,7 @@ class LoginScreenState extends State<LoginScreen>
   bool isAppleLoginPressed = false;
 
   Future<void> _signInWithApple(BuildContext context) async {
-
-        setState(() {
+    setState(() {
       isAppleLoginPressed = true;
     });
     try {
@@ -60,7 +59,6 @@ class LoginScreenState extends State<LoginScreen>
       }
       print('uid: ${user.uid}');
     } catch (e) {
-      // TODO: Show alert here
       print(e);
     }
   }
@@ -87,7 +85,6 @@ class LoginScreenState extends State<LoginScreen>
     // }
     // print('uid: ${user.uid}');
     //   } catch (e) {
-    //     // TODO: Show alert here
     //     print(e);
     //   }
     // }
@@ -276,7 +273,7 @@ class LoginScreenState extends State<LoginScreen>
         color: UniversalVariables.blackColor.withOpacity(0.7),
       ),
       child: AppleSignInButton(
-      //  style: ButtonStyle.black,
+        //  style: ButtonStyle.black,
         type: ButtonType.signIn,
         onPressed: () => _signInWithApple(context),
       )

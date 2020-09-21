@@ -26,13 +26,11 @@ class _InfluencerOrderTileState extends State<InfluencerOrderTile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -50,7 +48,7 @@ class _InfluencerOrderTileState extends State<InfluencerOrderTile> {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
+    // var screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
       child: Expanded(

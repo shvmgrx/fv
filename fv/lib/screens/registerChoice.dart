@@ -36,126 +36,102 @@ class RegisterChoice extends StatefulWidget {
 class _RegisterChoiceState extends State<RegisterChoice> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
-    var screenHeight = MediaQuery.of(context).size.height;
-   var screenWidth = MediaQuery.of(context).size.width;
+    // var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: UniversalVariables.backgroundGrey,
       body: Column(
-         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            flex:1,
-                      child: Row(
+            flex: 1,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-             Padding(
-             padding: const EdgeInsets.only(left:8.0),
-             child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: UniversalVariables.backgroundGrey,
-                      ),
-                      onPressed: () {
-                      
-
-                       
-                      },
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: UniversalVariables.backgroundGrey,
                     ),
-           ),
+                    onPressed: () {},
+                  ),
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("FAVEEZ",
                       style: TextStyles.appNameLogoStyle,
                       textAlign: TextAlign.center),
-                  
                 ),
-                 Padding(
-             padding: const EdgeInsets.only(left:8.0),
-             child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: UniversalVariables.backgroundGrey,
-                      ),
-                      onPressed: () {
-                      
-
-                      },
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: UniversalVariables.backgroundGrey,
                     ),
-           ),
+                    onPressed: () {},
+                  ),
+                ),
 
                 //       Navigator.pushAndRemoveUntil(
                 //         context,
                 //         MaterialPageRoute(builder: (context) => HomeScreen()),
                 //         (Route<dynamic> route) => false,
                 //       );
-
               ],
             ),
           ),
+          Expanded(flex: 1, child: Container()),
           Expanded(
-            flex:1,
-            child: Container()),
-
-
-          Expanded(
-            flex:3,
-                      child: Center(
+            flex: 3,
+            child: Center(
               child: Container(
-                
                 child: Column(
-                 
                   children: <Widget>[
-                  Container(
-                     color:UniversalVariables.white2,
-                    width:screenWidth*0.8,
-                        child: OutlineButton(
-                           padding: EdgeInsets.all(5),
-                           color:UniversalVariables.white2,
-                          splashColor: UniversalVariables.gold4,
-                          highlightColor: UniversalVariables.receiverColor,
-                          highlightedBorderColor: UniversalVariables.gold2,
-                          visualDensity: VisualDensity.adaptivePlatformDensity,
-                          onPressed: () => {
-                       Navigator.pushNamed(
-                                context, "/onboard_user_screen")
-                            
-                          },
-                          child: Text("REGISTER AS USER",
-style: TextStyles.registerChoice,),
+                    Container(
+                      color: UniversalVariables.white2,
+                      width: screenWidth * 0.8,
+                      child: OutlineButton(
+                        padding: EdgeInsets.all(5),
+                        color: UniversalVariables.white2,
+                        splashColor: UniversalVariables.gold4,
+                        highlightColor: UniversalVariables.receiverColor,
+                        highlightedBorderColor: UniversalVariables.gold2,
+                        visualDensity: VisualDensity.adaptivePlatformDensity,
+                        onPressed: () => {
+                          Navigator.pushNamed(context, "/onboard_user_screen")
+                        },
+                        child: Text(
+                          "REGISTER AS USER",
+                          style: TextStyles.registerChoice,
                         ),
                       ),
-                       SizedBox(height: 25),
-                      Container(
-                        width:screenWidth*0.8,
-                         color:UniversalVariables.white2,
-                        child: OutlineButton(
-                         padding: EdgeInsets.all(5),
-                          color:UniversalVariables.white2,
-                          splashColor: UniversalVariables.gold4,
-                          highlightColor: UniversalVariables.receiverColor,
-                           highlightedBorderColor: UniversalVariables.gold2,
-                          visualDensity: VisualDensity.adaptivePlatformDensity,
-                          onPressed: () => {
-                       
-                             Navigator.pushNamed(
-                                context, "/verify_expert_screen")
-                          },
-                          child: Text(
-                            "REGISTER AS EXPERT",
-                            style: TextStyles.registerChoice,
-                          ),
+                    ),
+                    SizedBox(height: 25),
+                    Container(
+                      width: screenWidth * 0.8,
+                      color: UniversalVariables.white2,
+                      child: OutlineButton(
+                        padding: EdgeInsets.all(5),
+                        color: UniversalVariables.white2,
+                        splashColor: UniversalVariables.gold4,
+                        highlightColor: UniversalVariables.receiverColor,
+                        highlightedBorderColor: UniversalVariables.gold2,
+                        visualDensity: VisualDensity.adaptivePlatformDensity,
+                        onPressed: () => {
+                          Navigator.pushNamed(context, "/verify_expert_screen")
+                        },
+                        child: Text(
+                          "REGISTER AS EXPERT",
+                          style: TextStyles.registerChoice,
                         ),
                       ),
-                    
-                    
+                    ),
                   ],
                 ),
               ),

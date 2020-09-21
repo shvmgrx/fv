@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
-import 'package:fv/constants/strings.dart';
 // import 'package:fv/models/income.dart';
 // import 'package:fv/models/incomeTest.dart';
 import 'package:fv/models/order.dart';
@@ -357,7 +356,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           : widget.selectedInfluencer.timeSlots['ttDurations'][6];
     });
 
-    Future<Null> refresh() {
+    Future<void> refresh() {
       getIVideoOrders();
       // return _repository.getCurrentUser().then((FirebaseUser user) {
       //   _repository.fetchFeaturedInfluencers(user).then((List<User> list) {

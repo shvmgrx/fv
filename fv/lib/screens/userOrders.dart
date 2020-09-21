@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
-import 'package:fv/constants/strings.dart';
+// import 'package:fv/constants/strings.dart';
 import 'package:fv/models/order.dart';
-import 'package:fv/models/user.dart';
+// import 'package:fv/models/user.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
 import 'package:fv/resources/order_methods.dart';
@@ -15,7 +15,7 @@ import 'package:fv/utils/universal_variables.dart';
 import 'package:fv/widgets/orderTile.dart';
 import 'package:intl/intl.dart';
 
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class UserOrders extends StatefulWidget {
   @override

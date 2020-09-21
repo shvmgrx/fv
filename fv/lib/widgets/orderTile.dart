@@ -32,13 +32,11 @@ class _OrderTileState extends State<OrderTile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -56,7 +54,7 @@ class _OrderTileState extends State<OrderTile> {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
+    // var screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Expanded(

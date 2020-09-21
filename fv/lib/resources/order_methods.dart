@@ -95,12 +95,12 @@ class OrderMethods {
   //     .where("seller_id", isEqualTo: userId)
   //     .snapshots();
 
-  Future<QuerySnapshot> fetchSell() async {
-    QuerySnapshot result = await firestore
-        .collection(SELLER_ORDER_COLLECTION)
-        //.where(EMAIL_FIELD, isEqualTo: user.email)
-        .getDocuments();
-  }
+  // Future<QuerySnapshot> fetchSell() async {
+  //   QuerySnapshot result = await firestore
+  //       .collection(SELLER_ORDER_COLLECTION)
+  //       //.where(EMAIL_FIELD, isEqualTo: user.email)
+  //       .getDocuments();
+  // }
 
   Future<int> fetchIncome(String loggedUserId) async {
     int worth = 0;
