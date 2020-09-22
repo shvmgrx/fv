@@ -90,6 +90,9 @@ class FirebaseRepository {
   Future<List<Order>> fetchSellerOrders(String loggedUserId) =>
       _firebaseMethods.fetchSellerOrders(loggedUserId);
 
+  Future<List<TxtOrder>> fetchSellerTxtOrders(String loggedUserId) =>
+      _firebaseMethods.fetchSellerTxtOrders(loggedUserId);
+
   Future<List<String>> fetchFvCodes() => _firebaseMethods.fetchFvCodes();
 
   Future<List<User>> fetchAllInfluencers(FirebaseUser user) =>

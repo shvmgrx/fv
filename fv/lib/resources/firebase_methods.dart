@@ -253,8 +253,6 @@ class FirebaseMethods {
         .orderBy("bought_on")
         .getDocuments();
 
-    print("fghjytfgvbh: $querySnapshot");
-
     for (var i = 0; i < querySnapshot.documents.length; i++) {
       if (querySnapshot.documents[i].data["buyer_id"] == loggedUserId) {
         txtOrderList.add(TxtOrder.fromMap(querySnapshot.documents[i].data));
@@ -277,6 +275,22 @@ class FirebaseMethods {
       }
     }
     return iOrderList;
+  }
+
+  Future<List<TxtOrder>> fetchSellerTxtOrders(String loggedUserId) async {
+    List<TxtOrder> iTxtOrderList = List<TxtOrder>();
+
+    var querySnapshot = await firestore
+        .collection(TXT_ORDER_COLLECTION)
+        .orderBy("bought_on")
+        .getDocuments();
+
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+      if (querySnapshot.documents[i].data["seller_id"] == loggedUserId) {
+        iTxtOrderList.add(TxtOrder.fromMap(querySnapshot.documents[i].data));
+      }
+    }
+    return iTxtOrderList;
   }
 
   Future<List<User>> fetchFeaturedInfluencers(FirebaseUser currentUser) async {

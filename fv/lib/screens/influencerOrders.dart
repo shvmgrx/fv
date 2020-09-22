@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fv/constants/conStrings.dart';
 import 'package:fv/constants/strings.dart';
 import 'package:fv/models/order.dart';
+import 'package:fv/models/txtOrder.dart';
 import 'package:fv/models/user.dart';
 import 'package:fv/onboarding/text_styles.dart';
 import 'package:fv/resources/firebase_repository.dart';
@@ -12,6 +14,7 @@ import 'package:fv/screens/home_screen.dart';
 import 'package:fv/models/influencer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/widgets/influencerMessageTile.dart';
 import 'package:fv/widgets/influencerOrderTile.dart';
 import 'package:fv/widgets/orderTile.dart';
 import 'package:intl/intl.dart';
@@ -48,11 +51,14 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
 
   bool showPreVideocalls = true;
   bool showVideocalls = false;
+
   bool showMessages = false;
+  bool showPreMessages = false;
 
   int loggedUserWorth;
 
   List<Order> sellerOrderList;
+  List<TxtOrder> sellerTxtOrderList;
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -134,6 +140,16 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
     });
   }
 
+  void showITxtOrders() {
+    _repository
+        .fetchSellerTxtOrders(loggedUserUID)
+        .then((List<TxtOrder> txtlist) {
+      setState(() {
+        sellerTxtOrderList = txtlist;
+      });
+    });
+  }
+
   Widget getIOrderWidgets(List<Order> sellerOrderList) {
     // var screenHeight = MediaQuery.of(context).size.height;
     // var screenWidth = MediaQuery.of(context).size.width;
@@ -207,6 +223,66 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
     return new Column(children: list);
   }
 
+  Widget getITxtOrderWidgets(List<TxtOrder> sellerTxtOrderList) {
+    // var screenHeight = MediaQuery.of(context).size.height;
+    // var screenWidth = MediaQuery.of(context).size.width;
+    List<Widget> list = new List<Widget>();
+
+    if (sellerTxtOrderList != null) {
+      if (sellerTxtOrderList.length > 0) {
+        for (var i = 0; i < sellerTxtOrderList.length; i++) {
+          list.add(InfluencerMessageTile(
+            buyerPhotoName: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 70.0,
+                  height: 70.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image:
+                          NetworkImage("${sellerTxtOrderList[i].buyerPhoto}"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text(
+                    "${sellerTxtOrderList[i].buyerName}",
+                    style: TextStyles.hintTextStyle,
+                  ),
+                ),
+              ],
+            ),
+            orderId: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "${sellerTxtOrderList[i].uid}",
+                style: TextStyles.orderIDStyle,
+              ),
+            ),
+            price: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: sellerTxtOrderList[i].currency == 0
+                  ? Text(
+                      "\$ ${sellerTxtOrderList[i].price}",
+                      style: TextStyles.hintTextStyle,
+                    )
+                  : Text(
+                      "€ ${sellerTxtOrderList[i].price}",
+                      style: TextStyles.hintTextStyle,
+                    ),
+            ),
+          ));
+        }
+      }
+    }
+
+    return new Column(children: list);
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -258,23 +334,6 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                           "\$ $loggedUserWorth",
                           style: TextStyles.moneyStyle,
                         ),
-
-                  //     IconButton(
-                  //   icon: Icon(
-                  //     Icons.arrow_back,
-                  //     color: UniversalVariables.white2,
-                  //   ),
-                  //   onPressed: () {
-                  //     // showIVideoOrders();
-                  //     incomeRevealer();
-
-                  //     // _orderMethods.fetchIncome(loggedUserUID).then((int value) {
-                  //     //   setState(() {
-                  //     //     loggedUserWorth = value;
-                  //     //   });
-                  //     // });
-                  //   },
-                  // ),
                 ),
               ),
             ],
@@ -288,12 +347,14 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      showVideocalls = true;
+                      showVideocalls = false;
+                      showPreVideocalls = true;
                       showMessages = false;
+                      showPreMessages = false;
                     });
                   },
                   child: Text(ConStrings.VIDEOCALLS,
-                      style: showVideocalls
+                      style: showPreVideocalls || showVideocalls
                           ? TextStyles.selectedOrdersStyle
                           : TextStyles.ordersStyle,
                       textAlign: TextAlign.center),
@@ -305,11 +366,13 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                   onTap: () {
                     setState(() {
                       showVideocalls = false;
-                      showMessages = true;
+                      showMessages = false;
+                      showPreMessages = true;
+                      showPreVideocalls = false;
                     });
                   },
                   child: Text(ConStrings.MESSAGES,
-                      style: showMessages
+                      style: showPreMessages || showMessages
                           ? TextStyles.selectedOrdersStyle
                           : TextStyles.ordersStyle,
                       textAlign: TextAlign.center),
@@ -340,13 +403,14 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 3,
-                        child: Icon(
-                          CupertinoIcons.video_camera,
-                          color: UniversalVariables.gold2,
-                          size: screenHeight * 0.08,
-                        ),
-                      ),
+                          flex: 3,
+                          child: SvgPicture.asset(
+                            "assets/vr.svg",
+                            height: screenHeight * 0.08,
+                            // width: 25,
+                            // alignment: Alignment.topCenter,
+                            color: UniversalVariables.gold2,
+                          )),
                       Expanded(
                         flex: 3,
                         child: Text(ConStrings.VIDEOCALLS_DETAIL,
@@ -382,6 +446,72 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
           Visibility(
               visible: showVideocalls,
               child: getIOrderWidgets(sellerOrderList)),
+          Visibility(
+            visible: showPreMessages,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      bottomLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                      bottomRight: Radius.circular(25.0),
+                    ),
+                    color: UniversalVariables.white2,
+                  ),
+                  height: screenHeight * 0.45,
+                  width: screenWidth * 0.9,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: SvgPicture.asset(
+                            "assets/tr.svg",
+                            height: screenHeight * 0.08,
+                            // width: 25,
+                            // alignment: Alignment.topCenter,
+                            color: UniversalVariables.gold2,
+                          )),
+                      Expanded(
+                        flex: 3,
+                        child: Text(ConStrings.MESSAGES_DETAIL,
+                            style: TextStyles.fvCodeHeading,
+                            textAlign: TextAlign.center),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Expanded(
+                          // flex: 3,
+                          child: OutlineButton(
+                            onPressed: () => {
+                              showITxtOrders(),
+                              setState(() {
+                                showPreVideocalls = false;
+                                showVideocalls = false;
+                                showMessages = true;
+                                showPreMessages = false;
+                              }),
+                            },
+                            child: Text(
+                              ConStrings.SHOW_MESSAGES,
+                              style: TextStyles.editHeadingName,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: showMessages,
+              child: getITxtOrderWidgets(sellerTxtOrderList)),
         ],
       ),
     );
