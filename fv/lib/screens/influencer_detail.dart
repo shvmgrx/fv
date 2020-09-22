@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/constants/conStrings.dart';
@@ -20,6 +21,7 @@ import 'package:provider/provider.dart';
 // import 'package:fv/widgets/priceCard.dart';
 
 import 'package:intl/intl.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 // import 'package:smooth_star_rating/smooth_star_rating.dart';
 // import 'package:fv/models/influencer.dart';
@@ -104,6 +106,78 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     });
 
     getIVideoOrders();
+  }
+
+  //stripe payment
+  void stripePayment(int billAmount, int currency) {
+    StripePayment.setOptions(StripeOptions(
+        publishableKey: "pk_live_FheU3MdCQh1zmfTBPEXZQNRP004f2b4pbj"));
+
+    final HttpsCallable INTENT = CloudFunctions.instance
+        .getHttpsCallable(functionName: 'createPaymentIntent');
+
+    StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
+        .then((paymentMethod) {
+      double amount =
+          billAmount * 100.0; // multipliying with 100 to change $ to cents
+      //  double amount = 1 * 100.0;
+      INTENT.call(<String, dynamic>{'amount': amount, 'currency': 'usd'}).then(
+          (response) {
+        confirmDialog(response.data["client_secret"], paymentMethod, billAmount,
+            currency); //function for confirmation for payment
+      });
+    });
+  }
+
+  confirmDialog(String clientSecret, PaymentMethod paymentMethod, int amount,
+      int currency) {
+    var confirm = AlertDialog(
+      title: Text("Confirm payment: \$${amount}"),
+      actions: <Widget>[
+        new RaisedButton(
+          child: new Text(
+            'CANCEL',
+            style: TextStyles.cancelStyle,
+          ),
+          onPressed: () {
+            final snackBar = SnackBar(
+              content: Text('Payment Cancelled'),
+            );
+            // Scaffold.of(context).showSnackBar(snackBar);
+            Navigator.pop(context);
+          },
+        ),
+        new RaisedButton(
+          child: new Text('CONFIRM', style: TextStyles.doneStyle),
+          onPressed: () {
+            // Navigator.of(context).pop();
+            confirmPayment(
+                clientSecret, paymentMethod); // function to confirm Payment
+          },
+        ),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return confirm;
+        });
+  }
+
+  confirmPayment(String sec, PaymentMethod paymentMethod) {
+    StripePayment.confirmPaymentIntent(
+      PaymentIntent(clientSecret: sec, paymentMethodId: paymentMethod.id),
+    ).then((val) {
+      // addPaymentDetailsToFirestore(); //Function to add Payment details to firestore
+      // final snackBar = SnackBar(
+      //   content: Text('Payment Successfull'),
+      // );
+      // Scaffold.of(context).showSnackBar(snackBar);
+      sendMessage();
+      Navigator.pop(context);
+    });
   }
 
   String dateMaker(Timestamp theSetDate) {

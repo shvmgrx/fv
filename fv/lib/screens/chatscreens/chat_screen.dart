@@ -500,7 +500,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       ModalTile(
                         title: "Video",
-                        subtitle: "Share Video (Under construction)",
+                        subtitle: "Share Video from gallery",
                         icon: CupertinoIcons.video_camera,
                         onTap: () => pickVideos(source: ImageSource.gallery),
                       ),
@@ -820,18 +820,6 @@ class _ChatScreenState extends State<ChatScreen> {
       int currency) {
     var confirm = AlertDialog(
       title: Text("Confirm payment: \$${amount}"),
-      // content: Container(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.center,
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: <Widget>[
-      //       Text(
-      //         "Charge amount: \$${amount}",
-      //         style: TextStyles.editHeadingName,
-      //       )
-      //     ],
-      //   ),
-      // ),
       actions: <Widget>[
         new RaisedButton(
           child: new Text(
