@@ -93,9 +93,14 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
   }
 
   void incomeRevealer() {
-    _orderMethods.fetchIncome(loggedUserUID).then((int value) {
+    _orderMethods.fetchIncome(loggedUserUID).then((List worthValues) {
+      var tempWorth = 0;
+
+      for (int i = 0; i < worthValues.length; i++) {
+        tempWorth = tempWorth + worthValues[i][0];
+      }
       setState(() {
-        loggedUserWorth = value;
+        loggedUserWorth = tempWorth;
       });
     });
   }
@@ -326,14 +331,24 @@ class _InfluencerOrdersState extends State<InfluencerOrders> {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: loggedUserinfReceived == 1
-                      ? Text(
-                          "€ $loggedUserWorth",
-                          style: TextStyles.moneyStyle,
-                        )
-                      : Text(
-                          "\$ $loggedUserWorth",
-                          style: TextStyles.moneyStyle,
-                        ),
+                      ? loggedUserWorth != null
+                          ? Text(
+                              "€ $loggedUserWorth",
+                              style: TextStyles.moneyStyle,
+                            )
+                          : Text(
+                              "€ 0",
+                              style: TextStyles.moneyStyle,
+                            )
+                      : loggedUserWorth != null
+                          ? Text(
+                              "\$ $loggedUserWorth",
+                              style: TextStyles.moneyStyle,
+                            )
+                          : Text(
+                              "\$ 0",
+                              style: TextStyles.moneyStyle,
+                            ),
                 ),
               ),
             ],

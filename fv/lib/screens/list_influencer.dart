@@ -71,7 +71,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
 
   int currency;
 
-  int loggedUserWorth;
+  int loggedUserWorth = 0;
 
   void initState() {
     _repository.getCurrentUser().then((user) {
@@ -86,6 +86,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
           currency = loggedUser['infReceived'];
           // loggedUserisInfCert = false;
         });
+        incomeRevealer();
       });
     });
 
@@ -129,19 +130,25 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
         });
       });
     });
-
-    _orderMethods.fetchIncome(loggedInUID).then((int value) {
-      setState(() {
-        loggedUserWorth = value;
-        print("loggedInUID:$loggedInUID  loggedUserWorth:$loggedUserWorth");
-      });
-    });
+    // print("USERFDNSD: $loggedInUID");
+    // incomeRevealer();
+    // _orderMethods.fetchIncome(loggedInUID).then((int value) {
+    //   setState(() {
+    //     loggedUserWorth = value;
+    //     print("loggedInUID:$loggedInUID  loggedUserWorth:$loggedUserWorth");
+    //   });
+    // });
   }
 
   void incomeRevealer() {
-    _orderMethods.fetchIncome(loggedInUID).then((int value) {
+    _orderMethods.fetchIncome(loggedInUID).then((List worthValues) {
+      var tempWorth = 0;
+
+      for (int i = 0; i < worthValues.length; i++) {
+        tempWorth = tempWorth + worthValues[i][0];
+      }
       setState(() {
-        loggedUserWorth = value;
+        loggedUserWorth = tempWorth;
       });
     });
   }

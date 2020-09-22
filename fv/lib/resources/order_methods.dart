@@ -41,7 +41,7 @@ class OrderMethods {
     bool sellerInList = false;
 
     QuerySnapshot result =
-        await firestore.collection(INCOME_COLLECTION).getDocuments();
+        await firestore.collection(TRANSACTIONS).getDocuments();
 
     final List<DocumentSnapshot> docs = result.documents;
 
@@ -53,14 +53,14 @@ class OrderMethods {
 
     sellerInList
         ? Firestore.instance
-            .collection(INCOME_COLLECTION)
+            .collection(TRANSACTIONS)
             .document("${order.sellerId}")
             .updateData({
             EARNER: order.sellerId,
             ORDER_INCOME: FieldValue.arrayUnion(t)
           })
         : Firestore.instance
-            .collection(INCOME_COLLECTION)
+            .collection(TRANSACTIONS)
             .document("${order.sellerId}")
             .setData({
             EARNER: order.sellerId,
@@ -128,21 +128,28 @@ class OrderMethods {
   //       .getDocuments();
   // }
 
-  Future<int> fetchIncome(String loggedUserId) async {
-    int worth = 0;
+  Future<List> fetchIncome(String loggedUserId) async {
+    var worth;
 
-    QuerySnapshot result = await firestore
-        .collection(INCOME_COLLECTION)
-        .where(EARNER, isEqualTo: loggedUserId)
+    List worthDocs = [];
+    var earningDoc;
+
+    var querySnapshot = await firestore
+        .collection(TRANSACTIONS)
+        //.where(EARNER, isEqualTo: loggedUserId)
         .getDocuments();
 
-    var transactions = result.documents[0].data[ORDER_INCOME];
-
-    for (var i = 0; i < transactions.length; i++) {
-      worth = worth + transactions[i]["amount"][0];
+    for (var i = 0; i < querySnapshot.documents.length; i++) {
+      if (querySnapshot.documents[i].data[EARNER] == loggedUserId) {
+        earningDoc = querySnapshot.documents[i].data[ORDER_INCOME];
+      }
     }
 
-    return worth;
+    for (var j = 0; j < earningDoc.length; j++) {
+      worthDocs.add(earningDoc[j]['amount']);
+    }
+
+    return worthDocs;
   }
 
 //old working function

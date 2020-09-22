@@ -4,7 +4,7 @@ const String FZCODES_COLLECTION = "fzCodes";
 const String ORDER_COLLECTION = "orders";
 const String TXT_ORDER_COLLECTION = "txtOrders";
 
-const String INCOME_COLLECTION = "transactions";
+const String TRANSACTIONS = "transactions";
 
 const String ORDER_INCOME = "orderIncome";
 const String EARNER = "earner";
