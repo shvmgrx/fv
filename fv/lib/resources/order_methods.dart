@@ -193,9 +193,6 @@ class OrderMethods {
         .where("seller_id", isEqualTo: user.uid)
         .getDocuments();
 
-    print("object");
-    print(querySnapshot.documents.length);
-
     for (var i = 0; i < querySnapshot.documents.length; i++) {
       loggedUserOrdersList.add(Order.fromMap(querySnapshot.documents[i].data));
     }
@@ -214,9 +211,6 @@ class OrderMethods {
         .collection(ORDER_COLLECTION)
         .where("seller_id", isEqualTo: user.uid)
         .getDocuments();
-
-    print("object");
-    print(querySnapshot.documents.length);
 
     for (var i = 0; i < querySnapshot.documents.length; i++) {
       loggedUserOrdersList.add(Order.fromMap(querySnapshot.documents[i].data));

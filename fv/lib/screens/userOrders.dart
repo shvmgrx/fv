@@ -14,6 +14,7 @@ import 'package:fv/screens/home_screen.dart';
 import 'package:fv/models/influencer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fv/utils/universal_variables.dart';
+import 'package:fv/widgets/messageTile.dart';
 import 'package:fv/widgets/orderTile.dart';
 import 'package:intl/intl.dart';
 
@@ -76,9 +77,9 @@ class _UserOrdersState extends State<UserOrders> {
       });
     });
 
-    if (showVideocalls) {
-      showVideoOrders();
-    }
+    showVideoOrders();
+    showTxtOrders();
+
     _repository.getCurrentUser().then((FirebaseUser user) {
       setState(() {
         loggedUserDisplayName = user.displayName;
@@ -201,8 +202,13 @@ class _UserOrdersState extends State<UserOrders> {
   Widget getTxtOrderWidgets(List<TxtOrder> buyerTxtOrderList) {
     List<Widget> txtList = new List<Widget>();
 
+    print("cvdjh: ${buyerTxtOrderList.length}");
+
     for (var i = 0; i < buyerTxtOrderList.length; i++) {
-      txtList.add(OrderTile(
+      txtList.add(
+          // Text(buyerTxtOrderList[i].sellerName)
+
+          MessageTile(
         sellerPhoto: Container(
           width: 120.0,
           height: 120.0,
@@ -476,13 +482,13 @@ class _UserOrdersState extends State<UserOrders> {
                           // flex: 3,
                           child: OutlineButton(
                             onPressed: () => {
+                              showTxtOrders(),
                               setState(() {
                                 showPreVideocalls = false;
                                 showPreMessages = false;
                                 showVideocalls = false;
                                 showMessages = true;
                               }),
-                              showTxtOrders()
                             },
                             child: Text(
                               ConStrings.SHOW_MESSAGES,

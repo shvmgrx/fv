@@ -253,6 +253,8 @@ class FirebaseMethods {
         .orderBy("bought_on")
         .getDocuments();
 
+    print("fghjytfgvbh: $querySnapshot");
+
     for (var i = 0; i < querySnapshot.documents.length; i++) {
       if (querySnapshot.documents[i].data["buyer_id"] == loggedUserId) {
         txtOrderList.add(TxtOrder.fromMap(querySnapshot.documents[i].data));

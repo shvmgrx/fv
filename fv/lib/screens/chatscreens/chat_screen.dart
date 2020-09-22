@@ -775,6 +775,7 @@ class _ChatScreenState extends State<ChatScreen> {
         sellerId: widget.receiver.uid,
         sellerName: widget.receiver.name,
         sellerPhoto: widget.receiver.profilePhoto,
+        currency: widget.receiver.infReceived,
         boughtOn: Timestamp.now(),
         price: replyType == 0
             ? widget.receiver.answerPrice1
