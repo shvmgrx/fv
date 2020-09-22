@@ -129,6 +129,14 @@ class FirebaseRepository {
       _firebaseMethods.uploadImage(
           image, receiverId, senderId, imageUploadProvider);
 
+  void uploadVideo(
+          {@required File video,
+          @required String receiverId,
+          @required String senderId,
+          @required ImageUploadProvider imageUploadProvider}) =>
+      _firebaseMethods.uploadVideo(
+          video, receiverId, senderId, imageUploadProvider);
+
   void changeProfilePhoto(
           {@required File image,
           @required ImageUploadProvider imageUploadProvider,

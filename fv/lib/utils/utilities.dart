@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:fv/enum/user_state.dart';
 import 'package:meta/meta.dart';
 //import 'package:path_provider/path_provider.dart';
+import 'package:video_player/video_player.dart';
 
 class Utils {
   static String getUsername(String name) {
@@ -52,18 +53,27 @@ class Utils {
   }
 
   static Future<File> pickImage({@required ImageSource source}) async {
-    //   print("1a");
     File _image;
     final iPicker = ImagePicker();
-    //    print("21a");
 
     final pickedFile = await iPicker.getImage(
         source: ImageSource.gallery, maxWidth: 700.0, maxHeight: 700.0);
-    // print("31a");
 
     _image = File(pickedFile.path);
-    //print("4a");
+
     return _image;
+  }
+
+  static Future<File> pickVideo({@required ImageSource source}) async {
+    File _video;
+
+    final vPicker = ImagePicker();
+
+    final pickedVideo = await vPicker.getVideo(source: ImageSource.gallery);
+
+    _video = File(pickedVideo.path);
+
+    return _video;
   }
 
   static Future<File> pickCover({@required ImageSource source}) async {

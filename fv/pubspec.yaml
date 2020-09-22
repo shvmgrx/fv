@@ -53,6 +53,8 @@ dependencies:
   flutter_datetime_picker: ^1.4.0
   connectivity: ^0.4.9+2
   flutter_animation_progress_bar: ^1.0.5
+  video_player: ^0.10.12+3
+  
 
 
 

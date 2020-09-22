@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fv/models/txtOrder.dart';
 import 'package:fv/resources/order_methods.dart';
@@ -27,7 +28,7 @@ import 'package:fv/provider/image_upload_provider.dart';
 import 'package:fv/widgets/nmBox.dart';
 import 'package:provider/provider.dart';
 import 'package:date_time_format/date_time_format.dart';
-
+import 'package:video_player/video_player.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -374,7 +375,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         title: "Video",
                         subtitle: "Share Video (Under construction)",
                         icon: CupertinoIcons.video_camera,
-                        // onTap: () => pickVideos(),
+                        onTap: () => pickVideos(source: ImageSource.gallery),
                       ),
                       // ModalTile(
                       //     title: "Schedule Call",
@@ -808,17 +809,14 @@ class _ChatScreenState extends State<ChatScreen> {
         imageUploadProvider: _imageUploadProvider);
   }
 
-  // pickVideos() async {
-  //   try {
-  //     _mediaPaths = await MediaPicker.pickVideos(quantity: 1);
-  //   } on PlatformException {}
-
-  //   if (!mounted) return;
-
-  //   setState(() {
-  //     _platformVersion = _mediaPaths.toString();
-  //   });
-  // }
+  void pickVideos({@required ImageSource source}) async {
+    File selectedVideo = await Utils.pickVideo(source: source);
+    _repository.uploadVideo(
+        video: selectedVideo,
+        receiverId: widget.receiver.uid,
+        senderId: _currentUserId,
+        imageUploadProvider: _imageUploadProvider);
+  }
 
   CustomAppBar customAppBar(context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);

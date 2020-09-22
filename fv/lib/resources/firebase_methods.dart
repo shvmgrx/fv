@@ -392,6 +392,23 @@ class FirebaseMethods {
     }
   }
 
+  Future<String> uploadVideoToStorage(File videoFile) async {
+    // mention try catch later on
+    try {
+      _storageReference = FirebaseStorage.instance
+          .ref()
+          .child('${DateTime.now().millisecondsSinceEpoch}');
+
+      StorageUploadTask storageUploadTask = _storageReference.putFile(
+          videoFile, StorageMetadata(contentType: 'video/mp4'));
+      var url = await (await storageUploadTask.onComplete).ref.getDownloadURL();
+
+      return url;
+    } catch (e) {
+      return null;
+    }
+  }
+
   void setImageMsg(String url, String receiverId, String senderId) async {
     Message message;
 
@@ -424,13 +441,21 @@ class FirebaseMethods {
 
   void uploadImage(File image, String receiverId, String senderId,
       ImageUploadProvider imageUploadProvider) async {
-    // Set some loading value to db and show it to user
     imageUploadProvider.setToLoading();
 
-    // Get url from the image bucket
     String url = await uploadImageToStorage(image);
 
-    // Hide loading
+    imageUploadProvider.setToIdle();
+
+    setImageMsg(url, receiverId, senderId);
+  }
+
+  void uploadVideo(File video, String receiverId, String senderId,
+      ImageUploadProvider imageUploadProvider) async {
+    imageUploadProvider.setToLoading();
+
+    String url = await uploadVideoToStorage(video);
+
     imageUploadProvider.setToIdle();
 
     setImageMsg(url, receiverId, senderId);
