@@ -298,7 +298,7 @@ class FirebaseMethods {
 
     QuerySnapshot querySnapshot = await firestore
         .collection(USERS_COLLECTION)
-        // .where("category", isEqualTo: "1")
+        .where("isInfluencer", isEqualTo: true)
         .getDocuments();
 
     for (var i = 0; i < querySnapshot.documents.length; i++) {
@@ -437,6 +437,34 @@ class FirebaseMethods {
         .add(map);
   }
 
+  void setVideoMsg(String url, String receiverId, String senderId) async {
+    Message message;
+
+    message = Message.imageMessage(
+        message: "VIDEO",
+        receiverId: receiverId,
+        senderId: senderId,
+        photoUrl: url,
+        timestamp: Timestamp.now(),
+        type: 'image');
+
+    // create imagemap
+    var map = message.toImageMap();
+
+    // var map = Map<String, dynamic>();
+    await firestore
+        .collection(MESSAGES_COLLECTION)
+        .document(message.senderId)
+        .collection(message.receiverId)
+        .add(map);
+
+    firestore
+        .collection(MESSAGES_COLLECTION)
+        .document(message.receiverId)
+        .collection(message.senderId)
+        .add(map);
+  }
+
 //setProfilePlaceholder
 
   void uploadImage(File image, String receiverId, String senderId,
@@ -458,7 +486,7 @@ class FirebaseMethods {
 
     imageUploadProvider.setToIdle();
 
-    setImageMsg(url, receiverId, senderId);
+    setVideoMsg(url, receiverId, senderId);
   }
 
   void changeProfilePhoto(File image, ImageUploadProvider imageUploadProvider,

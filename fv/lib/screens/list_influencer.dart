@@ -844,23 +844,23 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                               return buildInfluencerGrid(e);
                             }).toList(),
 
-                        if (category2Pressed)
-                          if (trendingList != null)
-                            ...trendingList.map((e) {
-                              return buildInfluencerGrid(e);
-                            }).toList(),
+                        // if (category2Pressed)
+                        //   if (trendingList != null)
+                        //     ...trendingList.map((e) {
+                        //       return buildInfluencerGrid(e);
+                        //     }).toList(),
 
-                        if (category3Pressed)
-                          if (newList != null)
-                            ...newList.map((e) {
-                              return buildInfluencerGrid(e);
-                            }).toList(),
+                        // if (category3Pressed)
+                        //   if (newList != null)
+                        //     ...newList.map((e) {
+                        //       return buildInfluencerGrid(e);
+                        //     }).toList(),
 
-                        if (category4Pressed)
-                          if (mostActiveList != null)
-                            ...mostActiveList.map((e) {
-                              return buildInfluencerGrid(e);
-                            }).toList()
+                        // if (category4Pressed)
+                        //   if (mostActiveList != null)
+                        //     ...mostActiveList.map((e) {
+                        //       return buildInfluencerGrid(e);
+                        //     }).toList()
                       ],
                     ),
                   ),

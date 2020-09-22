@@ -29,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     pageController = PageController();
     _repository.getCurrentUser().then((FirebaseUser user) {
-      _repository.fetchAllUsers(user).then((List<User> list) {
+      _repository.fetchFeaturedInfluencers(user).then((List<User> list) {
         setState(() {
           userAllList = list;
         });

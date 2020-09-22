@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fv/constants/conStrings.dart';
 import 'package:fv/models/txtOrder.dart';
 import 'package:fv/resources/order_methods.dart';
 import 'package:fv/screens/chatscreens/widgets/modalTile.dart';
@@ -84,6 +86,20 @@ class _ChatScreenState extends State<ChatScreen> {
         );
       });
     });
+
+    _controller = VideoPlayerController.network(
+      'https://firebasestorage.googleapis.com/v0/b/fvv1-481e5.appspot.com/o/1600806381759?alt=media&token=6115938b-8a16-49e5-a42b-75f89aecd9e2',
+    )
+      // ..setLooping(true)
+      ..initialize().then((_) {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   void onRadioChanged(int value) {
@@ -225,6 +241,7 @@ class _ChatScreenState extends State<ChatScreen> {
   getMessage(Message message) {
     final dateTime = message.timestamp;
     final messageTime = dateTime.toDate();
+    var screenWidth = MediaQuery.of(context).size.width;
     return message.type != MESSAGE_TYPE_IMAGE
         ? InkWell(
             child: Column(
@@ -281,12 +298,122 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           )
         : message.photoUrl != null
-            ? CachedImage(
-                message.photoUrl,
-                height: 250,
-                width: 250,
-                radius: 10,
-              )
+            ? message.message == 'VIDEO'
+                ? Container(
+                    color: UniversalVariables.white2,
+                    height: 250,
+                    width: 250,
+                    child: OutlineButton(
+                      splashColor: UniversalVariables.backgroundGrey,
+                      highlightedBorderColor: UniversalVariables.gold2,
+                      // color: UniversalVariables.gold2,
+                      onPressed: () => {
+                        _controller = VideoPlayerController.network(
+                          message.photoUrl,
+                        )
+                          ..setLooping(true)
+                          ..initialize().then((_) {
+                            setState(() {});
+                          }),
+                        showDialog(
+                          barrierColor: UniversalVariables.blackColor,
+                          barrierDismissible: true,
+                          context: context,
+                          child: Container(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _controller.value.isPlaying
+                                      ? _controller.pause()
+                                      : _controller.play();
+                                });
+                              },
+                              child: Column(
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: 9 / 16,
+                                    child: VideoPlayer(_controller),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          _controller.play();
+                                          //Navigator.pop(context);
+                                        },
+                                        child: Icon(Icons.play_arrow,
+                                            size: 50, color: Colors.green),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _controller.pause();
+                                          Navigator.pop(context);
+                                        },
+                                        child: Icon(Icons.clear,
+                                            size: 50, color: Colors.red),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Container(
+                          //       child: GestureDetector(
+                          //         onTap: () {
+                          //           setState(() {
+                          //             _controller.value.isPlaying
+                          //                 ? _controller.pause()
+                          //                 : _controller.play();
+                          //           });
+                          //         },
+                          //         child: AspectRatio(
+                          //           aspectRatio: 9 / 16,
+                          //           child: VideoPlayer(_controller),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     // Container(
+                          //     //   width: screenWidth,
+                          //     //   color: Colors.white,
+                          //     //   child: Row(
+                          //     //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     //     children: [
+                          //     //       GestureDetector(
+                          //     //         onTap: () {},
+                          //     //         child: Container(
+                          //     //           height: 50,
+                          //     //           width: 100,
+                          //     //           child:
+                          //     //               Icon(CupertinoIcons.down_arrow),
+                          //     //         ),
+                          //     //       ),
+                          //     //     ],
+                          //     //   ),
+                          //     // )
+                          //   ],
+                          // ),
+                        )
+                      },
+                      child: Text(
+                        ConStrings.SHOW_VIDEO,
+                        style: TextStyles.editHeadingName,
+                      ),
+                    ),
+                  )
+                : CachedImage(
+                    message.photoUrl,
+                    height: 250,
+                    width: 250,
+                    radius: 10,
+                  )
             : Text("Url was null");
   }
 
@@ -799,6 +926,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _chatMethods.addMessageToDb(_message, sender, widget.receiver);
   }
+
+  VideoPlayerController _controller;
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);

@@ -49,6 +49,8 @@ class ConStrings {
   static const String SHOW_VIDEOCALLS = "Show Videocalls";
   static const String SHOW_MESSAGES = "Show Messages";
 
+  static const String SHOW_VIDEO = "SHOW VIDEO";
+
   static const String ALREADYBOOKED = "The timeslot is already booked";
 
   static const String bought = "BOOKED";
