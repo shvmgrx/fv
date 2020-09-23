@@ -9,7 +9,7 @@ class ConStrings {
   static const String HASHTAGS = "Hashtags";
   static const String TXTRPLYPRICE = "Text Reply Price";
   static const String VIDRPLYPRICE = "Video Reply Price";
-  static const String VIDCALLPRICE = "Videocall Price";
+  static const String VIDCALLPRICE = "Videocall Price (10 mins)";
   static const String NEXT = "Next";
   static const String PREFERREDCURRENCY = "Preferred Currency";
   static const String FVCODE = "FV-CODE";

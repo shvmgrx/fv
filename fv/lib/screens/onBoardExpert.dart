@@ -574,56 +574,57 @@ class _OnBoardExpertState extends State<OnBoardExpert> {
                             ],
                           ),
                           SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 5,
-                                child: Text(ConStrings.PREFERREDCURRENCY,
-                                    style: TextStyles.editHeadingName,
-                                    textAlign: TextAlign.left),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: DropdownButton<String>(
-                                  value: tempCurrency,
-                                  icon: Icon(Icons.arrow_downward),
-                                  iconSize: 24,
-                                  //   elevation: 16,
-                                  // style: TextStyle(color: Colors.deepPurple),
-                                  // underline: Container(
-                                  //   height: 2,
-                                  //   color: Colors.deepPurpleAccent,
-                                  // ),
-                                  onChanged: (String newValue) {
-                                    setState(() {
-                                      if (newValue == "€ Euro") {
-                                        loggedUserinfReceived = 1;
-                                        tempCurrency = newValue;
-                                      } else {
-                                        loggedUserinfReceived = 0;
-                                        tempCurrency = newValue;
-                                      }
-                                    });
-                                  },
-                                  items: <String>[
-                                    '\$ Dollar',
-                                    '€ Euro',
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value,
-                                        style: TextStyles.hintTextStyle,
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              )
-                              // Text(loggedUserDisplayName)
-                            ],
-                          ),
+                          //enable later for currency
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       flex: 5,
+                          //       child: Text(ConStrings.PREFERREDCURRENCY,
+                          //           style: TextStyles.editHeadingName,
+                          //           textAlign: TextAlign.left),
+                          //     ),
+                          //     Expanded(
+                          //       flex: 2,
+                          //       child: DropdownButton<String>(
+                          //         value: tempCurrency,
+                          //         icon: Icon(Icons.arrow_downward),
+                          //         iconSize: 24,
+                          //         //   elevation: 16,
+                          //         // style: TextStyle(color: Colors.deepPurple),
+                          //         // underline: Container(
+                          //         //   height: 2,
+                          //         //   color: Colors.deepPurpleAccent,
+                          //         // ),
+                          //         onChanged: (String newValue) {
+                          //           setState(() {
+                          //             if (newValue == "€ Euro") {
+                          //               loggedUserinfReceived = 1;
+                          //               tempCurrency = newValue;
+                          //             } else {
+                          //               loggedUserinfReceived = 0;
+                          //               tempCurrency = newValue;
+                          //             }
+                          //           });
+                          //         },
+                          //         items: <String>[
+                          //           '\$ Dollar',
+                          //           '€ Euro',
+                          //         ].map<DropdownMenuItem<String>>(
+                          //             (String value) {
+                          //           return DropdownMenuItem<String>(
+                          //             value: value,
+                          //             child: Text(
+                          //               value,
+                          //               style: TextStyles.hintTextStyle,
+                          //             ),
+                          //           );
+                          //         }).toList(),
+                          //       ),
+                          //     )
+                          //     // Text(loggedUserDisplayName)
+                          //   ],
+                          // ),
                           SizedBox(height: 15),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
