@@ -108,78 +108,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
     getIVideoOrders();
   }
 
-  //stripe payment
-  void stripePayment(int billAmount, int currency) {
-    StripePayment.setOptions(StripeOptions(
-        publishableKey: "pk_live_FheU3MdCQh1zmfTBPEXZQNRP004f2b4pbj"));
-
-    final HttpsCallable INTENT = CloudFunctions.instance
-        .getHttpsCallable(functionName: 'createPaymentIntent');
-
-    StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
-        .then((paymentMethod) {
-      double amount =
-          billAmount * 100.0; // multipliying with 100 to change $ to cents
-      //  double amount = 1 * 100.0;
-      INTENT.call(<String, dynamic>{'amount': amount, 'currency': 'usd'}).then(
-          (response) {
-        confirmDialog(response.data["client_secret"], paymentMethod, billAmount,
-            currency); //function for confirmation for payment
-      });
-    });
-  }
-
-  confirmDialog(String clientSecret, PaymentMethod paymentMethod, int amount,
-      int currency) {
-    var confirm = AlertDialog(
-      title: Text("Confirm payment: \$${amount}"),
-      actions: <Widget>[
-        new RaisedButton(
-          child: new Text(
-            'CANCEL',
-            style: TextStyles.cancelStyle,
-          ),
-          onPressed: () {
-            final snackBar = SnackBar(
-              content: Text('Payment Cancelled'),
-            );
-            // Scaffold.of(context).showSnackBar(snackBar);
-            Navigator.pop(context);
-          },
-        ),
-        new RaisedButton(
-          child: new Text('CONFIRM', style: TextStyles.doneStyle),
-          onPressed: () {
-            // Navigator.of(context).pop();
-            confirmPayment(
-                clientSecret, paymentMethod); // function to confirm Payment
-          },
-        ),
-      ],
-    );
-
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return confirm;
-        });
-  }
-
-  confirmPayment(String sec, PaymentMethod paymentMethod) {
-    StripePayment.confirmPaymentIntent(
-      PaymentIntent(clientSecret: sec, paymentMethodId: paymentMethod.id),
-    ).then((val) {
-      // addPaymentDetailsToFirestore(); //Function to add Payment details to firestore
-      // final snackBar = SnackBar(
-      //   content: Text('Payment Successfull'),
-      // );
-      // Scaffold.of(context).showSnackBar(snackBar);
-      sendMessage();
-      Navigator.pop(context);
-    });
-  }
-
   String dateMaker(Timestamp theSetDate) {
     if (theSetDate != null) {
       var temp = theSetDate.toDate();
@@ -566,6 +494,207 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       _orderMethods.addOrderToBuyerDb(_buyerOrder);
 
       refresh();
+    }
+
+    confirmPayment(String sec, PaymentMethod paymentMethod, int amount,
+        int sTime, int sDuration, int infReceived) {
+      StripePayment.confirmPaymentIntent(
+        PaymentIntent(clientSecret: sec, paymentMethodId: paymentMethod.id),
+      ).then((val) {
+        // addPaymentDetailsToFirestore(); //Function to add Payment details to firestore
+        // final snackBar = SnackBar(
+        //   content: Text('Payment Successfull'),
+        // );
+        // Scaffold.of(context).showSnackBar(snackBar);
+
+        //Generate stuff for sending order
+        Order _order = Order(
+          uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime],
+          isBought: true,
+          buyerId: userProvider.getUser.uid,
+          buyerName: userProvider.getUser.name,
+          buyerPhoto: userProvider.getUser.profilePhoto,
+          sellerId: widget.selectedInfluencer.uid,
+          sellerName: widget.selectedInfluencer.name,
+          sellerPhoto: widget.selectedInfluencer.profilePhoto,
+          boughtOn: Timestamp.now(),
+          slotTime:
+              widget.selectedInfluencer.timeSlots['ttSlots'][sTime] != null
+                  ? widget.selectedInfluencer.timeSlots['ttSlots'][sTime]
+                  : null,
+          slotDuration: sDuration,
+          price: amount,
+          currency: infReceived,
+        );
+
+        Order _sellerOrder = Order(
+            uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime],
+            isBought: true,
+            buyerId: userProvider.getUser.uid,
+            sellerId: widget.selectedInfluencer.uid,
+            sellerName: widget.selectedInfluencer.name,
+            sellerPhoto: widget.selectedInfluencer.profilePhoto,
+            buyerName: userProvider.getUser.name,
+            buyerPhoto: userProvider.getUser.profilePhoto,
+            currency: infReceived,
+            boughtOn: Timestamp.now(),
+            slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
+            slotDuration: sDuration,
+            price: amount);
+
+        Order _buyerOrder = Order(
+            uid: widget.selectedInfluencer.timeSlots['ttIds'][sTime],
+            isBought: true,
+            buyerId: userProvider.getUser.uid,
+            sellerId: widget.selectedInfluencer.uid,
+            sellerName: widget.selectedInfluencer.name,
+            sellerPhoto: widget.selectedInfluencer.profilePhoto,
+            buyerName: userProvider.getUser.name,
+            buyerPhoto: userProvider.getUser.profilePhoto,
+            currency: infReceived,
+            boughtOn: Timestamp.now(),
+            slotTime: widget.selectedInfluencer.timeSlots['ttSlots'][sTime],
+            slotDuration: sDuration,
+            price: amount);
+
+        List iOrderId = [];
+        List iOrderDate = [];
+        List iAmount = [];
+
+        List<Map> magicMap = [];
+
+        iOrderId.add(_order.uid);
+        iOrderDate.add(_order.boughtOn);
+        iAmount.add(_order.price);
+
+        Map<String, List> tempIncome = {
+          "orderId": iOrderId,
+          "orderDate": iOrderDate,
+          "amount": iAmount,
+        };
+
+        magicMap.add(tempIncome);
+
+        _orderMethods.addOrderTransToDb(_order, magicMap);
+
+        _orderMethods.addOrderToDb(_order);
+
+        _orderMethods.addOrderToSellerDb(
+          _sellerOrder,
+        );
+        _orderMethods.addOrderToBuyerDb(_buyerOrder);
+
+        refresh();
+
+        //END stuff
+        Navigator.pop(context);
+      });
+    }
+
+    void confirmDialog(
+      String clientSecret,
+      PaymentMethod paymentMethod,
+      int amount,
+      int sTime,
+      int sDuration,
+      int infReceived,
+    ) {
+      var confirm = AlertDialog(
+        title: Text("Confirm payment: \$${amount}"),
+        actions: <Widget>[
+          new RaisedButton(
+            child: new Text(
+              'CANCEL',
+              style: TextStyles.cancelStyle,
+            ),
+            onPressed: () {
+              final snackBar = SnackBar(
+                content: Text('Payment Cancelled'),
+              );
+              // Scaffold.of(context).showSnackBar(snackBar);
+              Navigator.pop(context);
+            },
+          ),
+          new RaisedButton(
+            child: new Text('CONFIRM', style: TextStyles.doneStyle),
+            onPressed: () {
+              // Navigator.of(context).pop();
+              confirmPayment(clientSecret, paymentMethod, amount, sTime,
+                  sDuration, infReceived); // function to confirm Payment
+            },
+          ),
+        ],
+      );
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return confirm;
+          });
+    }
+
+    void stripePayment(int sTime, int sDuration, int infReceived) {
+      StripePayment.setOptions(StripeOptions(
+          publishableKey: "pk_live_FheU3MdCQh1zmfTBPEXZQNRP004f2b4pbj"));
+
+      //ORDER FUNCTION START
+      int orderPrice;
+
+      int _generatePrice() {
+        int basePrice = widget.selectedInfluencer.answerPrice3;
+
+        switch (sDuration) {
+          case 1:
+            {
+              setState(() {
+                orderPrice = (basePrice * 1.333).ceil();
+              });
+            }
+            break;
+
+          case 2:
+            {
+              setState(() {
+                orderPrice = (basePrice * 2.667).ceil();
+              });
+            }
+            break;
+
+          default:
+            {
+              setState(() {
+                orderPrice = basePrice;
+              });
+            }
+            break;
+        }
+        return orderPrice;
+      }
+
+      //ORDER FUNCTION END
+
+      final HttpsCallable INTENT = CloudFunctions.instance
+          .getHttpsCallable(functionName: 'createPaymentIntent');
+
+      StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
+          .then((paymentMethod) {
+        double amount =
+            orderPrice * 100.0; // multipliying with 100 to change $ to cents
+        //  double amount = 1 * 100.0;
+        INTENT
+            .call(<String, dynamic>{'amount': amount, 'currency': 'usd'}).then(
+                (response) {
+          confirmDialog(
+            response.data["client_secret"],
+            paymentMethod,
+            orderPrice,
+            sTime,
+            sDuration,
+            infReceived,
+          ); //function for confirmation for payment
+        });
+      });
     }
 
     var screenHeight = MediaQuery.of(context).size.height;
@@ -962,10 +1091,14 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts1Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             0,
                                                             ts1Duration,
-                                                            selectedUserinfReceived)
+                                                            selectedUserinfReceived),
+                                                        // sendOrder(
+                                                        //     0,
+                                                        //     ts1Duration,
+                                                        //     selectedUserinfReceived)
                                                       }
                                                     else if (ts1Bought)
                                                       {
@@ -1064,7 +1197,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts2Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             1,
                                                             ts2Duration,
                                                             selectedUserinfReceived),
@@ -1166,7 +1299,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts3Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             2,
                                                             ts3Duration,
                                                             selectedUserinfReceived),
@@ -1268,7 +1401,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts4Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             3,
                                                             ts4Duration,
                                                             selectedUserinfReceived),
@@ -1370,7 +1503,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts5Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             4,
                                                             ts5Duration,
                                                             selectedUserinfReceived),
@@ -1472,7 +1605,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts6Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             5,
                                                             ts6Duration,
                                                             selectedUserinfReceived),
@@ -1574,7 +1707,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                                   onTap: () => {
                                                     if (!ts7Bought)
                                                       {
-                                                        sendOrder(
+                                                        stripePayment(
                                                             6,
                                                             ts7Duration,
                                                             selectedUserinfReceived),
