@@ -83,6 +83,22 @@ class TextStyles {
     color: UniversalVariables.gold2,
   );
 
+  static final TextStyle feedbackHead = TextStyle(
+    fontSize: 15,
+    fontFamily: 'Raleway',
+    letterSpacing: 1.1,
+    fontWeight: FontWeight.w700,
+    color: UniversalVariables.gold2,
+  );
+
+  static final TextStyle feedback = TextStyle(
+    fontSize: 15,
+    fontFamily: 'Raleway',
+    letterSpacing: 1.1,
+    fontWeight: FontWeight.w700,
+    color: UniversalVariables.blackColor,
+  );
+
   static final TextStyle selectedOrdersStyle = TextStyle(
     fontSize: 20,
     fontFamily: 'Poppins',

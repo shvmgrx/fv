@@ -493,11 +493,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       ModalTile(
                         title: "Photo",
                         subtitle: "Share Photo from gallery",
-                        icon: IconData(0xf2e4,
-                            fontFamily: CupertinoIcons.iconFont,
-                            fontPackage: CupertinoIcons.iconFontPackage),
+                        icon: Icons.image,
                         onTap: () => pickImage(source: ImageSource.gallery),
                       ),
+
                       ModalTile(
                         title: "Video",
                         subtitle: "Share Video from gallery",

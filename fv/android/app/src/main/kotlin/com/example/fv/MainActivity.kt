@@ -1,4 +1,4 @@
-package com.example.fv
+package com.fv.faveez
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

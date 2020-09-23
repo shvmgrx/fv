@@ -370,7 +370,7 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                   ),
                   trailing: new Icon(Icons.feedback),
                   onTap: () {
-                    Navigator.of(context).pop();
+                    showFeedbackDialog(context);
                     //  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
                   }),
               ListTile(
@@ -1649,6 +1649,108 @@ class DummyUser9 extends StatelessWidget {
       ),
     );
   }
+}
+
+void showFeedbackDialog(BuildContext context) {
+  showDialog(
+      barrierDismissible: true,
+      context: context,
+      child: AlertDialog(
+        elevation: 2,
+        //backgroundColor: UniversalVariables.transparent,
+        title: Center(
+          child: Column(
+            children: <Widget>[
+              Text("Feedback", style: TextStyles.paymentModalStyle),
+              Divider()
+            ],
+          ),
+        ),
+        content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 130,
+            child: Stack(
+              children: <Widget>[
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          "Your feedback is extremely important to us",
+                          style: TextStyles.feedback,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Container(
+                        child: Text(
+                          "EMAIL: influnect@gmail.com",
+                          style: TextStyles.feedbackHead,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Align(
+                //   alignment: Alignment.bottomLeft,
+                //   child: Padding(
+                //     padding: EdgeInsets.only(left: 15.0),
+                //     child: GestureDetector(
+                //       onTap: () => Navigator.pop(context),
+                //       //    Navigator.pop(context),
+
+                //       child: Container(
+                //         height: 40.0,
+                //         width: 40.0,
+                //         decoration: BoxDecoration(
+                //             shape: BoxShape.circle,
+                //             color: UniversalVariables.white2),
+                //         child: Center(
+                //           child: Icon(Icons.close,
+                //               size: 20.0, color: UniversalVariables.offline),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 15.0),
+                    child: GestureDetector(
+                      onTap: () => {
+                        Navigator.pop(context),
+                        // if (valueSelected == 1)
+                        //   {
+                        //     stripePayment(widget.receiver.answerPrice1),
+                        //   }
+                        // else if (valueSelected == 2)
+                        //   {
+                        //     stripePayment(widget.receiver.answerPrice2),
+                        //   }
+
+                        //  sendMessage()
+                      },
+                      //Navigator.pop(context),
+
+                      child: Container(
+                        height: 40.0,
+                        width: 40.0,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: UniversalVariables.white2),
+                        child: Center(
+                          child: Icon(Icons.arrow_back,
+                              size: 20.0, color: UniversalVariables.online),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ));
 }
 
 void showAlertDialog(BuildContext context) {

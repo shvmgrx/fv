@@ -199,6 +199,7 @@ class LoginScreenState extends State<LoginScreen>
                     ]),
                     delay: delayedAmount + 3000,
                   ),
+                  SizedBox(height: 30),
                   appleSignInAvailable.isAvailable
                       ? DelayedAnimation(
                           child: Stack(children: [
@@ -266,30 +267,43 @@ class LoginScreenState extends State<LoginScreen>
       );
 
   Widget animatedAppleSignIn(screenwidth) => Container(
-      height: 60,
-      width: screenwidth * 0.7,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.0),
-        color: UniversalVariables.blackColor.withOpacity(0.7),
-      ),
-      child: AppleSignInButton(
-        //  style: ButtonStyle.black,
-        type: ButtonType.signIn,
-        onPressed: () => _signInWithApple(context),
-      )
+        height: 60,
+        width: screenwidth * 0.7,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          color: UniversalVariables.blackColor.withOpacity(0.7),
+        ),
+        child: FlatButton(
+          onPressed: () => _signInWithApple(context),
+          child: Text(
+            'Apple Sign In',
+            style: TextStyle(
+              fontFamily: 'Kiona',
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
 
-      // FlatButton(
-      //   onPressed: () => _signInWithApple(context),
-      //   child: Text(
-      //     'Apple Sign In',
-      //     style: TextStyle(
-      //       fontFamily: 'Kiona',
-      //       fontSize: 20.0,
-      //       fontWeight: FontWeight.bold,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      // ),
+        // AppleSignInButton(
+        //   //  style: ButtonStyle.black,
+        //   type: ButtonType.signIn,
+        //   onPressed: () => _signInWithApple(context),
+        // )
+
+        // FlatButton(
+        //   onPressed: () => _signInWithApple(context),
+        //   child: Text(
+        //     'Apple Sign In',
+        //     style: TextStyle(
+        //       fontFamily: 'Kiona',
+        //       fontSize: 20.0,
+        //       fontWeight: FontWeight.bold,
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        // ),
       );
 
   void performGoogleLogin() {
