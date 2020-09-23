@@ -641,6 +641,11 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
       //ORDER FUNCTION START
       int orderPrice;
 
+      //ORDER FUNCTION END
+
+      final HttpsCallable INTENT = CloudFunctions.instance
+          .getHttpsCallable(functionName: 'createPaymentIntent');
+
       int _generatePrice() {
         int basePrice = widget.selectedInfluencer.answerPrice3;
 
@@ -672,15 +677,10 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
         return orderPrice;
       }
 
-      //ORDER FUNCTION END
-
-      final HttpsCallable INTENT = CloudFunctions.instance
-          .getHttpsCallable(functionName: 'createPaymentIntent');
-
       StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
           .then((paymentMethod) {
-        double amount =
-            orderPrice * 100.0; // multipliying with 100 to change $ to cents
+        double amount = _generatePrice() *
+            100.0; // multipliying with 100 to change $ to cents
         //  double amount = 1 * 100.0;
         INTENT
             .call(<String, dynamic>{'amount': amount, 'currency': 'usd'}).then(
@@ -688,7 +688,7 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
           confirmDialog(
             response.data["client_secret"],
             paymentMethod,
-            orderPrice,
+            _generatePrice(),
             sTime,
             sDuration,
             infReceived,
