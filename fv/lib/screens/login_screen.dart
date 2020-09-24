@@ -159,7 +159,7 @@ class LoginScreenState extends State<LoginScreen>
                   ),
                   DelayedAnimation(
                     child: Text(
-                      "Get personal advice from your",
+                      "Personalized interactions with your",
                       style: TextStyle(
                           fontFamily: 'Poppins',
                           //fontWeight: FontWeight.w600,
@@ -170,7 +170,7 @@ class LoginScreenState extends State<LoginScreen>
                   ),
                   DelayedAnimation(
                     child: Text(
-                      "favourite experts on the fly.",
+                      "favorite people",
                       style: TextStyle(
                           fontFamily: 'Poppins',
                           //fontWeight: FontWeight.w600,
