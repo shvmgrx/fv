@@ -116,48 +116,6 @@ class LoginScreenState extends State<LoginScreen>
                   ),
                 ),
               ),
-              // Align(
-              //   alignment: Alignment.bottomLeft,
-              //   child: Padding(
-              //     padding: EdgeInsets.only(left: 15.0),
-              //     child: OutlineButton(
-              //       splashColor: UniversalVariables.white2,
-              //       onPressed: () => {
-              //         {
-              //           setState(() {
-              //             agreementAccepted = false;
-              //           }),
-              //           Navigator.pop(context)
-              //         },
-              //       },
-              //       child: Text(
-              //         "DENY",
-              //         style: TextStyles.deny,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // Align(
-              //   alignment: Alignment.bottomRight,
-              //   child: Padding(
-              //     padding: EdgeInsets.only(right: 15.0),
-              //     child: OutlineButton(
-              //       splashColor: UniversalVariables.white2,
-              //       onPressed: () => {
-              //         {
-              //           setState(() {
-              //             agreementAccepted = true;
-              //           }),
-              //           Navigator.pop(context)
-              //         },
-              //       },
-              //       child: Text(
-              //         "ACCEPT",
-              //         style: TextStyles.accept,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -178,7 +136,6 @@ class LoginScreenState extends State<LoginScreen>
       } else {
         print("There was an error");
       }
-      print('uid: ${user.uid}');
     } catch (e) {
       print(e);
     }
@@ -186,34 +143,10 @@ class LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    // final height = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    // final color = Colors.white;
 
     final appleSignInAvailable =
         Provider.of<AppleSignInAvailable>(context, listen: false);
-
-    // Future<void> _signInWithApple(BuildContext context) async {
-
-    //   try {
-    //     final authService = Provider.of<AuthMethods>(context, listen: false);
-    //     final user = await authService.signInWithApple(scopes: [Scope.email, Scope.fullName]);
-
-    // if (user != null) {
-    //   authenticateAppleUser(user);
-    // } else {
-    //   print("There was an error");
-    // }
-    // print('uid: ${user.uid}');
-    //   } catch (e) {
-    //     print(e);
-    //   }
-    // }
-    // final snackBar = SnackBar(
-    //     content: Text(
-    //   ConStrings.ACEEPT_TERMS,
-    //   style: TextStyles.fvSnackbar,
-    // ));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -222,63 +155,16 @@ class LoginScreenState extends State<LoginScreen>
         backgroundColor: UniversalVariables.backgroundGrey,
         body: Stack(
           children: <Widget>[
-            // Image.asset(
-            //   "assets/loginImage.png",
-            //   height: height,
-            //   fit: BoxFit.fitHeight,
-            // ),
             Center(
               child: Column(
                 children: <Widget>[
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 30),
-                  //   child: AvatarGlow(
-                  //     endRadius: 85,
-                  //     duration: Duration(seconds: 2),
-                  //     glowColor: Color(0xffd07155),
-                  //     repeat: true,
-                  //     repeatPauseDuration: Duration(seconds: 2),
-                  //     startDelay: Duration(seconds: 1),
-                  //     child: Material(
-                  //         elevation: 8.0,
-                  //         shape: CircleBorder(),
-                  //         child: CircleAvatar(
-                  //           child: Container(
-                  //               width: 190.0,
-                  //               height: 190.0,
-                  //               decoration: BoxDecoration(
-                  //                   shape: BoxShape.circle,
-                  //                   image: DecorationImage(
-                  //                       fit: BoxFit.fill,
-                  //                       image: AssetImage(
-                  //                           "assets/izlits.jpeg")))),
-                  //           // child: Image.asset(
-                  //           //   "assets/logoBorder.png",
-                  //           // ),
-                  //           radius: 50.0,
-                  //         )),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 160.0,
                   ),
                   DelayedAnimation(
-                    child:
-
-                        // GradientText("FAVEEZ",
-                        // gradient: LinearGradient(colors: [
-                        //   UniversalVariables.gold1,
-                        //   UniversalVariables.gold2,
-                        //   UniversalVariables.gold3,
-                        //   UniversalVariables.gold4
-                        // ],
-                        // ),
-                        // style: TextStyles.appNameLogoStyle,
-                        // textAlign: TextAlign.center),
-
-                        Text("FAVEEZ",
-                            style: TextStyles.appNameLogoStyle,
-                            textAlign: TextAlign.center),
+                    child: Text("FAVEEZ",
+                        style: TextStyles.appNameLogoStyle,
+                        textAlign: TextAlign.center),
                     delay: delayedAmount + 1000,
                   ),
                   SizedBox(
@@ -347,32 +233,34 @@ class LoginScreenState extends State<LoginScreen>
                         )
                       : Container(),
                   Spacer(),
-
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 50.0, left: 15),
-                    child: ListTile(
-                        title: new Text(
-                          "Terms and Conditions",
-                          style: TextStyle(
-                              color: agreementAccepted ? fCDD : fCLL,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        leading: agreementAccepted
-                            ? Icon(
-                                CupertinoIcons.check_mark_circled,
-                                size: 30,
-                                color: UniversalVariables.gold2,
-                              )
-                            : Icon(
-                                CupertinoIcons.circle,
-                                size: 30,
-                                color: UniversalVariables.gold2,
-                              ),
-                        onTap: () {
-                          showAlertDialog(context);
-                          //  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
-                        }),
+                  DelayedAnimation(
+                    delay: delayedAmount + 3300,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 50.0, left: 15),
+                      child: ListTile(
+                          title: new Text(
+                            "Terms and Conditions",
+                            style: TextStyle(
+                                color: agreementAccepted ? fCDD : fCLL,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                          leading: agreementAccepted
+                              ? Icon(
+                                  CupertinoIcons.check_mark_circled,
+                                  size: 30,
+                                  color: UniversalVariables.gold2,
+                                )
+                              : Icon(
+                                  CupertinoIcons.circle,
+                                  size: 30,
+                                  color: UniversalVariables.gold2,
+                                ),
+                          onTap: () {
+                            showAlertDialog(context);
+                            //  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
+                          }),
+                    ),
                   ),
                 ],
               ),
@@ -484,7 +372,6 @@ class LoginScreenState extends State<LoginScreen>
     });
 
     _repository.signIn().then((FirebaseUser user) {
-      print("something");
       if (user != null) {
         authenticateGoogleUser(user);
       } else {

@@ -1681,7 +1681,7 @@ void showReportkDialog(BuildContext context) {
         ),
         content: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.33,
             child: Stack(
               children: <Widget>[
                 SingleChildScrollView(
@@ -1691,14 +1691,14 @@ void showReportkDialog(BuildContext context) {
                     children: [
                       Container(
                         child: Text(
-                          "When you see something that you don't like on Faveez, you can report it if does not follow our Community Guidelines. ",
+                          "When you see something that you don't like on Faveez, you can report it if does not follow our Community Guidelines. We will act on your report within 24 hours.",
                           style: TextStyles.feedback,
                         ),
                       ),
                       SizedBox(height: 15),
                       Container(
                         child: Text(
-                          "Send us an email stating the reason for reporting the user or post along with a screenshot of inappropriate behavior or content.",
+                          "Send us an email stating the reason for reporting or blocking the user or post along with a screenshot of inappropriate behavior or content.",
                           style: TextStyles.feedback,
                         ),
                       ),
