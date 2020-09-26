@@ -119,6 +119,32 @@ class TextStyles {
     ],
   );
 
+  static final TextStyle deny = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: UniversalVariables.offline,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
+  static final TextStyle accept = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: UniversalVariables.online,
+    fontFamily: 'Poppins',
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 2.0,
+        color: Colors.white30,
+      ),
+    ],
+  );
+
   static final TextStyle fvCodeHeading = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,

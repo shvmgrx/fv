@@ -1755,92 +1755,94 @@ void showFeedbackDialog(BuildContext context) {
 
 void showAlertDialog(BuildContext context) {
   showDialog(
-      barrierDismissible: false,
-      context: context,
-      child: AlertDialog(
-        elevation: 2,
-        //backgroundColor: UniversalVariables.transparent,
-        title: Center(
-          child: Column(
-            children: <Widget>[
-              Text("Terms and Conditions", style: TextStyles.paymentModalStyle),
-              Divider()
-            ],
-          ),
+    barrierDismissible: false,
+    context: context,
+    child: AlertDialog(
+      elevation: 2,
+      //backgroundColor: UniversalVariables.transparent,
+      title: Center(
+        child: Column(
+          children: <Widget>[
+            Text("Terms and Conditions", style: TextStyles.paymentModalStyle),
+            Divider()
+          ],
         ),
-        content: Container(
-            width: MediaQuery.of(context).size.width,
-            //  height: 400,
-            child: Stack(
-              children: <Widget>[
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
+      ),
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        //  height: 400,
+        child: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                child: Text(
+                  pdfText,
+                  style: TextStyle(fontSize: 9),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0),
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  //    Navigator.pop(context),
+
                   child: Container(
-                    child: Text(
-                      pdfText,
-                      style: TextStyle(fontSize: 9),
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UniversalVariables.white2),
+                    child: Center(
+                      child: Icon(Icons.close,
+                          size: 20.0, color: UniversalVariables.offline),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 15.0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      //    Navigator.pop(context),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 15.0),
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.pop(context),
+                    // if (valueSelected == 1)
+                    //   {
+                    //     stripePayment(widget.receiver.answerPrice1),
+                    //   }
+                    // else if (valueSelected == 2)
+                    //   {
+                    //     stripePayment(widget.receiver.answerPrice2),
+                    //   }
 
-                      child: Container(
-                        height: 40.0,
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: UniversalVariables.white2),
-                        child: Center(
-                          child: Icon(Icons.close,
-                              size: 20.0, color: UniversalVariables.offline),
-                        ),
-                      ),
+                    //  sendMessage()
+                  },
+                  //Navigator.pop(context),
+
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UniversalVariables.white2),
+                    child: Center(
+                      child: Icon(Icons.done,
+                          size: 20.0, color: UniversalVariables.online),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 15.0),
-                    child: GestureDetector(
-                      onTap: () => {
-                        Navigator.pop(context),
-                        // if (valueSelected == 1)
-                        //   {
-                        //     stripePayment(widget.receiver.answerPrice1),
-                        //   }
-                        // else if (valueSelected == 2)
-                        //   {
-                        //     stripePayment(widget.receiver.answerPrice2),
-                        //   }
-
-                        //  sendMessage()
-                      },
-                      //Navigator.pop(context),
-
-                      child: Container(
-                        height: 40.0,
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: UniversalVariables.white2),
-                        child: Center(
-                          child: Icon(Icons.done,
-                              size: 20.0, color: UniversalVariables.online),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )),
-      ));
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 final String pdfText = """

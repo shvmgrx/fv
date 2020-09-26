@@ -61,4 +61,7 @@ class ConStrings {
 
   static const String UPCOMING_VCONTACTS =
       "This is where your videocalls will be listed";
+
+  static const String ACCEPT_TERMS =
+      "Please accept terms and conditions to access the app";
 }

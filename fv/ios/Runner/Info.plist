@@ -57,7 +57,7 @@
 	<key>NSMotionUsageDescription</key>
 	<string>Allow app to access motion</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Alllow app to access gallery media</string>
+	<string>Alllow app to access photos for your profile and sending messages</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Allow app to access speech</string>
 	<key>UIBackgroundModes</key>
