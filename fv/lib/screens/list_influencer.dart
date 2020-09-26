@@ -388,6 +388,19 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                     //  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
                   }),
               ListTile(
+                  title: new Text(
+                    "Report",
+                    style: TextStyle(
+                        color: category4Pressed ? fCDD : fCLL,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
+                  ),
+                  trailing: new Icon(Icons.dangerous),
+                  onTap: () {
+                    showReportkDialog(context);
+                    //  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
+                  }),
+              ListTile(
                 title: new Text(
                   "Log Out",
                   style: TextStyle(
@@ -1649,6 +1662,115 @@ class DummyUser9 extends StatelessWidget {
       ),
     );
   }
+}
+
+void showReportkDialog(BuildContext context) {
+  showDialog(
+      barrierDismissible: true,
+      context: context,
+      child: AlertDialog(
+        elevation: 2,
+        //backgroundColor: UniversalVariables.transparent,
+        title: Center(
+          child: Column(
+            children: <Widget>[
+              Text("Report", style: TextStyles.paymentModalStyle),
+              Divider()
+            ],
+          ),
+        ),
+        content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Stack(
+              children: <Widget>[
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          "When you see something that you don't like on Faveez, you can report it if does not follow our Community Guidelines. ",
+                          style: TextStyles.feedback,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Container(
+                        child: Text(
+                          "Send us an email stating the reason for reporting the user or post along with a screenshot of inappropriate behavior or content.",
+                          style: TextStyles.feedback,
+                        ),
+                      ),
+                      SizedBox(height: 35),
+                      Container(
+                        child: Text(
+                          "EMAIL: influnect@gmail.com",
+                          style: TextStyles.feedbackHead,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Align(
+                //   alignment: Alignment.bottomLeft,
+                //   child: Padding(
+                //     padding: EdgeInsets.only(left: 15.0),
+                //     child: GestureDetector(
+                //       onTap: () => Navigator.pop(context),
+                //       //    Navigator.pop(context),
+
+                //       child: Container(
+                //         height: 40.0,
+                //         width: 40.0,
+                //         decoration: BoxDecoration(
+                //             shape: BoxShape.circle,
+                //             color: UniversalVariables.white2),
+                //         child: Center(
+                //           child: Icon(Icons.close,
+                //               size: 20.0, color: UniversalVariables.offline),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 15.0),
+                    child: GestureDetector(
+                      onTap: () => {
+                        Navigator.pop(context),
+                        // if (valueSelected == 1)
+                        //   {
+                        //     stripePayment(widget.receiver.answerPrice1),
+                        //   }
+                        // else if (valueSelected == 2)
+                        //   {
+                        //     stripePayment(widget.receiver.answerPrice2),
+                        //   }
+
+                        //  sendMessage()
+                      },
+                      //Navigator.pop(context),
+
+                      child: Container(
+                        height: 40.0,
+                        width: 40.0,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: UniversalVariables.white2),
+                        child: Center(
+                          child: Icon(Icons.arrow_back,
+                              size: 20.0, color: UniversalVariables.online),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ));
 }
 
 void showFeedbackDialog(BuildContext context) {

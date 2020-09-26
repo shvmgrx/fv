@@ -2,6 +2,7 @@ import 'package:apple_sign_in/apple_sign_in.dart' as ap;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fv/constants/conStrings.dart';
 import 'package:fv/resources/auth_methods.dart';
 import 'package:fv/screens/registerChoice.dart';
@@ -52,6 +53,37 @@ class LoginScreenState extends State<LoginScreen>
   bool isAppleLoginPressed = false;
 
   void showAlertDialog(BuildContext context) {
+    Widget denyButton = FlatButton(
+      child: Text(
+        "DENY",
+        style: TextStyles.deny,
+      ),
+      onPressed: () {
+        {
+          setState(() {
+            agreementAccepted = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+    );
+
+    Widget acceptButton = FlatButton(
+      child: Text(
+        "ACCEPT",
+        style: TextStyles.accept,
+      ),
+      onPressed: () {
+        {
+          setState(() {
+            agreementAccepted = true;
+          });
+          Navigator.pop(context);
+        }
+        ;
+      },
+    );
+
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -61,11 +93,15 @@ class LoginScreenState extends State<LoginScreen>
         title: Center(
           child: Column(
             children: <Widget>[
-              Text("Terms and Conditions", style: TextStyles.paymentModalStyle),
+              Text("Terms and conditions", style: TextStyles.paymentModalStyle),
               Divider()
             ],
           ),
         ),
+        actions: [
+          denyButton,
+          acceptButton,
+        ],
         content: Container(
           width: MediaQuery.of(context).size.width,
           //  height: 400,
@@ -80,48 +116,48 @@ class LoginScreenState extends State<LoginScreen>
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child: OutlineButton(
-                    splashColor: UniversalVariables.white2,
-                    onPressed: () => {
-                      {
-                        setState(() {
-                          agreementAccepted = false;
-                        }),
-                        Navigator.pop(context)
-                      },
-                    },
-                    child: Text(
-                      "DENY",
-                      style: TextStyles.deny,
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: OutlineButton(
-                    splashColor: UniversalVariables.white2,
-                    onPressed: () => {
-                      {
-                        setState(() {
-                          agreementAccepted = true;
-                        }),
-                        Navigator.pop(context)
-                      },
-                    },
-                    child: Text(
-                      "ACCEPT",
-                      style: TextStyles.accept,
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomLeft,
+              //   child: Padding(
+              //     padding: EdgeInsets.only(left: 15.0),
+              //     child: OutlineButton(
+              //       splashColor: UniversalVariables.white2,
+              //       onPressed: () => {
+              //         {
+              //           setState(() {
+              //             agreementAccepted = false;
+              //           }),
+              //           Navigator.pop(context)
+              //         },
+              //       },
+              //       child: Text(
+              //         "DENY",
+              //         style: TextStyles.deny,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Align(
+              //   alignment: Alignment.bottomRight,
+              //   child: Padding(
+              //     padding: EdgeInsets.only(right: 15.0),
+              //     child: OutlineButton(
+              //       splashColor: UniversalVariables.white2,
+              //       onPressed: () => {
+              //         {
+              //           setState(() {
+              //             agreementAccepted = true;
+              //           }),
+              //           Navigator.pop(context)
+              //         },
+              //       },
+              //       child: Text(
+              //         "ACCEPT",
+              //         style: TextStyles.accept,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -369,8 +405,8 @@ class LoginScreenState extends State<LoginScreen>
         height: 60,
         width: screenwidth * 0.7,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: UniversalVariables.gold2.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(6.0),
+          color: UniversalVariables.white2,
         ),
         child: Center(
           child: FlatButton(
@@ -379,14 +415,33 @@ class LoginScreenState extends State<LoginScreen>
                   ? performGoogleLogin()
                   : scaffoldKey.currentState.showSnackBar(snackBar);
             },
-            child: Text(
-              'Google Sign In',
-              style: TextStyle(
-                fontFamily: 'Kiona',
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 27.0),
+                  child: SvgPicture.asset(
+                    "assets/google.svg",
+                    height: 12,
+                    width: 12,
+                    // alignment: Alignment.topCenter,
+                    //  color: UniversalVariables.grey2,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    'Sign in with Google',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: .3,
+                      wordSpacing: -.5,
+                      color: UniversalVariables.blackColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
