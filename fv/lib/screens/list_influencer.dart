@@ -717,9 +717,6 @@ class _ListInfluencerPageState extends State<ListInfluencerPage> {
                                 width: screenWidth * 0.85,
                                 height: screenHeight * 0.4,
                                 decoration: BoxDecoration(
-
-                                    //gradient: UniversalVariables.fabGradient,
-
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10.0),
                                       topRight: Radius.circular(10.0),

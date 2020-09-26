@@ -813,9 +813,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                       height: 80.0,
                                       width: screenWidth / 4,
                                       decoration: BoxDecoration(
-
-                                          //gradient: UniversalVariables.fabGradient,
-
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(10.0),
                                             topRight: Radius.circular(10.0),
@@ -897,9 +894,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                     height: 80.0,
                                     width: screenWidth / 4,
                                     decoration: BoxDecoration(
-
-                                        //gradient: UniversalVariables.fabGradient,
-
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10.0),
                                           topRight: Radius.circular(10.0),
@@ -970,9 +964,6 @@ class _InfluencerDetailsState extends State<InfluencerDetails>
                                     height: 80.0,
                                     width: screenWidth / 4,
                                     decoration: BoxDecoration(
-
-                                        //gradient: UniversalVariables.fabGradient,
-
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10.0),
                                           topRight: Radius.circular(10.0),

@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fv/enum/crop_state.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:gradient_text/gradient_text.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fv/models/user.dart';
 // import 'package:fv/onboarding/strings.dart';
@@ -210,21 +208,6 @@ class _EditProfileState extends State<EditProfile> {
                     },
                   ),
                 ),
-                // Align(
-                //   alignment: Alignment.center,
-                //   child: Text("FAVEEZ",
-                //       style: TextStyles.appNameLogoStyle,
-                //       textAlign: TextAlign.center),
-                //   // GradientText("FAVEEZ",
-                //   //     gradient: LinearGradient(colors: [
-                //   //       UniversalVariables.gold1,
-                //   //       UniversalVariables.gold2,
-                //   //       UniversalVariables.gold3,
-                //   //       UniversalVariables.gold4
-                //   //     ]),
-                //   //     style: TextStyles.appNameLogoStyle,
-                //   //     textAlign: TextAlign.center),
-                // ),
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(

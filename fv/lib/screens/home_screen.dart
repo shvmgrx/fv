@@ -163,18 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   // color: UniversalVariables.gold2,
                   ),
               child: Ink(
-                decoration: BoxDecoration(
-                    // gradient: LinearGradient(
-                    //   colors: [
-                    //     UniversalVariables.gold1,
-                    //     UniversalVariables.gold2,
-                    //     UniversalVariables.gold3,
-                    //   ],
-                    //   begin: Alignment.topCenter,
-                    //   end: Alignment.bottomRight,
-                    // ),
-                    //    borderRadius: BorderRadius.circular(30.0)
-                    ),
+                decoration: BoxDecoration(),
                 child: CupertinoTabBar(
                   backgroundColor: Colors.transparent,
                   items: <BottomNavigationBarItem>[
