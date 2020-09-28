@@ -326,6 +326,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
     // var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: UniversalVariables.backgroundGrey,

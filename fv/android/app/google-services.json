@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "574828841327-fhsbolmni8sav2akjua0eb8rms8h29uh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fv",
+            "certificate_hash": "c74bc499cde22529ab64cf36949456e2dddc9f9e"
+          }
+        },
+        {
           "client_id": "574828841327-iocc7j853mm92orufpkne4so59j2ti5o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -67,6 +75,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "574828841327-ns1osbuuiombdfatorl4ef136gs62s7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fv.faveez",
+            "certificate_hash": "bbd731a5f59c8dd47d057f08adcd59fa27946e53"
+          }
+        },
+        {
+          "client_id": "574828841327-7sie924tv1rlepnmq4ftims2vuobt7oc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fv.faveez",
+            "certificate_hash": "c74bc499cde22529ab64cf36949456e2dddc9f9e"
+          }
+        },
         {
           "client_id": "574828841327-4m80uegpr8f7khrr2fq6s2n767hjt6lq.apps.googleusercontent.com",
           "client_type": 1,

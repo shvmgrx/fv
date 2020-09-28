@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:fv/models/call.dart';
 import 'package:fv/resources/call_methods.dart';
 import 'package:fv/screens/callscreens/call_screen.dart';
@@ -15,6 +16,7 @@ class PickupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterRingtonePlayer.playRingtone();
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -50,6 +52,7 @@ class PickupScreen extends StatelessWidget {
                   icon: Icon(Icons.call_end),
                   color: Colors.redAccent,
                   onPressed: () async {
+                    FlutterRingtonePlayer.stop();
                     await callMethods.endCall(call: call);
                   },
                 ),
@@ -59,13 +62,16 @@ class PickupScreen extends StatelessWidget {
                   color: Colors.green,
                   onPressed: () async =>
                       await Permissions.cameraAndMicrophonePermissionsGranted()
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CallScreen(call: call),
+                          ? {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CallScreen(call: call),
+                                ),
                               ),
-                            )
-                          : {},
+                              FlutterRingtonePlayer.stop()
+                            }
+                          : {FlutterRingtonePlayer.stop()},
                 ),
               ],
             ),

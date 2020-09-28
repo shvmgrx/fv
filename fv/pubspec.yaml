@@ -54,6 +54,7 @@ dependencies:
   connectivity: ^0.4.9+2
   flutter_animation_progress_bar: ^1.0.5
   video_player: ^0.10.12+3
+  flutter_ringtone_player: ^2.0.0
   
 
 
